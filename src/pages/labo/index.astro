@@ -1,0 +1,105 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('labo')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+---
+<Base
+  theme="nuit"
+  track="labo"
+  title="Labo · notes techniques et cryptographie appliquée"
+  description="Writeups : durcissement Linux, canaux auxiliaires temporels, confidential computing, attestation AWS Nitro Enclaves. Notes écrites pour des pairs."
+>
+  <PageHead
+    kicker="Labo · registre technique"
+    title="Notes de travail, pas de plaquette"
+    lede="Ce qui est écrit ici s'adresse à des pairs. Aucune conclusion n'est avancée avant d'être reproductible, et les travaux inachevés sont annoncés comme tels."
+  >
+    {tags.length > 0 && (
+      <ul class="tags">
+        {tags.map((t) => <li class="mono">{t}</li>)}
+      </ul>
+    )}
+  </PageHead>
+
+  <section class="band">
+    <div class="shell">
+      {posts.length === 0 ? (
+        <p class="empty">
+          Rien de publié pour l'instant. Les notes arrivent quand le banc de test tient
+          debout, pas avant.
+        </p>
+      ) : (
+        <ol class="list">
+          {posts.map((p, i) => (
+            <li>
+              <a href={`/labo/${p.id}/`}>
+                <span class="li-n mono">{String(posts.length - i).padStart(2, '0')}</span>
+                <span class="li-b">
+                  <span class="li-m">
+                    <time class="mono" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+                    {p.data.status !== 'publié' && <span class="st">{p.data.status}</span>}
+                    {p.data.readingTime && <span class="mono rt">{p.data.readingTime}</span>}
+                  </span>
+                  <span class="li-t">{p.data.title}</span>
+                  <span class="li-s">{p.data.summary}</span>
+                  <span class="li-tg">
+                    {p.data.tags.map((t) => <span class="mono">{t}</span>)}
+                  </span>
+                </span>
+                <span class="li-go" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      <div class="note">
+        <p class="label">Pourquoi ces pages sont sombres</p>
+        <p>
+          Parce qu'elles ne sont pas écrites pour convertir. Le reste du site s'adresse à
+          quelqu'un qui a un problème à régler. Ici, on lit du code à 23 h.
+        </p>
+        <p>
+          Une mission technique à discuter&nbsp;?
+          <a class="tlink" href="/contact/?profil=mission">Écrivez-moi directement</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tags li { font-size: 0.66rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.15rem 0.5rem; }
+
+  .list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
+  .list li { border-bottom: 1px solid var(--rule); }
+  .list a {
+    display: grid; grid-template-columns: 3rem minmax(0, 1fr) 1.5rem; gap: 1.25rem;
+    padding: 2rem 0; text-decoration: none; color: inherit; align-items: start;
+    transition: background .18s var(--ease), padding-inline .18s var(--ease);
+  }
+  .list a:hover { background: var(--grenat-wash); padding-inline: 1rem; }
+  .li-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
+  .li-b { display: flex; flex-direction: column; gap: 0.5rem; }
+  .li-m { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  .li-m time, .rt { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+  .st {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--or); color: oklch(0.198 0.022 40); padding: 0.1rem 0.45rem; font-weight: 600;
+  }
+  .li-t { font-size: clamp(1.25rem, 1.05rem + 0.95vw, 1.85rem); font-weight: 700; letter-spacing: -0.032em; line-height: 1.15; max-width: 26ch; }
+  .li-s { color: var(--ink-soft); font-size: 0.95rem; max-width: 66ch; }
+  .li-tg { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+  .li-tg span { font-size: 0.63rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.1rem 0.45rem; }
+  .li-go { color: var(--grenat); justify-self: end; padding-top: 0.4rem; transition: transform .18s var(--ease); }
+  .list a:hover .li-go { transform: translateX(4px); }
+
+  .empty { color: var(--ink-soft); border-block: 1px solid var(--rule); padding: 3rem 0; max-width: 54ch; }
+  .note { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); max-width: 54ch; display: flex; flex-direction: column; gap: 0.8rem; }
+  .note p { color: var(--ink-soft); font-size: 0.9rem; }
+</style>

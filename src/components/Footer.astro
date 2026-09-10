@@ -1,0 +1,94 @@
+---
+const year = new Date().getFullYear();
+const communes = ['Rivesaltes', 'Perpignan', 'Canet-en-Roussillon', 'Saint-Cyprien', 'Cabestany', 'Le Barcarès', 'Saint-Estève', 'Baixas', 'Espira-de-l\'Agly', 'Salses-le-Château'];
+---
+<footer class="ft">
+  <div class="shell">
+    <div class="ft-top grid12">
+      <div class="ft-id">
+        <p class="ft-mark">E&nbsp;Informatique</p>
+        <p class="ft-say">
+          Un seul interlocuteur pour le poste, le serveur, le réseau et le site.
+          Basé à Rivesaltes, dans les Pyrénées-Orientales.
+        </p>
+        <a class="btn btn--onnuit" href="/contact/">
+          Décrire mon besoin <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <nav class="ft-col" aria-label="Prestations">
+        <p class="label">Prestations</p>
+        <a href="/particuliers/">Dépannage particuliers</a>
+        <a href="/professionnels/">Infogérance TPE / PME</a>
+        <a href="/services/#infra">Infrastructure VPS</a>
+        <a href="/services/#securite">Sécurité et sauvegardes</a>
+        <a href="/services/#web">Création de site web</a>
+        <a href="/services/#automatisation">Automatisation</a>
+      </nav>
+
+      <nav class="ft-col" aria-label="Le site">
+        <p class="label">Le site</p>
+        <a href="/portfolio/">Réalisations</a>
+        <a href="/labo/">Labo technique</a>
+        <a href="/blog/">Blog</a>
+        <a href="/a-propos/">À propos</a>
+        <a href="/contact/">Contact</a>
+        <a href="https://github.com/NetSo8" rel="me noopener" target="_blank">GitHub · NetSo8 ↗</a>
+      </nav>
+
+      <div class="ft-col">
+        <p class="label">Joindre</p>
+        <p class="ft-line">Rivesaltes 66600<br />Pyrénées-Orientales</p>
+        <p class="ft-line ft-dim">Sur place : Rivesaltes, Perpignan, littoral.<br />À distance : France entière.</p>
+        <p class="ft-line ft-dim">Réponse sous 24 h ouvrées.<br />Intervention sous 48 h.</p>
+      </div>
+    </div>
+
+    <div class="ft-zone">
+      <p class="label">Zone d'intervention en présentiel</p>
+      <p class="communes">{communes.join(' · ')}</p>
+    </div>
+
+    <div class="ft-bot">
+      <p class="mono">© {year} E Informatique · Elian · SIRET sur demande</p>
+      <p class="mono ft-legal">
+        <a href="/mentions-legales/">Mentions légales</a>
+        <span aria-hidden="true">·</span>
+        <a href="/sitemap-index.xml">Plan du site</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--nuit); color: var(--nuit-text); border-top: 1px solid var(--rule-nuit); padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+  .ft-top { align-items: start; row-gap: 2.75rem; }
+  .ft-id { grid-column: span 4; }
+  @media (max-width: 60rem) { .ft-id { grid-column: 1 / -1; } }
+  @media (max-width: 34rem) { .ft-id { grid-column: 1 / -1; } }
+
+  .ft-mark { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.035em; }
+  .ft-say { color: var(--nuit-soft); max-width: 34ch; margin-block: 0.6rem 1.5rem; font-size: 0.95rem; line-height: 1.65; }
+
+  .ft-col { grid-column: span 2; display: flex; flex-direction: column; gap: 0.55rem; }
+  @media (max-width: 60rem) { .ft-col { grid-column: span 2; } }
+  @media (max-width: 34rem) { .ft-col { grid-column: span 1; } }
+  .ft-col .label { color: var(--nuit-faint); margin-bottom: 0.35rem; }
+  .ft-col a { color: var(--nuit-soft); text-decoration: none; font-size: 0.9rem; width: fit-content; }
+  .ft-col a:hover { color: var(--paper); }
+  .ft-line { color: var(--nuit-soft); font-size: 0.9rem; line-height: 1.55; }
+  .ft-dim { color: var(--nuit-faint); }
+
+  .ft-zone { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule-nuit); }
+  .ft-zone .label { color: var(--nuit-faint); }
+  .communes { margin-top: 0.5rem; color: var(--nuit-soft); font-size: 0.86rem; line-height: 1.9; }
+
+  .ft-bot {
+    margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-nuit);
+    display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; justify-content: space-between;
+    color: var(--nuit-faint); font-size: 0.72rem;
+  }
+  .ft-legal { display: flex; gap: 0.6rem; }
+  .ft-bot a { color: var(--nuit-soft); text-decoration: none; }
+  .ft-bot a:hover { color: var(--paper); }
+</style>

@@ -1,0 +1,180 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const U = 'https://images.unsplash.com/';
+/* TODO Elian : remplacer par une vraie photo de toi à l'établi ou en intervention.
+   Une photo réelle vaut mieux que n'importe quelle banque d'images sur cette page. */
+const poste = `${U}photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80`;
+const paysage = `${U}photo-1560493676-04071c5f467b?auto=format&fit=crop&w=1400&q=80`;
+
+const principes = [
+  { t: 'Le devis avant la clé de douze', d: "Je n'ouvre rien avant d'avoir annoncé ce que je fais, combien de temps ça prend et ce que ça coûte. Si ça change en cours de route, je m'arrête et je vous appelle." },
+  { t: 'Documenter ce que je laisse', d: "Une infrastructure que personne d'autre ne peut reprendre est une infrastructure fragile. Tout ce que je gère est écrit, versionné, et les accès de secours restent chez vous." },
+  { t: 'Dire quand je ne sais pas', d: "Le périmètre que je couvre est large mais fini. Hors de ce périmètre, je le dis et j'oriente vers quelqu'un de compétent, plutôt que d'apprendre à vos frais." },
+  { t: 'Mesurer plutôt qu\'affirmer', d: "Un gain de performance, une disponibilité ou une faille se chiffrent. Ce qui n'est pas mesuré ne va pas dans un rapport, et ne va pas non plus dans une page de vente." },
+];
+
+const parcours = [
+  { a: 'Aujourd\'hui', t: 'Technicien systèmes et réseaux, indépendant', d: "Postes, serveurs Linux, réseau, sécurité et sites web pour les particuliers et les petites entreprises des Pyrénées-Orientales." },
+  { a: 'En continu', t: 'Automatisation et exploitation', d: "Scripts Python et shell, supervision, alerting, reproductibilité des configurations. C'est ce qui permet de tenir plusieurs clients seul, sans travailler la nuit." },
+  { a: 'En cours', t: 'Cryptographie appliquée et informatique de confiance', d: "Arithmétique modulaire, courbes elliptiques, exécution en temps constant, environnements d'exécution isolés. Travail personnel, publié au fil des résultats dans le labo." },
+];
+---
+<Base
+  title="À propos · Elian, technicien à Rivesaltes"
+  description="Qui je suis, comment je travaille et ce que je sais faire. Technicien systèmes et réseaux indépendant à Rivesaltes, dans les Pyrénées-Orientales."
+>
+  <PageHead
+    kicker="À propos"
+    title="Une personne, un périmètre, des preuves"
+    lede="Je m'appelle Elian, je suis technicien systèmes et réseaux indépendant, installé à Rivesaltes. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
+  />
+
+  <section class="band">
+    <div class="shell">
+      <div class="grid12 intro">
+        <div class="intro-t">
+          <p>
+            J'ai commencé par réparer des machines, ce qui apprend une chose que le
+            diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
+            la panne réelle. Ce réflexe de vérifier avant de conclure est resté, et il
+            sert autant sur un portable de 2016 que sur un serveur de production.
+          </p>
+          <p>
+            Le reste s'est construit par nécessité. Un client avait besoin d'un site,
+            puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent
+            vraiment, puis d'un accès distant qui ne soit pas une porte ouverte. Chaque
+            couche a été apprise parce que la couche du dessous ne suffisait plus.
+          </p>
+          <p>
+            Aujourd'hui, ce périmètre couvre le poste de travail, le réseau, le serveur
+            et le site. C'est exactement ce dont une structure de moins de vingt
+            personnes a besoin, et c'est aussi la limite que je m'impose : au-delà, je
+            préfère orienter que bricoler.
+          </p>
+        </div>
+        <figure class="intro-f">
+          <img src={poste} alt="Poste de travail d'atelier : plan, notes manuscrites et matériel en cours de diagnostic" loading="lazy" decoding="async" width="1200" height="800" />
+          <figcaption class="mono">Atelier, Rivesaltes (66)</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule sandy">
+    <div class="shell">
+      <SectionHead n="01" kicker="Méthode" title="Quatre principes qui tiennent depuis le début" />
+      <ol class="prin" data-reveal>
+        {principes.map((p, i) => (
+          <li>
+            <span class="pr-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead
+        n="02"
+        kicker="Compétences"
+        title="Ce que je fais, et ce que j'apprends"
+        lede="Deux colonnes séparées volontairement. La première est ce sur quoi vous pouvez compter aujourd'hui. La seconde est un travail personnel, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
+      />
+      <ol class="parc" data-reveal>
+        {parcours.map((p) => (
+          <li>
+            <span class="pa-a mono">{p.a}</span>
+            <div>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="traj">
+        <p>
+          La troisième ligne mérite une précision, parce qu'elle est facile à
+          survendre. Je ne me présente pas comme architecte en cryptographie : je
+          travaille dans cette direction, je publie ce que je mesure, et le jour où
+          ce travail vaudra une mission, ce sera le labo qui l'aura montré, pas cette
+          page.
+        </p>
+        <a class="btn btn--ghost" href="/labo/">Voir ce qui est publié <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <div class="grid12 lieu">
+        <figure class="lieu-f">
+          <img src={paysage} alt="Vignes de la plaine du Roussillon alignées jusqu'aux contreforts, ciel dégagé de tramontane" loading="lazy" decoding="async" width="1400" height="933" />
+        </figure>
+        <div class="lieu-t">
+          <p class="label">Pourquoi ici</p>
+          <h2>Rivesaltes, et pas ailleurs</h2>
+          <p>
+            Travailler à distance fonctionne pour presque tout. Presque. Il reste les
+            câbles, les baies, les imprimantes, les machines qui ne s'allument plus, et
+            les conversations qu'on n'a pas de la même façon par écran interposé.
+          </p>
+          <p>
+            La proximité n'est pas un argument commercial ajouté après coup : c'est ce
+            qui permet d'être là dans la journée quand une caisse ne fonctionne plus un
+            samedi de marché.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    kicker="Prendre contact"
+    title="Le plus simple reste de décrire votre situation."
+    text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
+  />
+</Base>
+
+<style>
+  .intro { row-gap: 2.5rem; align-items: start; }
+  .intro-t { grid-column: span 7; display: flex; flex-direction: column; gap: 1.15rem; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); max-width: 62ch; }
+  .intro-f { grid-column: 9 / span 4; margin: 0; }
+  .intro-f img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(0.78) contrast(1.05); }
+  .intro-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
+  @media (max-width: 60rem) { .intro-t, .intro-f { grid-column: 1 / -1; } .intro-f img { aspect-ratio: 16 / 9; } }
+
+  .sandy { background: var(--paper-warm); }
+  .prin { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
+  .prin li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
+  .pr-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.35rem; }
+  .prin h3 { font-size: 1.25rem; letter-spacing: -0.028em; }
+  .prin p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 64ch; }
+
+  .parc { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
+  .parc li { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
+  .pa-a { font-size: 0.7rem; color: var(--grenat); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding-top: 0.4rem; }
+  .parc h3 { font-size: 1.2rem; letter-spacing: -0.028em; }
+  .parc p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; }
+  @media (max-width: 46rem) { .parc li { grid-template-columns: 1fr; gap: 0.5rem; } }
+
+  .traj { margin-top: 2.5rem; padding: 1.75rem 0 0; border-top: 1px solid var(--rule); max-width: 60ch; }
+  .traj p { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+  .lieu { row-gap: 2rem; align-items: center; }
+  .lieu-f { grid-column: span 6; margin: 0; }
+  .lieu-f img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(0.82); }
+  .lieu-t { grid-column: 8 / span 5; }
+  .lieu-t .label { color: var(--grenat); }
+  .lieu-t h2 { margin-top: 0.8rem; font-size: var(--t-x2); }
+  .lieu-t p { margin-top: 1rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 46ch; }
+  @media (max-width: 60rem) { .lieu-f, .lieu-t { grid-column: 1 / -1; } }
+</style>

@@ -1,0 +1,149 @@
+---
+interface Props { track?: 'particulier' | 'pro' | 'labo' | null }
+const { track = null } = Astro.props;
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/particuliers/', label: 'Particuliers' },
+  { href: '/professionnels/', label: 'Entreprises' },
+  { href: '/services/', label: 'Services' },
+  { href: '/portfolio/', label: 'Réalisations' },
+  { href: '/labo/', label: 'Labo' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/a-propos/', label: 'À propos' },
+];
+const isOn = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+<header class="hd" data-track={track}>
+  <div class="strip">
+    <div class="shell strip-in">
+      <span class="pin" aria-hidden="true"></span>
+      <span>Rivesaltes 66600 · Perpignan · P.-O.</span>
+      <span class="sep hide-m" aria-hidden="true">/</span>
+      <span class="hide-m">Intervention sous 48 h</span>
+      <span class="sep hide-l" aria-hidden="true">/</span>
+      <span class="hide-l">À distance partout en France</span>
+      <a class="strip-cta" href="/contact/">Écrire&nbsp;→</a>
+    </div>
+  </div>
+
+  <div class="bar">
+    <div class="shell bar-in">
+      <a class="brand" href="/" aria-label="E Informatique, accueil">
+        <svg class="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.25"/>
+          <text x="6.5" y="21.5" class="mark-e">e</text>
+          <rect x="17.5" y="12" width="6" height="9.5" fill="var(--grenat)"/>
+        </svg>
+        <span class="brand-t">E&nbsp;Informatique</span>
+      </a>
+
+      <nav class="nav" aria-label="Navigation principale">
+        {links.map((l) => (
+          <a href={l.href} class:list={['nl', { on: isOn(l.href) }]} aria-current={isOn(l.href) ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))}
+      </nav>
+
+      <a class="btn btn--grenat bar-cta" href="/contact/">Me contacter</a>
+
+      <button class="burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Ouvrir le menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mmenu" id="mmenu" hidden>
+    <div class="shell mm-in">
+      {links.map((l) => (
+        <a href={l.href} class:list={['mm-l', { on: isOn(l.href) }]}>
+          <span class="mm-n label">{String(links.indexOf(l) + 1).padStart(2, '0')}</span>
+          {l.label}
+        </a>
+      ))}
+      <a class="btn btn--grenat mm-cta" href="/contact/">Décrire mon problème</a>
+      <p class="mm-tel mono">Rivesaltes · Perpignan · Pyrénées-Orientales</p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hd { position: sticky; top: 0; z-index: 50; }
+
+  .strip {
+    background: var(--fixed-nuit);
+    color: var(--nuit-soft);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+  }
+  .strip-in { display: flex; align-items: center; gap: 0.6rem; height: 30px; white-space: nowrap; overflow: hidden; }
+  .sep { color: var(--nuit-faint); }
+  .pin { width: 6px; height: 6px; background: var(--jade); border-radius: 50%; flex: none; }
+  .strip-cta { margin-left: auto; color: var(--fixed-paper); text-decoration: none; }
+  .strip-cta:hover { color: var(--or); }
+
+  .bar {
+    background: color-mix(in oklab, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar-in { display: flex; align-items: center; gap: 1.5rem; height: 66px; }
+
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); flex: none; }
+    .mark-e { font-family: var(--mono); font-size: 15px; font-weight: 600; fill: currentColor; }
+  .brand-t { font-weight: 700; letter-spacing: -0.03em; font-size: 1.02rem; }
+
+  .nav { display: flex; gap: 1.35rem; margin-left: auto; }
+  .nl {
+    text-decoration: none;
+    font-size: 0.885rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding-block: 0.35rem;
+    border-bottom: 2px solid transparent;
+    transition: color .16s var(--ease), border-color .16s var(--ease);
+  }
+  .nl:hover { color: var(--ink); }
+  .nl.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--grenat); }
+
+  .bar-cta { padding: 0.6rem 1rem; font-size: 0.875rem; flex: none; }
+
+  .burger { display: none; background: none; border: 0; padding: 0.5rem; cursor: pointer; margin-left: auto; }
+  .burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: transform .2s var(--ease); }
+  .burger span + span { margin-top: 6px; }
+  .burger[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .burger[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+  .mmenu { background: var(--paper); border-bottom: 1px solid var(--rule); }
+  .mm-in { display: flex; flex-direction: column; padding-block: 1rem 2rem; }
+  .mm-l {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 0.85rem 0; text-decoration: none; color: var(--ink);
+    font-size: 1.35rem; font-weight: 600; letter-spacing: -0.025em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mm-l.on { color: var(--grenat); }
+  .mm-n { color: var(--ink-faint); }
+  .mm-cta { margin-top: 1.5rem; justify-content: center; }
+  .mm-tel { margin-top: 1rem; color: var(--ink-faint); font-size: 0.75rem; }
+
+  @media (max-width: 62rem) {
+    .nav, .bar-cta { display: none; }
+    .burger { display: block; }
+  }
+  @media (max-width: 58rem) { .hide-l { display: none; } }
+  @media (max-width: 34rem) { .hide-m { display: none; } }
+</style>
+
+<script>
+  const b = document.querySelector('.burger') as HTMLButtonElement | null;
+  const m = document.getElementById('mmenu');
+  b?.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', String(!open));
+    b.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
+    if (m) m.hidden = open;
+  });
+</script>

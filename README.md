@@ -1,43 +1,119 @@
-# Astro Starter Kit: Minimal
+# einformatique.fr
 
-```sh
-npm create astro@latest -- --template minimal
+Site vitrine d'E Informatique (Elian, technicien informatique freelance à Rivesaltes, 66).
+Astro 7, sans framework client, sortie 100 % statique.
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # ./dist
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Ce que le site doit faire
 
-## 🚀 Project Structure
+Deux audiences, deux parcours, une seule marque :
 
-Inside of your Astro project, you'll see the following folders and files:
+| Parcours | Entrée | Page | CTA |
+| --- | --- | --- | --- |
+| Particulier | porte gauche de l'accueil | `/particuliers/` | « Décrire mon problème » |
+| Entreprise | porte droite de l'accueil | `/professionnels/` | « Demander un diagnostic » |
+| Pair technique | contenu du labo | `/labo/` | contact qualifié, sans pression |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+Le troisième parcours ne dispose d'aucun appel à l'action agressif : il repose
+uniquement sur les preuves publiées. L'accueil et les pages de conversion restent
+crédibles même si `/labo/` est vide (`ProofStrip` affiche alors un texte d'attente).
+
+## Arborescence
+
+```
+/                     accueil, double aiguillage dès le premier écran
+/particuliers/        dépannage, tarifs indicatifs, FAQ, ton simple
+/professionnels/      formules, périmètre, offre pont d'audit approfondi
+/services/            catalogue détaillé des 5 prestations (ancres #depannage, #infra…)
+/labo/                writeups techniques, registre sombre
+/labo/<slug>/         article technique, sommaire, code coloré
+/portfolio/           missions livrées (clair) + recherche en cours (sombre)
+/blog/                contenu grand public, séparé du labo
+/blog/<slug>/         article grand public
+/a-propos/            profil actuel, méthode, trajectoire annoncée sans la survendre
+/contact/             formulaire qui qualifie particulier / entreprise / mission
+/mentions-legales/    à compléter
+404                   page d'erreur
+/about/ → /a-propos/  redirection depuis l'ancienne URL
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Système de design
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Voir `DESIGN.md` (direction, palette, typographie) et `PRODUCT.md` (audiences, voix,
+anti-références). En résumé :
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **Grenat sur chaux.** Ancrage catalan assumé, pas de bleu informatique générique.
+  Jetons dans `src/styles/tokens.css`, en OKLCH.
+- **Clair par défaut, sombre pour le labo.** `<Base theme="nuit">` remappe les jetons
+  via `body.t-nuit`. Les valeurs `--fixed-paper` / `--fixed-nuit` ne s'inversent jamais
+  (bandeau supérieur, boutons posés sur fond nuit).
+- **Grille visible.** Filets d'un pixel, sections numérotées `§ 01`, listes réglées
+  plutôt que grilles de cartes.
+- **Deux familles.** Archivo (titres et corps), Spline Sans Mono (étiquettes, terminal,
+  métadonnées). Chargées depuis Google Fonts.
 
-## 🧞 Commands
+Composants réutilisables dans `src/components/` : `Nav`, `Footer`, `PageHead`,
+`SectionHead`, `Terminal`, `ChainDiagram`, `ZoneRadar`, `ProofStrip`, `CtaBand`, `Faq`.
 
-All commands are run from the root of the project, from a terminal:
+`ZoneRadar` place les communes selon leur **distance et leur relèvement réels** depuis
+Rivesaltes : modifier le tableau `pts` en tête du composant pour ajuster la zone.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Contenu
 
-## 👀 Want to learn more?
+Collections définies dans `src/content.config.ts` :
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `src/content/labo/*.md` : `title`, `summary`, `date`, `status`
+  (`publié` | `en cours` | `brouillon`), `tags`, `readingTime`, `repo`.
+  Le statut est affiché : un travail inachevé est annoncé comme tel.
+- `src/content/blog/*.md` : `title`, `summary`, `date`,
+  `audience` (`particulier` | `entreprise` | `tous`), `tags`.
+
+Les prestations et les réalisations sont des données typées :
+`src/data/services.ts` et `src/data/portfolio.ts`.
+
+## SEO
+
+- JSON-LD `LocalBusiness` sur toutes les pages (`src/layouts/Base.astro`), `Service`
+  sur `/services/`, `FAQPage` sur les FAQ, `TechArticle` et `BlogPosting` sur les articles.
+- `sitemap-index.xml` généré, `robots.txt` dans `public/`.
+- Les mots-clés locaux existants (dépannage Rivesaltes, technicien P.-O., création de
+  site Perpignan, sécurité PME, hébergement VPS) restent portés par l'accueil,
+  `/particuliers/`, `/professionnels/` et `/services/`.
+- Les termes longue traîne (confidential computing, zero-trust, Nitro Enclaves) sont
+  confinés à `/labo/` : ils ne remontent pas sur les pages de conversion locales.
+
+## À compléter avant mise en ligne
+
+1. **Endpoint du formulaire.** `FORM_ENDPOINT` en tête de `src/pages/contact.astro`
+   pointe vers un identifiant Formspree fictif. Le champ `_gotcha` est un piège à robots
+   déjà géré par Formspree, Web3Forms et Basin.
+2. **Tarifs.** Les montants de `/particuliers/` et les formules de `/professionnels/`
+   sont des ordres de grandeur cohérents pour le secteur, à valider ou corriger.
+   Ils sont regroupés dans les tableaux `tarifs` et `formules` en tête de chaque page.
+3. **Réalisations.** Les cinq entrées de `src/data/portfolio.ts` sont des exemples
+   plausibles, à remplacer par les vraies missions et les vrais chiffres.
+4. **Articles.** Les trois writeups et les trois articles de blog servent à montrer la
+   forme et le ton. À remplacer par les contenus réels.
+5. **Photographies.** Les images proviennent d'Unsplash et sont chargées en direct.
+   Deux emplacements gagneraient beaucoup à recevoir de vraies photos : le visuel
+   d'`/a-propos/` et la vue d'atelier de `/particuliers/`. Une fois les photos fournies,
+   les servir depuis `public/` plutôt que depuis Unsplash.
+6. **Mentions légales.** SIRET, TVA et hébergeur sont marqués `à compléter`.
+7. **Coordonnées.** Aucun numéro de téléphone n'est publié : en ajouter un dans
+   `Nav.astro`, `Footer.astro` et le JSON-LD si vous voulez capter les appels directs.
+
+## Contrôles effectués
+
+- Aucun débordement horizontal à 375, 748 et 1200 px.
+- Contraste : tout le texte atteint 4,5:1 en registre clair et en registre sombre.
+- Un seul `h1` par page, hiérarchie de titres sans saut, images avec `alt`, `width` et
+  `height`.
+- Navigation au clavier : lien d'évitement, focus visible, menu mobile avec
+  `aria-expanded`.
+- `prefers-reduced-motion` neutralise les animations et le défilement doux.

@@ -1,0 +1,82 @@
+/* ─────────────────────────────────────────────────────────────
+   einformatique.fr — jetons de design
+   Direction : fiche d'atelier catalane. Grenat sur chaux.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --paper:      oklch(0.968 0.011 78);
+  --paper-warm: oklch(0.955 0.014 74);
+  --sand:       oklch(0.935 0.017 76);
+  --sand-deep:  oklch(0.905 0.021 74);
+
+  /* Encres */
+  --ink:        oklch(0.235 0.021 45);
+  --ink-soft:   oklch(0.455 0.020 55);
+  --ink-faint:  oklch(0.515 0.018 58);
+
+  /* Signature */
+  --grenat:     oklch(0.478 0.176 22);
+  --grenat-hi:  oklch(0.560 0.190 26);
+  --grenat-wash:oklch(0.478 0.176 22 / 0.07);
+  --or:         oklch(0.780 0.150 76);
+  --or-wash:    oklch(0.780 0.150 76 / 0.22);
+
+  /* Nuit (terminal, labo) */
+  --nuit:       oklch(0.198 0.022 40);
+  --nuit-2:     oklch(0.258 0.022 42);
+  --nuit-3:     oklch(0.330 0.020 44);   /* filets et repères, jamais du texte */
+  --nuit-faint: oklch(0.640 0.016 60);   /* texte secondaire sur fond nuit */
+  --nuit-text:  oklch(0.900 0.012 70);
+  --nuit-soft:  oklch(0.700 0.014 62);
+  --jade:       oklch(0.720 0.130 152);
+
+  /* Valeurs fixes : ne s'inversent jamais (bandeau, boutons sur fond nuit) */
+  --fixed-paper: oklch(0.968 0.011 78);
+  --fixed-nuit:  oklch(0.198 0.022 40);
+
+  /* Filets */
+  --rule:       oklch(0.235 0.021 45 / 0.14);
+  --rule-strong:oklch(0.235 0.021 45 / 0.30);
+  --rule-nuit:  oklch(0.900 0.012 70 / 0.15);
+
+  /* Typographie */
+  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'Spline Sans Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --t-hero:  clamp(2.75rem, 1.2rem + 6.4vw, 6.5rem);
+  --t-x1:    clamp(2rem, 1.1rem + 3.6vw, 3.9rem);
+  --t-x2:    clamp(1.5rem, 1.05rem + 1.8vw, 2.5rem);
+  --t-x3:    clamp(1.15rem, 0.98rem + 0.7vw, 1.5rem);
+  --t-body:  clamp(1rem, 0.96rem + 0.2vw, 1.115rem);
+  --t-small: 0.875rem;
+  --t-label: 0.7rem;
+
+  /* Rythme */
+  --gut: 1.5rem;
+  --shell: 78rem;
+  --pad-x: clamp(1.15rem, 0.3rem + 3.4vw, 4rem);
+  --band:  clamp(3.5rem, 1.8rem + 6.5vw, 7.5rem);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+}
+
+/* ── Inversion : pages du labo ─────────────────────────────── */
+body.t-nuit {
+  --paper:      oklch(0.198 0.022 40);
+  --paper-warm: oklch(0.222 0.022 41);
+  --sand:       oklch(0.258 0.022 42);
+  --sand-deep:  oklch(0.300 0.021 43);
+
+  --ink:        oklch(0.925 0.010 72);
+  --ink-soft:   oklch(0.735 0.014 64);
+  --ink-faint:  oklch(0.640 0.016 60);
+
+  --grenat:     oklch(0.700 0.155 28);
+  --grenat-hi:  oklch(0.775 0.140 32);
+  --grenat-wash:oklch(0.700 0.155 28 / 0.10);
+
+  --rule:       oklch(0.925 0.010 72 / 0.14);
+  --rule-strong:oklch(0.925 0.010 72 / 0.30);
+  color-scheme: dark;
+}

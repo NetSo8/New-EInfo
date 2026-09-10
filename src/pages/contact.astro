@@ -1,0 +1,271 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+
+/* Remplacer par l'endpoint réel (Formspree, Web3Forms, Basin, ou une fonction serverless). */
+const FORM_ENDPOINT = 'https://formspree.io/f/VOTRE_ID';
+---
+<Base
+  title="Contact · E Informatique, Rivesaltes (66)"
+  description="Décrivez votre situation en quelques lignes : particulier, entreprise ou mission technique. Réponse sous 24 h ouvrées, intervention sous 48 h dans le 66."
+>
+  <PageHead
+    kicker="Contact"
+    title="Dites-moi ce qui se passe."
+    lede="Trois lignes suffisent pour démarrer. Le formulaire commence par une question qui sert uniquement à vous poser les bonnes questions ensuite."
+  />
+
+  <section class="band">
+    <div class="shell ct">
+      <form class="form" method="post" action={FORM_ENDPOINT} id="f">
+        <fieldset class="fs">
+          <legend class="lg">1 · Vous êtes</legend>
+          <div class="choix">
+            <label class="ch">
+              <input type="radio" name="profil" value="particulier" required />
+              <span class="ch-in">
+                <span class="ch-t">Un particulier</span>
+                <span class="ch-d">Ordinateur, box, imprimante, données à récupérer</span>
+              </span>
+            </label>
+            <label class="ch">
+              <input type="radio" name="profil" value="entreprise" />
+              <span class="ch-in">
+                <span class="ch-t">Une entreprise</span>
+                <span class="ch-d">Postes, serveur, site, sécurité, logiciel métier</span>
+              </span>
+            </label>
+            <label class="ch">
+              <input type="radio" name="profil" value="mission" />
+              <span class="ch-in">
+                <span class="ch-t">Une mission technique</span>
+                <span class="ch-d">Sécurité applicative, système bas niveau, cryptographie</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend class="lg">2 · Le contexte</legend>
+
+          <div class="row">
+            <label class="fl">
+              <span>Nom</span>
+              <input type="text" name="nom" required autocomplete="name" />
+            </label>
+            <label class="fl">
+              <span>Adresse e-mail</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="fl">
+              <span>Téléphone <em>facultatif</em></span>
+              <input type="tel" name="telephone" autocomplete="tel" />
+            </label>
+            <label class="fl">
+              <span>Commune</span>
+              <input type="text" name="commune" placeholder="Rivesaltes, Perpignan, à distance…" />
+            </label>
+          </div>
+
+          <div class="row" data-only="entreprise mission">
+            <label class="fl">
+              <span>Structure</span>
+              <input type="text" name="structure" />
+            </label>
+            <label class="fl">
+              <span>Nombre de postes concernés</span>
+              <input type="text" name="postes" placeholder="1 à 5, 6 à 20, plus de 20" />
+            </label>
+          </div>
+
+          <div data-only="particulier">
+            <label class="fl">
+              <span>Type d'appareil</span>
+              <input type="text" name="appareil" placeholder="Portable HP sous Windows 11, iMac 2017…" />
+            </label>
+          </div>
+
+          <div data-only="mission">
+            <label class="fl">
+              <span>Périmètre pressenti</span>
+              <input type="text" name="perimetre" placeholder="Revue de code, audit crypto, système embarqué…" />
+            </label>
+          </div>
+
+          <label class="fl">
+            <span>Ce qui se passe</span>
+            <textarea
+              name="message"
+              rows="6"
+              required
+              placeholder="Le symptôme, depuis quand, et ce qui a déjà été tenté. Écrivez comme vous le diriez au téléphone."
+            ></textarea>
+          </label>
+
+          <div class="row">
+            <label class="fl">
+              <span>Urgence</span>
+              <select name="urgence">
+                <option value="normale">Ça peut attendre quelques jours</option>
+                <option value="rapide">J'aimerais une réponse cette semaine</option>
+                <option value="bloquant">Je suis bloqué, ça m'empêche de travailler</option>
+              </select>
+            </label>
+            <label class="fl">
+              <span>Vous préférez</span>
+              <select name="canal">
+                <option value="email">Une réponse par e-mail</option>
+                <option value="tel">Être rappelé</option>
+                <option value="visio">Un point en visio</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <label class="rgpd">
+          <input type="checkbox" name="consentement" required />
+          <span>
+            J'accepte que ces informations soient utilisées pour me recontacter au sujet
+            de ma demande. Elles ne sont ni revendues ni utilisées à d'autres fins.
+          </span>
+        </label>
+
+        <p class="hp" aria-hidden="true">
+          <label>Ne pas remplir<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <button class="btn btn--grenat" type="submit">
+          Envoyer ma demande <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="form-note mono">
+          Réponse sous 24 h ouvrées. Aucun démarchage, aucune liste de diffusion.
+        </p>
+      </form>
+
+      <aside class="side">
+        <div class="sb">
+          <p class="label">Ce qui se passe ensuite</p>
+          <ol class="steps">
+            <li><span class="mono">01</span> Je lis et je réponds sous 24 h ouvrées.</li>
+            <li><span class="mono">02</span> Si c'est clair, je chiffre directement. Sinon, on s'appelle quinze minutes.</li>
+            <li><span class="mono">03</span> Vous recevez un écrit : ce que je fais, en combien de temps, à quel prix.</li>
+            <li><span class="mono">04</span> Rien ne démarre avant votre accord.</li>
+          </ol>
+        </div>
+
+        <div class="sb">
+          <p class="label">Où j'interviens</p>
+          <p class="sb-p">
+            En présentiel à Rivesaltes, Perpignan, Canet-en-Roussillon, Saint-Cyprien,
+            Cabestany, Le Barcarès et dans toute la plaine du Roussillon.
+            À distance partout en France.
+          </p>
+        </div>
+
+        <div class="sb">
+          <p class="label">Urgence réelle</p>
+          <p class="sb-p">
+            Un arrêt d'activité ou une suspicion de piratage passe devant le reste.
+            Indiquez-le dans le champ « urgence » et précisez un créneau où vous êtes
+            joignable : je rappelle le jour même.
+          </p>
+        </div>
+
+        <div class="sb sb-dev">
+          <p class="label">Vous venez du labo</p>
+          <p class="sb-p">
+            Pour une mission technique, joignez le contexte utile : langage, contrainte
+            matérielle, modèle de menace si vous en avez un. Le dépôt public est
+            <a class="tlink" href="https://github.com/NetSo8" rel="noopener" target="_blank">github.com/NetSo8</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ct { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  @media (max-width: 62rem) { .ct { grid-template-columns: 1fr; } }
+
+  .fs { border: 0; padding: 0; margin: 0 0 2.5rem; }
+  .lg {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--grenat); padding: 0 0 1rem; font-weight: 600;
+  }
+
+  .choix { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0; border-top: 1px solid var(--rule-strong); }
+  .ch { position: relative; cursor: pointer; border-bottom: 1px solid var(--rule); }
+  .ch + .ch { border-left: 1px solid var(--rule); }
+  .ch input { position: absolute; opacity: 0; inset: 0; }
+  .ch-in { display: flex; flex-direction: column; gap: 0.3rem; padding: 1.1rem 1rem 1.25rem; height: 100%; transition: background .16s var(--ease); }
+  .ch:hover .ch-in { background: var(--grenat-wash); }
+  .ch-t { font-weight: 600; font-size: 1rem; letter-spacing: -0.02em; }
+  .ch-t::before { content: '○'; color: var(--grenat); margin-right: 0.5rem; font-size: 0.8em; }
+  .ch input:checked ~ .ch-in { background: var(--nuit); color: var(--nuit-text); }
+  .ch input:checked ~ .ch-in .ch-t::before { content: '●'; color: var(--or); }
+  .ch input:checked ~ .ch-in .ch-d { color: var(--nuit-soft); }
+  .ch input:focus-visible ~ .ch-in { outline: 2px solid var(--grenat); outline-offset: -2px; }
+  .ch-d { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.45; }
+  @media (max-width: 34rem) { .ch + .ch { border-left: 0; } }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
+  @media (max-width: 40rem) { .row { grid-template-columns: 1fr; } }
+
+  .fl { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .fl > span { font-size: 0.8rem; font-weight: 600; letter-spacing: -0.005em; }
+  .fl em { font-style: normal; font-weight: 400; color: var(--ink-faint); font-size: 0.75rem; }
+  input[type='text'], input[type='email'], input[type='tel'], textarea, select {
+    font: inherit; font-size: 0.95rem; color: var(--ink);
+    background: var(--paper-warm); border: 1px solid var(--rule-strong); border-radius: 2px;
+    padding: 0.7rem 0.8rem; width: 100%;
+    transition: border-color .16s var(--ease), background .16s var(--ease);
+  }
+  input::placeholder, textarea::placeholder { color: var(--ink-faint); }
+  input:focus, textarea:focus, select:focus { border-color: var(--grenat); background: var(--paper); outline: none; }
+  textarea { resize: vertical; line-height: 1.55; }
+
+  .rgpd { display: flex; gap: 0.7rem; align-items: start; margin: 0.5rem 0 1.75rem; font-size: 0.82rem; color: var(--ink-soft); max-width: 60ch; }
+  .rgpd input { margin-top: 0.25rem; accent-color: var(--grenat); flex: none; }
+  .hp { position: absolute; left: -9999px; }
+  .form-note { margin-top: 1rem; font-size: 0.7rem; color: var(--ink-faint); }
+
+  [data-only] { display: none; }
+  [data-only].show { display: grid; }
+  div[data-only]:not(.row).show { display: block; }
+
+  .side { display: flex; flex-direction: column; gap: 1.75rem; position: sticky; top: 7rem; }
+  @media (max-width: 62rem) { .side { position: static; } }
+  .sb { border-top: 1px solid var(--rule-strong); padding-top: 1rem; }
+  .sb-p { margin-top: 0.7rem; font-size: 0.875rem; color: var(--ink-soft); }
+  .steps { list-style: none; padding: 0; margin: 0.9rem 0 0; display: flex; flex-direction: column; gap: 0.65rem; }
+  .steps li { font-size: 0.875rem; color: var(--ink-soft); padding-left: 2.2rem; position: relative; }
+  .steps .mono { position: absolute; left: 0; color: var(--grenat); font-weight: 600; font-size: 0.68rem; }
+  .sb-dev { border-top-color: var(--rule); }
+</style>
+
+<script>
+  const form = document.getElementById('f') as HTMLFormElement | null;
+  if (form) {
+    const blocks = Array.from(form.querySelectorAll<HTMLElement>('[data-only]'));
+    const apply = (v: string) => {
+      blocks.forEach((b) => {
+        const on = (b.dataset.only ?? '').split(' ').includes(v);
+        b.classList.toggle('show', on);
+        b.querySelectorAll<HTMLInputElement>('input, select, textarea').forEach((f) => (f.disabled = !on));
+      });
+    };
+    apply('');
+    form.querySelectorAll<HTMLInputElement>('input[name="profil"]').forEach((r) => {
+      r.addEventListener('change', () => apply(r.value));
+    });
+    const p = new URLSearchParams(location.search).get('profil');
+    if (p) {
+      const pre = form.querySelector<HTMLInputElement>(`input[name="profil"][value="${CSS.escape(p)}"]`);
+      if (pre) { pre.checked = true; apply(p); }
+    }
+  }
+</script>

@@ -1,0 +1,305 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Terminal from '../components/Terminal.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { services } from '../data/services';
+
+const U = 'https://images.unsplash.com/';
+const baie = `${U}photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1400&q=80`;
+
+const pro = services.filter((s) => s.pour.includes('entreprise'));
+
+const formules = [
+  {
+    n: '01',
+    t: 'Intervention ponctuelle',
+    q: "Quelque chose est cassé, ou un projet précis doit sortir.",
+    l: ['Facturation à l\'heure ou au forfait projet', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
+    p: 'Sur devis',
+  },
+  {
+    n: '02',
+    t: 'Infogérance mensuelle',
+    q: "Vous voulez que ça tourne sans y penser, avec quelqu'un à appeler.",
+    l: [
+      'Supervision continue des serveurs et du site',
+      'Mises à jour, sauvegardes vérifiées, correctifs de sécurité',
+      'Heures d\'intervention incluses chaque mois',
+      'Rapport mensuel lisible, sans jargon',
+    ],
+    p: 'à partir de 190 € / mois',
+    mid: true,
+  },
+  {
+    n: '03',
+    t: 'Audit de sécurité approfondi',
+    q: "Vous devez savoir où vous en êtes, avant un incident ou avant un client exigeant.",
+    l: [
+      'Cartographie des accès, des services exposés et des données sensibles',
+      'Revue de la gestion des secrets et de la chaîne de chiffrement',
+      'Test réel de restauration des sauvegardes',
+      'Rapport priorisé : ce qui est urgent, ce qui peut attendre, ce qui est correct',
+    ],
+    p: 'à partir de 1 200 €',
+    bridge: true,
+  },
+];
+
+const faq = [
+  { q: "Vous remplacez un prestataire informatique existant ?", a: "Souvent, oui, et la reprise se prépare. Je récupère les accès, je documente ce qui existe avant de toucher à quoi que ce soit, et la bascule se fait hors des heures ouvrées. Une reprise propre prend en général deux à quatre semaines." },
+  { q: "Combien de postes faut-il pour que ça ait du sens ?", a: "L'infogérance devient intéressante à partir de trois ou quatre postes, ou dès qu'un serveur, une caisse ou un logiciel métier est en jeu. En dessous, une intervention ponctuelle suffit et coûte moins cher." },
+  { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Toute l'infrastructure que je gère est documentée et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
+  { q: "Vous signez un engagement de niveau de service ?", a: "Oui, sur des chiffres tenables : réponse sous 4 h ouvrées, prise en charge d'un arrêt d'activité le jour même, sauvegardes restaurées et vérifiées chaque mois. Je préfère annoncer moins et tenir." },
+  { q: "Est-ce que vous travaillez avec notre éditeur de logiciel métier ?", a: "Oui, c'est une part importante du travail. Je fais l'interface technique avec l'éditeur, ce qui évite au dirigeant d'arbitrer entre deux discours qu'il ne peut pas vérifier." },
+];
+---
+<Base
+  track="pro"
+  title="Infogérance et sécurité informatique TPE/PME · P.-O."
+  description="Infrastructure VPS, sécurité, sauvegardes et site web pour les TPE des Pyrénées-Orientales. Un seul interlocuteur pour le code, le serveur et le réseau."
+>
+  <PageHead
+    tone="sand"
+    kicker="Entreprises · TPE, PME, professions libérales"
+    title="Un interlocuteur technique, pas un standard téléphonique."
+    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je tiens le poste, le réseau, le serveur et le site, avec le même niveau d'exigence sur les quatre."
+  >
+    <div class="ph-btns">
+      <a class="btn btn--grenat" href="/contact/?profil=entreprise">Demander un diagnostic <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost" href="#formules">Voir les formules</a>
+    </div>
+    <p class="ph-note mono">Premier échange de 30 min, gratuit et sans engagement · Réponse sous 24 h ouvrées</p>
+  </PageHead>
+
+  <section class="band">
+    <div class="shell">
+      <SectionHead
+        n="01"
+        kicker="Le point de départ"
+        title="Ce que je trouve en arrivant"
+        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'une entreprise de moins de vingt personnes qui n'a jamais eu de raison de regarder."
+      />
+      <div class="grid12 start">
+        <div class="start-a">
+          <Terminal
+            title="premier relevé : TPE, 12 postes"
+            lines={[
+              { k: 'cmd', t: 'audit --niveau=1' },
+              { k: 'ok', t: 'site vitrine        en ligne' },
+              { k: 'warn', t: 'sauvegardes         quotidiennes, jamais restaurées' },
+              { k: 'warn', t: 'accès distant       RDP exposé sur internet' },
+              { k: 'warn', t: 'comptes             3 comptes d\'anciens salariés actifs' },
+              { k: 'out', t: 'postes              12 · 4 sans correctif depuis 14 mois' },
+              { k: 'out', t: 'serveur métier       aucune documentation transmise' },
+              { k: 'dim', t: '' },
+              { k: 'dim', t: 'aucun de ces points ne se voit tant que rien ne casse.' },
+            ]}
+          />
+        </div>
+        <div class="start-b">
+          <p>
+            Aucune de ces lignes ne provoque de panne aujourd'hui. Elles décident
+            simplement de ce qui se passera le jour où quelque chose arrive : une heure
+            d'arrêt, ou trois semaines de reconstruction.
+          </p>
+          <p>
+            Le diagnostic sert à transformer cette liste floue en décisions chiffrées,
+            avec un ordre de priorité que vous pouvez tenir sur douze mois.
+          </p>
+          <a class="tlink" href="/contact/?profil=entreprise">Demander le diagnostic</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule sandy" id="formules">
+    <div class="shell">
+      <SectionHead
+        n="02"
+        kicker="Formules"
+        title="Trois façons de travailler ensemble"
+        lede="On commence rarement par la troisième. On finit souvent par la deuxième."
+      />
+      <div class="forms" data-reveal>
+        {formules.map((f) => (
+          <article class:list={['form', { bridge: f.bridge, mid: f.mid }]}>
+            <header>
+              <span class="fo-n mono">{f.n}</span>
+              <h3>{f.t}</h3>
+              <p class="fo-q">{f.q}</p>
+            </header>
+            <ul>
+              {f.l.map((x) => <li>{x}</li>)}
+            </ul>
+            <p class="fo-p mono">{f.p}</p>
+          </article>
+        ))}
+      </div>
+      <p class="forms-note">
+        Montants hors taxes, à titre indicatif. Le prix réel dépend du nombre de postes,
+        de la présence d'un serveur et du niveau de disponibilité attendu.
+      </p>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead
+        n="03"
+        kicker="Périmètre technique"
+        title="Quatre chantiers, tenus par la même personne"
+      />
+      <div class="grid12 chant">
+        <ol class="chant-l">
+          {pro.map((s) => (
+            <li id={s.id}>
+              <span class="ch-n mono">{s.n}</span>
+              <div>
+                <h3>{s.titre}</h3>
+                <p class="ch-r">{s.resume}</p>
+                <ul class="ch-liv">
+                  {s.livrables.map((l) => <li>{l}</li>)}
+                </ul>
+                <p class="ch-d mono">Délai courant : {s.delai}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <figure class="chant-f">
+          <img src={baie} alt="Baie de brassage réseau, jarretières bleues repérées une par une" loading="lazy" decoding="async" width="1400" height="933" />
+          <figcaption class="mono">Reprise de câblage, client 66</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule nuitband">
+    <div class="shell">
+      <div class="bridge-in">
+        <p class="label bridge-k">04 / Le cran au-dessus</p>
+        <h2>Quand l'audit standard ne suffit plus</h2>
+        <p class="bridge-l">
+          Certaines structures manipulent des données qui justifient d'aller plus loin
+          que la liste de contrôle habituelle : santé, juridique, sous-traitance
+          industrielle, ou simplement un client final qui pose des questions précises.
+        </p>
+        <div class="bridge-g">
+          <div>
+            <p class="label">Ce que ça ajoute</p>
+            <ul>
+              <li>Revue de la gestion des secrets : où sont les clés, qui peut les lire, comment elles tournent</li>
+              <li>Contrôle de la chaîne de chiffrement au repos et en transit, hypothèses comprises</li>
+              <li>Analyse des dépendances tierces qui voient vos données en clair</li>
+              <li>Test de restauration réel, chronométré, sur environnement isolé</li>
+            </ul>
+          </div>
+          <div>
+            <p class="label">Sur quoi ça s'appuie</p>
+            <p class="bridge-p">
+              Sur du travail publié, pas sur une plaquette. Les notes techniques du labo
+              montrent la méthode, les mesures et les limites, y compris quand la
+              conclusion n'est pas encore là.
+            </p>
+            <a class="btn btn--onnuit" href="/labo/">Lire le labo <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead n="05" kicker="Preuves publiées" title="Ce que j'écris quand je ne travaille pas pour vous" />
+      <div class="proof-w" data-reveal><ProofStrip /></div>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead n="06" kicker="Questions fréquentes" title="Les objections légitimes" />
+      <div class="faq-w"><Faq items={faq} /></div>
+    </div>
+  </section>
+
+  <CtaBand
+    kicker="Prochaine étape"
+    title="Trente minutes pour savoir où vous en êtes."
+    text="Un échange sans engagement : votre activité, ce qui vous inquiète, ce qui vous a déjà coûté du temps. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
+    href="/contact/?profil=entreprise"
+    cta="Demander un diagnostic"
+    second={{ href: '/portfolio/', label: 'Voir des interventions passées' }}
+  />
+</Base>
+
+<style>
+  .ph-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ph-note { margin-top: 1rem; font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+  .sandy { background: var(--paper-warm); }
+
+  .start { margin-top: 3rem; row-gap: 2rem; align-items: start; }
+  .start-a { grid-column: span 7; }
+  .start-b { grid-column: 9 / span 4; display: flex; flex-direction: column; gap: 1rem; color: var(--ink-soft); font-size: 0.95rem; }
+  .start-b .tlink { align-self: flex-start; }
+  @media (max-width: 60rem) { .start-a, .start-b { grid-column: 1 / -1; } }
+
+  .forms { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule-strong); }
+  .form {
+    display: flex; flex-direction: column; gap: 1.1rem;
+    padding: 1.75rem 1.5rem 1.75rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .form + .form { padding-left: 1.5rem; border-left: 1px solid var(--rule); }
+  .form.bridge { background: var(--nuit); color: var(--nuit-text); padding-inline: 1.5rem; border-color: var(--nuit); }
+  .fo-n { color: var(--grenat); font-weight: 600; font-size: 0.72rem; }
+  .bridge .fo-n { color: var(--or); }
+  .form h3 { margin-top: 0.5rem; font-size: 1.25rem; letter-spacing: -0.028em; }
+  .fo-q { margin-top: 0.4rem; font-size: 0.875rem; color: var(--ink-soft); }
+  .bridge .fo-q { color: var(--nuit-soft); }
+  .form ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.55rem; flex: 1; }
+  .form li { padding-left: 1.1rem; position: relative; font-size: 0.875rem; line-height: 1.5; }
+  .form li::before { content: '·'; position: absolute; left: 0.2rem; color: var(--grenat); font-weight: 700; }
+  .bridge li::before { color: var(--or); }
+  .fo-p { font-size: 0.8rem; font-weight: 600; color: var(--grenat); letter-spacing: 0.02em; }
+  .bridge .fo-p { color: var(--or); }
+  .forms-note { margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-faint); max-width: 62ch; }
+  @media (max-width: 62rem) {
+    .forms { grid-template-columns: 1fr; }
+    .form + .form { padding-left: 0; border-left: 0; }
+    .form.bridge { padding-inline: 1.5rem; }
+  }
+
+  .chant { margin-top: 3rem; row-gap: 2.5rem; align-items: start; }
+  .chant-l { grid-column: span 7; list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
+  .chant-l > li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.75rem 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 7rem; }
+  .ch-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.35rem; }
+  .chant-l h3 { font-size: 1.3rem; letter-spacing: -0.03em; }
+  .ch-r { margin-top: 0.45rem; font-size: 0.925rem; color: var(--ink-soft); max-width: 52ch; }
+  .ch-liv { list-style: none; padding: 0; margin: 0.9rem 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
+  .ch-liv li { padding-left: 1.1rem; position: relative; font-size: 0.85rem; color: var(--ink-soft); }
+  .ch-liv li::before { content: '+'; position: absolute; left: 0; color: var(--grenat); font-family: var(--mono); font-size: 0.75rem; }
+  .ch-d { margin-top: 0.9rem; font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; }
+  .chant-f { grid-column: 9 / span 4; margin: 0; position: sticky; top: 7rem; }
+  .chant-f img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: saturate(0.7) contrast(1.06); }
+  .chant-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
+  @media (max-width: 60rem) { .chant-l, .chant-f { grid-column: 1 / -1; } .chant-f { position: static; } .chant-f img { aspect-ratio: 16 / 9; } }
+
+  .nuitband { background: var(--nuit); color: var(--nuit-text); border-top-color: var(--nuit); }
+  .bridge-in { max-width: 62rem; }
+  .bridge-k { color: var(--or); }
+  .nuitband h2 { margin-top: 0.9rem; font-size: var(--t-x1); }
+  .bridge-l { margin-top: 1.1rem; color: var(--nuit-soft); max-width: 58ch; }
+  .bridge-g { margin-top: 2.5rem; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.5rem; align-items: start; }
+  .bridge-g .label { color: var(--nuit-faint); margin-bottom: 0.9rem; }
+  .bridge-g ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+  .bridge-g li { padding: 0.7rem 0 0.7rem 1.2rem; border-bottom: 1px solid var(--rule-nuit); position: relative; font-size: 0.9rem; color: var(--nuit-text); }
+  .bridge-g li:first-child { border-top: 1px solid var(--rule-nuit); }
+  .bridge-g li::before { content: '›'; position: absolute; left: 0; color: var(--or); }
+  .bridge-p { color: var(--nuit-soft); font-size: 0.9rem; max-width: 40ch; margin-bottom: 1.5rem; }
+  @media (max-width: 60rem) { .bridge-g { grid-template-columns: 1fr; } }
+
+  .proof-w { margin-top: 3rem; }
+  .faq-w { margin-top: 2.5rem; max-width: 62rem; }
+</style>

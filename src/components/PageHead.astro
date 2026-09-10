@@ -1,0 +1,25 @@
+---
+interface Props { kicker: string; title: string; lede: string; tone?: 'paper' | 'sand' | 'nuit' }
+const { kicker, title, lede, tone = 'paper' } = Astro.props;
+---
+<section class:list={['ph', tone]}>
+  <div class="shell ph-in">
+    <p class="label ph-k">{kicker}</p>
+    <h1>{title}</h1>
+    <p class="lede ph-l">{lede}</p>
+    <div class="ph-x"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .ph { padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2.25rem, 4vw, 3.5rem); border-bottom: 1px solid var(--rule); }
+  .sand { background: var(--paper-warm); }
+  .nuit { background: var(--nuit); color: var(--nuit-text); border-bottom-color: var(--rule-nuit); }
+  .ph-in { max-width: 62rem; }
+  .ph-k { color: var(--grenat); }
+  .nuit .ph-k { color: var(--or); }
+  .ph h1 { margin-top: 1rem; font-size: clamp(2.1rem, 1rem + 3.4vw, 3.5rem); }
+  .ph-l { margin-top: 1.25rem; max-width: 56ch; }
+  .nuit .ph-l { color: var(--nuit-soft); }
+  .ph-x:not(:empty) { margin-top: 2rem; }
+</style>

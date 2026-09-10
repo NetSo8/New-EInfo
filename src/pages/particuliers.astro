@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+
+const U = 'https://images.unsplash.com/';
+const etabli = `${U}photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1400&q=80`;
+
+const pannes = [
+  { t: 'Il met cinq minutes à démarrer', d: "Neuf fois sur dix, c'est le disque dur d'origine. Un disque SSD et la machine repart pour trois ans." },
+  { t: 'Écran noir, plus rien ne se passe', d: "Alimentation, écran, carte mère ou simple câble. Le diagnostic dit lequel, et si ça vaut la réparation." },
+  { t: 'Des fenêtres s\'ouvrent toutes seules', d: "Nettoyage complet, vérification des comptes, et changement des mots de passe qui ont pu fuiter." },
+  { t: 'Ma boîte mail a été piratée', d: "Reprise du compte, coupure des accès en cours, et mise en place de la double authentification." },
+  { t: 'Je veux récupérer mes photos', d: "Récupération quand le support le permet. Je vous dis avant si les chances sont bonnes ou faibles." },
+  { t: 'Le wifi ne passe pas au fond du couloir', d: "Mesure réelle du signal pièce par pièce, puis la solution la moins chère qui règle le problème." },
+  { t: "L'imprimante ne veut plus rien savoir", d: "Pilotes, réseau, ou matériel en fin de vie. Réglé sur place, ou remplacé en connaissance de cause." },
+  { t: 'Je change de machine et je perds tout', d: "Transfert complet : documents, photos, messagerie, mots de passe, favoris, logiciels installés." },
+];
+
+const etapes = [
+  { n: '01', t: 'Vous décrivez', d: "Par écrit ou par téléphone. La machine, le symptôme, depuis quand. Trois lignes suffisent." },
+  { n: '02', t: 'Je chiffre', d: "Je vous annonce ce que je vais faire, le temps que ça prend et ce que ça coûte. Avant de commencer." },
+  { n: '03', t: "J'interviens", d: "Chez vous, à l'atelier ou à distance selon la panne. Vous choisissez ce qui vous arrange." },
+  { n: '04', t: 'Je vous montre', d: "Ce qui s'est passé, ce que j'ai changé, et les deux ou trois réflexes qui évitent que ça recommence." },
+];
+
+const tarifs = [
+  { p: 'Diagnostic', prix: 'Offert', d: "Annoncé avant toute intervention, sans engagement." },
+  { p: 'Intervention à domicile', prix: '55 € / h', d: "Déplacement inclus jusqu'à 30 km de Rivesaltes." },
+  { p: 'Assistance à distance', prix: '45 € / h', d: "Prise en main de l'écran, avec votre accord à chaque étape." },
+  { p: 'Remplacement de disque par un SSD', prix: 'à partir de 90 €', d: "Pièce en supplément, système et données transférés." },
+  { p: 'Nettoyage complet et remise en état', prix: 'à partir de 120 €', d: "Logiciel, poussière, pâte thermique, démarrage." },
+  { p: 'Transfert vers une nouvelle machine', prix: 'à partir de 90 €', d: "Documents, photos, messagerie, mots de passe." },
+  { p: 'Récupération de données', prix: 'sur devis', d: "Chiffré après examen. Rien n'est facturé si rien n'est récupéré." },
+];
+
+const faq = [
+  { q: 'Vous venez chez moi ou je dois apporter la machine ?', a: "Les deux sont possibles. Pour un ordinateur de bureau ou une panne réseau, je viens chez vous. Pour une réparation matérielle plus longue, il est souvent plus simple et moins cher que la machine passe à l'atelier." },
+  { q: 'Est-ce que je paie si vous ne réparez pas ?', a: "Le diagnostic est offert. Si la réparation n'est pas rentable, je vous le dis et vous ne payez rien. Si vous préférez ne pas donner suite après le devis, vous ne payez rien non plus." },
+  { q: "Vous touchez à mes données personnelles ?", a: "Uniquement ce qui est nécessaire à l'intervention, et jamais sans vous le dire. Aucune copie n'est conservée après restitution. Sur une récupération de données, le support vous est rendu avec l'ensemble de ce qui a été extrait." },
+  { q: 'Vous travaillez le week-end ?', a: "En semaine en règle générale. Une panne qui vous empêche complètement de travailler ou une suspicion de piratage passe devant, week-end compris." },
+  { q: "Ma machine a douze ans, ça vaut le coup ?", a: "Parfois oui, souvent non. Je regarde le coût des pièces, l'état de la carte mère et la version de Windows encore supportée, et je vous donne une réponse franche, y compris quand elle me fait perdre une réparation." },
+];
+---
+<Base
+  track="particulier"
+  title="Dépannage informatique à domicile · Rivesaltes, Perpignan"
+  description="Réparation d'ordinateur, virus, récupération de photos, wifi et imprimante. Technicien à domicile à Rivesaltes et Perpignan. Diagnostic offert, sous 48 h."
+>
+  <PageHead
+    kicker="Particuliers · Pyrénées-Orientales"
+    title="Votre ordinateur vous pose problème. On règle ça."
+    lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence."
+  >
+    <div class="ph-btns">
+      <a class="btn btn--grenat" href="/contact/?profil=particulier">Décrire mon problème <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost" href="#tarifs">Voir les tarifs</a>
+    </div>
+    <p class="ph-note mono">Réponse sous 24 h ouvrées · Intervention sous 48 h · Déplacement inclus jusqu'à 30 km</p>
+  </PageHead>
+
+  <section class="band">
+    <div class="shell">
+      <SectionHead
+        n="01"
+        kicker="Ce que je répare le plus"
+        title="Vous reconnaîtrez sûrement votre panne"
+        lede="Aucune de ces situations n'est perdue d'avance, et aucune ne nécessite de racheter une machine sans avoir vérifié le reste."
+      />
+      <ul class="pannes" data-reveal>
+        {pannes.map((p) => (
+          <li>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band rule sandy">
+    <div class="shell">
+      <SectionHead n="02" kicker="Comment ça se passe" title="Quatre étapes, pas de surprise" />
+      <div class="grid12 flow">
+        <ol class="etapes">
+          {etapes.map((e) => (
+            <li>
+              <span class="et-n mono">{e.n}</span>
+              <div>
+                <h3>{e.t}</h3>
+                <p>{e.d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <figure class="flow-f">
+          <img src={etabli} alt="Mains gantées au travail sur une carte électronique, à l'établi" loading="lazy" decoding="async" width="1400" height="933" />
+          <figcaption class="mono">Réparation à l'atelier, Rivesaltes</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule" id="tarifs">
+    <div class="shell">
+      <SectionHead
+        n="03"
+        kicker="Tarifs indicatifs"
+        title="Ce que ça coûte, écrit avant l'intervention"
+        lede="Les montants ci-dessous servent à vous situer. Le prix exact vous est annoncé après le diagnostic, et il ne bouge plus ensuite sans votre accord."
+      />
+      <table class="tarifs" data-reveal>
+        <caption class="vh">Tarifs indicatifs des prestations aux particuliers</caption>
+        <thead>
+          <tr><th scope="col">Prestation</th><th scope="col">Tarif</th><th scope="col">Détail</th></tr>
+        </thead>
+        <tbody>
+          {tarifs.map((t) => (
+            <tr>
+              <th scope="row">{t.p}</th>
+              <td class="tr-p mono">{t.prix}</td>
+              <td class="tr-d">{t.d}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="tarif-note">
+        Particulier, prix TTC. Un devis écrit est remis dès que l'intervention dépasse
+        une heure ou nécessite une pièce.
+      </p>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead n="04" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
+      <ul class="nope" data-reveal>
+        <li><strong>Un abonnement antivirus à 80 € par an.</strong> Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé.</li>
+        <li><strong>Un ordinateur neuf quand une pièce suffit.</strong> Je chiffre les deux et je vous laisse comparer.</li>
+        <li><strong>Un « nettoyage » qui ne change rien.</strong> Si la lenteur vient du matériel, aucun logiciel ne la corrigera.</li>
+        <li><strong>Un contrat que vous ne pouvez pas arrêter.</strong> Pour un particulier, on paie l'intervention, et c'est tout.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead n="05" kicker="Questions fréquentes" title="Avant de m'appeler" />
+      <div class="faq-w"><Faq items={faq} /></div>
+    </div>
+  </section>
+
+  <CtaBand
+    kicker="Votre tour"
+    title="Dites-moi ce qui se passe."
+    text="La marque de l'appareil, ce qu'il fait, depuis quand. Je vous réponds sous 24 h ouvrées avec un premier avis et un ordre de prix, sans engagement."
+    href="/contact/?profil=particulier"
+    cta="Décrire mon problème"
+    second={{ href: '/blog/', label: 'Lire les conseils pratiques' }}
+  />
+</Base>
+
+<style>
+  .ph-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ph-note { margin-top: 1rem; font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+
+  .pannes {
+    list-style: none; padding: 0; margin: 3rem 0 0;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    border-top: 1px solid var(--rule-strong);
+  }
+  .pannes li { padding: 1.4rem 1.5rem 1.5rem 0; border-bottom: 1px solid var(--rule); }
+  .pannes h3 { font-size: 1.05rem; letter-spacing: -0.02em; }
+  .pannes p { margin-top: 0.4rem; font-size: 0.9rem; color: var(--ink-soft); max-width: 40ch; }
+
+  .sandy { background: var(--paper-warm); }
+  .flow { margin-top: 3rem; row-gap: 2.5rem; align-items: start; }
+  .etapes { grid-column: span 6; list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
+  .etapes li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.35rem 0; border-bottom: 1px solid var(--rule); }
+  .et-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.3rem; }
+  .etapes h3 { font-size: 1.15rem; letter-spacing: -0.025em; }
+  .etapes p { margin-top: 0.3rem; font-size: 0.9rem; color: var(--ink-soft); max-width: 46ch; }
+  .flow-f { grid-column: 8 / span 5; margin: 0; }
+  .flow-f img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(0.8) contrast(1.05); }
+  .flow-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
+  @media (max-width: 60rem) { .etapes, .flow-f { grid-column: 1 / -1; } .flow-f img { aspect-ratio: 16 / 9; } }
+
+  .tarifs { width: 100%; border-collapse: collapse; margin-top: 3rem; text-align: left; }
+  .tarifs thead th {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 500; padding-bottom: 0.7rem; border-bottom: 1px solid var(--rule-strong);
+  }
+  .tarifs tbody th { font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; padding: 1rem 1.5rem 1rem 0; vertical-align: top; }
+  .tarifs td { padding: 1rem 1.5rem 1rem 0; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  .tarifs tbody th { border-bottom: 1px solid var(--rule); }
+  .tr-p { color: var(--grenat); font-weight: 600; white-space: nowrap; font-size: 0.85rem; }
+  .tr-d { color: var(--ink-soft); font-size: 0.875rem; }
+  .tarif-note { margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-faint); max-width: 60ch; }
+  @media (max-width: 46rem) {
+    .tarifs thead { display: none; }
+    .tarifs tbody th, .tarifs td { display: block; padding: 0; border: 0; }
+    .tarifs tbody tr { display: block; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
+    .tr-p { margin: 0.2rem 0; }
+  }
+
+  .nope { list-style: none; padding: 0; margin: 2.5rem 0 0; max-width: 62ch; display: flex; flex-direction: column; }
+  .nope li { padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid var(--rule); position: relative; color: var(--ink-soft); font-size: 0.95rem; }
+  .nope li:first-child { border-top: 1px solid var(--rule); }
+  .nope li::before { content: '×'; position: absolute; left: 0.35rem; top: 1rem; color: var(--grenat); font-family: var(--mono); }
+  .nope strong { color: var(--ink); font-weight: 600; }
+
+  .faq-w { margin-top: 2.5rem; max-width: 62rem; }
+</style>

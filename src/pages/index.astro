@@ -1,17 +1,364 @@
 ---
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Terminal from '../components/Terminal.astro';
+import ChainDiagram from '../components/ChainDiagram.astro';
+import ZoneRadar from '../components/ZoneRadar.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { services } from '../data/services';
 
+const U = 'https://images.unsplash.com/';
+const vignes = `${U}photo-1560493676-04071c5f467b?auto=format&fit=crop&w=1400&q=80`;
+const atelier = `${U}photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80`;
+const cote = `${U}photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1600&q=80`;
+
+const faq = [
+  {
+    q: "Vous vous déplacez jusqu'où ?",
+    a: "Je me déplace sans supplément dans un rayon de 30 km autour de Rivesaltes, ce qui couvre Perpignan, le littoral de Canet à Saint-Cyprien, la plaine du Roussillon et la vallée de l'Agly. Au-delà, un forfait kilométrique est annoncé avant l'intervention. Le reste de la France est couvert à distance.",
+  },
+  {
+    q: "Combien ça coûte ?",
+    a: "Le diagnostic est annoncé et chiffré avant que je touche à la machine. Pour les particuliers, l'intervention se facture à l'heure, sans frais de dossier. Pour les entreprises, un audit ou un forfait mensuel est proposé après un premier échange gratuit d'une trentaine de minutes.",
+  },
+  {
+    q: "Vous intervenez sous combien de temps ?",
+    a: "Réponse sous 24 h ouvrées, intervention sous 48 h en règle générale. Un incident de sécurité ou un arrêt d'activité passe devant : dans ce cas je prends l'appel le jour même.",
+  },
+  {
+    q: "Je n'y connais rien du tout, c'est un problème ?",
+    a: "Non, c'est même le cas le plus fréquent. Je vous explique ce qui s'est passé en français, je vous montre ce que j'ai changé, et vous repartez avec les quelques réflexes qui évitent que ça recommence.",
+  },
+  {
+    q: "Vous travaillez avec quels systèmes ?",
+    a: "Windows, macOS et Linux côté poste de travail. Debian et Ubuntu côté serveur. Pour les logiciels métiers, je m'adapte : j'ai déjà repris des environnements dont l'éditeur avait disparu.",
+  },
+];
 ---
+<Base
+  title="Dépannage informatique Rivesaltes et Perpignan (66)"
+  description="Technicien informatique freelance à Rivesaltes. Dépannage particuliers, infrastructure et sécurité pour les TPE des Pyrénées-Orientales. Intervention sous 48 h."
+>
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="shell hero-in">
+      <div class="hero-txt">
+        <p class="label hero-eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          Technicien informatique · Rivesaltes · Pyrénées-Orientales
+        </p>
+        <h1>Une&nbsp;panne.<br />Un&nbsp;serveur.<br />Un&nbsp;site.<br /><span class="h1-alt">Un seul numéro.</span></h1>
+        <p class="lede hero-lede">
+          Je dépanne les particuliers du Roussillon et je tiens l'informatique des
+          entreprises qui n'ont pas de service technique. Poste, réseau, serveur,
+          sécurité, site web : la même personne du début à la fin.
+        </p>
+        <ul class="hero-facts">
+          <li><strong>48 h</strong><span>Délai d'intervention courant</span></li>
+          <li><strong>30 km</strong><span>Déplacement inclus depuis Rivesaltes</span></li>
+          <li><strong>1</strong><span>Interlocuteur, du poste au serveur</span></li>
+        </ul>
+      </div>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+      <figure class="hero-fig">
+        <img
+          src={vignes}
+          alt="Rangs de vigne du Roussillon peignés par la tramontane sous un ciel de fin de journée"
+          width="1400" height="933" fetchpriority="high" decoding="async"
+        />
+        <figcaption>
+          <span class="hf-l mono">Plaine du Roussillon, 66</span>
+          <span class="hf-r mono">Sur place : Rivesaltes → 30 km<br />À distance : France entière</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ─── DOUBLE AIGUILLAGE ────────────────────────────── -->
+  <section class="doors" aria-label="Choisir votre parcours">
+    <div class="door door--part">
+      <img src={atelier} alt="Technicien penché sur une carte électronique, loupe éclairante à l'établi" loading="lazy" decoding="async" width="1200" height="800" />
+      <div class="door-in">
+        <p class="label door-k">01 / Vous êtes un particulier</p>
+        <h2 class="door-t">Mon ordinateur ne va pas.</h2>
+        <ul class="door-l">
+          <li>Il rame, il chauffe, il s'éteint tout seul</li>
+          <li>Écran noir, plus de démarrage</li>
+          <li>Boîte mail piratée, fenêtres suspectes</li>
+          <li>Photos et documents à récupérer</li>
+          <li>Imprimante, box, wifi qui ne suivent plus</li>
+        </ul>
+        <p class="door-p">
+          Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
+          ne vaut pas le coup, je vous le dis.
+        </p>
+        <a class="btn btn--grenat" href="/particuliers/">
+          Décrire mon problème <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="door door--pro">
+      <div class="door-in">
+        <p class="label door-k door-k--pro">02 / Vous êtes une entreprise</p>
+        <h2 class="door-t">Mon activité dépend de tout ça.</h2>
+        <Terminal
+          title="audit : infra client"
+          lines={[
+            { k: 'cmd', t: 'check --scope=tpe' },
+            { k: 'ok', t: 'site           en ligne, 1,1 s au premier rendu' },
+            { k: 'warn', t: 'sauvegardes    présentes, jamais restaurées' },
+            { k: 'warn', t: 'accès distant  port 3389 ouvert sur internet' },
+            { k: 'out', t: 'postes         12 · 4 hors support de sécurité' },
+            { k: 'dim', t: 'rapport lisible remis sous 5 jours ouvrés' },
+          ]}
+        />
+        <p class="door-p door-p--pro">
+          Un audit d'infrastructure, puis une seule personne pour le code, le serveur
+          et le réseau. Pas d'allers-retours entre trois prestataires qui se renvoient
+          la panne.
+        </p>
+        <a class="btn btn--onnuit" href="/professionnels/">
+          Demander un diagnostic <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 01 SERVICES ────────────────────────────────── -->
+  <section class="band rule" id="services">
+    <div class="shell">
+      <SectionHead
+        n="01"
+        kicker="Ce que je couvre"
+        title="Cinq prestations, une seule chaîne technique"
+        lede="Chaque ligne se tient seule, et toutes se répondent : c'est ce qui permet de traiter la cause plutôt que le symptôme."
+      />
+
+      <ol class="svc" data-reveal>
+        {services.map((s) => (
+          <li class="svc-r">
+            <a href={`/services/#${s.id}`}>
+              <span class="svc-n mono">{s.n}</span>
+              <span class="svc-main">
+                <span class="svc-t">{s.titre}</span>
+                <span class="svc-p">{s.probleme}</span>
+              </span>
+              <span class="svc-meta">
+                <span class="svc-for">
+                  {s.pour.includes('particulier') && <em>Particuliers</em>}
+                  {s.pour.includes('entreprise') && <em>Entreprises</em>}
+                </span>
+                <span class="svc-d mono">{s.delai}</span>
+              </span>
+              <span class="svc-go" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─── § 02 L'ARGUMENT ──────────────────────────────── -->
+  <section class="band rule sandy">
+    <div class="shell">
+      <SectionHead
+        n="02"
+        kicker="L'avantage du freelance"
+        title="La panne est rarement là où on la cherche"
+      />
+      <div class="grid12 arg">
+        <div class="arg-a">
+          <ChainDiagram />
+        </div>
+        <div class="arg-b">
+          <p>
+            Un site lent peut venir du code, d'une base mal indexée, d'un disque saturé
+            ou d'un routeur qui perd des paquets. Trois prestataires spécialisés
+            regardent chacun leur étage et concluent que le problème vient de l'étage
+            d'à côté.
+          </p>
+          <p>
+            Je ne prétends pas tout couvrir. Je couvre un périmètre précis, poste,
+            réseau, serveur, site, et ce périmètre suffit à la très grande majorité des
+            besoins d'une petite structure. Ce qui sort de ce cadre, je le dis, et je
+            vous oriente.
+          </p>
+          <a class="tlink" href="/a-propos/">Comment je travaille</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 03 PREUVES ─────────────────────────────────── -->
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead
+        n="03"
+        kicker="Preuves publiées"
+        title="Le labo"
+        lede="Des notes techniques écrites pour des pairs : durcissement système, mesures, cryptographie appliquée. Rien n'est annoncé ici avant d'être vérifiable."
+      />
+      <div class="proof-w" data-reveal>
+        <ProofStrip />
+        <div class="proof-f">
+          <a class="btn btn--ghost" href="/labo/">Tous les writeups <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="/portfolio/">Réalisations et travaux en cours</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 04 ZONE ────────────────────────────────────── -->
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead
+        n="04"
+        kicker="Zone d'intervention"
+        title="Je privilégie la proximité"
+        lede="Pour tout ce qui se touche, être à vingt minutes change la nature du service. Pour le reste, la distance ne change rien."
+      />
+      <div class="grid12 zone">
+        <div class="zone-a"><ZoneRadar /></div>
+        <figure class="zone-b">
+          <img src={cote} alt="Côte Vermeille au crépuscule, village accroché au-dessus de la Méditerranée" loading="lazy" decoding="async" width="1600" height="1067" />
+          <figcaption class="mono">Littoral des Pyrénées-Orientales</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 05 FAQ ─────────────────────────────────────── -->
+  <section class="band rule">
+    <div class="shell">
+      <SectionHead n="05" kicker="Questions fréquentes" title="Ce qu'on me demande avant d'appeler" />
+      <div class="faq-w"><Faq items={faq} /></div>
+    </div>
+  </section>
+
+  <CtaBand
+    kicker="Prochaine étape"
+    title="Dites-moi ce qui ne va pas."
+    text="Quelques lignes suffisent : la machine, le symptôme, depuis quand. Je réponds sous 24 h ouvrées avec un plan concret et un ordre de prix, avant tout engagement."
+    second={{ href: '/services/', label: 'Voir le détail des prestations' }}
+  />
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .hero { padding-block: clamp(2.5rem, 4vw, 4.5rem) clamp(2.5rem, 5vw, 5rem); }
+  .hero-in { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 0.55rem; color: var(--ink-soft); }
+  .dot { width: 7px; height: 7px; background: var(--grenat); border-radius: 50%; flex: none; }
+  .hero h1 { margin-top: 1.25rem; font-size: clamp(2.35rem, 1rem + 4.1vw, 4rem); line-height: 0.98; }
+  .h1-alt { color: var(--grenat); }
+  .hero-lede { margin-top: 1.5rem; max-width: 44ch; }
+
+  .hero-facts {
+    list-style: none; padding: 0; margin: 2.25rem 0 0;
+    display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule);
+  }
+  .hero-facts li {
+    display: flex; flex-direction: column; gap: 0.1rem;
+    padding: 0.9rem 1.5rem 0 0; margin-right: 1.5rem;
+  }
+  .hero-facts li + li { border-left: 1px solid var(--rule); padding-left: 1.5rem; }
+  .hero-facts strong { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+  .hero-facts span { font-size: 0.75rem; color: var(--ink-soft); max-width: 15ch; line-height: 1.35; }
+
+  .hero-fig { margin: 0; position: relative; }
+  .hero-fig img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(0.85) contrast(1.04); }
+  .hero-fig figcaption {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+  .hf-r { text-align: right; line-height: 1.5; }
+
+  @media (max-width: 60rem) {
+    .hero-in { grid-template-columns: 1fr; }
+    .hero-fig { order: -1; }
+    .hero-fig img { aspect-ratio: 16 / 9; }
+  }
+
+  /* ── Portes ───────────────────────────────────────── */
+  .doors { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
+  .door { position: relative; padding: clamp(2rem, 4vw, 3.5rem) clamp(1.25rem, 3.5vw, 3.25rem) clamp(2.5rem, 4vw, 3.75rem); }
+  .door--part { background: var(--sand); overflow: hidden; }
+  .door--part > img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.10; filter: grayscale(1) contrast(1.2);
+  }
+  .door--pro { background: var(--nuit); color: var(--nuit-text); }
+  .door-in { position: relative; max-width: 34rem; margin-inline: auto; display: flex; flex-direction: column; gap: 1.1rem; }
+  .door-k { color: var(--grenat); }
+  .door-k--pro { color: var(--or); }
+  .door-t { font-size: clamp(1.65rem, 1.15rem + 1.8vw, 2.5rem); letter-spacing: -0.035em; }
+  .door-l { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+  .door-l li {
+    padding: 0.6rem 0 0.6rem 1.5rem; border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem; position: relative;
+  }
+  .door-l li::before {
+    content: '+'; position: absolute; left: 0; top: 0.6rem;
+    font-family: var(--mono); color: var(--grenat); font-size: 0.85rem;
+  }
+  .door-p { font-size: 0.925rem; color: var(--ink-soft); max-width: 42ch; }
+  .door-p--pro { color: var(--nuit-soft); }
+  .door .btn { align-self: flex-start; margin-top: 0.4rem; }
+
+  @media (max-width: 62rem) { .doors { grid-template-columns: 1fr; } }
+
+  /* ── Services ─────────────────────────────────────── */
+  .svc { list-style: none; margin: 3rem 0 0; padding: 0; border-top: 1px solid var(--rule-strong); }
+  .svc-r { border-bottom: 1px solid var(--rule); }
+  .svc-r a {
+    display: grid; grid-template-columns: 3rem minmax(0, 1fr) 12rem 1.5rem;
+    gap: 1rem; align-items: baseline; padding: 1.4rem 0;
+    text-decoration: none; color: inherit;
+    transition: background .18s var(--ease), padding-inline .18s var(--ease);
+  }
+  .svc-r a:hover { background: var(--grenat-wash); padding-inline: 0.9rem; }
+  .svc-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; }
+  .svc-main { display: flex; flex-direction: column; gap: 0.25rem; }
+  .svc-t { font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.65rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+  .svc-p { color: var(--ink-soft); font-size: 0.9rem; max-width: 52ch; }
+  .svc-meta { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-start; }
+  .svc-for { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .svc-for em {
+    font-style: normal; font-family: var(--mono); font-size: 0.67rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft);
+    border: 1px solid var(--rule-strong); padding: 0.1rem 0.4rem;
+  }
+  .svc-d { font-size: 0.7rem; color: var(--ink-faint); }
+  .svc-go { color: var(--grenat); justify-self: end; transition: transform .18s var(--ease); }
+  .svc-r a:hover .svc-go { transform: translateX(4px); }
+  @media (max-width: 60rem) {
+    .svc-r a { grid-template-columns: 2.5rem 1fr 1.25rem; }
+    .svc-meta { grid-column: 2; flex-direction: row; gap: 0.75rem; align-items: center; }
+  }
+
+  /* ── Argument ─────────────────────────────────────── */
+  .sandy { background: var(--paper-warm); }
+  .arg { margin-top: 3rem; row-gap: 2.5rem; }
+  .arg-a { grid-column: span 7; }
+  .arg-b { grid-column: 9 / span 4; display: flex; flex-direction: column; gap: 1rem; color: var(--ink-soft); font-size: 0.95rem; }
+  .arg-b .tlink { align-self: flex-start; margin-top: 0.4rem; }
+  @media (max-width: 60rem) { .arg-a, .arg-b { grid-column: 1 / -1; } }
+
+  /* ── Preuves ──────────────────────────────────────── */
+  .proof-w { margin-top: 3rem; }
+  .proof-f { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+
+  /* ── Zone ─────────────────────────────────────────── */
+  .zone { margin-top: 3rem; row-gap: 2.5rem; align-items: end; }
+  .zone-a { grid-column: span 6; }
+  .zone-b { grid-column: 8 / span 5; margin: 0; }
+  .zone-b img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; filter: saturate(0.82); }
+  .zone-b figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); letter-spacing: 0.06em; }
+  @media (max-width: 60rem) { .zone-a, .zone-b { grid-column: 1 / -1; } .zone-b img { aspect-ratio: 16 / 9; } }
+
+  .faq-w { margin-top: 2.5rem; max-width: 62rem; }
+</style>

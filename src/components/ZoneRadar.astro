@@ -1,0 +1,85 @@
+---
+/* Diagramme d'intervention : distances et relèvements réels depuis Rivesaltes. */
+const pts = [
+  { n: 'Salses-le-Château', a: 350, d: 9 },
+  { n: 'Le Barcarès', a: 75, d: 13 },
+  { n: 'Baixas', a: 232, d: 6 },
+  { n: 'Perpignan', a: 160, d: 9, big: true },
+  { n: 'Cabestany', a: 148, d: 13 },
+  { n: 'Canet-en-Roussillon', a: 118, d: 19 },
+  { n: 'Millas', a: 246, d: 18 },
+  { n: 'Thuir', a: 214, d: 20 },
+  { n: 'Saint-Cyprien', a: 146, d: 26 },
+  { n: 'Argelès-sur-Mer', a: 170, d: 33 },
+  { n: 'Céret', a: 200, d: 40 },
+  { n: 'Prades', a: 250, d: 45 },
+];
+const S = 520;           // viewBox
+const C = S / 2;
+const KM = 50;           // rayon max en km
+const r = (d: number) => (d / KM) * (C - 46);
+const xy = (a: number, d: number) => {
+  const rad = ((a - 90) * Math.PI) / 180;
+  return [C + r(d) * Math.cos(rad), C + r(d) * Math.sin(rad)];
+};
+const rings = [10, 20, 30, 40, 50];
+---
+<figure class="radar">
+  <svg viewBox={`0 0 ${S} ${S}`} role="img" aria-labelledby="radar-t">
+    <title id="radar-t">
+      Communes desservies depuis Rivesaltes, positionnées selon leur distance et leur direction réelles.
+    </title>
+
+    {rings.map((k) => (
+      <circle cx={C} cy={C} r={r(k)} fill="none" stroke="var(--rule)" stroke-dasharray={k === 30 ? '0' : '2 4'} />
+    ))}
+    {rings.map((k) => (
+      <text x={C + 4} y={C - r(k) + 12} class="km">{k} km</text>
+    ))}
+    <circle cx={C} cy={C} r={r(30)} fill="var(--grenat-wash)" stroke="var(--grenat)" stroke-width="1" />
+
+    <line x1={C} y1="28" x2={C} y2={S - 28} stroke="var(--rule)" />
+    <line x1="28" y1={C} x2={S - 28} y2={C} stroke="var(--rule)" />
+    <text x={C} y="20" class="card">N</text>
+    <text x={S - 14} y={C + 4} class="card sea">MER</text>
+
+    {pts.map((p) => {
+      const [x, y] = xy(p.a, p.d);
+      const right = x >= C;
+      return (
+        <g>
+          <line x1={C} y1={C} x2={x} y2={y} stroke="var(--rule)" />
+          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} fill={p.big ? 'var(--grenat)' : 'var(--ink)'} />
+          <text x={right ? x + 9 : x - 9} y={y + 3.5} text-anchor={right ? 'start' : 'end'} class="lbl">{p.n}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      <circle cx={C} cy={C} r="7" fill="none" stroke="var(--grenat)" stroke-width="2" />
+      <circle cx={C} cy={C} r="2.5" fill="var(--grenat)" />
+      <text x={C - 12} y={C - 14} text-anchor="end" class="home">RIVESALTES</text>
+    </g>
+  </svg>
+  <figcaption>
+    <span class="k1"></span> Déplacement inclus jusqu'à 30 km.
+    <span class="k2"></span> Au-delà, forfait kilométrique annoncé avant intervention.
+  </figcaption>
+</figure>
+
+<style>
+  .radar { margin: 0; }
+  svg { width: 100%; height: auto; overflow: visible; }
+  .lbl { font-family: var(--mono); font-size: 11.5px; fill: var(--ink-soft); }
+  .home { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--grenat); letter-spacing: 0.08em; }
+  .km { font-family: var(--mono); font-size: 10px; fill: var(--ink-faint); }
+  .card { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-faint); text-anchor: middle; letter-spacing: 0.1em; }
+  .sea { text-anchor: end; }
+  figcaption {
+    margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-soft);
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; align-items: center;
+  }
+  .k1, .k2 { width: 11px; height: 11px; display: inline-block; flex: none; }
+  .k1 { background: var(--grenat-wash); border: 1px solid var(--grenat); }
+  .k2 { border: 1px dashed var(--rule-strong); }
+</style>
