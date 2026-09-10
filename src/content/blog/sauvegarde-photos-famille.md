@@ -27,8 +27,8 @@ copie qui survit au cambriolage, à l'incendie et au dégât des eaux.
 
 1. Un disque externe de 2 To, branché une fois par mois. Sur Windows, l'Historique
    des fichiers suffit. Sur Mac, Time Machine.
-2. Un espace en ligne pour le seul dossier « Photos ». Cinq à dix euros par mois,
-   souvent moins que ce que coûte une tentative de récupération de données.
+2. Un espace en ligne pour le seul dossier « Photos ». L'abonnement reste très en
+   dessous de ce que coûte une tentative de récupération de données.
 3. Une vérification par an : ouvrez trois photos au hasard depuis la copie de
    sauvegarde. Si elles s'ouvrent, la sauvegarde fonctionne.
 

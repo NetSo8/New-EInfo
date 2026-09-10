@@ -51,7 +51,7 @@ export const projets: Projet[] = [
       'Chargement mobile ramené sous 1 s',
       '100/100 aux quatre catégories Lighthouse',
       'Demandes entrantes multipliées par trois sur six mois',
-      'Coût d\'hébergement annuel : moins de 20 €',
+      'Hébergement ramené à un service statique, sans serveur à maintenir',
     ],
     stack: ['Astro', 'JSON-LD', 'Cloudflare'],
   },

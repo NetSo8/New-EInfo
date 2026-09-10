@@ -19,7 +19,7 @@ const formules = [
     t: 'Intervention ponctuelle',
     q: "Quelque chose est cassé, ou un projet précis doit sortir.",
     l: ['Facturation à l\'heure ou au forfait projet', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
-    p: 'Sur devis',
+    p: 'Devis avant démarrage',
   },
   {
     n: '02',
@@ -31,7 +31,7 @@ const formules = [
       'Heures d\'intervention incluses chaque mois',
       'Rapport mensuel lisible, sans jargon',
     ],
-    p: 'à partir de 190 € / mois',
+    p: 'Forfait mensuel, après cadrage',
     mid: true,
   },
   {
@@ -44,7 +44,7 @@ const formules = [
       'Test réel de restauration des sauvegardes',
       'Rapport priorisé : ce qui est urgent, ce qui peut attendre, ce qui est correct',
     ],
-    p: 'à partir de 1 200 €',
+    p: 'Devis après visite',
     bridge: true,
   },
 ];
@@ -53,6 +53,7 @@ const faq = [
   { q: "Vous remplacez un prestataire informatique existant ?", a: "Souvent, oui, et la reprise se prépare. Je récupère les accès, je documente ce qui existe avant de toucher à quoi que ce soit, et la bascule se fait hors des heures ouvrées. Une reprise propre prend en général deux à quatre semaines." },
   { q: "Combien de postes faut-il pour que ça ait du sens ?", a: "L'infogérance devient intéressante à partir de trois ou quatre postes, ou dès qu'un serveur, une caisse ou un logiciel métier est en jeu. En dessous, une intervention ponctuelle suffit et coûte moins cher." },
   { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Toute l'infrastructure que je gère est documentée et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
+  { q: "Pourquoi aucun tarif n'est affiché ?", a: "Parce qu'un forfait annoncé sans avoir vu l'infrastructure est soit trop cher pour vous, soit intenable pour moi. Le premier échange de trente minutes est gratuit et suffit en général à donner un ordre de grandeur ferme, avant tout engagement." },
   { q: "Vous signez un engagement de niveau de service ?", a: "Oui, sur des chiffres tenables : réponse sous 4 h ouvrées, prise en charge d'un arrêt d'activité le jour même, sauvegardes restaurées et vérifiées chaque mois. Je préfère annoncer moins et tenir." },
   { q: "Est-ce que vous travaillez avec notre éditeur de logiciel métier ?", a: "Oui, c'est une part importante du travail. Je fais l'interface technique avec l'éditeur, ce qui évite au dirigeant d'arbitrer entre deux discours qu'il ne peut pas vérifier." },
 ];
@@ -140,8 +141,9 @@ const faq = [
         ))}
       </div>
       <p class="forms-note">
-        Montants hors taxes, à titre indicatif. Le prix réel dépend du nombre de postes,
-        de la présence d'un serveur et du niveau de disponibilité attendu.
+        Aucune grille tarifaire affichée : le montant dépend du nombre de postes, de la
+        présence d'un serveur et du niveau de disponibilité attendu. Il est chiffré après
+        le premier échange, par écrit, et ne bouge plus sans votre accord.
       </p>
     </div>
   </section>

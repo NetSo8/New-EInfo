@@ -28,7 +28,7 @@ crédibles même si `/labo/` est vide (`ProofStrip` affiche alors un texte d'att
 
 ```
 /                     accueil, double aiguillage dès le premier écran
-/particuliers/        dépannage, tarifs indicatifs, FAQ, ton simple
+/particuliers/        dépannage, méthode de chiffrage, FAQ, ton simple
 /professionnels/      formules, périmètre, offre pont d'audit approfondi
 /services/            catalogue détaillé des 5 prestations (ancres #depannage, #infra…)
 /labo/                writeups techniques, registre sombre
@@ -93,9 +93,11 @@ Les prestations et les réalisations sont des données typées :
 1. **Endpoint du formulaire.** `FORM_ENDPOINT` en tête de `src/pages/contact.astro`
    pointe vers un identifiant Formspree fictif. Le champ `_gotcha` est un piège à robots
    déjà géré par Formspree, Web3Forms et Basin.
-2. **Tarifs.** Les montants de `/particuliers/` et les formules de `/professionnels/`
-   sont des ordres de grandeur cohérents pour le secteur, à valider ou corriger.
-   Ils sont regroupés dans les tableaux `tarifs` et `formules` en tête de chaque page.
+2. **Tarifs : aucun montant n'est publié.** Choix assumé pour l'instant. `/particuliers/`
+   remplace la grille par la section « Comment je chiffre » (tableau `chiffrage` en tête
+   de page) et `/professionnels/` par des mentions neutres (tableau `formules`). Les deux
+   pages contiennent une question de FAQ qui explique pourquoi. Pour afficher des prix
+   plus tard, il suffit de renseigner ces deux tableaux et d'adapter les deux réponses.
 3. **Réalisations.** Les cinq entrées de `src/data/portfolio.ts` sont des exemples
    plausibles, à remplacer par les vraies missions et les vrais chiffres.
 4. **Articles.** Les trois writeups et les trois articles de blog servent à montrer la

@@ -26,19 +26,20 @@ const etapes = [
   { n: '04', t: 'Je vous montre', d: "Ce qui s'est passé, ce que j'ai changé, et les deux ou trois réflexes qui évitent que ça recommence." },
 ];
 
-const tarifs = [
-  { p: 'Diagnostic', prix: 'Offert', d: "Annoncé avant toute intervention, sans engagement." },
-  { p: 'Intervention à domicile', prix: '55 € / h', d: "Déplacement inclus jusqu'à 30 km de Rivesaltes." },
-  { p: 'Assistance à distance', prix: '45 € / h', d: "Prise en main de l'écran, avec votre accord à chaque étape." },
-  { p: 'Remplacement de disque par un SSD', prix: 'à partir de 90 €', d: "Pièce en supplément, système et données transférés." },
-  { p: 'Nettoyage complet et remise en état', prix: 'à partir de 120 €', d: "Logiciel, poussière, pâte thermique, démarrage." },
-  { p: 'Transfert vers une nouvelle machine', prix: 'à partir de 90 €', d: "Documents, photos, messagerie, mots de passe." },
-  { p: 'Récupération de données', prix: 'sur devis', d: "Chiffré après examen. Rien n'est facturé si rien n'est récupéré." },
+const chiffrage = [
+  { t: 'Le diagnostic est offert', d: "Je regarde, je vous dis ce qui ne va pas, et vous décidez ensuite. Aucun frais de dossier, aucun frais de prise en charge." },
+  { t: 'Rien ne commence sans votre accord', d: "Je vous annonce ce que je vais faire et ce que ça coûte avant d'ouvrir quoi que ce soit. Un devis écrit est remis dès que l'intervention dépasse une heure ou demande une pièce." },
+  { t: 'Le montant ne bouge plus ensuite', d: "Si je découvre autre chose en cours de route, je m'arrête et je vous appelle. Vous ne découvrez jamais un écart sur la facture." },
+  { t: 'Le déplacement est inclus', d: "Jusqu'à 30 km de Rivesaltes, il n'est pas facturé. Au-delà, le forfait kilométrique vous est annoncé avant que je prenne la route." },
+  { t: 'Si ça ne vaut pas le coup, vous ne payez pas', d: "Réparation non rentable, machine en fin de vie, ou vous préférez ne pas donner suite après le devis : dans les trois cas, rien ne vous est facturé." },
+  { t: 'Récupération de données : au résultat', d: "Chiffrée après examen du support, et rien n'est dû si rien n'est récupéré." },
 ];
+
 
 const faq = [
   { q: 'Vous venez chez moi ou je dois apporter la machine ?', a: "Les deux sont possibles. Pour un ordinateur de bureau ou une panne réseau, je viens chez vous. Pour une réparation matérielle plus longue, il est souvent plus simple et moins cher que la machine passe à l'atelier." },
   { q: 'Est-ce que je paie si vous ne réparez pas ?', a: "Le diagnostic est offert. Si la réparation n'est pas rentable, je vous le dis et vous ne payez rien. Si vous préférez ne pas donner suite après le devis, vous ne payez rien non plus." },
+  { q: 'Pourquoi les tarifs ne sont-ils pas affichés ?', a: "Parce qu'une grille de prix affichée est presque toujours fausse pour votre cas précis. Deux ordinateurs qui rament peuvent demander vingt minutes ou une demi-journée. Je préfère regarder, puis vous annoncer un montant ferme, plutôt qu'un tarif d'appel qui gonfle en cours de route." },
   { q: "Vous touchez à mes données personnelles ?", a: "Uniquement ce qui est nécessaire à l'intervention, et jamais sans vous le dire. Aucune copie n'est conservée après restitution. Sur une récupération de données, le support vous est rendu avec l'ensemble de ce qui a été extrait." },
   { q: 'Vous travaillez le week-end ?', a: "En semaine en règle générale. Une panne qui vous empêche complètement de travailler ou une suspicion de piratage passe devant, week-end compris." },
   { q: "Ma machine a douze ans, ça vaut le coup ?", a: "Parfois oui, souvent non. Je regarde le coût des pièces, l'état de la carte mère et la version de Windows encore supportée, et je vous donne une réponse franche, y compris quand elle me fait perdre une réparation." },
@@ -56,7 +57,7 @@ const faq = [
   >
     <div class="ph-btns">
       <a class="btn btn--grenat" href="/contact/?profil=particulier">Décrire mon problème <span class="arrow" aria-hidden="true">→</span></a>
-      <a class="btn btn--ghost" href="#tarifs">Voir les tarifs</a>
+      <a class="btn btn--ghost" href="#chiffrage">Comment je chiffre</a>
     </div>
     <p class="ph-note mono">Réponse sous 24 h ouvrées · Intervention sous 48 h · Déplacement inclus jusqu'à 30 km</p>
   </PageHead>
@@ -103,32 +104,28 @@ const faq = [
     </div>
   </section>
 
-  <section class="band rule" id="tarifs">
+  <section class="band rule" id="chiffrage">
     <div class="shell">
       <SectionHead
         n="03"
-        kicker="Tarifs indicatifs"
-        title="Ce que ça coûte, écrit avant l'intervention"
-        lede="Les montants ci-dessous servent à vous situer. Le prix exact vous est annoncé après le diagnostic, et il ne bouge plus ensuite sans votre accord."
+        kicker="Comment je chiffre"
+        title="Vous saurez ce que ça coûte avant que je commence"
+        lede="Je n'affiche pas de grille tarifaire, parce qu'elle serait fausse pour la moitié des situations. Ce qui est garanti, en revanche, tient en six points."
       />
-      <table class="tarifs" data-reveal>
-        <caption class="vh">Tarifs indicatifs des prestations aux particuliers</caption>
-        <thead>
-          <tr><th scope="col">Prestation</th><th scope="col">Tarif</th><th scope="col">Détail</th></tr>
-        </thead>
-        <tbody>
-          {tarifs.map((t) => (
-            <tr>
-              <th scope="row">{t.p}</th>
-              <td class="tr-p mono">{t.prix}</td>
-              <td class="tr-d">{t.d}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p class="tarif-note">
-        Particulier, prix TTC. Un devis écrit est remis dès que l'intervention dépasse
-        une heure ou nécessite une pièce.
+      <ol class="chiff" data-reveal>
+        {chiffrage.map((c, i) => (
+          <li>
+            <span class="cf-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{c.t}</h3>
+              <p>{c.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="chiff-note">
+        Pour obtenir un montant, décrivez la panne : la marque de l'appareil, ce qu'il
+        fait, depuis quand. Vous recevez une estimation sous 24 h ouvrées, sans engagement.
       </p>
     </div>
   </section>
@@ -137,7 +134,7 @@ const faq = [
     <div class="shell">
       <SectionHead n="04" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
       <ul class="nope" data-reveal>
-        <li><strong>Un abonnement antivirus à 80 € par an.</strong> Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé.</li>
+        <li><strong>Un abonnement antivirus annuel.</strong> Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé.</li>
         <li><strong>Un ordinateur neuf quand une pièce suffit.</strong> Je chiffre les deux et je vous laisse comparer.</li>
         <li><strong>Un « nettoyage » qui ne change rien.</strong> Si la lenteur vient du matériel, aucun logiciel ne la corrigera.</li>
         <li><strong>Un contrat que vous ne pouvez pas arrêter.</strong> Pour un particulier, on paie l'intervention, et c'est tout.</li>
@@ -187,23 +184,13 @@ const faq = [
   .flow-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
   @media (max-width: 60rem) { .etapes, .flow-f { grid-column: 1 / -1; } .flow-f img { aspect-ratio: 16 / 9; } }
 
-  .tarifs { width: 100%; border-collapse: collapse; margin-top: 3rem; text-align: left; }
-  .tarifs thead th {
-    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--ink-faint); font-weight: 500; padding-bottom: 0.7rem; border-bottom: 1px solid var(--rule-strong);
-  }
-  .tarifs tbody th { font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; padding: 1rem 1.5rem 1rem 0; vertical-align: top; }
-  .tarifs td { padding: 1rem 1.5rem 1rem 0; vertical-align: top; border-bottom: 1px solid var(--rule); }
-  .tarifs tbody th { border-bottom: 1px solid var(--rule); }
-  .tr-p { color: var(--grenat); font-weight: 600; white-space: nowrap; font-size: 0.85rem; }
-  .tr-d { color: var(--ink-soft); font-size: 0.875rem; }
-  .tarif-note { margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-faint); max-width: 60ch; }
-  @media (max-width: 46rem) {
-    .tarifs thead { display: none; }
-    .tarifs tbody th, .tarifs td { display: block; padding: 0; border: 0; }
-    .tarifs tbody tr { display: block; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
-    .tr-p { margin: 0.2rem 0; }
-  }
+  .chiff { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
+  .chiff li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
+  .cf-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.35rem; }
+  .chiff h3 { font-size: 1.2rem; letter-spacing: -0.028em; }
+  .chiff p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; }
+  .chiff-note { margin-top: 1.5rem; font-size: 0.875rem; color: var(--ink-soft); max-width: 62ch; }
+  @media (max-width: 40rem) { .chiff li { grid-template-columns: 2.5rem 1fr; gap: 0.9rem; } }
 
   .nope { list-style: none; padding: 0; margin: 2.5rem 0 0; max-width: 62ch; display: flex; flex-direction: column; }
   .nope li { padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid var(--rule); position: relative; color: var(--ink-soft); font-size: 0.95rem; }
