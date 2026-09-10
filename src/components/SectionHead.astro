@@ -17,11 +17,11 @@ const { n, kicker, title, lede, tone = 'paper' } = Astro.props;
 <style>
   .sh { display: grid; grid-template-columns: 10rem 1fr; gap: var(--gut); align-items: start; }
   .sh-meta { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.55rem; }
-  .sh-n { font-family: var(--mono); font-size: 0.72rem; color: var(--grenat); font-weight: 600; letter-spacing: 0.04em; }
+  .sh-n { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
   .sh-k { line-height: 1.5; }
   .sh-body { display: flex; flex-direction: column; gap: 1.1rem; max-width: 58ch; }
   .nuit .sh-k { color: var(--nuit-faint); }
-  .nuit .sh-n { color: var(--or); }
+  .nuit .sh-n { color: var(--accent-nuit); }
   @media (max-width: 60rem) {
     .sh { grid-template-columns: 1fr; gap: 0.9rem; }
     .sh-meta { flex-direction: row; align-items: baseline; gap: 0.8rem; padding-top: 0; }

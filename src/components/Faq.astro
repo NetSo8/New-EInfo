@@ -34,10 +34,10 @@ const schema = {
     font-weight: 600; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); letter-spacing: -0.02em;
   }
   summary::-webkit-details-marker { display: none; }
-  summary:hover { color: var(--grenat); }
+  summary:hover { color: var(--accent); }
   .pm { position: relative; width: 13px; height: 13px; flex: none; }
   .pm::before, .pm::after {
-    content: ''; position: absolute; inset: 50% 0 auto 0; height: 1.5px; background: var(--grenat);
+    content: ''; position: absolute; inset: 50% 0 auto 0; height: 1.5px; background: var(--accent);
   }
   .pm::after { transform: rotate(90deg); transition: transform .2s var(--ease); }
   .fq[open] .pm::after { transform: rotate(0deg); }

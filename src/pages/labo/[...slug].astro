@@ -75,7 +75,7 @@ const schema = {
             Sécurité applicative, revue de code système, cryptographie appliquée : si le
             sujet correspond à ce que vous cherchez, écrivez avec le contexte technique.
           </p>
-          <a class="btn btn--grenat" href="/contact/?profil=mission">Écrire <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--cta" href="/contact/?profil=mission">Écrire <span class="arrow" aria-hidden="true">→</span></a>
         </div>
         {others.length > 0 && (
           <div class="af-next">
@@ -98,15 +98,15 @@ const schema = {
   .art-h { padding-block: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 3.5vw, 3rem); border-bottom: 1px solid var(--rule); }
   .art-hin { max-width: 60rem; }
   .back { color: var(--ink-faint); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.08em; }
-  .back:hover { color: var(--grenat); }
+  .back:hover { color: var(--accent); }
   .art-m { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 1.75rem; }
   .art-m time, .rt { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
-  .st { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--or); color: oklch(0.198 0.022 40); padding: 0.1rem 0.45rem; font-weight: 600; }
+  .st { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--state-warn); color: var(--fixed-nuit); padding: 0.1rem 0.45rem; font-weight: 600; }
   .art-h h1 { margin-top: 1rem; font-size: clamp(1.95rem, 1rem + 3.3vw, 3.25rem); max-width: 22ch; }
   .art-s { margin-top: 1.15rem; color: var(--ink-soft); max-width: 62ch; font-size: 1.05rem; line-height: 1.6; }
   .art-tg { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .art-tg span, .repo { font-size: 0.65rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.15rem 0.5rem; }
-  .repo { text-decoration: none; color: var(--grenat); border-color: var(--grenat); }
+  .repo { text-decoration: none; color: var(--accent); border-color: var(--accent); }
 
   .art-body {
     display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem);
@@ -119,7 +119,7 @@ const schema = {
   .toc ol { list-style: none; padding: 0; margin: 0.8rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; counter-reset: t; }
   .toc li { counter-increment: t; }
   .toc a { display: block; font-size: 0.82rem; color: var(--ink-soft); text-decoration: none; line-height: 1.35; }
-  .toc a::before { content: counter(t, decimal-leading-zero) '  '; font-family: var(--mono); font-size: 0.66rem; color: var(--grenat); }
+  .toc a::before { content: counter(t, decimal-leading-zero) '  '; font-family: var(--mono); font-size: 0.66rem; color: var(--accent); }
   .toc a:hover { color: var(--ink); }
 
   .art-f { border-top: 1px solid var(--rule); padding-block: clamp(2.5rem, 5vw, 4rem); background: var(--paper-warm); }
@@ -129,5 +129,5 @@ const schema = {
   .af-next ul { list-style: none; padding: 0; margin: 0.9rem 0 0; border-top: 1px solid var(--rule); }
   .af-next li { border-bottom: 1px solid var(--rule); }
   .af-next a { display: block; padding: 0.9rem 0; text-decoration: none; font-weight: 600; letter-spacing: -0.02em; }
-  .af-next a:hover { color: var(--grenat); }
+  .af-next a:hover { color: var(--accent); }
 </style>

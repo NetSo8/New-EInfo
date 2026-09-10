@@ -81,13 +81,13 @@ const schema = {
     text-decoration: none; font-size: 0.83rem; font-weight: 500;
     transition: background .16s var(--ease), border-color .16s var(--ease);
   }
-  .jump a:hover { background: var(--grenat-wash); border-color: var(--grenat); }
-  .jump .mono { color: var(--grenat); font-size: 0.68rem; }
+  .jump a:hover { background: var(--accent-wash); border-color: var(--accent); }
+  .jump .mono { color: var(--accent); font-size: 0.68rem; }
 
   .svc { padding-block: clamp(2.75rem, 5vw, 4.75rem); border-bottom: 1px solid var(--rule); scroll-margin-top: 6.5rem; }
   .svc.alt { background: var(--paper-warm); }
   .svc-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-  .svc-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.06em; }
+  .svc-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.06em; }
   .svc h2 { margin-top: 0.75rem; font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.75rem); }
   .svc-pb { margin-top: 1rem; font-size: clamp(1.02rem, 0.96rem + 0.35vw, 1.2rem); color: var(--ink); font-weight: 500; max-width: 42ch; }
   .svc-r { margin-top: 0.85rem; color: var(--ink-soft); max-width: 48ch; font-size: 0.95rem; }
@@ -96,12 +96,12 @@ const schema = {
     font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
     border: 1px solid var(--rule-strong); padding: 0.25rem 0.6rem; text-decoration: none; color: var(--ink-soft);
   }
-  .tag:hover { border-color: var(--grenat); color: var(--grenat); }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
 
   .svc-r2 { border-top: 1px solid var(--rule-strong); padding-top: 1.25rem; }
   .svc-r2 ul { list-style: none; padding: 0; margin: 0.9rem 0 0; display: flex; flex-direction: column; }
   .svc-r2 li { padding: 0.65rem 0 0.65rem 1.35rem; border-bottom: 1px solid var(--rule); position: relative; font-size: 0.9rem; }
-  .svc-r2 li::before { content: '+'; position: absolute; left: 0; top: 0.65rem; font-family: var(--mono); color: var(--grenat); font-size: 0.8rem; }
+  .svc-r2 li::before { content: '+'; position: absolute; left: 0; top: 0.65rem; font-family: var(--mono); color: var(--accent); font-size: 0.8rem; }
   .svc-meta { margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; }
   .svc-meta dd { margin: 0.25rem 0 0; font-size: 0.78rem; }
   .svc-meta .dim { color: var(--ink-faint); max-width: 32ch; line-height: 1.5; }

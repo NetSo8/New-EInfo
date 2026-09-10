@@ -94,7 +94,7 @@ const faq = [
           Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
           ne vaut pas le coup, je vous le dis.
         </p>
-        <a class="btn btn--grenat" href="/particuliers/">
+        <a class="btn btn--cta" href="/particuliers/">
           Décrire mon problème <span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -120,7 +120,7 @@ const faq = [
           et le réseau. Pas d'allers-retours entre trois prestataires qui se renvoient
           la panne.
         </p>
-        <a class="btn btn--onnuit" href="/professionnels/">
+        <a class="btn btn--cta" href="/professionnels/">
           Demander un diagnostic <span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -251,9 +251,9 @@ const faq = [
   .hero { padding-block: clamp(2.5rem, 4vw, 4.5rem) clamp(2.5rem, 5vw, 5rem); }
   .hero-in { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
   .hero-eyebrow { display: flex; align-items: center; gap: 0.55rem; color: var(--ink-soft); }
-  .dot { width: 7px; height: 7px; background: var(--grenat); border-radius: 50%; flex: none; }
+  .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; flex: none; }
   .hero h1 { margin-top: 1.25rem; font-size: clamp(2.35rem, 1rem + 4.1vw, 4rem); line-height: 0.98; }
-  .h1-alt { color: var(--grenat); }
+  .h1-alt { color: var(--accent); }
   .hero-lede { margin-top: 1.5rem; max-width: 44ch; }
 
   .hero-facts {
@@ -293,8 +293,8 @@ const faq = [
   }
   .door--pro { background: var(--nuit); color: var(--nuit-text); }
   .door-in { position: relative; max-width: 34rem; margin-inline: auto; display: flex; flex-direction: column; gap: 1.1rem; }
-  .door-k { color: var(--grenat); }
-  .door-k--pro { color: var(--or); }
+  .door-k { color: var(--accent); }
+  .door-k--pro { color: var(--accent-nuit); }
   .door-t { font-size: clamp(1.65rem, 1.15rem + 1.8vw, 2.5rem); letter-spacing: -0.035em; }
   .door-l { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
   .door-l li {
@@ -303,7 +303,7 @@ const faq = [
   }
   .door-l li::before {
     content: '+'; position: absolute; left: 0; top: 0.6rem;
-    font-family: var(--mono); color: var(--grenat); font-size: 0.85rem;
+    font-family: var(--mono); color: var(--accent); font-size: 0.85rem;
   }
   .door-p { font-size: 0.925rem; color: var(--ink-soft); max-width: 42ch; }
   .door-p--pro { color: var(--nuit-soft); }
@@ -320,8 +320,8 @@ const faq = [
     text-decoration: none; color: inherit;
     transition: background .18s var(--ease), padding-inline .18s var(--ease);
   }
-  .svc-r a:hover { background: var(--grenat-wash); padding-inline: 0.9rem; }
-  .svc-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; }
+  .svc-r a:hover { background: var(--accent-wash); padding-inline: 0.9rem; }
+  .svc-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; }
   .svc-main { display: flex; flex-direction: column; gap: 0.25rem; }
   .svc-t { font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.65rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
   .svc-p { color: var(--ink-soft); font-size: 0.9rem; max-width: 52ch; }
@@ -333,7 +333,7 @@ const faq = [
     border: 1px solid var(--rule-strong); padding: 0.1rem 0.4rem;
   }
   .svc-d { font-size: 0.7rem; color: var(--ink-faint); }
-  .svc-go { color: var(--grenat); justify-self: end; transition: transform .18s var(--ease); }
+  .svc-go { color: var(--accent); justify-self: end; transition: transform .18s var(--ease); }
   .svc-r a:hover .svc-go { transform: translateX(4px); }
   @media (max-width: 60rem) {
     .svc-r a { grid-template-columns: 2.5rem 1fr 1.25rem; }

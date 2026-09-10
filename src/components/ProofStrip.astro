@@ -42,19 +42,19 @@ const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { month: 'short', year: '
     padding: 1.5rem 0; text-decoration: none; color: inherit;
     transition: background .18s var(--ease), padding-inline .18s var(--ease);
   }
-  .pr-i a:hover { background: var(--grenat-wash); padding-inline: 0.9rem; }
-  .pr-n { color: var(--grenat); font-weight: 600; font-size: 0.72rem; padding-top: 0.35rem; }
+  .pr-i a:hover { background: var(--accent-wash); padding-inline: 0.9rem; }
+  .pr-n { color: var(--accent); font-weight: 600; font-size: 0.72rem; padding-top: 0.35rem; }
   .pr-body { display: flex; flex-direction: column; gap: 0.4rem; }
   .pr-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
   .pr-date { font-size: 0.68rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; }
   .pr-tag { font-size: 0.66rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.05rem 0.4rem; }
   .pr-st {
     font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--nuit); background: var(--or); padding: 0.1rem 0.4rem; font-weight: 600;
+    color: var(--fixed-nuit); background: var(--state-warn); padding: 0.1rem 0.4rem; font-weight: 600;
   }
   .pr-t { font-weight: 700; font-size: clamp(1.05rem, 1rem + 0.45vw, 1.35rem); letter-spacing: -0.025em; line-height: 1.2; }
   .pr-s { color: var(--ink-soft); font-size: 0.925rem; max-width: 68ch; }
-  .pr-go { color: var(--grenat); padding-top: 0.3rem; transition: transform .18s var(--ease); }
+  .pr-go { color: var(--accent); padding-top: 0.3rem; transition: transform .18s var(--ease); }
   .pr-i a:hover .pr-go { transform: translateX(4px); }
   .empty { color: var(--ink-soft); border-block: 1px solid var(--rule); padding: 2rem 0; max-width: 58ch; }
 </style>

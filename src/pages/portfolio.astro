@@ -96,31 +96,31 @@ const rech = projets.filter((p) => p.type === 'recherche');
 
 <style>
   .gh { font-size: 0.72rem; color: var(--ink-faint); }
-  .sec-k { color: var(--grenat); margin-bottom: 2rem; }
-  .ork { color: var(--or); margin-bottom: 1rem; }
+  .sec-k { color: var(--accent); margin-bottom: 2rem; }
+  .ork { color: var(--accent-nuit); margin-bottom: 1rem; }
   .rech-l { color: var(--nuit-soft); max-width: 56ch; margin-bottom: 2.5rem; font-size: 0.95rem; }
 
   .projets { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
   .pj { padding: 2.25rem 0; border-bottom: 1px solid var(--rule); }
   .pj-h { display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 1rem; align-items: start; }
-  .pj-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
+  .pj-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
   .pj h2 { font-size: clamp(1.25rem, 1.05rem + 1vw, 1.85rem); letter-spacing: -0.032em; max-width: 30ch; }
   .pj-c { margin-top: 0.4rem; font-size: 0.72rem; color: var(--ink-faint); letter-spacing: 0.05em; }
   .pj-st {
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0.2rem 0.55rem; border: 1px solid var(--rule-strong); color: var(--ink-soft); white-space: nowrap;
   }
-  .pj-st.livré { border-color: var(--grenat); color: var(--grenat); }
-  .pj-st.recherche { background: var(--or); border-color: var(--or); color: oklch(0.198 0.022 40); font-weight: 600; }
+  .pj-st.livré { border-color: var(--accent); color: var(--accent); }
+  .pj-st.recherche { background: var(--state-warn); border-color: var(--state-warn); color: var(--fixed-nuit); font-weight: 600; }
 
   .pj-b { margin-top: 1.25rem; margin-left: 4rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 3rem; align-items: start; }
   .pj-r { color: var(--ink-soft); font-size: 0.95rem; max-width: 50ch; }
   .pj-f { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
   .pj-f li { padding: 0.6rem 0 0.6rem 1.2rem; border-bottom: 1px solid var(--rule); position: relative; font-size: 0.875rem; }
-  .pj-f li::before { content: '›'; position: absolute; left: 0; color: var(--grenat); }
+  .pj-f li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
   .pj-s { margin: 1.25rem 0 0 4rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
   .pj-s .mono { font-size: 0.63rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.12rem 0.45rem; }
-  .pj-l { margin-left: 0.6rem; font-size: 0.8rem; font-weight: 600; color: var(--grenat); text-decoration: none; }
+  .pj-l { margin-left: 0.6rem; font-size: 0.8rem; font-weight: 600; color: var(--accent); text-decoration: none; }
   .pj-l:hover { text-decoration: underline; }
 
   @media (max-width: 60rem) {
@@ -136,5 +136,5 @@ const rech = projets.filter((p) => p.type === 'recherche');
   .nuitband .pj-c, .nuitband .pj-s .mono { color: var(--nuit-faint); border-color: var(--rule-nuit); }
   .nuitband .pj-r { color: var(--nuit-soft); }
   .nuitband .pj-f, .nuitband .pj-f li { border-color: var(--rule-nuit); }
-  .nuitband .pj-n, .nuitband .pj-f li::before, .nuitband .pj-l { color: var(--or); }
+  .nuitband .pj-n, .nuitband .pj-f li::before, .nuitband .pj-l { color: var(--accent-nuit); }
 </style>

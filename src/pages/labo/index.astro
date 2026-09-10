@@ -83,20 +83,20 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
     padding: 2rem 0; text-decoration: none; color: inherit; align-items: start;
     transition: background .18s var(--ease), padding-inline .18s var(--ease);
   }
-  .list a:hover { background: var(--grenat-wash); padding-inline: 1rem; }
-  .li-n { color: var(--grenat); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
+  .list a:hover { background: var(--accent-wash); padding-inline: 1rem; }
+  .li-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
   .li-b { display: flex; flex-direction: column; gap: 0.5rem; }
   .li-m { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
   .li-m time, .rt { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
   .st {
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
-    background: var(--or); color: oklch(0.198 0.022 40); padding: 0.1rem 0.45rem; font-weight: 600;
+    background: var(--state-warn); color: var(--fixed-nuit); padding: 0.1rem 0.45rem; font-weight: 600;
   }
   .li-t { font-size: clamp(1.25rem, 1.05rem + 0.95vw, 1.85rem); font-weight: 700; letter-spacing: -0.032em; line-height: 1.15; max-width: 26ch; }
   .li-s { color: var(--ink-soft); font-size: 0.95rem; max-width: 66ch; }
   .li-tg { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
   .li-tg span { font-size: 0.63rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.1rem 0.45rem; }
-  .li-go { color: var(--grenat); justify-self: end; padding-top: 0.4rem; transition: transform .18s var(--ease); }
+  .li-go { color: var(--accent); justify-self: end; padding-top: 0.4rem; transition: transform .18s var(--ease); }
   .list a:hover .li-go { transform: translateX(4px); }
 
   .empty { color: var(--ink-soft); border-block: 1px solid var(--rule); padding: 3rem 0; max-width: 54ch; }

@@ -33,7 +33,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
         <svg class="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
           <rect x="0.5" y="0.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.25"/>
           <text x="6.5" y="21.5" class="mark-e">e</text>
-          <rect x="17.5" y="12" width="6" height="9.5" fill="var(--grenat)"/>
+          <rect x="17.5" y="12" width="6" height="9.5" fill="var(--accent)"/>
         </svg>
         <span class="brand-t">E&nbsp;Informatique</span>
       </a>
@@ -46,7 +46,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
         ))}
       </nav>
 
-      <a class="btn btn--grenat bar-cta" href="/contact/">Me contacter</a>
+      <a class="btn btn--cta bar-cta" href="/contact/">Me contacter</a>
 
       <button class="burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Ouvrir le menu">
         <span></span><span></span>
@@ -62,7 +62,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
           {l.label}
         </a>
       ))}
-      <a class="btn btn--grenat mm-cta" href="/contact/">Décrire mon problème</a>
+      <a class="btn btn--cta mm-cta" href="/contact/">Décrire mon problème</a>
       <p class="mm-tel mono">Rivesaltes · Perpignan · Pyrénées-Orientales</p>
     </div>
   </div>
@@ -80,9 +80,9 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
   }
   .strip-in { display: flex; align-items: center; gap: 0.6rem; height: 30px; white-space: nowrap; overflow: hidden; }
   .sep { color: var(--nuit-faint); }
-  .pin { width: 6px; height: 6px; background: var(--jade); border-radius: 50%; flex: none; }
+  .pin { width: 6px; height: 6px; background: var(--accent-nuit); border-radius: 50%; flex: none; }
   .strip-cta { margin-left: auto; color: var(--fixed-paper); text-decoration: none; }
-  .strip-cta:hover { color: var(--or); }
+  .strip-cta:hover { color: var(--accent-nuit); }
 
   .bar {
     background: color-mix(in oklab, var(--paper) 88%, transparent);
@@ -106,7 +106,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
     transition: color .16s var(--ease), border-color .16s var(--ease);
   }
   .nl:hover { color: var(--ink); }
-  .nl.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--grenat); }
+  .nl.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
 
   .bar-cta { padding: 0.6rem 1rem; font-size: 0.875rem; flex: none; }
 
@@ -124,7 +124,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
     font-size: 1.35rem; font-weight: 600; letter-spacing: -0.025em;
     border-bottom: 1px solid var(--rule);
   }
-  .mm-l.on { color: var(--grenat); }
+  .mm-l.on { color: var(--accent); }
   .mm-n { color: var(--ink-faint); }
   .mm-cta { margin-top: 1.5rem; justify-content: center; }
   .mm-tel { margin-top: 1rem; color: var(--ink-faint); font-size: 0.75rem; }

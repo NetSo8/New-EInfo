@@ -32,12 +32,12 @@ p  { text-wrap: pretty; }
 
 a { color: inherit; }
 
-::selection { background: var(--or-wash); color: var(--ink); }
+::selection { background: oklch(0.455 0.090 210 / 0.20); color: var(--ink); }
 
 :focus-visible {
-  outline: 2px solid var(--grenat);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: var(--r-sm);
 }
 
 /* ── Structure ────────────────────────────────────────────── */
@@ -68,7 +68,7 @@ a { color: inherit; }
   color: var(--ink-faint);
   font-weight: 500;
 }
-.label--grenat { color: var(--grenat); }
+.label--accent { color: var(--accent); }
 .mono { font-family: var(--mono); letter-spacing: -0.01em; }
 
 .lede {
@@ -94,24 +94,38 @@ a { color: inherit; }
   letter-spacing: -0.012em;
   text-decoration: none;
   border: 1px solid var(--btn-bg);
-  border-radius: 2px;
-  transition: transform .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: transform .18s var(--ease), background .18s var(--ease),
+              border-color .18s var(--ease), box-shadow .22s var(--ease);
 }
 .btn:hover { transform: translateY(-2px); }
-.btn--grenat { --btn-bg: var(--grenat); --btn-fg: var(--paper); }
-.btn--grenat:hover { --btn-bg: var(--grenat-hi); }
+.btn:active { transform: translateY(0); transition-duration: .06s; }
+
+/* Le rouge de marque n'existe que sur cette classe. */
+.btn--cta { --btn-bg: var(--cta); --btn-fg: var(--cta-ink); }
+.btn--cta:hover { --btn-bg: var(--cta-hi); box-shadow: 0 8px 22px -6px var(--cta-glow); }
+
 .btn--ghost {
   --btn-bg: transparent; --btn-fg: var(--ink);
   border-color: var(--rule-strong);
 }
-.btn--ghost:hover { border-color: var(--ink); }
+.btn--ghost:hover { border-color: var(--ink); background: var(--accent-wash); }
 .btn--onnuit { --btn-bg: var(--fixed-paper); --btn-fg: var(--fixed-nuit); }
+.btn--nuit-ghost {
+  --btn-bg: transparent; --btn-fg: var(--nuit-text);
+  border-color: var(--rule-nuit);
+}
+.btn--nuit-ghost:hover { border-color: var(--nuit-text); background: oklch(0.930 0.010 199 / 0.06); }
+.btn[disabled], .btn[aria-disabled='true'] {
+  opacity: 0.45; pointer-events: none; transform: none;
+}
 .btn .arrow { transition: transform .18s var(--ease); }
 .btn:hover .arrow { transform: translateX(3px); }
 
 /* ── Liens texte ──────────────────────────────────────────── */
 .tlink {
-  color: var(--grenat);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 600;
   background-image: linear-gradient(currentColor, currentColor);
