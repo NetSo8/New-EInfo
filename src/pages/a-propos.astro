@@ -33,10 +33,10 @@ const parcours = [
     lede="Je m'appelle Elian, je suis technicien systèmes et réseaux indépendant, installé à Rivesaltes. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
   />
 
-  <section class="band">
+  <section class="py-band">
     <div class="shell">
-      <div class="grid12 intro">
-        <div class="intro-t">
+      <div class="grid12 items-start gap-y-10">
+        <div class="col-span-full flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft mid:col-span-7">
           <p>
             J'ai commencé par réparer des machines, ce qui apprend une chose que le
             diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
@@ -56,24 +56,33 @@ const parcours = [
             préfère orienter que bricoler.
           </p>
         </div>
-        <figure class="intro-f">
-          <img src={poste} alt="Poste de travail d'atelier : plan, notes manuscrites et matériel en cours de diagnostic" loading="lazy" decoding="async" width="1200" height="800" />
-          <figcaption class="mono">Atelier, Rivesaltes (66)</figcaption>
+
+        <figure class="col-span-full m-0 mid:col-start-9 mid:col-span-4">
+          <img
+            src={poste}
+            alt="Poste de travail d'atelier : plan, notes manuscrites et matériel en cours de diagnostic"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
+            class="aspect-video w-full object-cover contrast-105 saturate-[0.78] mid:aspect-[4/5]"
+          />
+          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] text-ink-faint">Atelier, Rivesaltes (66)</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="band rule sandy">
+  <section class="border-t border-rule bg-paper-warm py-band">
     <div class="shell">
       <SectionHead n="01" kicker="Méthode" title="Quatre principes qui tiennent depuis le début" />
-      <ol class="prin" data-reveal>
+      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
         {principes.map((p, i) => (
-          <li>
-            <span class="pr-n mono">{String(i + 1).padStart(2, '0')}</span>
+          <li class="grid grid-cols-[3.5rem_1fr] gap-5 border-b border-rule py-[1.6rem]">
+            <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <h3>{p.t}</h3>
-              <p>{p.d}</p>
+              <h3 class="text-[1.25rem] tracking-[-0.028em]">{p.t}</h3>
+              <p class="mt-[0.4rem] max-w-[64ch] text-[0.95rem] text-ink-soft">{p.d}</p>
             </div>
           </li>
         ))}
@@ -81,7 +90,7 @@ const parcours = [
     </div>
   </section>
 
-  <section class="band rule">
+  <section class="border-t border-rule py-band">
     <div class="shell">
       <SectionHead
         n="02"
@@ -89,19 +98,20 @@ const parcours = [
         title="Ce que je fais, et ce que j'apprends"
         lede="Deux colonnes séparées volontairement. La première est ce sur quoi vous pouvez compter aujourd'hui. La seconde est un travail personnel, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
       />
-      <ol class="parc" data-reveal>
+      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
         {parcours.map((p) => (
-          <li>
-            <span class="pa-a mono">{p.a}</span>
+          <li class="grid grid-cols-1 gap-2 border-b border-rule py-[1.6rem] [@media(width>46rem)]:grid-cols-[9rem_1fr] [@media(width>46rem)]:gap-6">
+            <span class="pt-[0.4rem] font-mono text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-accent">{p.a}</span>
             <div>
-              <h3>{p.t}</h3>
-              <p>{p.d}</p>
+              <h3 class="text-[1.2rem] tracking-[-0.028em]">{p.t}</h3>
+              <p class="mt-[0.4rem] max-w-[62ch] text-[0.95rem] text-ink-soft">{p.d}</p>
             </div>
           </li>
         ))}
       </ol>
-      <div class="traj">
-        <p>
+
+      <div class="mt-10 max-w-[60ch] border-t border-rule pt-7">
+        <p class="mb-6 text-[0.95rem] text-ink-soft">
           La troisième ligne mérite une précision, parce qu'elle est facile à
           survendre. Je ne me présente pas comme architecte en cryptographie : je
           travaille dans cette direction, je publie ce que je mesure, et le jour où
@@ -113,21 +123,29 @@ const parcours = [
     </div>
   </section>
 
-  <section class="band rule">
+  <section class="border-t border-rule py-band">
     <div class="shell">
-      <div class="grid12 lieu">
-        <figure class="lieu-f">
-          <img src={paysage} alt="Vignes de la plaine du Roussillon alignées jusqu'aux contreforts, ciel dégagé de tramontane" loading="lazy" decoding="async" width="1400" height="933" />
+      <div class="grid12 items-center gap-y-8">
+        <figure class="col-span-full m-0 mid:col-span-6">
+          <img
+            src={paysage}
+            alt="Vignes de la plaine du Roussillon alignées jusqu'aux contreforts, ciel dégagé de tramontane"
+            loading="lazy"
+            decoding="async"
+            width="1400"
+            height="933"
+            class="aspect-3/2 w-full object-cover saturate-[0.82]"
+          />
         </figure>
-        <div class="lieu-t">
-          <p class="label">Pourquoi ici</p>
-          <h2>Rivesaltes, et pas ailleurs</h2>
-          <p>
+        <div class="col-span-full mid:col-start-8 mid:col-span-5">
+          <p class="label text-accent">Pourquoi ici</p>
+          <h2 class="mt-[0.8rem] text-x2">Rivesaltes, et pas ailleurs</h2>
+          <p class="mt-4 max-w-[46ch] text-[0.95rem] text-ink-soft">
             Travailler à distance fonctionne pour presque tout. Presque. Il reste les
             câbles, les baies, les imprimantes, les machines qui ne s'allument plus, et
             les conversations qu'on n'a pas de la même façon par écran interposé.
           </p>
-          <p>
+          <p class="mt-4 max-w-[46ch] text-[0.95rem] text-ink-soft">
             La proximité n'est pas un argument commercial ajouté après coup : c'est ce
             qui permet d'être là dans la journée quand une caisse ne fonctionne plus un
             samedi de marché.
@@ -143,38 +161,3 @@ const parcours = [
     text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
   />
 </Base>
-
-<style>
-  .intro { row-gap: 2.5rem; align-items: start; }
-  .intro-t { grid-column: span 7; display: flex; flex-direction: column; gap: 1.15rem; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); max-width: 62ch; }
-  .intro-f { grid-column: 9 / span 4; margin: 0; }
-  .intro-f img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(0.78) contrast(1.05); }
-  .intro-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
-  @media (max-width: 60rem) { .intro-t, .intro-f { grid-column: 1 / -1; } .intro-f img { aspect-ratio: 16 / 9; } }
-
-  .sandy { background: var(--paper-warm); }
-  .prin { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
-  .prin li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
-  .pr-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.35rem; }
-  .prin h3 { font-size: 1.25rem; letter-spacing: -0.028em; }
-  .prin p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 64ch; }
-
-  .parc { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
-  .parc li { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule); }
-  .pa-a { font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding-top: 0.4rem; }
-  .parc h3 { font-size: 1.2rem; letter-spacing: -0.028em; }
-  .parc p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; }
-  @media (max-width: 46rem) { .parc li { grid-template-columns: 1fr; gap: 0.5rem; } }
-
-  .traj { margin-top: 2.5rem; padding: 1.75rem 0 0; border-top: 1px solid var(--rule); max-width: 60ch; }
-  .traj p { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 1.5rem; }
-
-  .lieu { row-gap: 2rem; align-items: center; }
-  .lieu-f { grid-column: span 6; margin: 0; }
-  .lieu-f img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(0.82); }
-  .lieu-t { grid-column: 8 / span 5; }
-  .lieu-t .label { color: var(--accent); }
-  .lieu-t h2 { margin-top: 0.8rem; font-size: var(--t-x2); }
-  .lieu-t p { margin-top: 1rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 46ch; }
-  @media (max-width: 60rem) { .lieu-f, .lieu-t { grid-column: 1 / -1; } }
-</style>

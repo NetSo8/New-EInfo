@@ -6,66 +6,37 @@ const nodes = [
   { t: 'Site', s: 'Code, base, déploiement' },
 ];
 ---
-<figure class="chain">
-  <div class="ch-row above">
-    <span class="ch-brk">Prestataire A</span>
-    <span class="ch-brk">Prestataire B</span>
-    <span class="ch-brk">Prestataire C</span>
+<figure class="m-0">
+  {/* Les trois prestataires que la chaîne remplace. Masqués en étroit. */}
+  <div class="mb-[0.6rem] hidden grid-cols-3 gap-2 [@media(width>46rem)]:grid">
+    {['Prestataire A', 'Prestataire B', 'Prestataire C'].map((p) => (
+      <span class="border-b border-dashed border-rule-strong pb-[0.35rem] text-center font-mono text-[0.67rem] uppercase tracking-[0.1em] text-ink-faint">
+        {p}
+      </span>
+    ))}
   </div>
 
-  <ol class="ch-nodes">
+  {/* Les filets se chevauchent d'un pixel : une seule ligne entre deux cases. */}
+  <ol class="m-0 grid list-none grid-cols-2 p-0 [@media(width>46rem)]:grid-cols-4">
     {nodes.map((n, i) => (
-      <li class="ch-n">
-        <span class="ch-i mono">{String(i + 1).padStart(2, '0')}</span>
-        <span class="ch-t">{n.t}</span>
-        <span class="ch-s">{n.s}</span>
+      <li class="-mr-px -mb-px flex flex-col gap-[0.15rem] border border-rule bg-paper-warm px-[0.9rem] py-[1.15rem]">
+        <span class="font-mono text-[0.68rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
+        <span class="text-[1.05rem] font-bold tracking-[-0.02em]">{n.t}</span>
+        <span class="text-[0.76rem]/[1.4] text-ink-soft">{n.s}</span>
       </li>
     ))}
   </ol>
 
-  <div class="ch-under">
-    <span class="ch-uline" aria-hidden="true"></span>
-    <span class="ch-ulabel">Un seul interlocuteur</span>
+  {/* Accolade : les quatre étages tenus par une seule personne. */}
+  <div class="relative mt-[0.6rem] text-center">
+    <span class="block h-[10px] border border-t-0 border-accent" aria-hidden="true"></span>
+    <span class="mt-[0.55rem] inline-block font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent">
+      Un seul interlocuteur
+    </span>
   </div>
-  <figcaption>
+
+  <figcaption class="mt-[1.1rem] max-w-[54ch] text-[0.85rem] text-ink-soft">
     Quatre étages, une seule personne qui les traverse. La cause se trouve au lieu
     d'être renvoyée au voisin.
   </figcaption>
 </figure>
-
-<style>
-  .chain { margin: 0; }
-  .ch-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.6rem; }
-  .ch-brk {
-    font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--ink-faint); text-align: center; padding-bottom: 0.35rem;
-    border-bottom: 1px dashed var(--rule-strong);
-  }
-  .ch-nodes { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
-  .ch-n {
-    display: flex; flex-direction: column; gap: 0.15rem;
-    padding: 1.15rem 0.9rem; border: 1px solid var(--rule); border-right: 0;
-    background: var(--paper-warm);
-  }
-  .ch-n:last-child { border-right: 1px solid var(--rule); }
-  .ch-i { color: var(--accent); font-weight: 600; font-size: 0.68rem; }
-  .ch-t { font-weight: 700; letter-spacing: -0.02em; font-size: 1.05rem; }
-  .ch-s { font-size: 0.76rem; color: var(--ink-soft); line-height: 1.4; }
-
-  .ch-under { position: relative; margin-top: 0.6rem; text-align: center; }
-  .ch-uline { display: block; height: 10px; border: 1px solid var(--accent); border-top: 0; }
-  .ch-ulabel {
-    display: inline-block; margin-top: 0.55rem; font-family: var(--mono);
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600;
-  }
-  figcaption { margin-top: 1.1rem; font-size: 0.85rem; color: var(--ink-soft); max-width: 54ch; }
-
-  @media (max-width: 46rem) {
-    .ch-nodes { grid-template-columns: repeat(2, 1fr); }
-    .ch-n { border-right: 1px solid var(--rule); border-bottom: 0; }
-    .ch-n:nth-child(-n+2) { border-bottom: 0; }
-    .ch-n:nth-child(n+3) { border-bottom: 1px solid var(--rule); }
-    .ch-row { display: none; }
-  }
-</style>

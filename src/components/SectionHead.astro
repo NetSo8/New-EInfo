@@ -1,29 +1,23 @@
 ---
 interface Props { n: string; kicker: string; title: string; lede?: string; tone?: 'paper' | 'nuit' }
 const { n, kicker, title, lede, tone = 'paper' } = Astro.props;
+const nuit = tone === 'nuit';
 ---
-<div class:list={['sh', tone]}>
-  <div class="sh-meta">
-    <span class="sh-n">§&nbsp;{n}</span>
-    <span class="sh-k label">{kicker}</span>
+<div class="grid grid-cols-1 items-start gap-[0.9rem] mid:grid-cols-[10rem_1fr] mid:gap-gut">
+  <div class="flex items-baseline gap-[0.8rem] mid:flex-col mid:items-stretch mid:gap-[0.3rem] mid:pt-[0.55rem]">
+    <span
+      class:list={[
+        'font-mono text-[0.72rem] font-semibold tracking-[0.04em]',
+        nuit ? 'text-accent-nuit' : 'text-accent',
+      ]}
+    >§&nbsp;{n}</span>
+    <span class:list={['label leading-[1.5]', nuit && 'text-nuit-faint']}>{kicker}</span>
   </div>
-  <div class="sh-body">
+  <div class="flex max-w-[58ch] flex-col gap-[1.1rem]">
     <h2>{title}</h2>
-    {lede && <p class="lede">{lede}</p>}
+    {lede && (
+      <p class:list={['max-w-[46ch] text-lede/[1.5]', nuit ? 'text-nuit-soft' : 'text-ink-soft']}>{lede}</p>
+    )}
     <slot />
   </div>
 </div>
-
-<style>
-  .sh { display: grid; grid-template-columns: 10rem 1fr; gap: var(--gut); align-items: start; }
-  .sh-meta { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.55rem; }
-  .sh-n { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
-  .sh-k { line-height: 1.5; }
-  .sh-body { display: flex; flex-direction: column; gap: 1.1rem; max-width: 58ch; }
-  .nuit .sh-k { color: var(--nuit-faint); }
-  .nuit .sh-n { color: var(--accent-nuit); }
-  @media (max-width: 60rem) {
-    .sh { grid-template-columns: 1fr; gap: 0.9rem; }
-    .sh-meta { flex-direction: row; align-items: baseline; gap: 0.8rem; padding-top: 0; }
-  }
-</style>

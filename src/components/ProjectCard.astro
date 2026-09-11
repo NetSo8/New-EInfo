@@ -1,0 +1,63 @@
+---
+import type { Projet } from '../data/portfolio';
+
+interface Props { projet: Projet; n: number; nuit?: boolean }
+const { projet: p, n, nuit = false } = Astro.props;
+
+const etiq = { 'livré': 'Livré', 'maintenance': 'En maintenance', 'recherche': 'Recherche en cours' } as const;
+
+/* Sur bande sombre, filets et accents passent au registre nuit. */
+const filet = nuit ? 'border-rule-nuit' : 'border-rule';
+const accent = nuit ? 'text-accent-nuit' : 'text-accent';
+---
+<li class:list={['border-b py-9', filet]} data-reveal>
+  <div class="grid grid-cols-[2.5rem_1fr] items-start gap-4 mid:grid-cols-[3rem_minmax(0,1fr)_auto]">
+    <span class:list={['pt-[0.4rem] font-mono text-[0.75rem] font-semibold', accent]}>
+      {String(n).padStart(2, '0')}
+    </span>
+
+    <div>
+      <h2 class="max-w-[30ch] text-[clamp(1.25rem,1.05rem+1vw,1.85rem)] tracking-[-0.032em]">{p.titre}</h2>
+      <p class:list={['mt-[0.4rem] font-mono text-[0.72rem] tracking-[0.05em]', nuit ? 'text-nuit-faint' : 'text-ink-faint']}>
+        {p.client} · {p.annee}
+      </p>
+    </div>
+
+    <span
+      class:list={[
+        'col-start-2 justify-self-start whitespace-nowrap rounded-md border px-[0.55rem] py-[0.2rem] font-mono text-[0.62rem] uppercase tracking-[0.1em] mid:col-start-3',
+        p.type === 'recherche'
+          ? 'border-state-warn bg-state-warn font-semibold text-fixed-nuit'
+          : p.type === 'livré'
+            ? 'border-accent text-accent'
+            : ['border-rule-strong', nuit ? 'text-nuit-soft' : 'text-ink-soft'],
+      ]}
+    >{etiq[p.type]}</span>
+  </div>
+
+  <div class="mt-5 grid grid-cols-1 items-start gap-y-6 mid:ml-16 mid:grid-cols-2 mid:gap-x-12">
+    <p class:list={['max-w-[50ch] text-[0.95rem]', nuit ? 'text-nuit-soft' : 'text-ink-soft']}>{p.resume}</p>
+    <ul class:list={['m-0 list-none border-t p-0', filet]}>
+      {p.faits.map((f) => (
+        <li class:list={['relative border-b py-[0.6rem] pl-[1.2rem] text-[0.875rem]', filet]}>
+          <span class:list={['absolute left-0', accent]} aria-hidden="true">›</span>
+          {f}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <p class="mt-5 flex flex-wrap items-center gap-[0.4rem] mid:ml-16">
+    {p.stack.map((s) => (
+      <span class:list={[
+        'rounded-md border px-[0.45rem] py-[0.12rem] font-mono text-[0.63rem]',
+        nuit ? 'border-rule-nuit text-nuit-faint' : 'border-rule text-ink-faint',
+      ]}>{s}</span>
+    ))}
+    {p.lien && (
+      <a class:list={['ml-[0.6rem] text-[0.8rem] font-semibold no-underline hover:underline', accent]} href={p.lien.href}>
+        {p.lien.label} →
+      </a>
+    )}
+  </p>
+</li>

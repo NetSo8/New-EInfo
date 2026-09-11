@@ -3,16 +3,16 @@ import Base from '../layouts/Base.astro';
 import Terminal from '../components/Terminal.astro';
 ---
 <Base noindex title="Page introuvable | E Informatique" description="Cette adresse ne correspond à aucune page du site.">
-  <section class="band">
-    <div class="shell nf">
+  <section class="py-band">
+    <div class="shell grid min-h-[48vh] grid-cols-1 items-center gap-[clamp(2rem,5vw,4rem)] mid:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
       <div>
-        <p class="label nf-k">Erreur 404</p>
-        <h1>Cette page n'existe pas.</h1>
-        <p class="lede">
+        <p class="label text-accent">Erreur 404</p>
+        <h1 class="mt-4 text-[clamp(2rem,1rem+3.2vw,3.25rem)]">Cette page n'existe pas.</h1>
+        <p class="mt-[1.15rem] max-w-[46ch] text-lede/[1.5] text-ink-soft">
           Le lien est faux, la page a été renommée, ou elle n'a jamais existé.
           Dans les trois cas, ce n'est pas votre faute.
         </p>
-        <nav class="nf-l" aria-label="Pages principales">
+        <nav class="mt-8 flex flex-wrap gap-[0.6rem]" aria-label="Pages principales">
           <a class="btn btn--cta" href="/">Retour à l'accueil</a>
           <a class="btn btn--ghost" href="/particuliers/">Particuliers</a>
           <a class="btn btn--ghost" href="/professionnels/">Entreprises</a>
@@ -31,12 +31,3 @@ import Terminal from '../components/Terminal.astro';
     </div>
   </section>
 </Base>
-
-<style>
-  .nf { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; min-height: 48vh; }
-  @media (max-width: 60rem) { .nf { grid-template-columns: 1fr; } }
-  .nf-k { color: var(--accent); }
-  .nf h1 { margin-top: 1rem; font-size: clamp(2rem, 1rem + 3.2vw, 3.25rem); }
-  .nf .lede { margin-top: 1.15rem; }
-  .nf-l { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
-</style>

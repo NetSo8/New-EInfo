@@ -6,6 +6,8 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('labo')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
 const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+
+const puce = 'border border-rule px-2 py-[0.15rem] font-mono text-[0.66rem] text-ink-faint';
 ---
 <Base
   theme="nuit"
@@ -19,51 +21,73 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
     lede="Ce qui est écrit ici s'adresse à des pairs. Aucune conclusion n'est avancée avant d'être reproductible, et les travaux inachevés sont annoncés comme tels."
   >
     {tags.length > 0 && (
-      <ul class="tags">
-        {tags.map((t) => <li class="mono">{t}</li>)}
+      <ul class="m-0 flex list-none flex-wrap gap-[0.4rem] p-0">
+        {tags.map((t) => <li class={puce}>{t}</li>)}
       </ul>
     )}
   </PageHead>
 
-  <section class="band">
+  <section class="py-band">
     <div class="shell">
       {posts.length === 0 ? (
-        <p class="empty">
+        <p class="max-w-[54ch] border-y border-rule py-12 text-ink-soft">
           Rien de publié pour l'instant. Les notes arrivent quand le banc de test tient
           debout, pas avant.
         </p>
       ) : (
-        <ol class="list">
+        <ol class="m-0 list-none border-t border-rule-strong p-0">
           {posts.map((p, i) => (
-            <li>
-              <a href={`/labo/${p.id}/`}>
-                <span class="li-n mono">{String(posts.length - i).padStart(2, '0')}</span>
-                <span class="li-b">
-                  <span class="li-m">
-                    <time class="mono" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
-                    {p.data.status !== 'publié' && <span class="st">{p.data.status}</span>}
-                    {p.data.readingTime && <span class="mono rt">{p.data.readingTime}</span>}
+            <li class="border-b border-rule">
+              <a
+                href={`/labo/${p.id}/`}
+                class="group grid grid-cols-[3rem_minmax(0,1fr)_1.5rem] items-start gap-5 py-8 text-inherit no-underline transition-[background-color,padding-inline] duration-200 ease-out-soft hover:bg-accent-wash hover:px-4"
+              >
+                <span class="pt-[0.4rem] font-mono text-[0.75rem] font-semibold text-accent">
+                  {String(posts.length - i).padStart(2, '0')}
+                </span>
+
+                <span class="flex flex-col gap-2">
+                  <span class="flex flex-wrap items-center gap-3">
+                    <time class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-faint" datetime={p.data.date.toISOString()}>
+                      {fmt(p.data.date)}
+                    </time>
+                    {p.data.status !== 'publié' && (
+                      <span class="rounded-md bg-state-warn px-[0.45rem] py-[0.1rem] font-mono text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-fixed-nuit">
+                        {p.data.status}
+                      </span>
+                    )}
+                    {p.data.readingTime && (
+                      <span class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-faint">{p.data.readingTime}</span>
+                    )}
                   </span>
-                  <span class="li-t">{p.data.title}</span>
-                  <span class="li-s">{p.data.summary}</span>
-                  <span class="li-tg">
-                    {p.data.tags.map((t) => <span class="mono">{t}</span>)}
+
+                  <span class="max-w-[26ch] text-[clamp(1.25rem,1.05rem+0.95vw,1.85rem)]/[1.15] font-bold tracking-[-0.032em]">{p.data.title}</span>
+                  <span class="max-w-[66ch] text-[0.95rem] text-ink-soft">{p.data.summary}</span>
+
+                  <span class="mt-[0.2rem] flex flex-wrap gap-[0.4rem]">
+                    {p.data.tags.map((t) => (
+                      <span class="rounded-md border border-rule px-[0.45rem] py-[0.1rem] font-mono text-[0.63rem] text-ink-faint">{t}</span>
+                    ))}
                   </span>
                 </span>
-                <span class="li-go" aria-hidden="true">→</span>
+
+                <span
+                  class="justify-self-end pt-[0.4rem] text-accent transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
+                  aria-hidden="true"
+                >→</span>
               </a>
             </li>
           ))}
         </ol>
       )}
 
-      <div class="note">
+      <div class="mt-16 flex max-w-[54ch] flex-col gap-[0.8rem] border-t border-rule pt-5">
         <p class="label">Pourquoi ces pages sont sombres</p>
-        <p>
+        <p class="text-[0.9rem] text-ink-soft">
           Parce qu'elles ne sont pas écrites pour convertir. Le reste du site s'adresse à
           quelqu'un qui a un problème à régler. Ici, on lit du code à 23 h.
         </p>
-        <p>
+        <p class="text-[0.9rem] text-ink-soft">
           Une mission technique à discuter&nbsp;?
           <a class="tlink" href="/contact/?profil=mission">Écrivez-moi directement</a>.
         </p>
@@ -71,35 +95,3 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
     </div>
   </section>
 </Base>
-
-<style>
-  .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tags li { font-size: 0.66rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.15rem 0.5rem; }
-
-  .list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
-  .list li { border-bottom: 1px solid var(--rule); }
-  .list a {
-    display: grid; grid-template-columns: 3rem minmax(0, 1fr) 1.5rem; gap: 1.25rem;
-    padding: 2rem 0; text-decoration: none; color: inherit; align-items: start;
-    transition: background .18s var(--ease), padding-inline .18s var(--ease);
-  }
-  .list a:hover { background: var(--accent-wash); padding-inline: 1rem; }
-  .li-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.4rem; }
-  .li-b { display: flex; flex-direction: column; gap: 0.5rem; }
-  .li-m { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-  .li-m time, .rt { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
-  .st {
-    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
-    background: var(--state-warn); color: var(--fixed-nuit); padding: 0.1rem 0.45rem; font-weight: 600;
-  }
-  .li-t { font-size: clamp(1.25rem, 1.05rem + 0.95vw, 1.85rem); font-weight: 700; letter-spacing: -0.032em; line-height: 1.15; max-width: 26ch; }
-  .li-s { color: var(--ink-soft); font-size: 0.95rem; max-width: 66ch; }
-  .li-tg { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
-  .li-tg span { font-size: 0.63rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.1rem 0.45rem; }
-  .li-go { color: var(--accent); justify-self: end; padding-top: 0.4rem; transition: transform .18s var(--ease); }
-  .list a:hover .li-go { transform: translateX(4px); }
-
-  .empty { color: var(--ink-soft); border-block: 1px solid var(--rule); padding: 3rem 0; max-width: 54ch; }
-  .note { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); max-width: 54ch; display: flex; flex-direction: column; gap: 0.8rem; }
-  .note p { color: var(--ink-soft); font-size: 0.9rem; }
-</style>

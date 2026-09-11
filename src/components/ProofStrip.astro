@@ -8,53 +8,46 @@ const items = all.slice(0, 3);
 const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' });
 ---
 {items.length > 0 ? (
-  <ol class="proof">
+  <ol class="m-0 list-none border-t border-rule p-0">
     {items.map((p, i) => (
-      <li class="pr-i">
-        <a href={`/labo/${p.id}/`}>
-          <span class="pr-n mono">{String(i + 1).padStart(2, '0')}</span>
-          <span class="pr-body">
-            <span class="pr-meta">
-              <span class="mono pr-date">{fmt(p.data.date)}</span>
-              {p.data.status !== 'publié' && <span class="pr-st">{p.data.status}</span>}
-              {p.data.tags.slice(0, 2).map((t) => <span class="pr-tag mono">{t}</span>)}
-            </span>
-            <span class="pr-t">{p.data.title}</span>
-            <span class="pr-s">{p.data.summary}</span>
+      <li class="border-b border-rule">
+        <a
+          href={`/labo/${p.id}/`}
+          class="group grid grid-cols-[2.75rem_1fr_1.5rem] items-start gap-4 py-6 text-inherit no-underline transition-[background-color,padding-inline] duration-200 ease-out-soft hover:bg-accent-wash hover:px-[0.9rem]"
+        >
+          <span class="pt-[0.35rem] font-mono text-[0.72rem] font-semibold text-accent">
+            {String(i + 1).padStart(2, '0')}
           </span>
-          <span class="pr-go" aria-hidden="true">→</span>
+
+          <span class="flex flex-col gap-[0.4rem]">
+            <span class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-faint">
+                {fmt(p.data.date)}
+              </span>
+              {p.data.status !== 'publié' && (
+                <span class="rounded-md bg-state-warn px-[0.4rem] py-[0.1rem] font-mono text-[0.67rem] font-semibold uppercase tracking-[0.1em] text-fixed-nuit">
+                  {p.data.status}
+                </span>
+              )}
+              {p.data.tags.slice(0, 2).map((t) => (
+                <span class="rounded-md border border-rule px-[0.4rem] py-[0.05rem] font-mono text-[0.66rem] text-ink-faint">{t}</span>
+              ))}
+            </span>
+            <span class="text-[clamp(1.05rem,1rem+0.45vw,1.35rem)]/[1.2] font-bold tracking-[-0.025em]">{p.data.title}</span>
+            <span class="max-w-[68ch] text-[0.925rem] text-ink-soft">{p.data.summary}</span>
+          </span>
+
+          <span
+            class="pt-[0.3rem] text-accent transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
+            aria-hidden="true"
+          >→</span>
         </a>
       </li>
     ))}
   </ol>
 ) : (
-  <p class="empty">
+  <p class="max-w-[58ch] border-y border-rule py-8 text-ink-soft">
     Le labo est encore vide. Les writeups arrivent au rythme des travaux terminés,
     pas au rythme du calendrier éditorial.
   </p>
 )}
-
-<style>
-  .proof { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-  .pr-i { border-bottom: 1px solid var(--rule); }
-  .pr-i a {
-    display: grid; grid-template-columns: 2.75rem 1fr 1.5rem; gap: 1rem; align-items: start;
-    padding: 1.5rem 0; text-decoration: none; color: inherit;
-    transition: background .18s var(--ease), padding-inline .18s var(--ease);
-  }
-  .pr-i a:hover { background: var(--accent-wash); padding-inline: 0.9rem; }
-  .pr-n { color: var(--accent); font-weight: 600; font-size: 0.72rem; padding-top: 0.35rem; }
-  .pr-body { display: flex; flex-direction: column; gap: 0.4rem; }
-  .pr-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-  .pr-date { font-size: 0.68rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; }
-  .pr-tag { font-size: 0.66rem; color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.05rem 0.4rem; }
-  .pr-st {
-    font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--fixed-nuit); background: var(--state-warn); padding: 0.1rem 0.4rem; font-weight: 600;
-  }
-  .pr-t { font-weight: 700; font-size: clamp(1.05rem, 1rem + 0.45vw, 1.35rem); letter-spacing: -0.025em; line-height: 1.2; }
-  .pr-s { color: var(--ink-soft); font-size: 0.925rem; max-width: 68ch; }
-  .pr-go { color: var(--accent); padding-top: 0.3rem; transition: transform .18s var(--ease); }
-  .pr-i a:hover .pr-go { transform: translateX(4px); }
-  .empty { color: var(--ink-soft); border-block: 1px solid var(--rule); padding: 2rem 0; max-width: 58ch; }
-</style>

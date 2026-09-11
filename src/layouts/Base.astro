@@ -1,6 +1,5 @@
 ---
-import '../styles/base.css';
-import '../styles/prose.css';
+import '../styles/app.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
@@ -59,6 +58,17 @@ const business = {
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content={theme === 'nuit' ? '#1b2226' : '#f7f8f8'} />
 
+    <!-- Thème : résolu avant le premier rendu, pour éviter tout flash. -->
+    <script is:inline>
+      (() => {
+        const stored = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
+        const dark = stored ? stored === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        if (!stored) document.documentElement.dataset.themeSource = 'system';
+      })();
+    </script>
+
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="E Informatique" />
@@ -87,6 +97,15 @@ const business = {
       <slot />
     </main>
     <Footer />
+
+    <script is:inline>
+      // Suit le système tant que le visiteur n'a pas tranché lui-même.
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (document.documentElement.dataset.themeSource !== 'system') return;
+        document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+        document.dispatchEvent(new CustomEvent('themechange'));
+      });
+    </script>
 
     <script>
       const io = new IntersectionObserver(

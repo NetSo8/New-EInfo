@@ -2,23 +2,14 @@
 interface Props { kicker: string; title: string; text: string; href?: string; cta?: string; second?: { href: string; label: string } }
 const { kicker, title, text, href = '/contact/', cta = 'Décrire mon besoin', second } = Astro.props;
 ---
-<section class="cta">
-  <div class="shell cta-in">
-    <p class="label cta-k">{kicker}</p>
-    <h2>{title}</h2>
-    <p class="cta-t">{text}</p>
-    <div class="cta-btns">
+<section class="bg-nuit text-nuit-text py-[clamp(3.5rem,7vw,6.5rem)]">
+  <div class="shell max-w-[54rem]">
+    <p class="label text-accent-nuit">{kicker}</p>
+    <h2 class="mt-[0.9rem] text-x1">{title}</h2>
+    <p class="mt-4 max-w-[52ch] text-nuit-soft text-[1.05rem]/[1.65]">{text}</p>
+    <div class="mt-8 flex flex-wrap gap-3">
       <a class="btn btn--cta" href={href}>{cta} <span class="arrow" aria-hidden="true">→</span></a>
       {second && <a class="btn btn--nuit-ghost" href={second.href}>{second.label}</a>}
     </div>
   </div>
 </section>
-
-<style>
-  .cta { background: var(--nuit); color: var(--nuit-text); padding-block: clamp(3.5rem, 7vw, 6.5rem); }
-  .cta-in { max-width: 54rem; }
-  .cta-k { color: var(--accent-nuit); }
-  .cta h2 { margin-top: 0.9rem; font-size: var(--t-x1); }
-  .cta-t { margin-top: 1rem; color: var(--nuit-soft); max-width: 52ch; font-size: 1.05rem; line-height: 1.65; }
-  .cta-btns { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
-</style>

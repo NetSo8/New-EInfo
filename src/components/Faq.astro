@@ -12,34 +12,21 @@ const schema = {
   })),
 };
 ---
-<div class="faq">
+<div class="border-t border-rule">
   {items.map((i) => (
-    <details class="fq">
-      <summary>
+    <details class="group border-b border-rule">
+      <summary
+        class="flex cursor-pointer list-none items-center justify-between gap-8 py-[1.1rem] text-[clamp(1rem,0.95rem+0.3vw,1.15rem)] font-semibold tracking-[-0.02em] hover:text-accent [&::-webkit-details-marker]:hidden"
+      >
         <span>{i.q}</span>
-        <span class="pm" aria-hidden="true"></span>
+        {/* Le trait vertical pivote pour former un « − » à l'ouverture. */}
+        <span class="relative size-[13px] flex-none" aria-hidden="true">
+          <span class="absolute inset-x-0 top-1/2 h-[1.5px] bg-accent"></span>
+          <span class="absolute inset-x-0 top-1/2 h-[1.5px] rotate-90 bg-accent transition-transform duration-200 ease-out-soft group-open:rotate-0"></span>
+        </span>
       </summary>
-      <div class="fa"><p>{i.a}</p></div>
+      <div class="max-w-[66ch] pb-5 text-ink-soft"><p>{i.a}</p></div>
     </details>
   ))}
 </div>
 <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
-
-<style>
-  .faq { border-top: 1px solid var(--rule); }
-  .fq { border-bottom: 1px solid var(--rule); }
-  summary {
-    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-    padding: 1.1rem 0; cursor: pointer; list-style: none;
-    font-weight: 600; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); letter-spacing: -0.02em;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary:hover { color: var(--accent); }
-  .pm { position: relative; width: 13px; height: 13px; flex: none; }
-  .pm::before, .pm::after {
-    content: ''; position: absolute; inset: 50% 0 auto 0; height: 1.5px; background: var(--accent);
-  }
-  .pm::after { transform: rotate(90deg); transition: transform .2s var(--ease); }
-  .fq[open] .pm::after { transform: rotate(0deg); }
-  .fa { padding-bottom: 1.25rem; color: var(--ink-soft); max-width: 66ch; }
-</style>

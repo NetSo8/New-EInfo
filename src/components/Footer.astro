@@ -1,13 +1,26 @@
 ---
 const year = new Date().getFullYear();
 const communes = ['Rivesaltes', 'Perpignan', 'Canet-en-Roussillon', 'Saint-Cyprien', 'Cabestany', 'Le Barcarès', 'Saint-Estève', 'Baixas', 'Espira-de-l\'Agly', 'Salses-le-Château'];
+
+const prestations = [
+  { href: '/particuliers/', label: 'Dépannage particuliers' },
+  { href: '/professionnels/', label: 'Infogérance TPE / PME' },
+  { href: '/services/#infra', label: 'Infrastructure VPS' },
+  { href: '/services/#securite', label: 'Sécurité et sauvegardes' },
+  { href: '/services/#web', label: 'Création de site web' },
+  { href: '/services/#automatisation', label: 'Automatisation' },
+];
+
+const link = 'w-fit text-[0.9rem] text-nuit-soft no-underline hover:text-paper';
+const colonne = 'col-span-1 xs:col-span-2 flex flex-col gap-[0.55rem]';
+const titre = 'label mb-[0.35rem] text-nuit-faint';
 ---
-<footer class="ft">
+<footer class="border-t border-rule-nuit bg-nuit pt-[clamp(3rem,6vw,5rem)] pb-8 text-nuit-text">
   <div class="shell">
-    <div class="ft-top grid12">
-      <div class="ft-id">
-        <p class="ft-mark">E&nbsp;Informatique</p>
-        <p class="ft-say">
+    <div class="grid12 items-start gap-y-11">
+      <div class="col-span-full mid:col-span-4">
+        <p class="text-2xl font-extrabold tracking-[-0.035em]">E&nbsp;Informatique</p>
+        <p class="mt-[0.6rem] mb-6 max-w-[34ch] text-[0.95rem]/[1.65] text-nuit-soft">
           Un seul interlocuteur pour le poste, le serveur, le réseau et le site.
           Basé à Rivesaltes, dans les Pyrénées-Orientales.
         </p>
@@ -16,79 +29,41 @@ const communes = ['Rivesaltes', 'Perpignan', 'Canet-en-Roussillon', 'Saint-Cypri
         </a>
       </div>
 
-      <nav class="ft-col" aria-label="Prestations">
-        <p class="label">Prestations</p>
-        <a href="/particuliers/">Dépannage particuliers</a>
-        <a href="/professionnels/">Infogérance TPE / PME</a>
-        <a href="/services/#infra">Infrastructure VPS</a>
-        <a href="/services/#securite">Sécurité et sauvegardes</a>
-        <a href="/services/#web">Création de site web</a>
-        <a href="/services/#automatisation">Automatisation</a>
+      <nav class={colonne} aria-label="Prestations">
+        <p class={titre}>Prestations</p>
+        {prestations.map((l) => <a class={link} href={l.href}>{l.label}</a>)}
       </nav>
 
-      <nav class="ft-col" aria-label="Le site">
-        <p class="label">Le site</p>
-        <a href="/portfolio/">Réalisations</a>
-        <a href="/labo/">Labo technique</a>
-        <a href="/blog/">Blog</a>
-        <a href="/a-propos/">À propos</a>
-        <a href="/contact/">Contact</a>
-        <a href="https://github.com/NetSo8" rel="me noopener" target="_blank">GitHub · NetSo8 ↗</a>
+      <nav class={colonne} aria-label="Le site">
+        <p class={titre}>Le site</p>
+        <a class={link} href="/portfolio/">Réalisations</a>
+        <a class={link} href="/labo/">Labo technique</a>
+        <a class={link} href="/blog/">Blog</a>
+        <a class={link} href="/a-propos/">À propos</a>
+        <a class={link} href="/contact/">Contact</a>
+        <a class={link} href="https://github.com/NetSo8" rel="me noopener" target="_blank">GitHub · NetSo8 ↗</a>
       </nav>
 
-      <div class="ft-col">
-        <p class="label">Joindre</p>
-        <p class="ft-line">Rivesaltes 66600<br />Pyrénées-Orientales</p>
-        <p class="ft-line ft-dim">Sur place : Rivesaltes, Perpignan, littoral.<br />À distance : France entière.</p>
-        <p class="ft-line ft-dim">Réponse sous 24 h ouvrées.<br />Intervention sous 48 h.</p>
+      <div class={colonne}>
+        <p class={titre}>Joindre</p>
+        <p class="text-[0.9rem]/[1.55] text-nuit-soft">Rivesaltes 66600<br />Pyrénées-Orientales</p>
+        <p class="text-[0.9rem]/[1.55] text-nuit-faint">Sur place : Rivesaltes, Perpignan, littoral.<br />À distance : France entière.</p>
+        <p class="text-[0.9rem]/[1.55] text-nuit-faint">Réponse sous 24 h ouvrées.<br />Intervention sous 48 h.</p>
       </div>
     </div>
 
-    <div class="ft-zone">
-      <p class="label">Zone d'intervention en présentiel</p>
-      <p class="communes">{communes.join(' · ')}</p>
+    <div class="mt-14 border-t border-rule-nuit pt-6">
+      <p class="label text-nuit-faint">Zone d'intervention en présentiel</p>
+      <p class="mt-2 text-[0.86rem]/[1.9] text-nuit-soft">{communes.join(' · ')}</p>
     </div>
 
-    <div class="ft-bot">
-      <p class="mono">© {year} E Informatique · Elian · SIRET sur demande</p>
-      <p class="mono ft-legal">
-        <a href="/mentions-legales/">Mentions légales</a>
+    <div class="mt-8 flex flex-wrap justify-between gap-x-6 gap-y-3 border-t border-rule-nuit pt-5 font-mono text-[0.72rem] text-nuit-faint">
+      <p>© {year} E Informatique · Elian · SIRET sur demande</p>
+      <p class="flex gap-[0.6rem]">
+        <a class="text-nuit-soft no-underline hover:text-paper" href="/mentions-legales/">Mentions légales</a>
         <span aria-hidden="true">·</span>
-        <a href="/sitemap-index.xml">Plan du site</a>
+        <a class="text-nuit-soft no-underline hover:text-paper" href="/sitemap-index.xml">Plan du site</a>
       </p>
     </div>
   </div>
 </footer>
-
-<style>
-  .ft { background: var(--nuit); color: var(--nuit-text); border-top: 1px solid var(--rule-nuit); padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
-  .ft-top { align-items: start; row-gap: 2.75rem; }
-  .ft-id { grid-column: span 4; }
-  @media (max-width: 60rem) { .ft-id { grid-column: 1 / -1; } }
-  @media (max-width: 34rem) { .ft-id { grid-column: 1 / -1; } }
-
-  .ft-mark { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.035em; }
-  .ft-say { color: var(--nuit-soft); max-width: 34ch; margin-block: 0.6rem 1.5rem; font-size: 0.95rem; line-height: 1.65; }
-
-  .ft-col { grid-column: span 2; display: flex; flex-direction: column; gap: 0.55rem; }
-  @media (max-width: 60rem) { .ft-col { grid-column: span 2; } }
-  @media (max-width: 34rem) { .ft-col { grid-column: span 1; } }
-  .ft-col .label { color: var(--nuit-faint); margin-bottom: 0.35rem; }
-  .ft-col a { color: var(--nuit-soft); text-decoration: none; font-size: 0.9rem; width: fit-content; }
-  .ft-col a:hover { color: var(--paper); }
-  .ft-line { color: var(--nuit-soft); font-size: 0.9rem; line-height: 1.55; }
-  .ft-dim { color: var(--nuit-faint); }
-
-  .ft-zone { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule-nuit); }
-  .ft-zone .label { color: var(--nuit-faint); }
-  .communes { margin-top: 0.5rem; color: var(--nuit-soft); font-size: 0.86rem; line-height: 1.9; }
-
-  .ft-bot {
-    margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-nuit);
-    display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; justify-content: space-between;
-    color: var(--nuit-faint); font-size: 0.72rem;
-  }
-  .ft-legal { display: flex; gap: 0.6rem; }
-  .ft-bot a { color: var(--nuit-soft); text-decoration: none; }
-  .ft-bot a:hover { color: var(--paper); }
-</style>

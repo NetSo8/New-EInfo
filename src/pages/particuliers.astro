@@ -36,6 +36,13 @@ const chiffrage = [
 ];
 
 
+const refus = [
+  { t: 'Un abonnement antivirus annuel.', d: "Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé." },
+  { t: 'Un ordinateur neuf quand une pièce suffit.', d: 'Je chiffre les deux et je vous laisse comparer.' },
+  { t: 'Un « nettoyage » qui ne change rien.', d: 'Si la lenteur vient du matériel, aucun logiciel ne la corrigera.' },
+  { t: 'Un contrat que vous ne pouvez pas arrêter.', d: "Pour un particulier, on paie l'intervention, et c'est tout." },
+];
+
 const faq = [
   { q: 'Vous venez chez moi ou je dois apporter la machine ?', a: "Les deux sont possibles. Pour un ordinateur de bureau ou une panne réseau, je viens chez vous. Pour une réparation matérielle plus longue, il est souvent plus simple et moins cher que la machine passe à l'atelier." },
   { q: 'Est-ce que je paie si vous ne réparez pas ?', a: "Le diagnostic est offert. Si la réparation n'est pas rentable, je vous le dis et vous ne payez rien. Si vous préférez ne pas donner suite après le devis, vous ne payez rien non plus." },
@@ -55,14 +62,16 @@ const faq = [
     title="Votre ordinateur vous pose problème. On règle ça."
     lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence."
   >
-    <div class="ph-btns">
+    <div class="flex flex-wrap gap-3">
       <a class="btn btn--cta" href="/contact/?profil=particulier">Décrire mon problème <span class="arrow" aria-hidden="true">→</span></a>
       <a class="btn btn--ghost" href="#chiffrage">Comment je chiffre</a>
     </div>
-    <p class="ph-note mono">Réponse sous 24 h ouvrées · Intervention sous 48 h · Déplacement inclus jusqu'à 30 km</p>
+    <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
+      Réponse sous 24 h ouvrées · Intervention sous 48 h · Déplacement inclus jusqu'à 30 km
+    </p>
   </PageHead>
 
-  <section class="band">
+  <section class="py-band">
     <div class="shell">
       <SectionHead
         n="01"
@@ -70,41 +79,50 @@ const faq = [
         title="Vous reconnaîtrez sûrement votre panne"
         lede="Aucune de ces situations n'est perdue d'avance, et aucune ne nécessite de racheter une machine sans avoir vérifié le reste."
       />
-      <ul class="pannes" data-reveal>
+      <ul class="m-0 mt-12 grid list-none grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] border-t border-rule-strong p-0" data-reveal>
         {pannes.map((p) => (
-          <li>
-            <h3>{p.t}</h3>
-            <p>{p.d}</p>
+          <li class="border-b border-rule pt-[1.4rem] pr-6 pb-6">
+            <h3 class="text-[1.05rem] tracking-[-0.02em]">{p.t}</h3>
+            <p class="mt-[0.4rem] max-w-[40ch] text-[0.9rem] text-ink-soft">{p.d}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="band rule sandy">
+  <section class="border-t border-rule bg-paper-warm py-band">
     <div class="shell">
       <SectionHead n="02" kicker="Comment ça se passe" title="Quatre étapes, pas de surprise" />
-      <div class="grid12 flow">
-        <ol class="etapes">
+      <div class="grid12 mt-12 items-start gap-y-10">
+        <ol class="col-span-full m-0 list-none border-t border-rule-strong p-0 mid:col-span-6">
           {etapes.map((e) => (
-            <li>
-              <span class="et-n mono">{e.n}</span>
+            <li class="grid grid-cols-[3rem_1fr] gap-4 border-b border-rule py-[1.35rem]">
+              <span class="pt-[0.3rem] font-mono text-[0.75rem] font-semibold text-accent">{e.n}</span>
               <div>
-                <h3>{e.t}</h3>
-                <p>{e.d}</p>
+                <h3 class="text-[1.15rem] tracking-[-0.025em]">{e.t}</h3>
+                <p class="mt-[0.3rem] max-w-[46ch] text-[0.9rem] text-ink-soft">{e.d}</p>
               </div>
             </li>
           ))}
         </ol>
-        <figure class="flow-f">
-          <img src={etabli} alt="Mains gantées au travail sur une carte électronique, à l'établi" loading="lazy" decoding="async" width="1400" height="933" />
-          <figcaption class="mono">Réparation à l'atelier, Rivesaltes</figcaption>
+
+        <figure class="col-span-full m-0 mid:col-start-8 mid:col-span-5">
+          <img
+            src={etabli}
+            alt="Mains gantées au travail sur une carte électronique, à l'établi"
+            loading="lazy"
+            decoding="async"
+            width="1400"
+            height="933"
+            class="aspect-video w-full object-cover contrast-105 saturate-80 mid:aspect-[4/5]"
+          />
+          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] text-ink-faint">Réparation à l'atelier, Rivesaltes</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="band rule" id="chiffrage">
+  <section class="border-t border-rule py-band" id="chiffrage">
     <div class="shell">
       <SectionHead
         n="03"
@@ -112,40 +130,42 @@ const faq = [
         title="Vous saurez ce que ça coûte avant que je commence"
         lede="Je n'affiche pas de grille tarifaire, parce qu'elle serait fausse pour la moitié des situations. Ce qui est garanti, en revanche, tient en six points."
       />
-      <ol class="chiff" data-reveal>
+      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
         {chiffrage.map((c, i) => (
-          <li>
-            <span class="cf-n mono">{String(i + 1).padStart(2, '0')}</span>
+          <li class="grid grid-cols-[2.5rem_1fr] gap-[0.9rem] border-b border-rule py-6 xs:grid-cols-[3.5rem_1fr] xs:gap-5">
+            <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <h3>{c.t}</h3>
-              <p>{c.d}</p>
+              <h3 class="text-[1.2rem] tracking-[-0.028em]">{c.t}</h3>
+              <p class="mt-[0.4rem] max-w-[62ch] text-[0.95rem] text-ink-soft">{c.d}</p>
             </div>
           </li>
         ))}
       </ol>
-      <p class="chiff-note">
+      <p class="mt-6 max-w-[62ch] text-[0.875rem] text-ink-soft">
         Pour obtenir un montant, décrivez la panne : la marque de l'appareil, ce qu'il
         fait, depuis quand. Vous recevez une estimation sous 24 h ouvrées, sans engagement.
       </p>
     </div>
   </section>
 
-  <section class="band rule">
+  <section class="border-t border-rule py-band">
     <div class="shell">
       <SectionHead n="04" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
-      <ul class="nope" data-reveal>
-        <li><strong>Un abonnement antivirus annuel.</strong> Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé.</li>
-        <li><strong>Un ordinateur neuf quand une pièce suffit.</strong> Je chiffre les deux et je vous laisse comparer.</li>
-        <li><strong>Un « nettoyage » qui ne change rien.</strong> Si la lenteur vient du matériel, aucun logiciel ne la corrigera.</li>
-        <li><strong>Un contrat que vous ne pouvez pas arrêter.</strong> Pour un particulier, on paie l'intervention, et c'est tout.</li>
+      <ul class="m-0 mt-10 flex max-w-[62ch] list-none flex-col p-0" data-reveal>
+        {refus.map((r) => (
+          <li class="relative border-b border-rule py-[1.1rem] pl-8 text-[0.95rem] text-ink-soft first:border-t">
+            <span class="absolute left-[0.35rem] top-4 font-mono text-accent" aria-hidden="true">×</span>
+            <strong class="font-semibold text-ink">{r.t}</strong> {r.d}
+          </li>
+        ))}
       </ul>
     </div>
   </section>
 
-  <section class="band rule">
+  <section class="border-t border-rule py-band">
     <div class="shell">
       <SectionHead n="05" kicker="Questions fréquentes" title="Avant de m'appeler" />
-      <div class="faq-w"><Faq items={faq} /></div>
+      <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
     </div>
   </section>
 
@@ -158,45 +178,3 @@ const faq = [
     second={{ href: '/blog/', label: 'Lire les conseils pratiques' }}
   />
 </Base>
-
-<style>
-  .ph-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .ph-note { margin-top: 1rem; font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.04em; }
-
-  .pannes {
-    list-style: none; padding: 0; margin: 3rem 0 0;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-    border-top: 1px solid var(--rule-strong);
-  }
-  .pannes li { padding: 1.4rem 1.5rem 1.5rem 0; border-bottom: 1px solid var(--rule); }
-  .pannes h3 { font-size: 1.05rem; letter-spacing: -0.02em; }
-  .pannes p { margin-top: 0.4rem; font-size: 0.9rem; color: var(--ink-soft); max-width: 40ch; }
-
-  .sandy { background: var(--paper-warm); }
-  .flow { margin-top: 3rem; row-gap: 2.5rem; align-items: start; }
-  .etapes { grid-column: span 6; list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule-strong); }
-  .etapes li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.35rem 0; border-bottom: 1px solid var(--rule); }
-  .et-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.3rem; }
-  .etapes h3 { font-size: 1.15rem; letter-spacing: -0.025em; }
-  .etapes p { margin-top: 0.3rem; font-size: 0.9rem; color: var(--ink-soft); max-width: 46ch; }
-  .flow-f { grid-column: 8 / span 5; margin: 0; }
-  .flow-f img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(0.8) contrast(1.05); }
-  .flow-f figcaption { padding-top: 0.6rem; font-size: 0.66rem; color: var(--ink-faint); }
-  @media (max-width: 60rem) { .etapes, .flow-f { grid-column: 1 / -1; } .flow-f img { aspect-ratio: 16 / 9; } }
-
-  .chiff { list-style: none; padding: 0; margin: 3rem 0 0; border-top: 1px solid var(--rule-strong); }
-  .chiff li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
-  .cf-n { color: var(--accent); font-weight: 600; font-size: 0.75rem; padding-top: 0.35rem; }
-  .chiff h3 { font-size: 1.2rem; letter-spacing: -0.028em; }
-  .chiff p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; }
-  .chiff-note { margin-top: 1.5rem; font-size: 0.875rem; color: var(--ink-soft); max-width: 62ch; }
-  @media (max-width: 40rem) { .chiff li { grid-template-columns: 2.5rem 1fr; gap: 0.9rem; } }
-
-  .nope { list-style: none; padding: 0; margin: 2.5rem 0 0; max-width: 62ch; display: flex; flex-direction: column; }
-  .nope li { padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid var(--rule); position: relative; color: var(--ink-soft); font-size: 0.95rem; }
-  .nope li:first-child { border-top: 1px solid var(--rule); }
-  .nope li::before { content: '×'; position: absolute; left: 0.35rem; top: 1rem; color: var(--accent); font-family: var(--mono); }
-  .nope strong { color: var(--ink); font-weight: 600; }
-
-  .faq-w { margin-top: 2.5rem; max-width: 62rem; }
-</style>

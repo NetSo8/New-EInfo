@@ -1,4 +1,5 @@
 ---
+
 /* Diagramme d'intervention : distances et relèvements réels depuis Rivesaltes. */
 const pts = [
   { n: 'Salses-le-Château', a: 350, d: 9 },
@@ -24,62 +25,55 @@ const xy = (a: number, d: number) => {
 };
 const rings = [10, 20, 30, 40, 50];
 ---
-<figure class="radar">
-  <svg viewBox={`0 0 ${S} ${S}`} role="img" aria-labelledby="radar-t">
+<figure class="m-0">
+  <svg viewBox={`0 0 ${S} ${S}`} class="h-auto w-full overflow-visible" role="img" aria-labelledby="radar-t">
     <title id="radar-t">
       Communes desservies depuis Rivesaltes, positionnées selon leur distance et leur direction réelles.
     </title>
 
     {rings.map((k) => (
-      <circle cx={C} cy={C} r={r(k)} fill="none" stroke="var(--rule)" stroke-dasharray={k === 30 ? '0' : '2 4'} />
+      <circle cx={C} cy={C} r={r(k)} fill="none" class="stroke-rule" stroke-dasharray={k === 30 ? '0' : '2 4'} />
     ))}
     {rings.map((k) => (
-      <text x={C + 4} y={C - r(k) + 12} class="km">{k} km</text>
+      <text x={C + 4} y={C - r(k) + 12} class="fill-ink-faint font-mono text-[10px]">{k} km</text>
     ))}
-    <circle cx={C} cy={C} r={r(30)} fill="var(--accent-wash)" stroke="var(--accent)" stroke-width="1" />
 
-    <line x1={C} y1="28" x2={C} y2={S - 28} stroke="var(--rule)" />
-    <line x1="28" y1={C} x2={S - 28} y2={C} stroke="var(--rule)" />
-    <text x={C} y="20" class="card">N</text>
-    <text x={S - 14} y={C + 4} class="card sea">MER</text>
+    {/* Le disque des 30 km : déplacement inclus. */}
+    <circle cx={C} cy={C} r={r(30)} class="fill-accent-wash stroke-accent" stroke-width="1" />
+
+    <line x1={C} y1="28" x2={C} y2={S - 28} class="stroke-rule" />
+    <line x1="28" y1={C} x2={S - 28} y2={C} class="stroke-rule" />
+    <text x={C} y="20" class="fill-ink-faint text-center font-mono text-[10.5px] tracking-[0.1em] [text-anchor:middle]">N</text>
+    <text x={S - 14} y={C + 4} class="fill-ink-faint font-mono text-[10.5px] tracking-[0.1em] [text-anchor:end]">MER</text>
 
     {pts.map((p) => {
       const [x, y] = xy(p.a, p.d);
       const right = x >= C;
       return (
         <g>
-          <line x1={C} y1={C} x2={x} y2={y} stroke="var(--rule)" />
-          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} fill={p.big ? 'var(--accent)' : 'var(--ink)'} />
-          <text x={right ? x + 9 : x - 9} y={y + 3.5} text-anchor={right ? 'start' : 'end'} class="lbl">{p.n}</text>
+          <line x1={C} y1={C} x2={x} y2={y} class="stroke-rule" />
+          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} class={p.big ? 'fill-accent' : 'fill-ink'} />
+          <text
+            x={right ? x + 9 : x - 9}
+            y={y + 3.5}
+            text-anchor={right ? 'start' : 'end'}
+            class="fill-ink-soft font-mono text-[11.5px]"
+          >{p.n}</text>
         </g>
       );
     })}
 
     <g>
-      <circle cx={C} cy={C} r="7" fill="none" stroke="var(--accent)" stroke-width="2" />
-      <circle cx={C} cy={C} r="2.5" fill="var(--accent)" />
-      <text x={C - 12} y={C - 14} text-anchor="end" class="home">RIVESALTES</text>
+      <circle cx={C} cy={C} r="7" fill="none" class="stroke-accent" stroke-width="2" />
+      <circle cx={C} cy={C} r="2.5" class="fill-accent" />
+      <text x={C - 12} y={C - 14} text-anchor="end" class="fill-accent font-mono text-[11px] font-semibold tracking-[0.08em]">RIVESALTES</text>
     </g>
   </svg>
-  <figcaption>
-    <span class="k1"></span> Déplacement inclus jusqu'à 30 km.
-    <span class="k2"></span> Au-delà, forfait kilométrique annoncé avant intervention.
+
+  <figcaption class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-[0.4rem] text-[0.8rem] text-ink-soft">
+    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-accent bg-accent-wash"></span>
+    Déplacement inclus jusqu'à 30 km.
+    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-dashed border-rule-strong"></span>
+    Au-delà, forfait kilométrique annoncé avant intervention.
   </figcaption>
 </figure>
-
-<style>
-  .radar { margin: 0; }
-  svg { width: 100%; height: auto; overflow: visible; }
-  .lbl { font-family: var(--mono); font-size: 11.5px; fill: var(--ink-soft); }
-  .home { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--accent); letter-spacing: 0.08em; }
-  .km { font-family: var(--mono); font-size: 10px; fill: var(--ink-faint); }
-  .card { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-faint); text-anchor: middle; letter-spacing: 0.1em; }
-  .sea { text-anchor: end; }
-  figcaption {
-    margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-soft);
-    display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; align-items: center;
-  }
-  .k1, .k2 { width: 11px; height: 11px; display: inline-block; flex: none; }
-  .k1 { background: var(--accent-wash); border: 1px solid var(--accent); }
-  .k2 { border: 1px dashed var(--rule-strong); }
-</style>

@@ -31,35 +31,48 @@ const schema = {
 ---
 <Base title={post.data.title} description={post.data.summary}>
   <article>
-    <header class="art-h">
-      <div class="shell art-hin">
-        <a class="back mono" href="/blog/">← Blog</a>
-        <div class="art-m">
-          <time class="mono" datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
-          <span class="aud">{etiq[post.data.audience]}</span>
+    <header class="border-b border-rule bg-paper-warm pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(1.75rem,3vw,2.75rem)]">
+      <div class="shell max-w-[58rem]">
+        <a class="font-mono text-[0.72rem] tracking-[0.08em] text-ink-faint no-underline hover:text-accent" href="/blog/">← Blog</a>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <time class="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-faint" datetime={post.data.date.toISOString()}>
+            {fmt(post.data.date)}
+          </time>
+          <span class="rounded-md border border-accent px-[0.45rem] py-[0.1rem] font-mono text-[0.62rem] uppercase tracking-[0.1em] text-accent">
+            {etiq[post.data.audience]}
+          </span>
         </div>
-        <h1>{post.data.title}</h1>
-        <p class="art-s">{post.data.summary}</p>
+        <h1 class="mt-4 max-w-[24ch] text-[clamp(1.9rem,1rem+3.1vw,3rem)]">{post.data.title}</h1>
+        <p class="mt-[1.1rem] max-w-[60ch] text-[1.05rem]/[1.6] text-ink-soft">{post.data.summary}</p>
       </div>
     </header>
 
-    <div class="shell art-body">
+    <div class="shell grid grid-cols-1 items-start gap-[clamp(2rem,5vw,4.5rem)] py-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,1fr)_16rem]">
       <div class="prose"><Content /></div>
 
-      <aside class="aside">
-        <div class="ab">
+      <aside class="flex flex-col gap-7 lg:sticky lg:top-28">
+        <div class="border-t border-rule-strong pt-4">
           <p class="label">En pratique</p>
-          <p>
+          <p class="mt-[0.7rem] mb-[1.1rem] text-[0.875rem] text-ink-soft">
             Cet article décrit ce que je fais chez mes clients. Si vous préférez que je
             m'en occupe, la mise en place se règle en général en une intervention.
           </p>
           <a class="btn btn--cta" href="/contact/">Me confier ça <span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <div class="ab">
+
+        <div class="border-t border-rule-strong pt-4">
           <p class="label">Voir aussi</p>
-          <ul class="ab-l">
-            <li><a href={cible}>{post.data.audience === 'entreprise' ? 'Prestations entreprises' : 'Dépannage particuliers'}</a></li>
-            {others.map((o) => <li><a href={`/blog/${o.id}/`}>{o.data.title}</a></li>)}
+          <ul class="m-0 mt-[0.8rem] list-none p-0">
+            <li class="border-b border-rule">
+              <a class="block py-[0.7rem] text-[0.875rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={cible}>
+                {post.data.audience === 'entreprise' ? 'Prestations entreprises' : 'Dépannage particuliers'}
+              </a>
+            </li>
+            {others.map((o) => (
+              <li class="border-b border-rule">
+                <a class="block py-[0.7rem] text-[0.875rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={`/blog/${o.id}/`}>{o.data.title}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
@@ -74,33 +87,3 @@ const schema = {
 
   <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
 </Base>
-
-<style>
-  .art-h { padding-block: clamp(2rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.75rem); border-bottom: 1px solid var(--rule); background: var(--paper-warm); }
-  .art-hin { max-width: 58rem; }
-  .back { color: var(--ink-faint); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.08em; }
-  .back:hover { color: var(--accent); }
-  .art-m { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 1.75rem; }
-  .art-m time { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
-  .aud {
-    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid var(--accent); padding: 0.1rem 0.45rem;
-  }
-  .art-h h1 { margin-top: 1rem; font-size: clamp(1.9rem, 1rem + 3.1vw, 3rem); max-width: 24ch; }
-  .art-s { margin-top: 1.1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; line-height: 1.6; }
-
-  .art-body {
-    display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: start; padding-block: clamp(2.5rem, 5vw, 4rem);
-  }
-  @media (max-width: 62rem) { .art-body { grid-template-columns: 1fr; } }
-
-  .aside { display: flex; flex-direction: column; gap: 1.75rem; position: sticky; top: 7rem; }
-  @media (max-width: 62rem) { .aside { position: static; } }
-  .ab { border-top: 1px solid var(--rule-strong); padding-top: 1rem; }
-  .ab p:not(.label) { margin: 0.7rem 0 1.1rem; font-size: 0.875rem; color: var(--ink-soft); }
-  .ab-l { list-style: none; padding: 0; margin: 0.8rem 0 0; }
-  .ab-l li { border-bottom: 1px solid var(--rule); }
-  .ab-l a { display: block; padding: 0.7rem 0; font-size: 0.875rem; font-weight: 600; text-decoration: none; letter-spacing: -0.015em; }
-  .ab-l a:hover { color: var(--accent); }
-</style>

@@ -2,41 +2,31 @@
 interface Line { k: 'cmd' | 'out' | 'ok' | 'warn' | 'dim'; t: string }
 interface Props { title?: string; lines: Line[]; caption?: string }
 const { title = 'elian@e-informatique : zsh', lines, caption } = Astro.props;
----
-<figure class="term">
-  <div class="term-bar">
-    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="term-t">{title}</span>
-  </div>
-  <pre class="term-body"><code>{lines.map((l) => (
-    <span class:list={['ln', l.k]}>{l.k === 'cmd' ? <span class="pr">$</span> : null}{l.t}{'\n'}</span>
-  ))}<span class="ln cmd"><span class="pr">$</span><span class="cur" aria-hidden="true"></span></span></code></pre>
-  {caption && <figcaption>{caption}</figcaption>}
-</figure>
 
-<style>
-  .term { background: var(--nuit); border: 1px solid var(--nuit-2); border-radius: var(--r-lg); overflow: hidden; margin: 0; }
-  .term-bar {
-    display: flex; align-items: center; gap: 0.7rem;
-    padding: 0.55rem 0.85rem; background: var(--nuit-2);
-    border-bottom: 1px solid var(--nuit-3);
-  }
-  .dots { display: flex; gap: 5px; }
-  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--nuit-3); }
-  .dots i:first-child { background: var(--accent-nuit); }
-  .term-t { font-family: var(--mono); font-size: 0.68rem; color: var(--nuit-faint); }
-  .term-body {
-    margin: 0; padding: 1.15rem 1.15rem 1.3rem;
-    font-family: var(--mono); font-size: 0.775rem; line-height: 1.85;
-    color: var(--nuit-text); overflow-x: auto;
-  }
-  .ln { display: block; white-space: pre-wrap; word-break: break-word; }
-  .pr { color: var(--accent-nuit); margin-right: 0.6rem; font-weight: 600; }
-  .out { color: var(--nuit-soft); }
-  .dim { color: var(--nuit-faint); }
-  .ok { color: var(--accent-nuit); }
-  .warn { color: var(--state-warn); }
-  .cur { display: inline-block; width: 8px; height: 1em; background: var(--accent-nuit); vertical-align: -0.15em; animation: bl 1.1s steps(2) infinite; }
-  @keyframes bl { 50% { opacity: 0 } }
-  figcaption { padding: 0.65rem 1.15rem; border-top: 1px solid var(--nuit-2); font-family: var(--mono); font-size: 0.66rem; color: var(--nuit-faint); }
-</style>
+/* Le registre du terminal est fixe : il ne suit pas le thème de la page. */
+const tone: Record<Line['k'], string> = {
+  cmd: 'text-nuit-text',
+  out: 'text-nuit-soft',
+  dim: 'text-nuit-faint',
+  ok: 'text-accent-nuit',
+  warn: 'text-state-warn',
+};
+---
+<figure class="m-0 overflow-hidden rounded-lg border border-nuit-2 bg-nuit">
+  <div class="flex items-center gap-[0.7rem] border-b border-nuit-3 bg-nuit-2 px-[0.85rem] py-[0.55rem]">
+    <span class="flex gap-[5px]" aria-hidden="true">
+      <i class="size-[9px] rounded-full bg-accent-nuit"></i>
+      <i class="size-[9px] rounded-full bg-nuit-3"></i>
+      <i class="size-[9px] rounded-full bg-nuit-3"></i>
+    </span>
+    <span class="font-mono text-[0.68rem] text-nuit-faint">{title}</span>
+  </div>
+
+  <pre class="m-0 overflow-x-auto px-[1.15rem] pt-[1.15rem] pb-[1.3rem] font-mono text-[0.775rem]/[1.85] text-nuit-text"><code>{lines.map((l) => (
+    <span class:list={['block break-words whitespace-pre-wrap', tone[l.k]]}>{l.k === 'cmd' ? <span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span> : null}{l.t}{'\n'}</span>
+  ))}<span class="block"><span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span><span class="inline-block h-[1em] w-[8px] animate-blink bg-accent-nuit align-[-0.15em]" aria-hidden="true"></span></span></code></pre>
+
+  {caption && (
+    <figcaption class="border-t border-nuit-2 px-[1.15rem] py-[0.65rem] font-mono text-[0.66rem] text-nuit-faint">{caption}</figcaption>
+  )}
+</figure>

@@ -14,136 +14,135 @@ const links = [
 ];
 const isOn = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
-<header class="hd" data-track={track}>
-  <div class="strip">
-    <div class="shell strip-in">
-      <span class="pin" aria-hidden="true"></span>
+<header class="sticky top-0 z-50" data-track={track}>
+  {/* Bandeau d'état. Toujours sombre : un filet le détache en thème nuit. */}
+  <div class="bg-fixed-nuit font-mono text-[0.68rem] tracking-[0.04em] text-nuit-soft theme-dark:border-b theme-dark:border-rule-nuit">
+    <div class="shell flex h-[30px] items-center gap-[0.6rem] overflow-hidden whitespace-nowrap">
+      <span class="size-[6px] flex-none rounded-full bg-accent-nuit" aria-hidden="true"></span>
       <span>Rivesaltes 66600 · Perpignan · P.-O.</span>
-      <span class="sep hide-m" aria-hidden="true">/</span>
-      <span class="hide-m">Intervention sous 48 h</span>
-      <span class="sep hide-l" aria-hidden="true">/</span>
-      <span class="hide-l">À distance partout en France</span>
-      <a class="strip-cta" href="/contact/">Écrire&nbsp;→</a>
+      <span class="hidden text-nuit-faint xs:inline" aria-hidden="true">/</span>
+      <span class="hidden xs:inline">Intervention sous 48 h</span>
+      <span class="hidden text-nuit-faint md:inline" aria-hidden="true">/</span>
+      <span class="hidden md:inline">À distance partout en France</span>
+      <a class="ml-auto text-fixed-paper no-underline hover:text-accent-nuit" href="/contact/">Écrire&nbsp;→</a>
     </div>
   </div>
 
-  <div class="bar">
-    <div class="shell bar-in">
-      <a class="brand" href="/" aria-label="E Informatique, accueil">
-        <svg class="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.25"/>
-          <text x="6.5" y="21.5" class="mark-e">e</text>
-          <rect x="17.5" y="12" width="6" height="9.5" fill="var(--accent)"/>
+  <div class="border-b border-rule bg-paper/88 backdrop-blur-[8px] backdrop-saturate-150">
+    <div class="shell flex h-[66px] items-center gap-6">
+      <a class="flex flex-none items-center gap-[0.6rem] text-ink no-underline" href="/" aria-label="E Informatique, accueil">
+        <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.25" />
+          <text x="6.5" y="21.5" class="fill-current font-mono text-[15px] font-semibold">e</text>
+          <rect x="17.5" y="12" width="6" height="9.5" class="fill-accent" />
         </svg>
-        <span class="brand-t">E&nbsp;Informatique</span>
+        <span class="text-[1.02rem] font-bold tracking-[-0.03em]">E&nbsp;Informatique</span>
       </a>
 
-      <nav class="nav" aria-label="Navigation principale">
+      <nav class="ml-auto hidden gap-[1.35rem] lg:flex" aria-label="Navigation principale">
         {links.map((l) => (
-          <a href={l.href} class:list={['nl', { on: isOn(l.href) }]} aria-current={isOn(l.href) ? 'page' : undefined}>
-            {l.label}
-          </a>
+          <a
+            href={l.href}
+            class:list={[
+              'border-b-2 py-[0.35rem] text-[0.885rem] no-underline transition-[color,border-color] duration-150 ease-out-soft hover:text-ink',
+              isOn(l.href)
+                ? 'border-accent font-semibold text-ink'
+                : 'border-transparent font-medium text-ink-soft',
+            ]}
+            aria-current={isOn(l.href) ? 'page' : undefined}
+          >{l.label}</a>
         ))}
       </nav>
 
-      <a class="btn btn--cta bar-cta" href="/contact/">Me contacter</a>
+      <button
+        class="ml-auto grid size-[34px] flex-none cursor-pointer place-items-center rounded-md border border-rule p-0 text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out-soft hover:border-rule-strong hover:bg-accent-wash hover:text-ink lg:ml-0"
+        type="button"
+        data-theme-toggle
+        aria-label="Basculer le thème sombre"
+        aria-pressed="false"
+        title="Thème clair / sombre"
+      >
+        <svg class="col-start-1 row-start-1 theme-dark:hidden" width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" />
+          <path d="M12 2.4v2.2M12 19.4v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.2M19.4 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
+        </svg>
+        <svg class="col-start-1 row-start-1 hidden theme-dark:block" width="17" height="17" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" />
+        </svg>
+      </button>
 
-      <button class="burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Ouvrir le menu">
-        <span></span><span></span>
+      <a class="btn btn--cta hidden flex-none px-4 py-[0.6rem] text-[0.875rem] lg:inline-flex" href="/contact/">Me contacter</a>
+
+      <button
+        class="group ml-[0.4rem] cursor-pointer border-0 bg-transparent p-2 lg:hidden"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mmenu"
+        aria-label="Ouvrir le menu"
+        data-burger
+      >
+        <span class="block h-[2px] w-[22px] bg-ink transition-transform duration-200 ease-out-soft group-aria-expanded:translate-y-[4px] group-aria-expanded:rotate-45"></span>
+        <span class="mt-[6px] block h-[2px] w-[22px] bg-ink transition-transform duration-200 ease-out-soft group-aria-expanded:-translate-y-[4px] group-aria-expanded:-rotate-45"></span>
       </button>
     </div>
   </div>
 
-  <div class="mmenu" id="mmenu" hidden>
-    <div class="shell mm-in">
-      {links.map((l) => (
-        <a href={l.href} class:list={['mm-l', { on: isOn(l.href) }]}>
-          <span class="mm-n label">{String(links.indexOf(l) + 1).padStart(2, '0')}</span>
+  <div class="border-b border-rule bg-paper" id="mmenu" hidden>
+    <div class="shell flex flex-col pt-4 pb-8">
+      {links.map((l, i) => (
+        <a
+          href={l.href}
+          class:list={[
+            'flex items-baseline gap-4 border-b border-rule py-[0.85rem] text-[1.35rem] font-semibold tracking-[-0.025em] no-underline',
+            isOn(l.href) ? 'text-accent' : 'text-ink',
+          ]}
+        >
+          <span class="label text-ink-faint">{String(i + 1).padStart(2, '0')}</span>
           {l.label}
         </a>
       ))}
-      <a class="btn btn--cta mm-cta" href="/contact/">Décrire mon problème</a>
-      <p class="mm-tel mono">Rivesaltes · Perpignan · Pyrénées-Orientales</p>
+      <a class="btn btn--cta mt-6 justify-center" href="/contact/">Décrire mon problème</a>
+      <p class="mt-4 font-mono text-[0.75rem] text-ink-faint">Rivesaltes · Perpignan · Pyrénées-Orientales</p>
     </div>
   </div>
 </header>
 
-<style>
-  .hd { position: sticky; top: 0; z-index: 50; }
-
-  .strip {
-    background: var(--fixed-nuit);
-    color: var(--nuit-soft);
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
-  }
-  .strip-in { display: flex; align-items: center; gap: 0.6rem; height: 30px; white-space: nowrap; overflow: hidden; }
-  .sep { color: var(--nuit-faint); }
-  .pin { width: 6px; height: 6px; background: var(--accent-nuit); border-radius: 50%; flex: none; }
-  .strip-cta { margin-left: auto; color: var(--fixed-paper); text-decoration: none; }
-  .strip-cta:hover { color: var(--accent-nuit); }
-
-  .bar {
-    background: color-mix(in oklab, var(--paper) 88%, transparent);
-    backdrop-filter: saturate(1.4) blur(8px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .bar-in { display: flex; align-items: center; gap: 1.5rem; height: 66px; }
-
-  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); flex: none; }
-    .mark-e { font-family: var(--mono); font-size: 15px; font-weight: 600; fill: currentColor; }
-  .brand-t { font-weight: 700; letter-spacing: -0.03em; font-size: 1.02rem; }
-
-  .nav { display: flex; gap: 1.35rem; margin-left: auto; }
-  .nl {
-    text-decoration: none;
-    font-size: 0.885rem;
-    font-weight: 500;
-    color: var(--ink-soft);
-    padding-block: 0.35rem;
-    border-bottom: 2px solid transparent;
-    transition: color .16s var(--ease), border-color .16s var(--ease);
-  }
-  .nl:hover { color: var(--ink); }
-  .nl.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
-
-  .bar-cta { padding: 0.6rem 1rem; font-size: 0.875rem; flex: none; }
-
-  .burger { display: none; background: none; border: 0; padding: 0.5rem; cursor: pointer; margin-left: auto; }
-  .burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: transform .2s var(--ease); }
-  .burger span + span { margin-top: 6px; }
-  .burger[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
-  .burger[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
-
-  .mmenu { background: var(--paper); border-bottom: 1px solid var(--rule); }
-  .mm-in { display: flex; flex-direction: column; padding-block: 1rem 2rem; }
-  .mm-l {
-    display: flex; align-items: baseline; gap: 1rem;
-    padding: 0.85rem 0; text-decoration: none; color: var(--ink);
-    font-size: 1.35rem; font-weight: 600; letter-spacing: -0.025em;
-    border-bottom: 1px solid var(--rule);
-  }
-  .mm-l.on { color: var(--accent); }
-  .mm-n { color: var(--ink-faint); }
-  .mm-cta { margin-top: 1.5rem; justify-content: center; }
-  .mm-tel { margin-top: 1rem; color: var(--ink-faint); font-size: 0.75rem; }
-
-  @media (max-width: 62rem) {
-    .nav, .bar-cta { display: none; }
-    .burger { display: block; }
-  }
-  @media (max-width: 58rem) { .hide-l { display: none; } }
-  @media (max-width: 34rem) { .hide-m { display: none; } }
-</style>
-
 <script>
-  const b = document.querySelector('.burger') as HTMLButtonElement | null;
-  const m = document.getElementById('mmenu');
-  b?.addEventListener('click', () => {
-    const open = b.getAttribute('aria-expanded') === 'true';
-    b.setAttribute('aria-expanded', String(!open));
-    b.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
-    if (m) m.hidden = open;
+  // ── Bascule de thème ────────────────────────────────────────
+  const root = document.documentElement;
+  const toggle = document.querySelector('[data-theme-toggle]') as HTMLButtonElement | null;
+  const meta = document.querySelector('meta[name="theme-color"]');
+
+  const sync = () => {
+    const dark = root.dataset.theme === 'dark';
+    toggle?.setAttribute('aria-pressed', String(dark));
+    toggle?.setAttribute('aria-label', dark ? 'Passer au thème clair' : 'Passer au thème sombre');
+    // Les pages du labo restent sombres quel que soit le thème choisi.
+    if (!document.body.classList.contains('t-nuit')) {
+      meta?.setAttribute('content', dark ? '#1b2226' : '#f7f8f8');
+    }
+  };
+
+  toggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    delete root.dataset.themeSource;
+    try { localStorage.setItem('theme', next); } catch {}
+    sync();
+  });
+
+  document.addEventListener('themechange', sync);
+  sync();
+
+  // ── Menu mobile ─────────────────────────────────────────────
+  const burger = document.querySelector('[data-burger]') as HTMLButtonElement | null;
+  const menu = document.getElementById('mmenu');
+  burger?.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    burger.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
+    if (menu) menu.hidden = open;
   });
 </script>
