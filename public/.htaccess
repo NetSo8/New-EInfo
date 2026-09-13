@@ -1,0 +1,20 @@
+# einformatique.fr — hébergement Apache (OVH)
+#
+# Canonicalise tout vers https://einformatique.fr : une seule version du
+# site indexable. Sans ce fichier, http:// et www. servent le même contenu
+# que le domaine principal (contenu dupliqué, aucun avertissement de
+# sécurité navigateur, dilution du signal SEO).
+
+RewriteEngine On
+
+# HTTPS obligatoire + domaine sans www, en une seule redirection (301)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://einformatique.fr%{REQUEST_URI} [L,R=301]
+
+# Indique aux navigateurs de toujours revenir en HTTPS sur ce domaine,
+# même sur un lien tapé en http:// (protection contre le détournement de
+# la première requête).
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
