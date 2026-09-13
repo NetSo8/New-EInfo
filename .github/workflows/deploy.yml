@@ -1,0 +1,60 @@
+name: Déploiement FTP
+
+# Le site est statique : on construit ici, on téléverse le résultat.
+# Rien n'est compilé sur l'hébergement.
+on:
+  push:
+    branches:
+      - main
+  # Permet de relancer un déploiement à la main depuis l'onglet Actions,
+  # sans avoir à pousser un commit vide.
+  workflow_dispatch:
+
+# Deux déploiements simultanés téléverseraient le même dossier en même temps.
+concurrency:
+  group: deploy-ftp
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      # `npm ci` installe exactement ce que décrit package-lock.json.
+      # `npm install` pourrait remonter une version et livrer autre chose que
+      # ce qui a été testé en local.
+      - name: Installer les dépendances
+        run: npm ci
+
+      # `npm run build` enchaîne trois étapes, et la moindre qui échoue arrête
+      # le déploiement avant tout téléversement :
+      #   1. astro build
+      #   2. check:privacy — aucune ressource chargée depuis un domaine tiers,
+      #      donc aucune adresse IP de visiteur transmise hors de l'hébergement
+      #   3. check:a11y   — lang, titres, alt, noms accessibles
+      - name: Construire le site et passer les contrôles
+        run: npm run build
+
+      - name: Téléverser sur l'hébergement
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /www/
+          # Vide /www/ avant de téléverser : indispensable pour que les fichiers
+          # supprimés d'une version à l'autre disparaissent aussi du serveur.
+          # À ne garder que si rien d'autre que ce site ne vit dans /www/.
+          dangerous-clean-slate: true
