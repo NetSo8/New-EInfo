@@ -1,0 +1,117 @@
+---
+import DottedMap from 'dotted-map';
+
+interface Props { class?: string }
+const { class: klass = '' } = Astro.props;
+
+/* Carte du monde en points, très diffuse, même principe que le fond du
+   hero (HeroNetworkBg) et le fond crypto de la page à propos
+   (CryptoCrackBg), thème « portée du réseau » pour la page contact.
+   Le semis de points vient de `dotted-map` (projection Mercator réelle,
+   bien plus fin qu'un tracé à la main). Décoratif, pas une carte de
+   couverture réelle du service. */
+const map = new DottedMap({ height: 58, grid: 'diagonal' });
+
+const baseSvg = map.getSVG({
+  radius: 0.16,
+  color: 'currentColor',
+  shape: 'circle',
+  backgroundColor: 'transparent',
+});
+const [, W, H] = baseSvg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/)!;
+const dotsInner = baseSvg.replace(/^<svg[^>]*>\s*/, '').replace(/\s*<\/svg>\s*$/, '');
+
+/* Trois foyers réels : Rivesaltes (base), New York, Tokyo, reliés par des
+   arcs qui portent un flux animé, pour suggérer la portée du réseau. */
+map.addPin({ lat: 42.771, lng: 2.865, data: 'home' });
+map.addPin({ lat: 40.730, lng: -73.935, data: 'na' });
+map.addPin({ lat: 35.68, lng: 139.69, data: 'asia' });
+const hubs = map.getPoints().filter((p) => p.data) as { x: number; y: number; data: string }[];
+const hub = (id: string) => hubs.find((p) => p.data === id)!;
+
+const arcs = [
+  [hub('home'), hub('na')],
+  [hub('home'), hub('asia')],
+];
+const arcPath = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+  const mx = (a.x + b.x) / 2;
+  const my = Math.min(a.y, b.y) - Number(H) * 0.16;
+  return `M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+};
+---
+<svg
+  viewBox={`0 0 ${W} ${H}`}
+  preserveAspectRatio="xMidYMid slice"
+  class:list={['world-bg absolute', klass]}
+  role="presentation"
+  aria-hidden="true"
+>
+  {/* Décale le cadrage vers le bas de la carte, là où les foyers et les
+      arcs sont les plus lisibles dans le bandeau. */}
+  <g transform={`translate(0, ${(Number(H) * 0.16).toFixed(1)})`}>
+    <g class="wb-dots" set:html={dotsInner} />
+
+    <g class="wb-arcs" fill="none">
+      {arcs.map(([a, b], i) => (
+        <path d={arcPath(a, b)} class="wb-arc" style={`--i:${i}`} />
+      ))}
+    </g>
+
+    <g class="wb-pulses" fill="none">
+      {hubs.map((h, i) => (
+        <circle cx={h.x} cy={h.y} r="1.1" class="wb-pulse" style={`--delay:${(i * 1.4).toFixed(2)}s`} />
+      ))}
+    </g>
+
+    <g class="wb-hub-dots">
+      {hubs.map((h) => <circle cx={h.x} cy={h.y} r="0.45" class="wb-hub-dot" />)}
+    </g>
+  </g>
+</svg>
+
+<style>
+  .world-bg {
+    filter: blur(0.3px);
+    /* Pleine opacité en haut, disparaît avant le bas du bandeau. */
+    mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+  }
+
+  .wb-dots {
+    color: var(--color-ink-faint);
+    opacity: 0;
+    animation: wb-fade 1s ease-out forwards;
+  }
+
+  .wb-hub-dot {
+    fill: var(--color-accent);
+  }
+
+  .wb-arc {
+    stroke: var(--color-accent);
+    stroke-width: 0.3;
+    stroke-dasharray: 1.4 3.2;
+    opacity: 0.3;
+    animation: wb-flow 12s linear calc(var(--i, 0) * 1.4s) infinite;
+  }
+
+  .wb-pulse {
+    stroke: var(--color-accent);
+    stroke-width: 0.25;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: wb-ring 6.5s var(--delay, 0s) cubic-bezier(0.19, 1, 0.22, 1) infinite;
+  }
+
+  @keyframes wb-fade {
+    to { opacity: 0.38; }
+  }
+  @keyframes wb-flow {
+    to { stroke-dashoffset: -92; }
+  }
+  @keyframes wb-ring {
+    0% { transform: scale(1); opacity: 0.22; }
+    75% { transform: scale(9); opacity: 0; }
+    100% { transform: scale(9); opacity: 0; }
+  }
+</style>

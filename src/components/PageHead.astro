@@ -1,24 +1,12 @@
 ---
-interface Props { kicker: string; title: string; lede: string; tone?: 'paper' | 'sand' | 'nuit' }
+interface Props { kicker: string; title: string; lede: string; tone?: 'paper' | 'warm' }
 const { kicker, title, lede, tone = 'paper' } = Astro.props;
-const nuit = tone === 'nuit';
 ---
-<section
-  class:list={[
-    'pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.25rem,4vw,3.5rem)] border-b',
-    nuit ? 'bg-nuit text-nuit-text border-rule-nuit' : 'border-rule',
-    tone === 'sand' && 'bg-paper-warm',
-  ]}
->
+<section class:list={['pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.25rem,4vw,3.5rem)] border-b border-rule', tone === 'warm' && 'bg-paper-warm']}>
   <div class="shell max-w-[62rem]">
-    <p class:list={['label', nuit ? 'text-accent-nuit' : 'text-accent']}>{kicker}</p>
+    <p class="label text-accent">{kicker}</p>
     <h1 class="mt-4 text-[clamp(2.1rem,1rem+3.4vw,3.5rem)]">{title}</h1>
-    <p
-      class:list={[
-        'mt-5 max-w-[56ch] text-lede/[1.5]',
-        nuit ? 'text-nuit-soft' : 'text-ink-soft',
-      ]}
-    >{lede}</p>
+    <p class="mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft">{lede}</p>
     <div class="empty:hidden mt-8"><slot /></div>
   </div>
 </section>

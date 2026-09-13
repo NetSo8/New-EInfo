@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
 import PageHead from '../components/PageHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -19,11 +20,13 @@ const rech = projets.filter((p) => p.type === 'recherche');
   >
     <p class="font-mono text-[0.72rem] text-ink-faint">
       Dépôts publics :
-      <a class="tlink" href="https://github.com/NetSo8" rel="noopener" target="_blank">github.com/NetSo8 ↗</a>
+      <a class="tlink inline-flex items-center gap-[0.3rem]" href="https://github.com/NetSo8" rel="noopener noreferrer" target="_blank">
+        github.com/NetSo8 <ArrowUpRight size="0.95em" aria-hidden="true" />
+      </a>
     </p>
   </PageHead>
 
-  <section class="py-band">
+  <section class="section">
     <div class="shell">
       <p class="label mb-8 text-accent">01 / Missions client</p>
       <ol class="m-0 list-none border-t border-rule-strong p-0">
@@ -32,16 +35,15 @@ const rech = projets.filter((p) => p.type === 'recherche');
     </div>
   </section>
 
-  {/* Bande sombre : la recherche relève du registre du labo. */}
-  <section class="bg-nuit py-band text-nuit-text">
+  <section class="section on-nuit bg-nuit">
     <div class="shell">
-      <p class="label mb-4 text-accent-nuit">02 / Travaux de recherche</p>
-      <p class="mb-10 max-w-[56ch] text-[0.95rem] text-nuit-soft">
-        Non facturés, non finis, publiés quand même. Ils indiquent la direction que
-        prend le travail technique sans prétendre qu'elle est déjà atteinte.
+      <p class="label mb-4 text-accent">02 / Travaux de recherche</p>
+      <p class="mb-10 max-w-[56ch] text-base text-ink-soft">
+        Non facturés, non finis. Ils indiquent la direction que prend le travail
+        technique sans prétendre qu'elle est déjà atteinte.
       </p>
-      <ol class="m-0 list-none border-t border-rule-nuit p-0">
-        {rech.map((p, i) => <ProjectCard projet={p} n={i + 1} nuit />)}
+      <ol class="m-0 list-none border-t border-rule p-0">
+        {rech.map((p, i) => <ProjectCard projet={p} n={i + 1} />)}
       </ol>
     </div>
   </section>
@@ -50,6 +52,5 @@ const rech = projets.filter((p) => p.type === 'recherche');
     kicker="Votre cas"
     title="Un contexte proche du vôtre ?"
     text="Les chiffres ci-dessus viennent d'entreprises de moins de vingt personnes, avec un budget réel et des contraintes d'activité. Décrivez le vôtre, je vous dis franchement s'il ressemble à ce que je sais faire."
-    second={{ href: '/labo/', label: 'Voir le labo technique' }}
   />
 </Base>

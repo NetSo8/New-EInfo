@@ -6,15 +6,10 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description: string;
-  /** Fil d'audience affiché dans la barre d'état : particulier | pro | labo | null */
-  track?: 'particulier' | 'pro' | 'labo' | null;
-  /** Registre visuel. Le labo bascule en encre sombre. */
-  theme?: 'paper' | 'nuit';
-  ogImage?: string;
   noindex?: boolean;
 }
 
-const { title, description, track = null, noindex = false, theme = 'paper' } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://einformatique.fr').href;
 
 const business = {
@@ -23,9 +18,9 @@ const business = {
   '@id': 'https://einformatique.fr/#business',
   name: 'E Informatique',
   description:
-    "Technicien informatique freelance à Rivesaltes : dépannage, infrastructure VPS, sécurité et sites web pour particuliers et TPE/PME des Pyrénées-Orientales.",
+    "Technicien réseau et sécurité freelance à Rivesaltes : dépannage informatique pour les particuliers, réseau local, segmentation VLAN, pare-feu, VPN, sauvegardes testées et sites web pour les TPE/PME des Pyrénées-Orientales.",
   url: 'https://einformatique.fr',
-  founder: { '@type': 'Person', name: 'Elian', jobTitle: 'Technicien systèmes et réseaux' },
+  founder: { '@type': 'Person', name: 'Elian', jobTitle: 'Technicien réseau et sécurité' },
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Rivesaltes',
@@ -37,12 +32,22 @@ const business = {
   areaServed: [
     { '@type': 'City', name: 'Rivesaltes' },
     { '@type': 'City', name: 'Perpignan' },
-    { '@type': 'City', name: 'Canet-en-Roussillon' },
-    { '@type': 'City', name: 'Saint-Cyprien' },
     { '@type': 'City', name: 'Cabestany' },
-    { '@type': 'AdministrativeArea', name: 'Pyrénées-Orientales' },
+    { '@type': 'City', name: 'Le Barcarès' },
+    { '@type': 'City', name: 'Baixas' },
+    { '@type': 'City', name: 'Salses-le-Château' },
   ],
-  knowsAbout: ['Dépannage informatique', 'Administration système Linux', 'Sécurité informatique', 'Hébergement VPS', 'Création de site web'],
+  knowsAbout: [
+    'Réseau informatique',
+    'Segmentation VLAN',
+    'Pare-feu et filtrage réseau',
+    'VPN et accès distant sécurisé',
+    'Réseau sans fil et couverture wifi',
+    'Sécurité informatique et sauvegardes',
+    'Dépannage informatique',
+    'Création et maintenance de site web',
+    'Cryptographie appliquée',
+  ],
   sameAs: ['https://github.com/NetSo8'],
 };
 ---
@@ -56,7 +61,7 @@ const business = {
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content={theme === 'nuit' ? '#1b2226' : '#f7f8f8'} />
+    <meta name="theme-color" content="#f7f8f8" />
 
     <!-- Thème : résolu avant le premier rendu, pour éviter tout flash. -->
     <script is:inline>
@@ -66,6 +71,15 @@ const business = {
           : window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         if (!stored) document.documentElement.dataset.themeSource = 'system';
+
+        /* Même principe pour le mouvement : appliqué avant le premier rendu,
+           sinon les fonds démarrent leur boucle avant d'être coupés. */
+        try {
+          const motion = localStorage.getItem('motion');
+          if (motion === 'reduced' || motion === 'full') {
+            document.documentElement.dataset.motion = motion;
+          }
+        } catch {}
       })();
     </script>
 
@@ -75,24 +89,23 @@ const business = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content={new URL('/logo.png', Astro.site ?? 'https://einformatique.fr').href} />
+    <meta name="twitter:card" content="summary" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&family=Spline+Sans+Mono:wght@400;500;600&display=swap"
-    />
-    <link rel="preconnect" href="https://images.unsplash.com" />
+    {/* Polices servies depuis ce serveur : aucune requête vers un tiers, donc
+        aucune adresse IP de visiteur transmise hors de l'hébergement. Les deux
+        fichiers ci-dessous portent le texte visible dès le premier rendu. */}
+    <link rel="preload" href="/fonts/satoshi-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(business)} />
   </head>
-  <body class:list={[{ 't-nuit': theme === 'nuit' }]}>
+  <body>
     <a class="skip" href="#main">Aller au contenu</a>
-    <Nav track={track} />
+    <Nav />
     <main id="main">
       <slot />
     </main>

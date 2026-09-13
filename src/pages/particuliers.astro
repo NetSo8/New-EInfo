@@ -1,12 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import X from '@lucide/astro/icons/x';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
+import { Image } from 'astro:assets';
+import etabli from '../assets/etabli.jpg';
 
-const U = 'https://images.unsplash.com/';
-const etabli = `${U}photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1400&q=80`;
 
 const pannes = [
   { t: 'Il met cinq minutes à démarrer', d: "Neuf fois sur dix, c'est le disque dur d'origine. Un disque SSD et la machine repart pour trois ans." },
@@ -30,11 +32,10 @@ const chiffrage = [
   { t: 'Le diagnostic est offert', d: "Je regarde, je vous dis ce qui ne va pas, et vous décidez ensuite. Aucun frais de dossier, aucun frais de prise en charge." },
   { t: 'Rien ne commence sans votre accord', d: "Je vous annonce ce que je vais faire et ce que ça coûte avant d'ouvrir quoi que ce soit. Un devis écrit est remis dès que l'intervention dépasse une heure ou demande une pièce." },
   { t: 'Le montant ne bouge plus ensuite', d: "Si je découvre autre chose en cours de route, je m'arrête et je vous appelle. Vous ne découvrez jamais un écart sur la facture." },
-  { t: 'Le déplacement est inclus', d: "Jusqu'à 30 km de Rivesaltes, il n'est pas facturé. Au-delà, le forfait kilométrique vous est annoncé avant que je prenne la route." },
+  { t: 'Le déplacement est inclus', d: "Jusqu'à 15 km de Rivesaltes, il n'est pas facturé. Au-delà, le forfait kilométrique vous est annoncé avant que je prenne la route." },
   { t: 'Si ça ne vaut pas le coup, vous ne payez pas', d: "Réparation non rentable, machine en fin de vie, ou vous préférez ne pas donner suite après le devis : dans les trois cas, rien ne vous est facturé." },
   { t: 'Récupération de données : au résultat', d: "Chiffrée après examen du support, et rien n'est dû si rien n'est récupéré." },
 ];
-
 
 const refus = [
   { t: 'Un abonnement antivirus annuel.', d: "Ce qui est intégré à Windows suffit dans l'immense majorité des cas, à condition d'être correctement réglé." },
@@ -53,9 +54,8 @@ const faq = [
 ];
 ---
 <Base
-  track="particulier"
   title="Dépannage informatique à domicile · Rivesaltes, Perpignan"
-  description="Réparation d'ordinateur, virus, récupération de photos, wifi et imprimante. Technicien à domicile à Rivesaltes et Perpignan. Diagnostic offert, sous 48 h."
+  description="Réparation d'ordinateur, virus, récupération de photos, wifi et imprimante. Technicien à domicile à Rivesaltes et Perpignan. Diagnostic offert."
 >
   <PageHead
     kicker="Particuliers · Pyrénées-Orientales"
@@ -63,15 +63,15 @@ const faq = [
     lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence."
   >
     <div class="flex flex-wrap gap-3">
-      <a class="btn btn--cta" href="/contact/?profil=particulier">Décrire mon problème <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--cta" href="/contact/">Décrire mon problème <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       <a class="btn btn--ghost" href="#chiffrage">Comment je chiffre</a>
     </div>
     <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
-      Réponse sous 24 h ouvrées · Intervention sous 48 h · Déplacement inclus jusqu'à 30 km
+      Déplacement inclus jusqu'à 15 km
     </p>
   </PageHead>
 
-  <section class="py-band">
+  <section class="section">
     <div class="shell">
       <SectionHead
         n="01"
@@ -83,14 +83,14 @@ const faq = [
         {pannes.map((p) => (
           <li class="border-b border-rule pt-[1.4rem] pr-6 pb-6">
             <h3 class="text-[1.05rem] tracking-[-0.02em]">{p.t}</h3>
-            <p class="mt-[0.4rem] max-w-[40ch] text-[0.9rem] text-ink-soft">{p.d}</p>
+            <p class="mt-[0.4rem] max-w-[40ch] text-base text-ink-soft">{p.d}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="border-t border-rule bg-paper-warm py-band">
+  <section class="section section-rule section-tint">
     <div class="shell">
       <SectionHead n="02" kicker="Comment ça se passe" title="Quatre étapes, pas de surprise" />
       <div class="grid12 mt-12 items-start gap-y-10">
@@ -100,29 +100,29 @@ const faq = [
               <span class="pt-[0.3rem] font-mono text-[0.75rem] font-semibold text-accent">{e.n}</span>
               <div>
                 <h3 class="text-[1.15rem] tracking-[-0.025em]">{e.t}</h3>
-                <p class="mt-[0.3rem] max-w-[46ch] text-[0.9rem] text-ink-soft">{e.d}</p>
+                <p class="mt-[0.3rem] max-w-[46ch] text-base text-ink-soft">{e.d}</p>
               </div>
             </li>
           ))}
         </ol>
 
         <figure class="col-span-full m-0 mid:col-start-8 mid:col-span-5">
-          <img
+          <Image
             src={etabli}
             alt="Mains gantées au travail sur une carte électronique, à l'établi"
             loading="lazy"
             decoding="async"
-            width="1400"
-            height="933"
+            widths={[480, 768, 1100]}
+            sizes="(width >= 60rem) 40vw, 100vw"
+            quality={68}
             class="aspect-video w-full object-cover contrast-105 saturate-80 mid:aspect-[4/5]"
           />
-          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] text-ink-faint">Réparation à l'atelier, Rivesaltes</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-rule py-band" id="chiffrage">
+  <section class="section section-rule" id="chiffrage">
     <div class="shell">
       <SectionHead
         n="03"
@@ -136,25 +136,25 @@ const faq = [
             <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h3 class="text-[1.2rem] tracking-[-0.028em]">{c.t}</h3>
-              <p class="mt-[0.4rem] max-w-[62ch] text-[0.95rem] text-ink-soft">{c.d}</p>
+              <p class="mt-[0.4rem] max-w-[62ch] text-base text-ink-soft">{c.d}</p>
             </div>
           </li>
         ))}
       </ol>
-      <p class="mt-6 max-w-[62ch] text-[0.875rem] text-ink-soft">
+      <p class="mt-6 max-w-[62ch] text-base text-ink-soft">
         Pour obtenir un montant, décrivez la panne : la marque de l'appareil, ce qu'il
-        fait, depuis quand. Vous recevez une estimation sous 24 h ouvrées, sans engagement.
+        fait, depuis quand. Vous recevez une estimation sans engagement.
       </p>
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead n="04" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
       <ul class="m-0 mt-10 flex max-w-[62ch] list-none flex-col p-0" data-reveal>
         {refus.map((r) => (
-          <li class="relative border-b border-rule py-[1.1rem] pl-8 text-[0.95rem] text-ink-soft first:border-t">
-            <span class="absolute left-[0.35rem] top-4 font-mono text-accent" aria-hidden="true">×</span>
+          <li class="relative border-b border-rule py-[1.1rem] pl-8 text-base text-ink-soft first:border-t">
+            <X class="absolute top-[1.35rem] left-[0.35rem] text-accent" size="0.85em" aria-hidden="true" />
             <strong class="font-semibold text-ink">{r.t}</strong> {r.d}
           </li>
         ))}
@@ -162,7 +162,7 @@ const faq = [
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead n="05" kicker="Questions fréquentes" title="Avant de m'appeler" />
       <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
@@ -172,8 +172,8 @@ const faq = [
   <CtaBand
     kicker="Votre tour"
     title="Dites-moi ce qui se passe."
-    text="La marque de l'appareil, ce qu'il fait, depuis quand. Je vous réponds sous 24 h ouvrées avec un premier avis et un ordre de prix, sans engagement."
-    href="/contact/?profil=particulier"
+    text="La marque de l'appareil, ce qu'il fait, depuis quand. Je vous réponds avec un premier avis et un ordre de prix, sans engagement."
+    href="/contact/"
     cta="Décrire mon problème"
     second={{ href: '/blog/', label: 'Lire les conseils pratiques' }}
   />

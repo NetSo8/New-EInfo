@@ -1,4 +1,6 @@
 ---
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+
 interface Props { kicker: string; title: string; text: string; href?: string; cta?: string; second?: { href: string; label: string } }
 const { kicker, title, text, href = '/contact/', cta = 'Décrire mon besoin', second } = Astro.props;
 ---
@@ -8,7 +10,7 @@ const { kicker, title, text, href = '/contact/', cta = 'Décrire mon besoin', se
     <h2 class="mt-[0.9rem] text-x1">{title}</h2>
     <p class="mt-4 max-w-[52ch] text-nuit-soft text-[1.05rem]/[1.65]">{text}</p>
     <div class="mt-8 flex flex-wrap gap-3">
-      <a class="btn btn--cta" href={href}>{cta} <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--cta" href={href}>{cta} <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       {second && <a class="btn btn--nuit-ghost" href={second.href}>{second.label}</a>}
     </div>
   </div>

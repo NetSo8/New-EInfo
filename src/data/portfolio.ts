@@ -6,7 +6,6 @@ export interface Projet {
   resume: string;
   faits: string[];
   stack: string[];
-  lien?: { href: string; label: string };
 }
 
 export const projets: Projet[] = [
@@ -66,10 +65,9 @@ export const projets: Projet[] = [
       'Écart de 41 ns détecté sous un bruit de mesure de 300 ns',
       'Vérification automatique de l\'assembleur produit',
       'Écrit en C, sans dépendance externe',
-      'Travail en cours, publié au fil des résultats',
+      'Travail en cours',
     ],
     stack: ['C', 'GCC', 'perf', 'Python'],
-    lien: { href: '/labo/constant-time-comparaison/', label: 'Lire le writeup' },
   },
   {
     titre: 'Lecture critique de l\'attestation Nitro Enclaves',
@@ -80,10 +78,9 @@ export const projets: Projet[] = [
       "Analyse de ce que le document d'attestation d'AWS Nitro Enclaves prouve réellement, et de ce que trois bibliothèques clientes courantes laissent passer lors de la validation de la chaîne.",
     faits: [
       'Travail en cours, banc de test non terminé',
-      'Notes publiées à l\'état de brouillon annoté',
+      'Notes tenues à l\'état de brouillon annoté',
       'Aucune conclusion avancée avant reproductibilité',
     ],
     stack: ['AWS Nitro', 'CBOR / COSE', 'Rust'],
-    lien: { href: '/labo/nitro-enclaves-attestation/', label: 'Lire les notes' },
   },
 ];

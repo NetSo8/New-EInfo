@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import WorldMapBg from '../components/WorldMapBg.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import Check from '@lucide/astro/icons/check';
+import Copy from '@lucide/astro/icons/copy';
 
 const EMAIL = 'elianb.pro@gmail.com';
 
@@ -13,7 +18,7 @@ const preciser = [
 
 const suite = [
   'Vous écrivez, en quelques lignes suffisent.',
-  'Je lis et je réponds sous 24 h ouvrées.',
+  'Je lis et je réponds dès que possible.',
   "Si c'est clair, je chiffre directement. Sinon, on s'appelle quinze minutes.",
   'Vous recevez un écrit : ce que je fais, en combien de temps, à quel prix.',
   'Rien ne démarre avant votre accord.',
@@ -24,7 +29,7 @@ const bloc = 'border-t border-rule-strong pt-4';
 ---
 <Base
   title="Contact · E Informatique, Rivesaltes (66)"
-  description="Écrivez-moi directement par e-mail : particulier, entreprise ou mission technique. Réponse sous 24 h ouvrées, intervention sous 48 h dans le 66."
+  description="Écrivez-moi directement par e-mail : particulier, entreprise ou mission technique, dans les Pyrénées-Orientales."
 >
   <PageHead
     kicker="Contact"
@@ -32,35 +37,43 @@ const bloc = 'border-t border-rule-strong pt-4';
     lede="Pas de formulaire, pas d'intermédiaire : un e-mail suffit pour démarrer. Voici ce qui m'aide à vous répondre vite."
   />
 
-  <section class="py-band">
-    <div class="shell grid grid-cols-1 items-start gap-[clamp(2rem,5vw,4.5rem)] lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)]">
+  <section class="relative isolate overflow-hidden pt-[clamp(6rem,3rem+10vw,12rem)] pb-[clamp(4.5rem,2.4rem+8vw,9.5rem)]">
+    <WorldMapBg class="-z-10 inset-x-0 top-0 h-[clamp(11rem,20vw,17rem)] w-full opacity-60" />
+    <div class="shell relative grid grid-cols-1 items-start gap-[clamp(2rem,5vw,4.5rem)] lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)]">
       <div>
         <div class="mb-10 flex flex-col gap-4 rounded-md border border-rule-strong bg-paper-warm p-[clamp(1.3rem,1rem+1.5vw,2.2rem)]">
           <p class={legende}>Écrire directement</p>
           <a class="btn btn--cta w-fit" href={`mailto:${EMAIL}`}>
-            {EMAIL} <span class="arrow" aria-hidden="true">→</span>
+            {EMAIL} <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
           </a>
           <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <button type="button" class="tlink cursor-pointer border-0 bg-transparent p-0 font-[inherit] text-[0.85rem]" data-copy={EMAIL}>
-              Copier l'adresse
+            <button type="button" class="group tlink inline-flex min-h-[24px] cursor-pointer items-center gap-[0.35rem] border-0 bg-transparent p-0 font-[inherit] text-[0.85rem]" data-copy={EMAIL}>
+              <Copy class="group-aria-pressed:hidden" size="0.95em" aria-hidden="true" />
+              <Check class="hidden group-aria-pressed:block" size="0.95em" aria-hidden="true" />
+              <span data-copy-label>Copier l'adresse</span>
             </button>
-            <a class="tlink text-[0.85rem]" href="https://github.com/NetSo8" rel="noopener" target="_blank">GitHub · NetSo8 ↗</a>
+            {/* Le libellé du bouton change en place ; sans région live, un
+                lecteur d'écran ne l'annonce pas et l'action semble sans effet. */}
+            <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
+            <a class="tlink inline-flex min-h-[24px] items-center gap-[0.3rem] text-[0.85rem]" href="https://github.com/NetSo8" rel="noopener noreferrer" target="_blank">
+              GitHub · NetSo8 <ArrowUpRight size="0.95em" aria-hidden="true" />
+            </a>
           </div>
         </div>
 
-        <fieldset class="m-0 mb-10 border-0 p-0">
-          <legend class={legende}>Ce qui m'aide à répondre vite</legend>
+        <section class="mb-10">
+          <p class={legende}>Ce qui m'aide à répondre vite</p>
           <ul class="m-0 grid list-none grid-cols-1 gap-x-5 gap-y-4 border-t border-rule-strong p-0 [@media(width>40rem)]:grid-cols-2">
             {preciser.map((p) => (
               <li class="border-b border-rule-strong pt-4 pb-5">
                 <p class="text-[0.95rem] font-semibold">{p.t}</p>
-                <p class="mt-[0.3rem] text-[0.85rem]/[1.5] text-ink-soft">{p.d}</p>
+                <p class="mt-[0.3rem] text-base/[1.5] text-ink-soft">{p.d}</p>
               </li>
             ))}
           </ul>
-        </fieldset>
+        </section>
 
-        <p class="max-w-[60ch] text-[0.82rem] text-ink-soft">
+        <p class="max-w-[60ch] text-base text-ink-soft">
           Ces informations ne servent qu'à vous recontacter au sujet de votre demande.
           Elles ne sont ni revendues ni utilisées à d'autres fins.
         </p>
@@ -71,7 +84,7 @@ const bloc = 'border-t border-rule-strong pt-4';
           <p class="label">Ce qui se passe ensuite</p>
           <ol class="m-0 mt-[0.9rem] flex list-none flex-col gap-[0.65rem] p-0">
             {suite.map((s, i) => (
-              <li class="relative pl-9 text-[0.875rem] text-ink-soft">
+              <li class="relative pl-9 text-base text-ink-soft">
                 <span class="absolute left-0 font-mono text-[0.68rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
                 {s}
               </li>
@@ -81,28 +94,18 @@ const bloc = 'border-t border-rule-strong pt-4';
 
         <div class={bloc}>
           <p class="label">Où j'interviens</p>
-          <p class="mt-[0.7rem] text-[0.875rem] text-ink-soft">
-            En présentiel à Rivesaltes, Perpignan, Canet-en-Roussillon, Saint-Cyprien,
-            Cabestany, Le Barcarès et dans toute la plaine du Roussillon.
-            À distance partout en France.
+          <p class="mt-[0.7rem] text-base text-ink-soft">
+            En présentiel à Rivesaltes, Perpignan, Cabestany, Le Barcarès et dans un
+            rayon de 15 km. À distance partout en France.
           </p>
         </div>
 
         <div class={bloc}>
           <p class="label">Urgence réelle</p>
-          <p class="mt-[0.7rem] text-[0.875rem] text-ink-soft">
+          <p class="mt-[0.7rem] text-base text-ink-soft">
             Un arrêt d'activité ou une suspicion de piratage passe devant le reste.
             Précisez-le dans votre e-mail avec un créneau où vous êtes joignable :
             je rappelle le jour même.
-          </p>
-        </div>
-
-        <div class="border-t border-rule pt-4">
-          <p class="label">Vous venez du labo</p>
-          <p class="mt-[0.7rem] text-[0.875rem] text-ink-soft">
-            Pour une mission technique, joignez le contexte utile : langage, contrainte
-            matérielle, modèle de menace si vous en avez un. Le dépôt public est
-            <a class="tlink" href="https://github.com/NetSo8" rel="noopener" target="_blank">github.com/NetSo8</a>.
           </p>
         </div>
       </aside>
@@ -113,13 +116,25 @@ const bloc = 'border-t border-rule-strong pt-4';
 <script>
   // Petit confort : copier l'adresse sans ouvrir le client mail.
   const btn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const label = btn?.querySelector<HTMLElement>('[data-copy-label]');
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  let timer: ReturnType<typeof setTimeout>;
+
   btn?.addEventListener('click', async () => {
-    const value = btn.dataset.copy ?? '';
     try {
-      await navigator.clipboard.writeText(value);
-      const original = btn.textContent;
-      btn.textContent = 'Adresse copiée';
-      setTimeout(() => { btn.textContent = original; }, 1800);
-    } catch {}
+      await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+    } catch {
+      if (status) status.textContent = "La copie a échoué, sélectionnez l'adresse à la main";
+      return;
+    }
+    btn.setAttribute('aria-pressed', 'true');
+    if (label) label.textContent = 'Adresse copiée';
+    if (status) status.textContent = 'Adresse copiée dans le presse-papiers';
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      btn.removeAttribute('aria-pressed');
+      if (label) label.textContent = "Copier l'adresse";
+      if (status) status.textContent = '';
+    }, 1800);
   });
 </script>

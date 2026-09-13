@@ -1,7 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import CtaBand from '../../components/CtaBand.astro';
 import { getCollection, render } from 'astro:content';
+import { AUDIENCE_LABEL, formatDate } from '../../lib/blog';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -10,8 +13,6 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-const etiq = { particulier: 'Particuliers', entreprise: 'Entreprises', tous: 'Tout public' } as const;
 const cible = post.data.audience === 'entreprise' ? '/professionnels/' : '/particuliers/';
 
 const others = (await getCollection('blog'))
@@ -33,14 +34,14 @@ const schema = {
   <article>
     <header class="border-b border-rule bg-paper-warm pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(1.75rem,3vw,2.75rem)]">
       <div class="shell max-w-[58rem]">
-        <a class="font-mono text-[0.72rem] tracking-[0.08em] text-ink-faint no-underline hover:text-accent" href="/blog/">← Blog</a>
+        <a class="inline-flex min-h-[24px] items-center gap-[0.4rem] font-mono text-[0.72rem] tracking-[0.08em] text-ink-faint no-underline hover:text-accent" href="/blog/">
+          <ArrowLeft size="1em" aria-hidden="true" /> Blog
+        </a>
         <div class="mt-7 flex flex-wrap items-center gap-3">
           <time class="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-faint" datetime={post.data.date.toISOString()}>
-            {fmt(post.data.date)}
+            {formatDate(post.data.date)}
           </time>
-          <span class="rounded-md border border-accent px-[0.45rem] py-[0.1rem] font-mono text-[0.62rem] uppercase tracking-[0.1em] text-accent">
-            {etiq[post.data.audience]}
-          </span>
+          <span class="badge badge--accent">{AUDIENCE_LABEL[post.data.audience]}</span>
         </div>
         <h1 class="mt-4 max-w-[24ch] text-[clamp(1.9rem,1rem+3.1vw,3rem)]">{post.data.title}</h1>
         <p class="mt-[1.1rem] max-w-[60ch] text-[1.05rem]/[1.6] text-ink-soft">{post.data.summary}</p>
@@ -53,11 +54,11 @@ const schema = {
       <aside class="flex flex-col gap-7 lg:sticky lg:top-28">
         <div class="border-t border-rule-strong pt-4">
           <p class="label">En pratique</p>
-          <p class="mt-[0.7rem] mb-[1.1rem] text-[0.875rem] text-ink-soft">
+          <p class="mt-[0.7rem] mb-[1.1rem] text-base text-ink-soft">
             Cet article décrit ce que je fais chez mes clients. Si vous préférez que je
             m'en occupe, la mise en place se règle en général en une intervention.
           </p>
-          <a class="btn btn--cta" href="/contact/">Me confier ça <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--cta" href="/contact/">Me confier ça <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
         </div>
 
         <div class="border-t border-rule-strong pt-4">
@@ -82,7 +83,7 @@ const schema = {
   <CtaBand
     kicker="Après lecture"
     title="Une question qui reste ?"
-    text="Écrivez-la telle quelle. Je réponds sous 24 h ouvrées, y compris quand la réponse est que vous n'avez besoin de personne."
+    text="Écrivez-la telle quelle, y compris quand la réponse est que vous n'avez besoin de personne."
   />
 
   <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

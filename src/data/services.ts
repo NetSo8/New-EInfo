@@ -6,7 +6,9 @@ export interface Service {
   resume: string;
   pour: Array<'particulier' | 'entreprise'>;
   livrables: string[];
-  delai: string;
+  /** Requêtes visées par la prestation. Référence rédactionnelle : ces termes
+   *  doivent se retrouver dans les textes visibles, jamais injectés en clair
+   *  dans une balise masquée. */
   motscles: string;
 }
 
@@ -17,83 +19,52 @@ export const services: Service[] = [
     titre: 'Dépannage et assistance',
     probleme: "Votre machine ne démarre plus, rame, ou fait quelque chose d'inquiétant.",
     resume:
-      "Diagnostic sur place ou à distance, réparation, remise en état. Windows, macOS et Linux. Je vous dis ce qui ne va pas et ce que ça coûte avant de commencer.",
+      "Le métier de base : technicien informatique. Diagnostic sur place ou à distance, réparation matérielle et logicielle, remise en état. Windows, macOS et Linux. Je vous dis ce qui ne va pas et ce que ça coûte avant de commencer.",
     pour: ['particulier', 'entreprise'],
     livrables: [
       'Diagnostic annoncé et chiffré avant intervention',
       'Réparation logicielle ou remplacement de pièce',
       'Récupération de données quand le support le permet',
       'Nettoyage, remise en service, transfert vers une nouvelle machine',
+      'Sauvegarde mise en place et restauration testée devant vous',
     ],
-    delai: 'Sous 48 h',
-    motscles: 'dépannage informatique Rivesaltes, réparation ordinateur Perpignan',
+    motscles: 'dépannage informatique Rivesaltes, technicien informatique Perpignan, réparation ordinateur 66',
   },
   {
-    id: 'infra',
+    id: 'reseau',
     n: '02',
-    titre: 'Infrastructure et hébergement',
-    probleme: "Votre hébergement est instable, trop cher, ou personne ne sait comment il est configuré.",
+    titre: 'Réseau et sécurité',
+    probleme: "Le wifi lâche, l'accès distant est une porte ouverte, et personne ne sait comment le réseau est câblé.",
     resume:
-      "Serveur Linux monté proprement pour votre activité, déploiement de vos outils métiers, supervision continue avec alerte quand quelque chose sort du rail.",
-    pour: ['entreprise'],
-    livrables: [
-      'VPS Debian ou Ubuntu configuré, documenté, reproductible',
-      'Déploiement du site et des services métiers',
-      'Supervision 24/7 et alertes Telegram en cas d\'incident',
-      'Documentation d\'exploitation qui vous reste, y compris sans moi',
-    ],
-    delai: '2 à 5 jours',
-    motscles: 'hébergement VPS Perpignan, administration serveur Linux Pyrénées-Orientales',
-  },
-  {
-    id: 'securite',
-    n: '03',
-    titre: 'Sécurité et sauvegardes',
-    probleme: "Vous voulez éviter le piratage, la perte de données et l'arrêt d'activité.",
-    resume:
-      "Durcissement des serveurs, des postes et des accès, sauvegardes réellement testées, traitement des incidents et remise en état.",
+      "C'est mon cœur de métier et le seul chantier que je revendique comme une spécialité. Remise à plat du réseau local et de tout ce qui décide de sa sécurité : plan d'adressage, segmentation, pare-feu, accès distant chiffré, wifi mesuré, sauvegardes testées. Quand l'outil du marché ne convient pas, je code le mien : applications de supervision, utilitaires réseau sur mesure.",
     pour: ['particulier', 'entreprise'],
     livrables: [
-      'Audit de configuration, rapport lisible et priorisé',
-      'Durcissement des accès, du pare-feu et des comptes',
-      'Sauvegardes chiffrées, avec restauration testée devant vous',
-      'Intervention sur incident : confinement, remise en service, rapport',
+      "Plan d'adressage et schéma réseau à jour, remis par écrit",
+      'Segmentation VLAN : postes, caisses, wifi invités, équipements isolés',
+      'Pare-feu et règles de filtrage documentées, entrantes et sortantes',
+      'Accès distant par VPN chiffré, à la place du RDP exposé sur internet',
+      'Couverture wifi mesurée sur site, bornes placées sur relevé et non au hasard',
+      'Durcissement des accès et des comptes, sauvegardes chiffrées et restauration testée',
+      'Supervision continue et alerte quand quelque chose sort du rail',
     ],
-    delai: 'Incident : le jour même',
-    motscles: 'sécurité informatique PME Perpignan, sauvegarde entreprise 66',
+    motscles:
+      'technicien réseau et sécurité Perpignan, configuration VLAN pare-feu Pyrénées-Orientales, VPN télétravail TPE 66, sécurisation réseau entreprise Rivesaltes',
   },
   {
     id: 'web',
-    n: '04',
-    titre: 'Site web',
+    n: '03',
+    titre: 'Site web : création et maintenance',
     probleme: "Votre site est lent, daté, ou tombe sans que vous sachiez pourquoi.",
     resume:
-      "Création ou refonte orientée performance et référencement local, puis maintenance : mises à jour, sauvegardes, supervision de disponibilité.",
+      "Création ou refonte orientée performance et référencement local, puis maintenance dans la durée : mises à jour, sauvegardes, correctifs de sécurité, supervision de disponibilité. L'hébergement va avec, et il est tenu par la même personne que le réseau.",
     pour: ['entreprise'],
     livrables: [
       'Site rapide, accessible, indexable, sans dépendance inutile',
       'Référencement local travaillé sur vos communes',
       'Hébergement et nom de domaine gérés de bout en bout',
-      'Maintenance mensuelle : mises à jour, sauvegardes, disponibilité',
+      'Serveur ou VPS Linux configuré, durci et documenté pour le faire tourner',
+      'Maintenance mensuelle : mises à jour, sauvegardes, correctifs, disponibilité',
     ],
-    delai: '2 à 6 semaines',
-    motscles: 'création site web Perpignan, refonte site internet Rivesaltes',
-  },
-  {
-    id: 'automatisation',
-    n: '05',
-    titre: 'Automatisation',
-    probleme: "Vous passez du temps chaque semaine sur une tâche que la machine peut faire.",
-    resume:
-      "Scripts sur mesure en Python ou en shell pour les traitements répétitifs, avec journalisation et alertes pour savoir quand ça a tourné et quand ça a échoué.",
-    pour: ['entreprise'],
-    livrables: [
-      'Script sur mesure, versionné et documenté',
-      'Exécution planifiée, journalisée, supervisée',
-      'Alerte immédiate en cas d\'échec, pas trois semaines après',
-      'Transfert de compétence si vous voulez le reprendre',
-    ],
-    delai: '1 à 10 jours',
-    motscles: 'automatisation Python entreprise, script métier sur mesure',
+    motscles: 'création site web Perpignan, maintenance site internet Rivesaltes, refonte site vitrine 66',
   },
 ];

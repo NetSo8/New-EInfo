@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import PageHead from '../../components/PageHead.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { getCollection } from 'astro:content';
+import { AUDIENCE_LABEL, formatDate } from '../../lib/blog';
 
 const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-const etiq = { particulier: 'Particuliers', entreprise: 'Entreprises', tous: 'Tout public' } as const;
 ---
 <Base
   title="Blog · conseils informatiques pratiques (66)"
@@ -16,43 +16,33 @@ const etiq = { particulier: 'Particuliers', entreprise: 'Entreprises', tous: 'To
     kicker="Blog"
     title="Ce que j'explique le plus souvent"
     lede="Les mêmes questions reviennent sur presque toutes les interventions. Autant les écrire une fois pour toutes, en français, sans supposer que vous connaissez le vocabulaire."
-  >
-    <p class="font-mono text-[0.72rem] tracking-[0.04em] text-ink-faint">
-      Vous cherchez le registre technique&nbsp;?
-      <a class="tlink" href="/labo/">Le labo est ici</a>.
-    </p>
-  </PageHead>
+  />
 
-  <section class="py-band">
+  <section class="section">
     <div class="shell">
       {posts.length === 0 ? (
         <p class="border-y border-rule py-12 text-ink-soft">Aucun article publié pour l'instant.</p>
       ) : (
-        <ol class="m-0 list-none border-t border-rule-strong p-0">
+        <ol class="rowlist">
           {posts.map((p) => (
-            <li class="border-b border-rule">
+            <li>
               <a
                 href={`/blog/${p.id}/`}
-                class="group grid grid-cols-[1fr_1.5rem] items-start gap-6 py-[1.9rem] text-inherit no-underline transition-[background-color,padding-inline] duration-200 ease-out-soft hover:bg-accent-wash hover:px-4 [@media(width>52rem)]:grid-cols-[11rem_minmax(0,1fr)_1.5rem]"
+                class="grid grid-cols-[1fr_1.5rem] items-start gap-6 py-[1.9rem] hover:px-4 [@media(width>52rem)]:grid-cols-[11rem_minmax(0,1fr)_1.5rem]"
               >
                 <span class="flex flex-row items-center gap-3 [@media(width>52rem)]:flex-col [@media(width>52rem)]:items-start [@media(width>52rem)]:gap-[0.45rem] [@media(width>52rem)]:pt-[0.35rem]">
                   <time class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-faint" datetime={p.data.date.toISOString()}>
-                    {fmt(p.data.date)}
+                    {formatDate(p.data.date)}
                   </time>
-                  <span class="w-fit rounded-md border border-accent px-[0.45rem] py-[0.1rem] font-mono text-[0.62rem] uppercase tracking-[0.1em] text-accent">
-                    {etiq[p.data.audience]}
-                  </span>
+                  <span class="badge badge--accent w-fit">{AUDIENCE_LABEL[p.data.audience]}</span>
                 </span>
 
                 <span class="flex flex-col gap-[0.45rem]">
                   <span class="max-w-[28ch] text-[clamp(1.2rem,1.05rem+0.85vw,1.7rem)]/[1.18] font-bold tracking-[-0.032em]">{p.data.title}</span>
-                  <span class="max-w-[66ch] text-[0.93rem] text-ink-soft">{p.data.summary}</span>
+                  <span class="max-w-[66ch] text-base text-ink-soft">{p.data.summary}</span>
                 </span>
 
-                <span
-                  class="justify-self-end pt-[0.4rem] text-accent transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
-                  aria-hidden="true"
-                >→</span>
+                <ArrowRight class="arrow justify-self-end mt-[0.4rem] text-accent" size="1.1em" aria-hidden="true" />
               </a>
             </li>
           ))}

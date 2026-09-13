@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import Plus from '@lucide/astro/icons/plus';
 import CtaBand from '../components/CtaBand.astro';
 import { services } from '../data/services';
 
@@ -20,16 +22,16 @@ const schema = {
   })),
 };
 
-const tag = 'rounded-md border border-rule-strong px-[0.6rem] py-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-soft no-underline hover:border-accent hover:text-accent';
+const tag = 'badge inline-flex min-h-[24px] items-center no-underline hover:border-accent hover:text-accent';
 ---
 <Base
-  title="Services informatiques · Rivesaltes et Perpignan"
-  description="Cinq prestations détaillées : dépannage, infrastructure et hébergement VPS, sécurité et sauvegardes, création de site web, automatisation. Pyrénées-Orientales."
+  title="Services informatiques · Rivesaltes et Perpignan (66)"
+  description="Trois prestations, pas un catalogue : dépannage informatique, réseau et sécurité (VLAN, pare-feu, VPN, wifi, sauvegardes), création et maintenance de site web. Rivesaltes, Perpignan, Pyrénées-Orientales."
 >
   <PageHead
     kicker="Catalogue"
     title="Le détail de ce que je fais"
-    lede="Cinq prestations décrites sans emballage : le problème traité, ce que vous recevez concrètement, et le délai courant. Si vous cherchez plutôt par situation, passez par la page particuliers ou la page entreprises."
+    lede="Trois prestations seulement, décrites sans emballage : le problème traité et ce que vous recevez concrètement. La liste est courte parce que c'est un choix : le réseau et sa sécurité sont ma spécialité, pas une ligne de catalogue. Si vous cherchez plutôt par situation, passez par la page particuliers ou la page entreprises."
   >
     <nav class="flex flex-wrap gap-2" aria-label="Aller à une prestation">
       {services.map((s) => (
@@ -56,7 +58,7 @@ const tag = 'rounded-md border border-rule-strong px-[0.6rem] py-1 font-mono tex
           <p class="font-mono text-[0.75rem] font-semibold tracking-[0.06em] text-accent">§ {s.n}</p>
           <h2 class="mt-3 text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)]">{s.titre}</h2>
           <p class="mt-4 max-w-[42ch] text-[clamp(1.02rem,0.96rem+0.35vw,1.2rem)] font-medium text-ink">{s.probleme}</p>
-          <p class="mt-[0.85rem] max-w-[48ch] text-[0.95rem] text-ink-soft">{s.resume}</p>
+          <p class="mt-[0.85rem] max-w-[48ch] text-base text-ink-soft">{s.resume}</p>
           <div class="mt-6 flex gap-2">
             {s.pour.includes('particulier') && <a class={tag} href="/particuliers/">Particuliers</a>}
             {s.pour.includes('entreprise') && <a class={tag} href="/professionnels/">Entreprises</a>}
@@ -67,25 +69,14 @@ const tag = 'rounded-md border border-rule-strong px-[0.6rem] py-1 font-mono tex
           <p class="label">Ce que vous recevez</p>
           <ul class="m-0 mt-[0.9rem] flex list-none flex-col p-0">
             {s.livrables.map((l) => (
-              <li class="relative border-b border-rule py-[0.65rem] pl-[1.35rem] text-[0.9rem]">
-                <span class="absolute left-0 top-[0.65rem] font-mono text-[0.8rem] text-accent" aria-hidden="true">+</span>
+              <li class="relative border-b border-rule py-[0.65rem] pl-[1.35rem] text-base">
+                <Plus class="absolute top-[1rem] left-0 text-accent" size="0.8em" aria-hidden="true" />
                 {l}
               </li>
             ))}
           </ul>
 
-          <dl class="my-6 flex flex-wrap gap-x-10 gap-y-6">
-            <div>
-              <dt class="label">Délai courant</dt>
-              <dd class="mt-1 font-mono text-[0.78rem]">{s.delai}</dd>
-            </div>
-            <div>
-              <dt class="label">Recherché sous</dt>
-              <dd class="mt-1 max-w-[32ch] font-mono text-[0.78rem]/[1.5] text-ink-faint">{s.motscles}</dd>
-            </div>
-          </dl>
-
-          <a class="btn btn--ghost" href="/contact/">Parler de ce point <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="mt-6 btn btn--ghost" href="/contact/">Parler de ce point <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
         </div>
       </div>
     </section>

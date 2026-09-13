@@ -1,15 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ChevronRight from '@lucide/astro/icons/chevron-right';
+import Plus from '@lucide/astro/icons/plus';
 import PageHead from '../components/PageHead.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Terminal from '../components/Terminal.astro';
-import ProofStrip from '../components/ProofStrip.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import { services } from '../data/services';
+import { Image } from 'astro:assets';
+import baie from '../assets/baie.jpg';
 
-const U = 'https://images.unsplash.com/';
-const baie = `${U}photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1400&q=80`;
 
 const pro = services.filter((s) => s.pour.includes('entreprise'));
 
@@ -17,29 +19,28 @@ const formules = [
   {
     n: '01',
     t: 'Intervention ponctuelle',
-    q: "Quelque chose est cassé, ou un projet précis doit sortir.",
+    q: "Quelque chose est cassé, ou un chantier précis doit sortir : remise à plat du réseau, VPN à déployer, nouveau site.",
     l: ['Facturation à l\'heure ou au forfait projet', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
     p: 'Devis avant démarrage',
   },
   {
     n: '02',
     t: 'Infogérance mensuelle',
-    q: "Vous voulez que ça tourne sans y penser, avec quelqu'un à appeler.",
+    q: "Vous voulez que le réseau et le site tournent sans y penser, avec quelqu'un à appeler.",
     l: [
-      'Supervision continue des serveurs et du site',
+      'Supervision continue du réseau, des accès et du site',
       'Mises à jour, sauvegardes vérifiées, correctifs de sécurité',
       'Heures d\'intervention incluses chaque mois',
       'Rapport mensuel lisible, sans jargon',
     ],
     p: 'Forfait mensuel, après cadrage',
-    mid: true,
   },
   {
     n: '03',
     t: 'Audit de sécurité approfondi',
     q: "Vous devez savoir où vous en êtes, avant un incident ou avant un client exigeant.",
     l: [
-      'Cartographie des accès, des services exposés et des données sensibles',
+      'Cartographie du réseau, des accès, des services exposés et des données sensibles',
       'Revue de la gestion des secrets et de la chaîne de chiffrement',
       'Test réel de restauration des sauvegardes',
       'Rapport priorisé : ce qui est urgent, ce qui peut attendre, ce qui est correct',
@@ -51,7 +52,9 @@ const formules = [
 
 const faq = [
   { q: "Vous remplacez un prestataire informatique existant ?", a: "Souvent, oui, et la reprise se prépare. Je récupère les accès, je documente ce qui existe avant de toucher à quoi que ce soit, et la bascule se fait hors des heures ouvrées. Une reprise propre prend en général deux à quatre semaines." },
-  { q: "Combien de postes faut-il pour que ça ait du sens ?", a: "L'infogérance devient intéressante à partir de trois ou quatre postes, ou dès qu'un serveur, une caisse ou un logiciel métier est en jeu. En dessous, une intervention ponctuelle suffit et coûte moins cher." },
+  { q: "Combien de postes faut-il pour que ça ait du sens ?", a: "L'infogérance devient intéressante à partir de trois ou quatre postes, ou dès qu'une caisse, un accès distant ou un logiciel métier est en jeu. En dessous, une intervention ponctuelle suffit et coûte moins cher." },
+  { q: "Pourquoi un périmètre aussi étroit ?", a: "Parce qu'un prestataire seul qui annonce dix spécialités n'en a aucune. Le réseau et sa sécurité, c'est ce que je travaille en profondeur, et c'est aussi là que se trouvent la majorité des problèmes qu'on impute au logiciel. Le site web est le prolongement naturel, puisque c'est moi qui tiens ce qui le fait tourner. Pour le reste (téléphonie, ERP, matériel spécialisé), j'ai des confrères et je vous les indique." },
+  { q: "Vous administrez nos serveurs ?", a: "Je configure et j'exploite les serveurs Linux et les VPS dont dépendent le site et les services que je mets en place, et je les documente pour qu'un autre puisse les reprendre. En revanche, si votre activité repose sur un parc de serveurs déjà important, un administrateur système à temps plein sera plus pertinent que moi, et je le dis avant de commencer plutôt qu'après." },
   { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Toute l'infrastructure que je gère est documentée et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
   { q: "Pourquoi aucun tarif n'est affiché ?", a: "Parce qu'un forfait annoncé sans avoir vu l'infrastructure est soit trop cher pour vous, soit intenable pour moi. Le premier échange de trente minutes est gratuit et suffit en général à donner un ordre de grandeur ferme, avant tout engagement." },
   { q: "Vous signez un engagement de niveau de service ?", a: "Oui, sur des chiffres tenables : réponse sous 4 h ouvrées, prise en charge d'un arrêt d'activité le jour même, sauvegardes restaurées et vérifiées chaque mois. Je préfère annoncer moins et tenir." },
@@ -66,26 +69,25 @@ const bridgeItems = [
 ];
 ---
 <Base
-  track="pro"
-  title="Infogérance et sécurité informatique TPE/PME · P.-O."
-  description="Infrastructure VPS, sécurité, sauvegardes et site web pour les TPE des Pyrénées-Orientales. Un seul interlocuteur pour le code, le serveur et le réseau."
+  title="Technicien réseau et sécurité TPE/PME · Perpignan (66)"
+  description="Réseau local, segmentation VLAN, pare-feu, VPN, wifi et sauvegardes testées pour les TPE des Pyrénées-Orientales. Plus la création et la maintenance de votre site. Deux chantiers, pas un catalogue."
 >
   <PageHead
-    tone="sand"
+    tone="warm"
     kicker="Entreprises · TPE, PME, professions libérales"
-    title="Un interlocuteur technique, pas un standard téléphonique."
-    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je tiens le poste, le réseau, le serveur et le site, avec le même niveau d'exigence sur les quatre."
+    title="Je fais deux choses, et je les fais bien."
+    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je ne vous propose pas pour autant un catalogue de dix lignes : je tiens votre réseau et sa sécurité, et je construis puis je maintiens votre site. Ce qui sort de ce périmètre, je le dis et je vous oriente."
   >
     <div class="flex flex-wrap gap-3">
-      <a class="btn btn--cta" href="/contact/?profil=entreprise">Demander un diagnostic <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--cta" href="/contact/">Demander un diagnostic <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       <a class="btn btn--ghost" href="#formules">Voir les formules</a>
     </div>
     <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
-      Premier échange de 30 min, gratuit et sans engagement · Réponse sous 24 h ouvrées
+      Premier échange gratuit et sans engagement
     </p>
   </PageHead>
 
-  <section class="py-band">
+  <section class="section">
     <div class="shell">
       <SectionHead
         n="01"
@@ -98,20 +100,24 @@ const bridgeItems = [
           <Terminal
             title="premier relevé : TPE, 12 postes"
             lines={[
-              { k: 'cmd', t: 'audit --niveau=1' },
-              { k: 'ok', t: 'site vitrine        en ligne' },
-              { k: 'warn', t: 'sauvegardes         quotidiennes, jamais restaurées' },
-              { k: 'warn', t: 'accès distant       RDP exposé sur internet' },
-              { k: 'warn', t: 'comptes             3 comptes d\'anciens salariés actifs' },
+              { k: 'cmd', t: 'audit --lan --tls --ssh --dns' },
+              { k: 'ok', t: 'tls  443/tcp        TLS 1.3 · HSTS · expire dans 61 j' },
+              { k: 'ok', t: 'dns  SPF/DKIM       alignés, DMARC en p=none' },
+              { k: 'warn', t: 'ssh  22/tcp         PasswordAuthentication yes · root autorisé' },
+              { k: 'warn', t: 'rdp  3389/tcp       exposé en NAT direct, aucun VPN devant' },
+              { k: 'warn', t: 'smb  445/tcp        signature désactivée, SMBv1 actif' },
+              { k: 'warn', t: 'vlan                un seul domaine de diffusion en /24 plat' },
+              { k: 'warn', t: 'wifi WPA2-PSK       clé partagée depuis 2019, invités inclus' },
+              { k: 'warn', t: 'comptes             3 comptes d\'anciens salariés encore actifs' },
               { k: 'out', t: 'postes              12 · 4 sans correctif depuis 14 mois' },
-              { k: 'out', t: 'serveur métier       aucune documentation transmise' },
+              { k: 'out', t: 'sauvegardes         quotidiennes · aucune restauration testée' },
               { k: 'dim', t: '' },
-              { k: 'dim', t: 'aucun de ces points ne se voit tant que rien ne casse.' },
+              { k: 'dim', t: 'aucune de ces lignes ne déclenche d\'alerte aujourd\'hui.' },
             ]}
           />
         </div>
 
-        <div class="col-span-full flex flex-col items-start gap-4 text-[0.95rem] text-ink-soft mid:col-start-9 mid:col-span-4">
+        <div class="col-span-full flex flex-col items-start gap-4 text-base text-ink-soft mid:col-start-9 mid:col-span-4">
           <p>
             Aucune de ces lignes ne provoque de panne aujourd'hui. Elles décident
             simplement de ce qui se passera le jour où quelque chose arrive : une heure
@@ -121,13 +127,13 @@ const bridgeItems = [
             Le diagnostic sert à transformer cette liste floue en décisions chiffrées,
             avec un ordre de priorité que vous pouvez tenir sur douze mois.
           </p>
-          <a class="tlink" href="/contact/?profil=entreprise">Demander le diagnostic</a>
+          <a class="tlink" href="/contact/">Demander le diagnostic</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-rule bg-paper-warm py-band" id="formules">
+  <section class="section section-rule section-tint" id="formules">
     <div class="shell">
       <SectionHead
         n="02"
@@ -141,43 +147,44 @@ const bridgeItems = [
           <article
             class:list={[
               'flex flex-col gap-[1.1rem] border-b border-rule px-6 py-7',
-              f.bridge ? 'border-nuit bg-nuit text-nuit-text' : 'lg:not-first:border-l',
+              f.bridge ? 'on-nuit bg-nuit' : 'lg:not-first:border-l',
             ]}
           >
             <header>
-              <span class:list={['font-mono text-[0.72rem] font-semibold', f.bridge ? 'text-accent-nuit' : 'text-accent']}>{f.n}</span>
+              <span class="font-mono text-[0.72rem] font-semibold text-accent">{f.n}</span>
               <h3 class="mt-2 text-[1.25rem] tracking-[-0.028em]">{f.t}</h3>
-              <p class:list={['mt-[0.4rem] text-[0.875rem]', f.bridge ? 'text-nuit-soft' : 'text-ink-soft']}>{f.q}</p>
+              <p class="mt-[0.4rem] text-base text-ink-soft">{f.q}</p>
             </header>
 
             <ul class="m-0 flex flex-1 list-none flex-col gap-[0.55rem] p-0">
               {f.l.map((x) => (
-                <li class="relative pl-[1.1rem] text-[0.875rem]/[1.5]">
-                  <span class:list={['absolute left-[0.2rem] font-bold', f.bridge ? 'text-accent-nuit' : 'text-accent']} aria-hidden="true">·</span>
+                <li class="relative pl-[1.1rem] text-base/[1.5]">
+                  <Plus class="absolute top-[0.4rem] left-0 text-accent" size="0.75em" aria-hidden="true" />
                   {x}
                 </li>
               ))}
             </ul>
 
-            <p class:list={['font-mono text-[0.8rem] font-semibold tracking-[0.02em]', f.bridge ? 'text-accent-nuit' : 'text-accent']}>{f.p}</p>
+            <p class="font-mono text-[0.8rem] font-semibold tracking-[0.02em] text-accent">{f.p}</p>
           </article>
         ))}
       </div>
 
-      <p class="mt-5 max-w-[62ch] text-[0.8rem] text-ink-faint">
+      <p class="mt-5 max-w-[62ch] text-base text-ink-faint">
         Aucune grille tarifaire affichée : le montant dépend du nombre de postes, de la
-        présence d'un serveur et du niveau de disponibilité attendu. Il est chiffré après
+        complexité du réseau, du nombre de sites à relier et du niveau de disponibilité attendu. Il est chiffré après
         le premier échange, par écrit, et ne bouge plus sans votre accord.
       </p>
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead
         n="03"
         kicker="Périmètre technique"
-        title="Quatre chantiers, tenus par la même personne"
+        title="Deux chantiers, et c'est volontaire"
+        lede="Le réseau et sa sécurité d'un côté, le site web et sa maintenance de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
       />
       <div class="grid12 mt-12 items-start gap-y-10">
         <ol class="col-span-full m-0 list-none border-t border-rule-strong p-0 mid:col-span-7">
@@ -186,42 +193,41 @@ const bridgeItems = [
               <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{s.n}</span>
               <div>
                 <h3 class="text-[1.3rem] tracking-[-0.03em]">{s.titre}</h3>
-                <p class="mt-[0.45rem] max-w-[52ch] text-[0.925rem] text-ink-soft">{s.resume}</p>
+                <p class="mt-[0.45rem] max-w-[52ch] text-base text-ink-soft">{s.resume}</p>
                 <ul class="m-0 mt-[0.9rem] flex list-none flex-col gap-[0.35rem] p-0">
                   {s.livrables.map((l) => (
-                    <li class="relative pl-[1.1rem] text-[0.85rem] text-ink-soft">
-                      <span class="absolute left-0 font-mono text-[0.75rem] text-accent" aria-hidden="true">+</span>
+                    <li class="relative pl-[1.1rem] text-base text-ink-soft">
+                      <Plus class="absolute top-[0.45rem] left-0 text-accent" size="0.75em" aria-hidden="true" />
                       {l}
                     </li>
                   ))}
                 </ul>
-                <p class="mt-[0.9rem] font-mono text-[0.68rem] tracking-[0.06em] text-ink-faint">Délai courant : {s.delai}</p>
               </div>
             </li>
           ))}
         </ol>
 
         <figure class="col-span-full m-0 mid:col-start-9 mid:col-span-4 mid:sticky mid:top-28">
-          <img
+          <Image
             src={baie}
             alt="Baie de brassage réseau, jarretières bleues repérées une par une"
             loading="lazy"
             decoding="async"
-            width="1400"
-            height="933"
+            widths={[420, 700, 1000]}
+            sizes="(width >= 60rem) 32vw, 100vw"
+            quality={68}
             class="aspect-video w-full object-cover contrast-105 saturate-70 mid:aspect-3/4"
           />
-          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] text-ink-faint">Reprise de câblage, client 66</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="bg-nuit py-band text-nuit-text">
+  <section class="section on-nuit bg-nuit">
     <div class="shell max-w-[62rem]">
-      <p class="label text-accent-nuit">04 / Le cran au-dessus</p>
+      <p class="label text-accent">04 / Le cran au-dessus</p>
       <h2 class="mt-[0.9rem] text-x1">Quand l'audit standard ne suffit plus</h2>
-      <p class="mt-[1.1rem] max-w-[58ch] text-nuit-soft">
+      <p class="mt-[1.1rem] max-w-[58ch] text-ink-soft">
         Certaines structures manipulent des données qui justifient d'aller plus loin
         que la liste de contrôle habituelle : santé, juridique, sous-traitance
         industrielle, ou simplement un client final qui pose des questions précises.
@@ -229,11 +235,11 @@ const bridgeItems = [
 
       <div class="mt-10 grid grid-cols-1 items-start gap-10 mid:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <p class="label mb-[0.9rem] text-nuit-faint">Ce que ça ajoute</p>
+          <p class="label mb-[0.9rem]">Ce que ça ajoute</p>
           <ul class="m-0 flex list-none flex-col p-0">
             {bridgeItems.map((b) => (
-              <li class="relative border-b border-rule-nuit py-[0.7rem] pl-[1.2rem] text-[0.9rem] text-nuit-text first:border-t">
-                <span class="absolute left-0 text-accent-nuit" aria-hidden="true">›</span>
+              <li class="relative border-b border-rule py-[0.7rem] pl-[1.2rem] text-base first:border-t">
+                <ChevronRight class="absolute top-[0.8rem] left-0 text-accent" size="0.9em" aria-hidden="true" />
                 {b}
               </li>
             ))}
@@ -241,28 +247,20 @@ const bridgeItems = [
         </div>
 
         <div>
-          <p class="label mb-[0.9rem] text-nuit-faint">Sur quoi ça s'appuie</p>
-          <p class="mb-6 max-w-[40ch] text-[0.9rem] text-nuit-soft">
-            Sur du travail publié, pas sur une plaquette. Les notes techniques du labo
-            montrent la méthode, les mesures et les limites, y compris quand la
-            conclusion n'est pas encore là.
+          <p class="label mb-[0.9rem]">Sur quoi ça s'appuie</p>
+          <p class="mb-6 max-w-[40ch] text-base text-ink-soft">
+            Sur des réalisations livrées, pas sur une plaquette. Le portfolio détaille
+            le contexte, les contraintes et ce qui a été fait, projet par projet.
           </p>
-          <a class="btn btn--nuit-ghost" href="/labo/">Lire le labo <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--nuit-ghost" href="/portfolio/">Voir les réalisations <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
-      <SectionHead n="05" kicker="Preuves publiées" title="Ce que j'écris quand je ne travaille pas pour vous" />
-      <div class="mt-12" data-reveal><ProofStrip /></div>
-    </div>
-  </section>
-
-  <section class="border-t border-rule py-band">
-    <div class="shell">
-      <SectionHead n="06" kicker="Questions fréquentes" title="Les objections légitimes" />
+      <SectionHead n="05" kicker="Questions fréquentes" title="Les objections légitimes" />
       <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
     </div>
   </section>
@@ -271,7 +269,7 @@ const bridgeItems = [
     kicker="Prochaine étape"
     title="Trente minutes pour savoir où vous en êtes."
     text="Un échange sans engagement : votre activité, ce qui vous inquiète, ce qui vous a déjà coûté du temps. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
-    href="/contact/?profil=entreprise"
+    href="/contact/"
     cta="Demander un diagnostic"
     second={{ href: '/portfolio/', label: 'Voir des interventions passées' }}
   />

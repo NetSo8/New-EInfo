@@ -1,7 +1,7 @@
 ---
 interface Line { k: 'cmd' | 'out' | 'ok' | 'warn' | 'dim'; t: string }
-interface Props { title?: string; lines: Line[]; caption?: string }
-const { title = 'elian@e-informatique : zsh', lines, caption } = Astro.props;
+interface Props { title?: string; lines: Line[] }
+const { title = 'elian@e-informatique : zsh', lines } = Astro.props;
 
 /* Le registre du terminal est fixe : il ne suit pas le thème de la page. */
 const tone: Record<Line['k'], string> = {
@@ -11,22 +11,34 @@ const tone: Record<Line['k'], string> = {
   ok: 'text-accent-nuit',
   warn: 'text-state-warn',
 };
+
+/* Le verdict d'une ligne ne doit jamais tenir à sa seule couleur : une
+   deutéranopie confond le vert-rouge de `ok` et l'ambre de `warn`. Chaque
+   état porte donc aussi un signe, comme dans un vrai outil en ligne de
+   commande, et un mot lu par les lecteurs d'écran. Les lignes neutres
+   gardent la même gouttière, sinon les colonnes se décalent. */
+const mark: Record<Line['k'], string> = { cmd: '$', ok: '+', warn: '!', out: ' ', dim: ' ' };
+const spoken: Record<Line['k'], string> = {
+  cmd: 'Commande : ',
+  ok: 'Conforme : ',
+  warn: 'À corriger : ',
+  out: '',
+  dim: '',
+};
+
+const id = `term-${Math.random().toString(36).slice(2, 8)}`;
 ---
-<figure class="m-0 overflow-hidden rounded-lg border border-nuit-2 bg-nuit">
+<figure class="m-0 overflow-hidden rounded-lg border border-nuit-2 bg-nuit" aria-labelledby={id}>
   <div class="flex items-center gap-[0.7rem] border-b border-nuit-3 bg-nuit-2 px-[0.85rem] py-[0.55rem]">
     <span class="flex gap-[5px]" aria-hidden="true">
-      <i class="size-[9px] rounded-full bg-accent-nuit"></i>
-      <i class="size-[9px] rounded-full bg-nuit-3"></i>
-      <i class="size-[9px] rounded-full bg-nuit-3"></i>
+      <span class="size-[9px] rounded-full bg-accent-nuit"></span>
+      <span class="size-[9px] rounded-full bg-nuit-3"></span>
+      <span class="size-[9px] rounded-full bg-nuit-3"></span>
     </span>
-    <span class="font-mono text-[0.68rem] text-nuit-faint">{title}</span>
+    <span class="font-mono text-[0.68rem] text-nuit-faint" id={id}>{title}</span>
   </div>
 
   <pre class="m-0 overflow-x-auto px-[1.15rem] pt-[1.15rem] pb-[1.3rem] font-mono text-[0.775rem]/[1.85] text-nuit-text"><code>{lines.map((l) => (
-    <span class:list={['block break-words whitespace-pre-wrap', tone[l.k]]}>{l.k === 'cmd' ? <span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span> : null}{l.t}{'\n'}</span>
-  ))}<span class="block"><span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span><span class="inline-block h-[1em] w-[8px] animate-blink bg-accent-nuit align-[-0.15em]" aria-hidden="true"></span></span></code></pre>
-
-  {caption && (
-    <figcaption class="border-t border-nuit-2 px-[1.15rem] py-[0.65rem] font-mono text-[0.66rem] text-nuit-faint">{caption}</figcaption>
-  )}
+    <span class:list={['block break-words whitespace-pre-wrap', tone[l.k]]}>{spoken[l.k] && <span class="sr-only">{spoken[l.k]}</span>}<span class="mr-[0.6rem] font-semibold" aria-hidden="true">{mark[l.k]}</span>{l.t}{'\n'}</span>
+  ))}<span class="block" aria-hidden="true"><span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span><span class="inline-block h-[1em] w-[8px] animate-blink bg-accent-nuit align-[-0.15em]"></span></span></code></pre>
 </figure>

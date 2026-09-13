@@ -1,6 +1,10 @@
 ---
-interface Props { track?: 'particulier' | 'pro' | 'labo' | null }
-const { track = null } = Astro.props;
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import Menu from '@lucide/astro/icons/menu';
+import Moon from '@lucide/astro/icons/moon';
+import Sun from '@lucide/astro/icons/sun';
+import X from '@lucide/astro/icons/x';
+
 const path = Astro.url.pathname;
 
 const links = [
@@ -8,34 +12,29 @@ const links = [
   { href: '/professionnels/', label: 'Entreprises' },
   { href: '/services/', label: 'Services' },
   { href: '/portfolio/', label: 'Réalisations' },
-  { href: '/labo/', label: 'Labo' },
   { href: '/blog/', label: 'Blog' },
   { href: '/a-propos/', label: 'À propos' },
 ];
 const isOn = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
-<header class="sticky top-0 z-50" data-track={track}>
+<header class="sticky top-0 z-50">
   {/* Bandeau d'état. Toujours sombre : un filet le détache en thème nuit. */}
   <div class="bg-fixed-nuit font-mono text-[0.68rem] tracking-[0.04em] text-nuit-soft theme-dark:border-b theme-dark:border-rule-nuit">
     <div class="shell flex h-[30px] items-center gap-[0.6rem] overflow-hidden whitespace-nowrap">
       <span class="size-[6px] flex-none rounded-full bg-accent-nuit" aria-hidden="true"></span>
       <span>Rivesaltes 66600 · Perpignan · P.-O.</span>
-      <span class="hidden text-nuit-faint xs:inline" aria-hidden="true">/</span>
-      <span class="hidden xs:inline">Intervention sous 48 h</span>
       <span class="hidden text-nuit-faint md:inline" aria-hidden="true">/</span>
       <span class="hidden md:inline">À distance partout en France</span>
-      <a class="ml-auto text-fixed-paper no-underline hover:text-accent-nuit" href="/contact/">Écrire&nbsp;→</a>
+      <a class="ml-auto inline-flex h-full items-center gap-[0.35rem] pl-1 text-fixed-paper no-underline hover:text-accent-nuit" href="/contact/">
+        Écrire <ArrowRight size="1em" aria-hidden="true" />
+      </a>
     </div>
   </div>
 
   <div class="border-b border-rule bg-paper/88 backdrop-blur-[8px] backdrop-saturate-150">
     <div class="shell flex h-[66px] items-center gap-6">
       <a class="flex flex-none items-center gap-[0.6rem] text-ink no-underline" href="/" aria-label="E Informatique, accueil">
-        <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.25" />
-          <text x="6.5" y="21.5" class="fill-current font-mono text-[15px] font-semibold">e</text>
-          <rect x="17.5" y="12" width="6" height="9.5" class="fill-accent" />
-        </svg>
+        <img src="/logo.png" alt="" width="30" height="30" class="size-[30px]" />
         <span class="text-[1.02rem] font-bold tracking-[-0.03em]">E&nbsp;Informatique</span>
       </a>
 
@@ -44,7 +43,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
           <a
             href={l.href}
             class:list={[
-              'border-b-2 py-[0.35rem] text-[0.885rem] no-underline transition-[color,border-color] duration-150 ease-out-soft hover:text-ink',
+              'flex min-h-[24px] items-center border-b-2 py-[0.45rem] text-[0.885rem] no-underline transition-[color,border-color] duration-150 ease-out-soft hover:text-ink',
               isOn(l.href)
                 ? 'border-accent font-semibold text-ink'
                 : 'border-transparent font-medium text-ink-soft',
@@ -55,36 +54,29 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
       </nav>
 
       <button
-        class="ml-auto grid size-[34px] flex-none cursor-pointer place-items-center rounded-md border border-rule p-0 text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out-soft hover:border-rule-strong hover:bg-accent-wash hover:text-ink lg:ml-0"
+        class="btn-icon ml-auto lg:ml-0"
         type="button"
         data-theme-toggle
         aria-label="Basculer le thème sombre"
         aria-pressed="false"
         title="Thème clair / sombre"
       >
-        <svg class="col-start-1 row-start-1 theme-dark:hidden" width="17" height="17" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4.2" />
-          <path d="M12 2.4v2.2M12 19.4v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.2M19.4 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
-        </svg>
-        <svg class="col-start-1 row-start-1 hidden theme-dark:block" width="17" height="17" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" />
-        </svg>
+        <Sun class="col-start-1 row-start-1 theme-dark:hidden" size={17} stroke-width={1.8} aria-hidden="true" />
+        <Moon class="col-start-1 row-start-1 hidden theme-dark:block" size={17} stroke-width={1.8} aria-hidden="true" />
       </button>
 
       <a class="btn btn--cta hidden flex-none px-4 py-[0.6rem] text-[0.875rem] lg:inline-flex" href="/contact/">Me contacter</a>
 
       <button
-        class="group ml-[0.4rem] cursor-pointer border-0 bg-transparent p-2 lg:hidden"
+        class="btn-icon group ml-[0.4rem] lg:hidden"
         type="button"
         aria-expanded="false"
         aria-controls="mmenu"
         aria-label="Ouvrir le menu"
         data-burger
       >
-        <span class="block h-[2px] w-[22px] bg-ink transition-transform duration-200 ease-out-soft group-aria-expanded:translate-y-[4px] group-aria-expanded:rotate-45"></span>
-        <span class="mt-[6px] block h-[2px] w-[22px] bg-ink transition-transform duration-200 ease-out-soft group-aria-expanded:-translate-y-[4px] group-aria-expanded:-rotate-45"></span>
+        <Menu class="col-start-1 row-start-1 transition-[opacity,transform] duration-200 ease-out-soft group-aria-expanded:scale-75 group-aria-expanded:opacity-0" size={22} aria-hidden="true" />
+        <X class="col-start-1 row-start-1 scale-75 opacity-0 transition-[opacity,transform] duration-200 ease-out-soft group-aria-expanded:scale-100 group-aria-expanded:opacity-100" size={22} aria-hidden="true" />
       </button>
     </div>
   </div>
@@ -119,10 +111,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
     const dark = root.dataset.theme === 'dark';
     toggle?.setAttribute('aria-pressed', String(dark));
     toggle?.setAttribute('aria-label', dark ? 'Passer au thème clair' : 'Passer au thème sombre');
-    // Les pages du labo restent sombres quel que soit le thème choisi.
-    if (!document.body.classList.contains('t-nuit')) {
-      meta?.setAttribute('content', dark ? '#1b2226' : '#f7f8f8');
-    }
+    meta?.setAttribute('content', dark ? '#1b2226' : '#f7f8f8');
   };
 
   toggle?.addEventListener('click', () => {
@@ -137,12 +126,37 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
   sync();
 
   // ── Menu mobile ─────────────────────────────────────────────
+  // Ouvrir un menu au clavier ne suffit pas : il faut pouvoir en sortir sans
+  // souris. Échap ferme et rend le focus au bouton, et un focus qui s'échappe
+  // du panneau le referme — sinon on tabule dans une page qu'on ne voit plus.
   const burger = document.querySelector('[data-burger]') as HTMLButtonElement | null;
   const menu = document.getElementById('mmenu');
+
+  const setMenu = (open: boolean, refocus = false) => {
+    if (!burger || !menu) return;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    menu.hidden = !open;
+    if (refocus) burger.focus();
+  };
+
   burger?.addEventListener('click', () => {
-    const open = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!open));
-    burger.setAttribute('aria-label', open ? 'Ouvrir le menu' : 'Fermer le menu');
-    if (menu) menu.hidden = open;
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
   });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (burger?.getAttribute('aria-expanded') === 'true') setMenu(false, true);
+  });
+
+  document.addEventListener('focusin', (e) => {
+    if (burger?.getAttribute('aria-expanded') !== 'true') return;
+    const t = e.target as Node;
+    if (!menu?.contains(t) && t !== burger) setMenu(false);
+  });
+
+  // Un passage en disposition large laisse le panneau ouvert derrière la
+  // navigation en ligne : on le referme avec la bascule.
+  const wide = window.matchMedia('(width >= 62rem)');
+  wide.addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 </script>

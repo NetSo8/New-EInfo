@@ -2,8 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Terminal from '../components/Terminal.astro';
 ---
-<Base noindex title="Page introuvable | E Informatique" description="Cette adresse ne correspond à aucune page du site.">
-  <section class="py-band">
+<Base noindex title="Page introuvable · E Informatique" description="Cette adresse ne correspond à aucune page du site.">
+  <section class="section">
     <div class="shell grid min-h-[48vh] grid-cols-1 items-center gap-[clamp(2rem,5vw,4rem)] mid:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
       <div>
         <p class="label text-accent">Erreur 404</p>
@@ -20,12 +20,14 @@ import Terminal from '../components/Terminal.astro';
         </nav>
       </div>
       <Terminal
-        title="resolve : chemin demandé"
+        title="trace : résolution du chemin"
         lines={[
-          { k: 'cmd', t: 'resolve $URI' },
-          { k: 'warn', t: 'statut         404 not found' },
-          { k: 'out', t: 'cause probable lien obsolète ou faute de frappe' },
-          { k: 'ok', t: 'site           en ligne, rien de cassé' },
+          { k: 'cmd', t: 'curl -sI https://$HOST$URI' },
+          { k: 'ok', t: 'dns      A 5 ms · enregistrement résolu' },
+          { k: 'ok', t: 'tls      TLS 1.3 · chaîne complète, certificat valide' },
+          { k: 'warn', t: 'http     404 not found' },
+          { k: 'out', t: 'cause    lien obsolète ou faute de frappe dans l\'URL' },
+          { k: 'dim', t: 'le serveur répond : c\'est le chemin qui n\'existe pas.' },
         ]}
       />
     </div>

@@ -4,15 +4,15 @@ import PageHead from '../components/PageHead.astro';
 ---
 <Base
   noindex
-  title="Mentions légales | E Informatique"
+  title="Mentions légales · E Informatique"
   description="Mentions légales, hébergement, propriété intellectuelle et traitement des données personnelles du site einformatique.fr, E Informatique à Rivesaltes."
 >
   <PageHead
     kicker="Informations légales"
     title="Mentions légales"
-    lede="Les informations ci-dessous doivent être complétées avec les données réelles de la structure avant mise en ligne."
+    lede="Le SIRET et le numéro de TVA de la structure restent à renseigner avant mise en ligne."
   />
-  <section class="py-band">
+  <section class="section">
     <div class="shell">
       <div class="prose">
         <h2>Éditeur du site</h2>
@@ -21,22 +21,23 @@ import PageHead from '../components/PageHead.astro';
           Siège : Rivesaltes (66600), Pyrénées-Orientales, France.<br />
           SIRET : <code>à compléter</code> · TVA : <code>à compléter</code><br />
           Directeur de la publication : Elian.<br />
-          Contact : <a href="/contact/">formulaire de contact</a>.
+          Contact : <a href="/contact/">page de contact</a>.
         </p>
 
         <h2>Hébergement</h2>
         <p>
-          Le site est un site statique hébergé par <code>à compléter</code>.
-          Coordonnées de l'hébergeur : <code>à compléter</code>.
+          Le site est un site statique hébergé par OVH SAS, société par actions
+          simplifiée au capital de 50 000 000 €, immatriculée au RCS de Lille
+          Métropole sous le numéro 424 761 419 00045, dont le siège social est situé
+          2 rue Kellermann, 59100 Roubaix, France.
         </p>
 
         <h2>Données personnelles</h2>
         <p>
-          Les données transmises par le formulaire de contact (nom, adresse
-          électronique, téléphone facultatif, commune et description de la demande) sont
-          utilisées uniquement pour répondre à cette demande et, le cas échéant, établir
-          un devis. Elles ne sont ni cédées, ni revendues, ni utilisées à des fins de
-          prospection.
+          Les informations transmises par e-mail (nom, adresse électronique, téléphone
+          facultatif, commune et description de la demande) sont utilisées uniquement
+          pour répondre à cette demande et, le cas échéant, établir un devis. Elles ne
+          sont ni cédées, ni revendues, ni utilisées à des fins de prospection.
         </p>
         <p>
           Base légale : mesures précontractuelles prises à la demande de la personne
@@ -46,30 +47,97 @@ import PageHead from '../components/PageHead.astro';
         <p>
           Conformément au règlement général sur la protection des données, vous disposez
           d'un droit d'accès, de rectification, d'effacement, de limitation et
-          d'opposition. Ces droits s'exercent par le formulaire de contact. Une
+          d'opposition. Ces droits s'exercent par <a href="/contact/">e-mail</a>. Une
           réclamation peut être adressée à la CNIL.
         </p>
 
-        <h2>Traceurs</h2>
+        <h2>Traceurs et ressources tierces</h2>
         <p>
-          Le site ne dépose aucun cookie publicitaire et n'utilise aucun outil de suivi
-          comportemental. Les polices de caractères sont chargées depuis Google Fonts et
-          les photographies depuis Unsplash, ce qui transmet à ces services l'adresse IP
-          du visiteur. Ces dépendances peuvent être internalisées sur demande.
+          Le site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et
+          n'intègre aucun bouton de réseau social. Aucune bannière de consentement n'est
+          nécessaire, parce qu'il n'y a rien à consentir.
+        </p>
+        <p>
+          Toutes les ressources de la page (polices de caractères, images, feuilles de
+          style, scripts) sont servies depuis le serveur qui héberge ce site, en France.
+          Consulter ce site n'adresse donc <strong>aucune requête à un service tiers</strong>
+          {' '}et ne transmet votre adresse IP à personne d'autre que l'hébergeur. Les
+          polices ne viennent ni de Google Fonts ni d'un autre CDN, et les photographies
+          ne sont pas appelées depuis un service distant.
+        </p>
+        <p>
+          Seule exception, sous votre contrôle : les liens sortants explicitement
+          identifiés, par exemple vers GitHub. Ils ne sont suivis que si vous cliquez
+          dessus, et l'adresse de la page d'origine n'est pas transmise.
+        </p>
+        <p>
+          Deux préférences d'affichage sont mémorisées dans le stockage local de votre
+          navigateur : le thème clair ou sombre, et la réduction des animations. Il ne
+          s'agit pas de traceurs. Ces valeurs restent sur votre appareil, ne sont jamais
+          transmises au serveur, et relèvent des préférences strictement nécessaires au
+          service demandé, exemptées de consentement préalable.
         </p>
 
         <h2>Propriété intellectuelle</h2>
         <p>
           Les textes, schémas et code de ce site sont la propriété de son éditeur, à
-          l'exception des photographies, publiées sous licence Unsplash, et des marques
-          citées, qui appartiennent à leurs détenteurs respectifs.
+          l'exception des photographies, publiées sous licence Unsplash, des polices de
+          caractères Satoshi (Indian Type Foundry, ITF Free Font License) et Spline Sans
+          Mono (SIL Open Font License 1.1), des icônes Lucide (licence ISC), et des
+          marques citées, qui appartiennent à leurs détenteurs respectifs.
         </p>
 
         <h2>Accessibilité</h2>
         <p>
-          Le site vise le niveau AA des règles pour l'accessibilité des contenus web.
-          Un défaut constaté peut être signalé par le formulaire de contact, il sera
-          corrigé dans les meilleurs délais.
+          Le site est conçu pour viser le niveau AA des <abbr title="Web Content
+          Accessibility Guidelines">WCAG</abbr> 2.2. Ce qui suit décrit ce qui a été
+          réellement vérifié, et non une conformité déclarée sur l'honneur.
+        </p>
+        <ul>
+          <li>
+            <strong>Contrastes.</strong> Chaque association de texte et de fond est
+            calculée : toutes dépassent 4,5:1, la plupart 7:1 (niveau AAA), dans le
+            registre clair comme dans le registre sombre.
+          </li>
+          <li>
+            <strong>Daltonisme.</strong> Aucune information n'est portée par la seule
+            couleur. Les relevés techniques marquent leurs lignes d'un signe, les liens
+            dans le texte sont soulignés, les états sont doublés d'un mot.
+          </li>
+          <li>
+            <strong>Navigation au clavier.</strong> L'ensemble du site s'utilise sans
+            souris : lien d'évitement, indicateur de focus visible à tout moment,
+            fermeture du menu par la touche Échap, aucun piège au clavier. Les zones
+            cliquables mesurent au moins 24 pixels.
+          </li>
+          <li>
+            <strong>Lecteurs d'écran.</strong> Un seul titre de niveau 1 par page,
+            hiérarchie sans saut, repères de navigation nommés, images porteuses de sens
+            décrites, images décoratives ignorées.
+          </li>
+          <li>
+            <strong>Basse vision.</strong> Le contenu reste lisible à 320 pixels de
+            large et supporte l'augmentation de l'interlettrage et de l'interlignage
+            sans perte. Si votre système demande un contraste renforcé, le site sert
+            une variante à bords francs.
+          </li>
+          <li>
+            <strong>Mouvement.</strong> Les fonds animés respectent le réglage
+            « réduire les animations » du système, et un bouton en pied de page permet
+            de les arrêter sans passer par là.
+          </li>
+        </ul>
+        <p>
+          Ces points sont recontrôlés automatiquement à chaque mise en ligne. Deux
+          limites, énoncées franchement : aucun audit <abbr title="Référentiel général
+          d'amélioration de l'accessibilité">RGAA</abbr> formel par un tiers n'a été
+          réalisé, et aucun test n'a été mené avec des personnes en situation de
+          handicap sur ce site précis.
+        </p>
+        <p>
+          Si vous rencontrez un obstacle, <a href="/contact/">signalez-le par e-mail</a>
+          en décrivant la page et votre équipement : c'est corrigé en priorité, et vous
+          recevez une réponse même si la correction demande du temps.
         </p>
       </div>
     </div>

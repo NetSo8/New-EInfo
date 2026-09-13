@@ -1,31 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import Plus from '@lucide/astro/icons/plus';
 import SectionHead from '../components/SectionHead.astro';
 import Terminal from '../components/Terminal.astro';
 import ChainDiagram from '../components/ChainDiagram.astro';
 import ZoneRadar from '../components/ZoneRadar.astro';
-import ProofStrip from '../components/ProofStrip.astro';
+import HeroNetworkBg from '../components/HeroNetworkBg.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
+import { Image } from 'astro:assets';
 import { services } from '../data/services';
-
-const U = 'https://images.unsplash.com/';
-const vignes = `${U}photo-1560493676-04071c5f467b?auto=format&fit=crop&w=1400&q=80`;
-const atelier = `${U}photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80`;
-const cote = `${U}photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1600&q=80`;
+import atelier from '../assets/atelier.jpg';
+import cote from '../assets/cote.jpg';
 
 const faq = [
   {
     q: "Vous vous déplacez jusqu'où ?",
-    a: "Je me déplace sans supplément dans un rayon de 30 km autour de Rivesaltes, ce qui couvre Perpignan, le littoral de Canet à Saint-Cyprien, la plaine du Roussillon et la vallée de l'Agly. Au-delà, un forfait kilométrique est annoncé avant l'intervention. Le reste de la France est couvert à distance.",
+    a: "Je me déplace sans supplément dans un rayon de 15 km autour de Rivesaltes, ce qui couvre Perpignan et les communes proches. Au-delà, un forfait kilométrique est annoncé avant l'intervention. Le reste de la France est couvert à distance.",
   },
   {
     q: "Combien ça coûte ?",
     a: "Le diagnostic est annoncé et chiffré avant que je touche à la machine. Pour les particuliers, l'intervention se facture à l'heure, sans frais de dossier. Pour les entreprises, un audit ou un forfait mensuel est proposé après un premier échange gratuit d'une trentaine de minutes.",
-  },
-  {
-    q: "Vous intervenez sous combien de temps ?",
-    a: "Réponse sous 24 h ouvrées, intervention sous 48 h en règle générale. Un incident de sécurité ou un arrêt d'activité passe devant : dans ce cas je prends l'appel le jour même.",
   },
   {
     q: "Je n'y connais rien du tout, c'est un problème ?",
@@ -38,9 +34,8 @@ const faq = [
 ];
 
 const faits = [
-  { v: '48 h', d: "Délai d'intervention courant" },
-  { v: '30 km', d: 'Déplacement inclus depuis Rivesaltes' },
-  { v: '1', d: 'Interlocuteur, du poste au serveur' },
+  { v: '15 km', d: 'Déplacement inclus depuis Rivesaltes' },
+  { v: '1', d: 'Interlocuteur, du poste au réseau' },
 ];
 
 const pannesCourantes = [
@@ -53,25 +48,26 @@ const pannesCourantes = [
 ---
 <Base
   title="Dépannage informatique Rivesaltes et Perpignan (66)"
-  description="Technicien informatique freelance à Rivesaltes. Dépannage particuliers, infrastructure et sécurité pour les TPE des Pyrénées-Orientales. Intervention sous 48 h."
+  description="Technicien réseau et sécurité à Rivesaltes (66). Dépannage informatique pour les particuliers ; réseau local, VLAN, pare-feu, VPN, sauvegardes et sites web pour les TPE des Pyrénées-Orientales."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
-  <section class="pt-[clamp(2.5rem,4vw,4.5rem)] pb-[clamp(2.5rem,5vw,5rem)]">
-    <div class="shell grid grid-cols-1 items-center gap-[clamp(2rem,5vw,4.5rem)] mid:grid-cols-[minmax(0,1.22fr)_minmax(0,0.78fr)]">
-      <div>
+  <section class="relative isolate overflow-hidden pt-[clamp(3rem,6vw,6rem)] pb-[clamp(3.5rem,7vw,7.5rem)]">
+    <HeroNetworkBg class="-z-10 opacity-70" />
+    <div class="shell relative">
+      <div class="max-w-[38rem]">
         <p class="label flex items-center gap-[0.55rem] text-ink-soft">
           <span class="size-[7px] flex-none rounded-full bg-accent" aria-hidden="true"></span>
-          Technicien informatique · Rivesaltes · Pyrénées-Orientales
+          Technicien réseau et sécurité · Rivesaltes · Pyrénées-Orientales
         </p>
 
         <h1 class="mt-5 text-[clamp(2.35rem,1rem+4.1vw,4rem)]/[0.98]">
-          Une&nbsp;panne.<br />Un&nbsp;serveur.<br />Un&nbsp;site.<br /><span class="text-accent">Un seul numéro.</span>
+          Une&nbsp;panne.<br />Un&nbsp;réseau.<br />Un&nbsp;site.<br /><span class="text-accent">Un seul numéro.</span>
         </h1>
 
         <p class="mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft">
-          Je dépanne les particuliers du Roussillon et je tiens l'informatique des
-          entreprises qui n'ont pas de service technique. Poste, réseau, serveur,
-          sécurité, site web : la même personne du début à la fin.
+          Je dépanne les particuliers du Roussillon, et je tiens le réseau et la
+          sécurité des entreprises qui n'ont pas de service technique. Un périmètre
+          court, assumé, travaillé en profondeur plutôt qu'étalé sur dix lignes.
         </p>
 
         <ul class="m-0 mt-9 flex list-none flex-wrap border-t border-rule p-0">
@@ -83,19 +79,6 @@ const pannesCourantes = [
           ))}
         </ul>
       </div>
-
-      <figure class="relative order-first m-0 mid:order-none">
-        <img
-          src={vignes}
-          alt="Rangs de vigne du Roussillon peignés par la tramontane sous un ciel de fin de journée"
-          width="1400" height="933" fetchpriority="high" decoding="async"
-          class="aspect-video w-full object-cover contrast-[1.04] saturate-85 mid:aspect-[4/5]"
-        />
-        <figcaption class="flex justify-between gap-4 pt-[0.6rem] font-mono text-[0.66rem] tracking-[0.04em] text-ink-faint">
-          <span>Plaine du Roussillon, 66</span>
-          <span class="text-right leading-[1.5]">Sur place : Rivesaltes → 30 km<br />À distance : France entière</span>
-        </figcaption>
-      </figure>
     </div>
   </section>
 
@@ -103,14 +86,15 @@ const pannesCourantes = [
   <section class="grid grid-cols-1 border-t border-rule lg:grid-cols-2" aria-label="Choisir votre parcours">
     <div class="relative overflow-hidden bg-sand px-[clamp(1.25rem,3.5vw,3.25rem)] pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2.5rem,4vw,3.75rem)]">
       {/* Photo d'ambiance en fond, volontairement très effacée. */}
-      <img
+      <Image
         src={atelier}
         alt=""
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        width="1200"
-        height="800"
+        widths={[640, 960, 1280]}
+        sizes="(width >= 62rem) 50vw, 100vw"
+        quality={45}
         class="absolute inset-0 size-full object-cover opacity-10 grayscale contrast-125"
       />
       <div class="relative mx-auto flex max-w-[34rem] flex-col gap-[1.1rem]">
@@ -119,92 +103,83 @@ const pannesCourantes = [
 
         <ul class="m-0 flex list-none flex-col p-0">
           {pannesCourantes.map((p) => (
-            <li class="relative border-b border-rule py-[0.6rem] pl-6 text-[0.95rem]">
-              <span class="absolute left-0 top-[0.6rem] font-mono text-[0.85rem] text-accent" aria-hidden="true">+</span>
+            <li class="relative border-b border-rule py-[0.6rem] pl-6 text-base">
+              <Plus class="absolute top-[0.95rem] left-0 text-accent" size="0.85em" aria-hidden="true" />
               {p}
             </li>
           ))}
         </ul>
 
-        <p class="max-w-[42ch] text-[0.925rem] text-ink-soft">
+        <p class="max-w-[42ch] text-base text-ink-soft">
           Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
           ne vaut pas le coup, je vous le dis.
         </p>
         <a class="btn btn--cta mt-[0.4rem] self-start" href="/particuliers/">
-          Décrire mon problème <span class="arrow" aria-hidden="true">→</span>
+          Décrire mon problème <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
     </div>
 
-    <div class="bg-nuit px-[clamp(1.25rem,3.5vw,3.25rem)] pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2.5rem,4vw,3.75rem)] text-nuit-text">
+    <div class="on-nuit bg-nuit px-[clamp(1.25rem,3.5vw,3.25rem)] pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2.5rem,4vw,3.75rem)]">
       <div class="mx-auto flex max-w-[34rem] flex-col gap-[1.1rem]">
-        <p class="label text-accent-nuit">02 / Vous êtes une entreprise</p>
-        <h2 class="text-[clamp(1.65rem,1.15rem+1.8vw,2.5rem)] tracking-[-0.035em]">Mon activité dépend de tout ça.</h2>
+        <p class="label text-accent">02 / Vous êtes une entreprise</p>
+        <h2 class="text-[clamp(1.65rem,1.15rem+1.8vw,2.5rem)] tracking-[-0.035em]">Mon réseau tient mon activité.</h2>
 
         <Terminal
-          title="audit : infra client"
+          title="scan : réseau client, 12 postes"
           lines={[
-            { k: 'cmd', t: 'check --scope=tpe' },
-            { k: 'ok', t: 'site           en ligne, 1,1 s au premier rendu' },
-            { k: 'warn', t: 'sauvegardes    présentes, jamais restaurées' },
-            { k: 'warn', t: 'accès distant  port 3389 ouvert sur internet' },
-            { k: 'out', t: 'postes         12 · 4 hors support de sécurité' },
-            { k: 'dim', t: 'rapport lisible remis sous 5 jours ouvrés' },
+            { k: 'cmd', t: 'nmap -sV --top-ports 1000 192.168.1.0/24' },
+            { k: 'ok', t: '192.168.1.1    passerelle · firmware à jour' },
+            { k: 'warn', t: '192.168.1.14   3389/tcp rdp · publié sur l\'IP publique' },
+            { k: 'warn', t: '192.168.1.22   445/tcp smb · SMBv1 encore actif' },
+            { k: 'warn', t: 'wifi-invites   même VLAN que les caisses' },
+            { k: 'out', t: 'hôtes actifs   17 · 12 postes, 3 adresses inconnues' },
+            { k: 'dim', t: 'rapport lisible, priorisé, sans jargon' },
           ]}
         />
 
-        <p class="max-w-[42ch] text-[0.925rem] text-nuit-soft">
-          Un audit d'infrastructure, puis une seule personne pour le code, le serveur
-          et le réseau. Pas d'allers-retours entre trois prestataires qui se renvoient
-          la panne.
+        <p class="max-w-[42ch] text-base text-ink-soft">
+          Un audit du réseau et des accès, puis une seule personne pour le tenir dans la
+          durée. Pas d'allers-retours entre trois prestataires qui se renvoient la
+          panne.
         </p>
         <a class="btn btn--cta mt-[0.4rem] self-start" href="/professionnels/">
-          Demander un diagnostic <span class="arrow" aria-hidden="true">→</span>
+          Demander un diagnostic <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
     </div>
   </section>
 
   <!-- ─── § 01 SERVICES ────────────────────────────────── -->
-  <section class="border-t border-rule py-band" id="services">
+  <section class="section section-rule" id="services">
     <div class="shell">
       <SectionHead
         n="01"
         kicker="Ce que je couvre"
-        title="Cinq prestations, une seule chaîne technique"
-        lede="Chaque ligne se tient seule, et toutes se répondent : c'est ce qui permet de traiter la cause plutôt que le symptôme."
+        title="Trois prestations, une seule chaîne technique"
+        lede="Une liste courte, et c'est le but : le réseau et sa sécurité sont ma spécialité, le dépannage est le métier dont je viens, le site web le prolongement des deux."
       />
 
-      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
+      <ol class="rowlist mt-12" data-reveal>
         {services.map((s) => (
-          <li class="border-b border-rule">
+          <li>
             <a
               href={`/services/#${s.id}`}
-              class="group grid grid-cols-[2.5rem_1fr_1.25rem] items-baseline gap-4 py-[1.4rem] text-inherit no-underline transition-[background-color,padding-inline] duration-200 ease-out-soft hover:bg-accent-wash hover:px-[0.9rem] mid:grid-cols-[3rem_minmax(0,1fr)_12rem_1.5rem]"
+              class="grid grid-cols-[2.5rem_1fr_1.25rem] items-baseline gap-4 py-[1.4rem] hover:px-[0.9rem] mid:grid-cols-[3rem_minmax(0,1fr)_12rem_1.5rem]"
             >
               <span class="font-mono text-[0.75rem] font-semibold text-accent">{s.n}</span>
 
               <span class="flex flex-col gap-1">
                 <span class="text-[clamp(1.2rem,1.05rem+0.7vw,1.65rem)]/[1.15] font-bold tracking-[-0.03em]">{s.titre}</span>
-                <span class="max-w-[52ch] text-[0.9rem] text-ink-soft">{s.probleme}</span>
+                <span class="max-w-[52ch] text-base text-ink-soft">{s.probleme}</span>
               </span>
 
-              <span class="col-start-2 flex flex-row items-center gap-3 mid:col-start-3 mid:flex-col mid:items-start mid:gap-[0.3rem]">
-                <span class="flex flex-wrap gap-[0.35rem]">
-                  {s.pour.includes('particulier') && (
-                    <em class="rounded-md border border-rule-strong px-[0.4rem] py-[0.1rem] font-mono text-[0.67rem] uppercase not-italic tracking-[0.08em] text-ink-soft">Particuliers</em>
-                  )}
-                  {s.pour.includes('entreprise') && (
-                    <em class="rounded-md border border-rule-strong px-[0.4rem] py-[0.1rem] font-mono text-[0.67rem] uppercase not-italic tracking-[0.08em] text-ink-soft">Entreprises</em>
-                  )}
-                </span>
-                <span class="font-mono text-[0.7rem] text-ink-faint">{s.delai}</span>
+              <span class="col-start-2 flex flex-wrap items-center gap-[0.35rem] mid:col-start-3">
+                {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
+                {s.pour.includes('entreprise') && <span class="badge">Entreprises</span>}
               </span>
 
-              <span
-                class="justify-self-end text-accent transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
-                aria-hidden="true"
-              >→</span>
+              <ArrowRight class="arrow justify-self-end text-accent" size="1.1em" aria-hidden="true" />
             </a>
           </li>
         ))}
@@ -213,7 +188,7 @@ const pannesCourantes = [
   </section>
 
   <!-- ─── § 02 L'ARGUMENT ──────────────────────────────── -->
-  <section class="border-t border-rule bg-paper-warm py-band">
+  <section class="section section-rule section-tint">
     <div class="shell">
       <SectionHead
         n="02"
@@ -224,7 +199,7 @@ const pannesCourantes = [
         <div class="col-span-full mid:col-span-7">
           <ChainDiagram />
         </div>
-        <div class="col-span-full flex flex-col items-start gap-4 text-[0.95rem] text-ink-soft mid:col-start-9 mid:col-span-4">
+        <div class="col-span-full flex flex-col items-start gap-4 text-base text-ink-soft mid:col-start-9 mid:col-span-4">
           <p>
             Un site lent peut venir du code, d'une base mal indexée, d'un disque saturé
             ou d'un routeur qui perd des paquets. Trois prestataires spécialisés
@@ -232,10 +207,10 @@ const pannesCourantes = [
             d'à côté.
           </p>
           <p>
-            Je ne prétends pas tout couvrir. Je couvre un périmètre précis, poste,
-            réseau, serveur, site, et ce périmètre suffit à la très grande majorité des
-            besoins d'une petite structure. Ce qui sort de ce cadre, je le dis, et je
-            vous oriente.
+            Je ne prétends pas tout couvrir, et je ne veux pas. Je couvre un périmètre
+            précis, poste de travail, réseau local, sécurité, site web, et ce périmètre
+            suffit à la très grande majorité des besoins d'une petite structure. Ce qui
+            sort de ce cadre, je le dis, et je vous oriente.
           </p>
           <a class="tlink mt-[0.4rem]" href="/a-propos/">Comment je travaille</a>
         </div>
@@ -243,30 +218,11 @@ const pannesCourantes = [
     </div>
   </section>
 
-  <!-- ─── § 03 PREUVES ─────────────────────────────────── -->
-  <section class="border-t border-rule py-band">
+  <!-- ─── § 03 ZONE ────────────────────────────────────── -->
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead
         n="03"
-        kicker="Preuves publiées"
-        title="Le labo"
-        lede="Des notes techniques écrites pour des pairs : durcissement système, mesures, cryptographie appliquée. Rien n'est annoncé ici avant d'être vérifiable."
-      />
-      <div class="mt-12" data-reveal>
-        <ProofStrip />
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a class="btn btn--ghost" href="/labo/">Tous les writeups <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="/portfolio/">Réalisations et travaux en cours</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── § 04 ZONE ────────────────────────────────────── -->
-  <section class="border-t border-rule py-band">
-    <div class="shell">
-      <SectionHead
-        n="04"
         kicker="Zone d'intervention"
         title="Je privilégie la proximité"
         lede="Pour tout ce qui se touche, être à vingt minutes change la nature du service. Pour le reste, la distance ne change rien."
@@ -274,22 +230,24 @@ const pannesCourantes = [
       <div class="grid12 mt-12 items-end gap-y-10">
         <div class="col-span-full mid:col-span-6"><ZoneRadar /></div>
         <figure class="col-span-full m-0 mid:col-start-8 mid:col-span-5">
-          <img
+          <Image
             src={cote}
-            alt="Côte Vermeille au crépuscule, village accroché au-dessus de la Méditerranée"
-            loading="lazy" decoding="async" width="1600" height="1067"
+            alt="Mains sur le clavier d'un ordinateur portable pendant une intervention à distance"
+            loading="lazy" decoding="async"
+            widths={[480, 768, 1100]}
+            sizes="(width >= 60rem) 40vw, 100vw"
+            quality={68}
             class="aspect-video w-full object-cover saturate-[0.82] mid:aspect-3/4"
           />
-          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] tracking-[0.06em] text-ink-faint">Littoral des Pyrénées-Orientales</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- ─── § 05 FAQ ─────────────────────────────────────── -->
-  <section class="border-t border-rule py-band">
+  <!-- ─── § 04 FAQ ─────────────────────────────────────── -->
+  <section class="section section-rule">
     <div class="shell">
-      <SectionHead n="05" kicker="Questions fréquentes" title="Ce qu'on me demande avant d'appeler" />
+      <SectionHead n="04" kicker="Questions fréquentes" title="Ce qu'on me demande avant d'appeler" />
       <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
     </div>
   </section>
@@ -297,7 +255,7 @@ const pannesCourantes = [
   <CtaBand
     kicker="Prochaine étape"
     title="Dites-moi ce qui ne va pas."
-    text="Quelques lignes suffisent : la machine, le symptôme, depuis quand. Je réponds sous 24 h ouvrées avec un plan concret et un ordre de prix, avant tout engagement."
+    text="Quelques lignes suffisent : la machine, le symptôme, depuis quand. Je réponds avec un plan concret et un ordre de prix, avant tout engagement."
     second={{ href: '/services/', label: 'Voir le détail des prestations' }}
   />
 </Base>

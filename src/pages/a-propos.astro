@@ -3,12 +3,10 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
+import CryptoCrackBg from '../components/CryptoCrackBg.astro';
+import { Image } from 'astro:assets';
+import paysage from '../assets/paysage.jpg';
 
-const U = 'https://images.unsplash.com/';
-/* TODO Elian : remplacer par une vraie photo de toi à l'établi ou en intervention.
-   Une photo réelle vaut mieux que n'importe quelle banque d'images sur cette page. */
-const poste = `${U}photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80`;
-const paysage = `${U}photo-1560493676-04071c5f467b?auto=format&fit=crop&w=1400&q=80`;
 
 const principes = [
   { t: 'Le devis avant la clé de douze', d: "Je n'ouvre rien avant d'avoir annoncé ce que je fais, combien de temps ça prend et ce que ça coûte. Si ça change en cours de route, je m'arrête et je vous appelle." },
@@ -18,62 +16,62 @@ const principes = [
 ];
 
 const parcours = [
-  { a: 'Aujourd\'hui', t: 'Technicien systèmes et réseaux, indépendant', d: "Postes, serveurs Linux, réseau, sécurité et sites web pour les particuliers et les petites entreprises des Pyrénées-Orientales." },
-  { a: 'En continu', t: 'Automatisation et exploitation', d: "Scripts Python et shell, supervision, alerting, reproductibilité des configurations. C'est ce qui permet de tenir plusieurs clients seul, sans travailler la nuit." },
-  { a: 'En cours', t: 'Cryptographie appliquée et informatique de confiance', d: "Arithmétique modulaire, courbes elliptiques, exécution en temps constant, environnements d'exécution isolés. Travail personnel, publié au fil des résultats dans le labo." },
+  { a: 'Le socle', t: 'Technicien informatique', d: "Le métier par lequel j'ai commencé et que je n'ai jamais quitté : postes Windows, macOS et Linux, matériel, pannes, récupération de données, remise en état. C'est ce qui apprend à chercher la cause plutôt que le symptôme." },
+  { a: 'Aujourd\'hui', t: 'Réseau et sécurité', d: "Plan d'adressage, segmentation VLAN, pare-feu, VPN, wifi mesuré sur relevé, durcissement des accès, sauvegardes testées. C'est le seul chantier que je revendique comme une spécialité, et celui sur lequel je refuse de me contenter de la liste de contrôle." },
+  { a: 'Ma spécialisation', t: 'Cryptographie appliquée et sécurité réseau', d: "Les deux domaines qui me passionnent, et vers lesquels je fais évoluer mon métier : arithmétique modulaire, courbes elliptiques, exécution en temps constant, protocoles et chiffrement en transit. Travail personnel mené en parallèle des missions clients." },
 ];
 ---
 <Base
-  title="À propos · Elian, technicien à Rivesaltes"
-  description="Qui je suis, comment je travaille et ce que je sais faire. Technicien systèmes et réseaux indépendant à Rivesaltes, dans les Pyrénées-Orientales."
+  title="À propos · Elian, technicien informatique à Rivesaltes"
+  description="Qui je suis, comment je travaille et ce que je sais faire. Technicien informatique devenu technicien réseau et sécurité, indépendant à Rivesaltes (66), en spécialisation sur la cryptographie appliquée."
 >
   <PageHead
     kicker="À propos"
     title="Une personne, un périmètre, des preuves"
-    lede="Je m'appelle Elian, je suis technicien systèmes et réseaux indépendant, installé à Rivesaltes. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
+    lede="Je m'appelle Elian. Je suis parti du métier de technicien informatique et je me spécialise, couche par couche, sur le réseau et la cryptographie. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
   />
 
-  <section class="py-band">
-    <div class="shell">
-      <div class="grid12 items-start gap-y-10">
-        <div class="col-span-full flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft mid:col-span-7">
-          <p>
-            J'ai commencé par réparer des machines, ce qui apprend une chose que le
-            diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
-            la panne réelle. Ce réflexe de vérifier avant de conclure est resté, et il
-            sert autant sur un portable de 2016 que sur un serveur de production.
-          </p>
-          <p>
-            Le reste s'est construit par nécessité. Un client avait besoin d'un site,
-            puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent
-            vraiment, puis d'un accès distant qui ne soit pas une porte ouverte. Chaque
-            couche a été apprise parce que la couche du dessous ne suffisait plus.
-          </p>
-          <p>
-            Aujourd'hui, ce périmètre couvre le poste de travail, le réseau, le serveur
-            et le site. C'est exactement ce dont une structure de moins de vingt
-            personnes a besoin, et c'est aussi la limite que je m'impose : au-delà, je
-            préfère orienter que bricoler.
-          </p>
-        </div>
-
-        <figure class="col-span-full m-0 mid:col-start-9 mid:col-span-4">
-          <img
-            src={poste}
-            alt="Poste de travail d'atelier : plan, notes manuscrites et matériel en cours de diagnostic"
-            loading="lazy"
-            decoding="async"
-            width="1200"
-            height="800"
-            class="aspect-video w-full object-cover contrast-105 saturate-[0.78] mid:aspect-[4/5]"
-          />
-          <figcaption class="pt-[0.6rem] font-mono text-[0.66rem] text-ink-faint">Atelier, Rivesaltes (66)</figcaption>
-        </figure>
+  <section class="section relative isolate overflow-hidden">
+    <CryptoCrackBg class="-z-10 opacity-60" />
+    <div class="shell relative">
+      <div class="flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft">
+        <p>
+          J'ai commencé par réparer des machines, ce qui apprend une chose que le
+          diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
+          la panne réelle. Ce réflexe de vérifier avant de conclure est resté, et il
+          sert autant sur un portable de 2016 que sur un serveur de production.
+        </p>
+        <p>
+          Le reste s'est construit par nécessité. Un client avait besoin d'un site,
+          puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent
+          vraiment, puis d'un accès distant qui ne soit pas une porte ouverte. Chaque
+          couche a été apprise parce que la couche du dessous ne suffisait plus.
+        </p>
+        <p>
+          Aujourd'hui, ce périmètre couvre le poste de travail, le réseau local et sa
+          sécurité, et le site. C'est exactement ce dont une structure de moins de vingt
+          personnes a besoin, et c'est aussi la limite que je m'impose : au-delà, je
+          préfère orienter que bricoler.
+        </p>
+        <p>
+          Deux domaines m'ont pris plus que les autres, et ce sont ceux vers lesquels je
+          spécialise mon métier : le réseau et la cryptographie. Le réseau parce que
+          c'est là que se jouent la plupart des problèmes qu'on impute au logiciel, et
+          parce qu'un réseau correctement segmenté règle d'avance des incidents de
+          sécurité entiers. La cryptographie parce que c'est la couche sur laquelle
+          tout le reste s'appuie sans jamais la regarder : arithmétique modulaire,
+          courbes elliptiques, exécution en temps constant, chiffrement en transit.
+        </p>
+        <p>
+          C'est un travail de fond, mené à titre personnel, en parallèle des missions.
+          Il ne remplace pas le métier de technicien, il le prolonge : la même exigence
+          de vérifier avant de conclure, appliquée un étage plus bas.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-rule bg-paper-warm py-band">
+  <section class="section section-rule section-tint">
     <div class="shell">
       <SectionHead n="01" kicker="Méthode" title="Quatre principes qui tiennent depuis le début" />
       <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
@@ -82,7 +80,7 @@ const parcours = [
             <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h3 class="text-[1.25rem] tracking-[-0.028em]">{p.t}</h3>
-              <p class="mt-[0.4rem] max-w-[64ch] text-[0.95rem] text-ink-soft">{p.d}</p>
+              <p class="mt-[0.4rem] max-w-[64ch] text-base text-ink-soft">{p.d}</p>
             </div>
           </li>
         ))}
@@ -90,13 +88,13 @@ const parcours = [
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead
         n="02"
         kicker="Compétences"
         title="Ce que je fais, et ce que j'apprends"
-        lede="Deux colonnes séparées volontairement. La première est ce sur quoi vous pouvez compter aujourd'hui. La seconde est un travail personnel, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
+        lede="Trois niveaux, énoncés dans l'ordre où ils se sont construits. Les deux premiers sont ce sur quoi vous pouvez compter aujourd'hui. Le troisième est ma spécialisation en cours : un travail personnel, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
       />
       <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
         {parcours.map((p) => (
@@ -104,48 +102,48 @@ const parcours = [
             <span class="pt-[0.4rem] font-mono text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-accent">{p.a}</span>
             <div>
               <h3 class="text-[1.2rem] tracking-[-0.028em]">{p.t}</h3>
-              <p class="mt-[0.4rem] max-w-[62ch] text-[0.95rem] text-ink-soft">{p.d}</p>
+              <p class="mt-[0.4rem] max-w-[62ch] text-base text-ink-soft">{p.d}</p>
             </div>
           </li>
         ))}
       </ol>
 
       <div class="mt-10 max-w-[60ch] border-t border-rule pt-7">
-        <p class="mb-6 text-[0.95rem] text-ink-soft">
+        <p class="text-base text-ink-soft">
           La troisième ligne mérite une précision, parce qu'elle est facile à
-          survendre. Je ne me présente pas comme architecte en cryptographie : je
-          travaille dans cette direction, je publie ce que je mesure, et le jour où
-          ce travail vaudra une mission, ce sera le labo qui l'aura montré, pas cette
-          page.
+          survendre. Je ne me présente pas comme architecte en cryptographie : je me
+          spécialise dans cette direction, à titre personnel, et je ne la mets en avant
+          sur une mission que si le sujet s'y prête réellement. Ce que je facture reste
+          le dépannage, le réseau et sa sécurité, et le site.
         </p>
-        <a class="btn btn--ghost" href="/labo/">Voir ce qui est publié <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-rule py-band">
+  <section class="section section-rule">
     <div class="shell">
       <div class="grid12 items-center gap-y-8">
         <figure class="col-span-full m-0 mid:col-span-6">
-          <img
+          <Image
             src={paysage}
-            alt="Vignes de la plaine du Roussillon alignées jusqu'aux contreforts, ciel dégagé de tramontane"
+            alt="Baies de serveurs câblées, voyants allumés dans la pénombre d'un local technique"
             loading="lazy"
             decoding="async"
-            width="1400"
-            height="933"
+            widths={[560, 900, 1300]}
+            sizes="(width >= 60rem) 48vw, 100vw"
+            quality={68}
             class="aspect-3/2 w-full object-cover saturate-[0.82]"
           />
         </figure>
         <div class="col-span-full mid:col-start-8 mid:col-span-5">
           <p class="label text-accent">Pourquoi ici</p>
           <h2 class="mt-[0.8rem] text-x2">Rivesaltes, et pas ailleurs</h2>
-          <p class="mt-4 max-w-[46ch] text-[0.95rem] text-ink-soft">
+          <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
             Travailler à distance fonctionne pour presque tout. Presque. Il reste les
             câbles, les baies, les imprimantes, les machines qui ne s'allument plus, et
             les conversations qu'on n'a pas de la même façon par écran interposé.
           </p>
-          <p class="mt-4 max-w-[46ch] text-[0.95rem] text-ink-soft">
+          <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
             La proximité n'est pas un argument commercial ajouté après coup : c'est ce
             qui permet d'être là dans la journée quand une caisse ne fonctionne plus un
             samedi de marché.

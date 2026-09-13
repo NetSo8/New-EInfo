@@ -7,23 +7,16 @@ const pts = [
   { n: 'Baixas', a: 232, d: 6 },
   { n: 'Perpignan', a: 160, d: 9, big: true },
   { n: 'Cabestany', a: 148, d: 13 },
-  { n: 'Canet-en-Roussillon', a: 118, d: 19 },
-  { n: 'Millas', a: 246, d: 18 },
-  { n: 'Thuir', a: 214, d: 20 },
-  { n: 'Saint-Cyprien', a: 146, d: 26 },
-  { n: 'Argelès-sur-Mer', a: 170, d: 33 },
-  { n: 'Céret', a: 200, d: 40 },
-  { n: 'Prades', a: 250, d: 45 },
 ];
 const S = 520;           // viewBox
 const C = S / 2;
-const KM = 50;           // rayon max en km
+const KM = 20;           // rayon max affiché en km
 const r = (d: number) => (d / KM) * (C - 46);
 const xy = (a: number, d: number) => {
   const rad = ((a - 90) * Math.PI) / 180;
   return [C + r(d) * Math.cos(rad), C + r(d) * Math.sin(rad)];
 };
-const rings = [10, 20, 30, 40, 50];
+const rings = [5, 10, 15, 20];
 ---
 <figure class="m-0">
   <svg viewBox={`0 0 ${S} ${S}`} class="h-auto w-full overflow-visible" role="img" aria-labelledby="radar-t">
@@ -32,27 +25,28 @@ const rings = [10, 20, 30, 40, 50];
     </title>
 
     {rings.map((k) => (
-      <circle cx={C} cy={C} r={r(k)} fill="none" class="stroke-rule" stroke-dasharray={k === 30 ? '0' : '2 4'} />
+      <circle cx={C} cy={C} r={r(k)} fill="none" class="stroke-rule" stroke-dasharray={k === 15 ? '0' : '2 4'} />
     ))}
     {rings.map((k) => (
       <text x={C + 4} y={C - r(k) + 12} class="fill-ink-faint font-mono text-[10px]">{k} km</text>
     ))}
 
-    {/* Le disque des 30 km : déplacement inclus. */}
-    <circle cx={C} cy={C} r={r(30)} class="fill-accent-wash stroke-accent" stroke-width="1" />
+    {/* Le disque des 15 km : déplacement inclus. */}
+    <circle cx={C} cy={C} r={r(15)} class="fill-accent-wash stroke-accent" stroke-width="1" />
 
     <line x1={C} y1="28" x2={C} y2={S - 28} class="stroke-rule" />
     <line x1="28" y1={C} x2={S - 28} y2={C} class="stroke-rule" />
     <text x={C} y="20" class="fill-ink-faint text-center font-mono text-[10.5px] tracking-[0.1em] [text-anchor:middle]">N</text>
     <text x={S - 14} y={C + 4} class="fill-ink-faint font-mono text-[10.5px] tracking-[0.1em] [text-anchor:end]">MER</text>
 
-    {pts.map((p) => {
+    {pts.map((p, i) => {
       const [x, y] = xy(p.a, p.d);
       const right = x >= C;
       return (
         <g>
           <line x1={C} y1={C} x2={x} y2={y} class="stroke-rule" />
-          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} class={p.big ? 'fill-accent' : 'fill-ink'} />
+          <line x1={C} y1={C} x2={x} y2={y} class="stroke-accent radar-link" style={`--i:${i}`} />
+          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} class={p.big ? 'fill-accent radar-hub' : 'fill-ink'} />
           <text
             x={right ? x + 9 : x - 9}
             y={y + 3.5}
@@ -64,16 +58,51 @@ const rings = [10, 20, 30, 40, 50];
     })}
 
     <g>
-      <circle cx={C} cy={C} r="7" fill="none" class="stroke-accent" stroke-width="2" />
+      <circle cx={C} cy={C} r="7" fill="none" class="stroke-accent radar-ring" />
       <circle cx={C} cy={C} r="2.5" class="fill-accent" />
       <text x={C - 12} y={C - 14} text-anchor="end" class="fill-accent font-mono text-[11px] font-semibold tracking-[0.08em]">RIVESALTES</text>
     </g>
   </svg>
 
-  <figcaption class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-[0.4rem] text-[0.8rem] text-ink-soft">
+  <figcaption class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-[0.4rem] text-base text-ink-soft">
     <span class="inline-block size-[11px] flex-none rounded-[3px] border border-accent bg-accent-wash"></span>
-    Déplacement inclus jusqu'à 30 km.
+    Déplacement inclus jusqu'à 15 km.
     <span class="inline-block size-[11px] flex-none rounded-[3px] border border-dashed border-rule-strong"></span>
     Au-delà, forfait kilométrique annoncé avant intervention.
   </figcaption>
 </figure>
+
+<style>
+  /* Petit signal qui part de Rivesaltes vers chaque commune, pour donner au
+     radar un vrai côté réseau plutôt qu'un diagramme figé. */
+  .radar-link {
+    stroke-width: 1.5;
+    stroke-dasharray: 2 16;
+    opacity: 0.85;
+    animation: radar-flow 3.4s linear calc(var(--i, 0) * -0.55s) infinite;
+  }
+  .radar-hub {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: radar-hub-pulse 2.4s ease-in-out infinite;
+  }
+  .radar-ring {
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: radar-ring-pulse 3s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+  }
+
+  @keyframes radar-flow {
+    to { stroke-dashoffset: -36; }
+  }
+  @keyframes radar-hub-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  @keyframes radar-ring-pulse {
+    0% { transform: scale(1); opacity: 0.65; }
+    75% { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { mulberry32 } from '../lib/random';
+
+interface Props { class?: string }
+const { class: klass = '' } = Astro.props;
+
+/* Fond diffus : des octets épars qui scintillent puis se résolvent
+   brièvement avant de se brouiller à nouveau, dispersés derrière le texte.
+   Même principe que le fond réseau du hero, thème « cassage de clé » en plus.
+   Décoratif, aucune opération réelle n'a lieu. */
+const rand = mulberry32(0xb17e5);
+const HEX = '0123456789ABCDEF';
+const byte = () => HEX[Math.floor(rand() * 16)] + HEX[Math.floor(rand() * 16)];
+
+const W = 1200;
+const H = 640;
+const cols = 4;
+const rows = 5;
+const decoysPerCell = 2;
+/* Cantonné à la portion droite du cadre : le texte occupe la gauche. */
+const zoneX: [number, number] = [0.58, 1];
+
+type Cell = { x: number; y: number; size: number; final: string; decoys: string[] };
+const cells: Cell[] = [];
+for (let row = 0; row < rows; row++) {
+  for (let col = 0; col < cols; col++) {
+    const jx = (rand() - 0.5) * 0.7;
+    const jy = (rand() - 0.5) * 0.7;
+    const fx = zoneX[0] + ((col + 0.5 + jx) / cols) * (zoneX[1] - zoneX[0]);
+    cells.push({
+      x: fx * W,
+      y: ((row + 0.5 + jy) / rows) * H,
+      size: 11 + rand() * 6,
+      final: byte(),
+      decoys: Array.from({ length: decoysPerCell }, byte),
+    });
+  }
+}
+---
+<svg
+  viewBox={`0 0 ${W} ${H}`}
+  preserveAspectRatio="xMidYMid slice"
+  class:list={['crack-bg absolute inset-0 size-full', klass]}
+  role="presentation"
+  aria-hidden="true"
+>
+  {cells.map((c, i) => (
+    <g style={`--i:${i}`} font-family="var(--font-mono)" text-anchor="middle">
+      {c.decoys.map((d, k) => (
+        <text x={c.x.toFixed(1)} y={c.y.toFixed(1)} font-size={c.size.toFixed(1)} class="cb-glyph cb-decoy" style={`--k:${k}`}>{d}</text>
+      ))}
+      <text x={c.x.toFixed(1)} y={c.y.toFixed(1)} font-size={c.size.toFixed(1)} class="cb-glyph cb-final">{c.final}</text>
+    </g>
+  ))}
+</svg>
+
+<style>
+  .crack-bg {
+    filter: blur(0.5px);
+    mask-image: radial-gradient(ellipse 46% 62% at 80% 46%, black 35%, transparent 92%);
+  }
+  .cb-glyph { opacity: 0; }
+  .cb-decoy {
+    fill: var(--color-ink-faint);
+    animation: cb-flicker 10s calc(var(--i, 0) * 0.2s + var(--k, 0) * 0.25s) linear infinite;
+  }
+  .cb-final {
+    fill: var(--color-accent);
+    animation: cb-lock 10s calc(var(--i, 0) * 0.2s) linear infinite;
+  }
+
+  @keyframes cb-flicker {
+    0%, 4% { opacity: 0; }
+    7% { opacity: 0.32; }
+    11%, 32% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes cb-lock {
+    0%, 34% { opacity: 0; }
+    40% { opacity: 0.6; }
+    50% { opacity: 0.6; }
+    58%, 100% { opacity: 0; }
+  }
+</style>

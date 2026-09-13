@@ -1,4 +1,4 @@
-# PRODUCT.md — einformatique.fr
+# PRODUCT.md : einformatique.fr
 
 ## Register
 brand
@@ -16,13 +16,14 @@ système et cloud chiffré.
 2. **Dirigeant TPE/PME** (garage, cabinet, restaurant, commerce, artisan du 66) :
    pas de service IT. Veut un interlocuteur unique et fiable, pas cinq prestataires.
    Achète de la tranquillité, pas de la technique.
-3. **Pair technique** (minoritaire, discret) : arrive par un writeup, cherche une
-   compétence pointue. N'a pas besoin d'être converti, seulement d'être convaincu.
+3. **Pair technique** (minoritaire, discret) : arrive par une recommandation ou une
+   recherche technique, cherche une compétence pointue. N'a pas besoin d'être
+   converti, seulement d'être convaincu.
 
 ## Voix
 Trois mots : **sec, ouvrier, précis**. Le ton d'un artisan qui a déjà vu la panne.
 Pas de superlatif, pas de promesse molle, pas de vocabulaire d'agence.
-Deux registres : conversion (clair, sans jargon) et /labo/ (technique, écrit pour des pairs).
+Registre de conversion : clair, sans jargon.
 
 ## Anti-références
 - Le template SaaS bleu : hero centré, trois cartes à icônes arrondies, dégradés.
@@ -32,6 +33,6 @@ Deux registres : conversion (clair, sans jargon) et /labo/ (technique, écrit po
 
 ## Principes
 - Le local est un actif, pas une limite. Rivesaltes est écrit en toutes lettres.
-- Rien n'est affirmé sans preuve. La trajectoire crypto n'existe qu'à travers /labo/.
-- Le site reste crédible et vendable même si /labo/ est vide.
+- Rien n'est affirmé sans preuve. Les travaux de recherche en cours sont documentés
+  dans `/portfolio/`, avec leur état réel.
 - Le particulier et le pro ne lisent jamais la page de l'autre par accident.
