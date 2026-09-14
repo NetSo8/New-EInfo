@@ -1,0 +1,59 @@
+---
+import '../styles/app.css';
+import Terminal from '../components/Terminal.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+
+const EMAIL = 'elianb.pro@gmail.com';
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Site en maintenance · E Informatique</title>
+    <meta name="description" content="Le site einformatique.fr est en maintenance. De retour très bientôt — écrivez directement par e-mail en attendant." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#1c2224" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preload" href="/fonts/satoshi-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body class="min-h-dvh bg-nuit text-nuit-text">
+    <main id="main" class="flex min-h-dvh items-center justify-center px-[clamp(1.15rem,0.3rem+3.4vw,4rem)] py-[clamp(3rem,4vw,5rem)]">
+      <div class="w-full max-w-[34rem]">
+        <div class="flex flex-col items-center text-center">
+          <img src="/logo.png" alt="E Informatique" width="72" height="72" class="mb-7 rounded-none" />
+          <p class="label text-accent-nuit">Maintenance en cours</p>
+          <h1 class="mt-4 text-[clamp(1.9rem,1.3rem+2.4vw,2.75rem)] text-nuit-text">
+            Le site fait une pause technique.
+          </h1>
+          <p class="mt-4 max-w-[38ch] text-lede/[1.5] text-nuit-soft">
+            Rien de grave : on règle deux ou trois choses sous le capot.
+            De retour très bientôt.
+          </p>
+        </div>
+
+        <div class="mt-9">
+          <Terminal
+            title="elian@e-informatique : zsh"
+            lines={[
+              { k: 'cmd', t: 'systemctl status einformatique.fr' },
+              { k: 'warn', t: 'maintenance   en cours · mise à jour du site' },
+              { k: 'ok', t: 'contact       e-mail toujours surveillé' },
+              { k: 'dim', t: 'retour prévu très prochainement.' },
+            ]}
+          />
+        </div>
+
+        <div class="mt-9 flex flex-col items-center gap-3 text-center">
+          <a class="btn btn--cta" href={`mailto:${EMAIL}`}>
+            Écrire à {EMAIL} <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          </a>
+          <p class="font-mono text-[0.72rem] text-nuit-faint">© {year} E Informatique · Rivesaltes (66)</p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
