@@ -19,3 +19,7 @@ RewriteRule ^ https://einformatique.fr%{REQUEST_URI} [L,R=301]
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
+# Sans cette ligne, Apache sert sa propre page d'erreur brute au lieu de la
+# page 404 du site (avec navigation et mise en forme).
+ErrorDocument 404 /404.html
+
