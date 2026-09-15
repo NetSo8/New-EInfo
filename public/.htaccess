@@ -19,22 +19,3 @@ RewriteRule ^ https://einformatique.fr%{REQUEST_URI} [L,R=301]
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
-# ─────────────────────────────────────────────────────────────
-# MODE MAINTENANCE — bloc temporaire.
-#
-# Toute requête reçoit un statut 503 (indisponible temporairement,
-# pas une erreur permanente pour les moteurs de recherche) et Apache
-# sert le contenu de /maintenance/ à la place, sans changer l'URL
-# affichée au visiteur. Les ressources nécessaires à cette page
-# restent accessibles.
-#
-# Pour remettre le site en ligne : supprimer ce bloc entier
-# (jusqu'à « FIN MODE MAINTENANCE ») puis redéployer.
-# ─────────────────────────────────────────────────────────────
-ErrorDocument 503 /maintenance/
-
-RewriteCond %{REQUEST_URI} !^/maintenance/ [NC]
-RewriteCond %{REQUEST_URI} !^/(_astro|fonts)/ [NC]
-RewriteCond %{REQUEST_URI} !^/(logo\.png|favicon\.ico|favicon\.svg)$ [NC]
-RewriteRule ^ - [R=503,L]
-# ─────────────────────────────────────────────────── FIN MODE MAINTENANCE ──
