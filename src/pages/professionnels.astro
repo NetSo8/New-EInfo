@@ -19,67 +19,66 @@ const formules = [
   {
     n: '01',
     t: 'Intervention ponctuelle',
-    q: "Quelque chose est cassé, ou un chantier précis doit sortir : remise à plat du réseau, VPN à déployer, nouveau site.",
+    q: "Un site à construire, une fonctionnalité à ajouter, ou un lot de code généré par IA à faire relire avant la mise en production.",
     l: ['Facturation à l\'heure ou au forfait projet', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
     p: 'Devis avant démarrage',
   },
   {
     n: '02',
     t: 'Infogérance mensuelle',
-    q: "Vous voulez que le réseau et le site tournent sans y penser, avec quelqu'un à appeler.",
+    q: "Vous voulez que le site tourne sans y penser, avec quelqu'un à appeler.",
     l: [
-      'Supervision continue du réseau, des accès et du site',
+      'Supervision continue du site et de sa disponibilité',
       'Mises à jour, sauvegardes vérifiées, correctifs de sécurité',
-      'Heures d\'intervention incluses chaque mois',
+      'Relecture du code livré par un prestataire ou une IA avant chaque mise en ligne',
       'Rapport mensuel lisible, sans jargon',
     ],
     p: 'Forfait mensuel, après cadrage',
   },
   {
     n: '03',
-    t: 'Audit de sécurité approfondi',
-    q: "Vous devez savoir où vous en êtes, avant un incident ou avant un client exigeant.",
+    t: 'Revue de code approfondie',
+    q: "Votre équipe utilise Copilot, Cursor ou ChatGPT en production, et personne n'a de vue d'ensemble sur ce qui part réellement en ligne.",
     l: [
-      'Cartographie du réseau, des accès, des services exposés et des données sensibles',
-      'Revue de la gestion des secrets et de la chaîne de chiffrement',
-      'Test réel de restauration des sauvegardes',
+      "Cartographie du code généré par IA dans le dépôt",
+      "Détection des erreurs récurrentes propres à l'assistant utilisé",
+      'Vérification que le comportement livré correspond à la spécification',
       'Rapport priorisé : ce qui est urgent, ce qui peut attendre, ce qui est correct',
     ],
-    p: 'Devis après visite',
+    p: 'Devis après échange',
     bridge: true,
   },
 ];
 
 const faq = [
-  { q: "Vous remplacez un prestataire informatique existant ?", a: "Souvent, oui, et la reprise se prépare. Je récupère les accès, je documente ce qui existe avant de toucher à quoi que ce soit, et la bascule se fait hors des heures ouvrées. Une reprise propre prend en général deux à quatre semaines." },
-  { q: "Combien de postes faut-il pour que ça ait du sens ?", a: "L'infogérance devient intéressante à partir de trois ou quatre postes, ou dès qu'une caisse, un accès distant ou un logiciel métier est en jeu. En dessous, une intervention ponctuelle suffit et coûte moins cher." },
-  { q: "Pourquoi un périmètre aussi étroit ?", a: "Parce qu'un prestataire seul qui annonce dix spécialités n'en a aucune. Le réseau et sa sécurité, c'est ce que je travaille en profondeur, et c'est aussi là que se trouvent la majorité des problèmes qu'on impute au logiciel. Le site web est le prolongement naturel, puisque c'est moi qui tiens ce qui le fait tourner. Pour le reste (téléphonie, ERP, matériel spécialisé), j'ai des confrères et je vous les indique." },
-  { q: "Vous administrez nos serveurs ?", a: "Je configure et j'exploite les serveurs Linux et les VPS dont dépendent le site et les services que je mets en place, et je les documente pour qu'un autre puisse les reprendre. En revanche, si votre activité repose sur un parc de serveurs déjà important, un administrateur système à temps plein sera plus pertinent que moi, et je le dis avant de commencer plutôt qu'après." },
-  { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Toute l'infrastructure que je gère est documentée et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
-  { q: "Pourquoi aucun tarif n'est affiché ?", a: "Parce qu'un forfait annoncé sans avoir vu l'infrastructure est soit trop cher pour vous, soit intenable pour moi. Le premier échange de trente minutes est gratuit et suffit en général à donner un ordre de grandeur ferme, avant tout engagement." },
-  { q: "Vous signez un engagement de niveau de service ?", a: "Oui, sur des chiffres tenables : réponse sous 4 h ouvrées, prise en charge d'un arrêt d'activité le jour même, sauvegardes restaurées et vérifiées chaque mois. Je préfère annoncer moins et tenir." },
-  { q: "Est-ce que vous travaillez avec notre éditeur de logiciel métier ?", a: "Oui, c'est une part importante du travail. Je fais l'interface technique avec l'éditeur, ce qui évite au dirigeant d'arbitrer entre deux discours qu'il ne peut pas vérifier." },
+  { q: "Vous remplacez notre développeur ou notre agence ?", a: "Pas nécessairement. Je peux relire ce qu'ils livrent avant la mise en ligne, reprendre un projet abandonné, ou construire et maintenir le site en direct si vous n'avez personne d'autre. Vous décidez du périmètre." },
+  { q: "Comment vous détectez les problèmes propres à Copilot, Cursor ou ChatGPT ?", a: "Chaque assistant a ses tics : tel modèle laisse des secrets en dur plus souvent, tel autre invente des noms de dépendances plausibles. Je relis en connaissant ces schémas récurrents, pas seulement les motifs génériques qu'un linter automatique connaît déjà." },
+  { q: "Vous corrigez directement le code, ou juste un rapport ?", a: "Les deux sont possibles. Un rapport priorisé si votre équipe préfère corriger elle-même, des correctifs directs si vous voulez que ce soit réglé. Le tarif suit ce choix." },
+  { q: "C'est confidentiel ? Vous voyez notre code source.", a: "Oui. Le code n'est partagé avec personne d'autre, et rien n'en est conservé après la mission sauf accord contraire. Un accord de confidentialité peut être signé avant tout accès." },
+  { q: "Vous administrez nos serveurs ?", a: "Je configure et j'exploite les serveurs Linux et les VPS dont dépend le site, et je les documente pour qu'un autre puisse les reprendre. Si votre activité repose sur un parc de serveurs déjà important, un administrateur système à temps plein sera plus pertinent que moi, et je le dis avant de commencer plutôt qu'après." },
+  { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Tout ce que je gère est documenté et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
+  { q: "Pourquoi aucun tarif n'est affiché ?", a: "Parce qu'un forfait annoncé sans avoir vu le projet est soit trop cher pour vous, soit intenable pour moi. Le premier échange de trente minutes est gratuit et suffit en général à donner un ordre de grandeur ferme, avant tout engagement." },
 ];
 
 const bridgeItems = [
-  'Revue de la gestion des secrets : où sont les clés, qui peut les lire, comment elles tournent',
-  'Contrôle de la chaîne de chiffrement au repos et en transit, hypothèses comprises',
-  'Analyse des dépendances tierces qui voient vos données en clair',
-  'Test de restauration réel, chronométré, sur environnement isolé',
+  { t: 'Harnais de sécurité pour agents IA', d: "Exécution isolée d'un agent non fiable : sandboxing dans un premier temps, enclave matérielle ensuite." },
+  { t: 'Scanner de code généré par IA', d: 'Patterns dangereux propres à chaque assistant : Copilot, Cursor, Claude et GPT ont chacun leurs tics.' },
+  { t: 'Orchestrateur de vérification', d: "Typage, analyse statique, cohérence entre le README et l'implémentation réelle, en un seul passage." },
+  { t: 'Outillage de migration post-quantique', d: 'Préparer le remplacement des algorithmes actuels par des versions résistantes (Kyber, Dilithium).' },
 ];
 ---
 <Base
-  title="Technicien réseau et sécurité TPE/PME · Perpignan (66)"
-  description="Réseau local, VLAN, pare-feu, VPN, wifi et sauvegardes testées pour les TPE des Pyrénées-Orientales. Création et maintenance de site web incluses."
+  title="Sites web & revue de code IA pour TPE/PME · Perpignan (66)"
+  description="Création et maintenance de site web, et relecture de code généré par IA (Copilot, Cursor, ChatGPT, Claude) pour les TPE des Pyrénées-Orientales."
 >
   <PageHead
     tone="warm"
     kicker="Entreprises · TPE, PME, professions libérales"
     title="Je fais deux choses, et je les fais bien."
-    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je ne vous propose pas pour autant un catalogue de dix lignes : je tiens votre réseau et sa sécurité, et je construis puis je maintiens votre site. Ce qui sort de ce périmètre, je le dis et je vous oriente."
+    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je ne vous propose pas pour autant un catalogue de dix lignes : je construis et je maintiens votre site, et je relis le code que votre équipe ou ses prestataires produisent avec une IA. Ce qui sort de ce périmètre, je le dis et je vous oriente."
   >
     <div class="flex flex-wrap gap-3">
-      <a class="btn btn--cta" href="/contact/">Demander un diagnostic <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+      <a class="btn btn--cta" href="/contact/">Demander une relecture <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       <a class="btn btn--ghost" href="#formules">Voir les formules</a>
     </div>
     <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
@@ -93,24 +92,22 @@ const bridgeItems = [
         n="01"
         kicker="Le point de départ"
         title="Ce que je trouve en arrivant"
-        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'une entreprise de moins de vingt personnes qui n'a jamais eu de raison de regarder."
+        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'une équipe qui utilise un assistant IA depuis quelques mois et n'a jamais eu de raison de tout relire."
       />
       <div class="grid12 mt-12 items-start gap-y-8">
         <div class="col-span-full mid:col-span-7">
           <Terminal
-            title="premier relevé : TPE, 12 postes"
+            title="premier relevé : dépôt client, 62 fichiers générés par IA"
             lines={[
-              { k: 'cmd', t: 'audit --lan --tls --ssh --dns' },
-              { k: 'ok', t: 'tls  443/tcp        TLS 1.3 · HSTS · expire dans 61 j' },
-              { k: 'ok', t: 'dns  SPF/DKIM       alignés, DMARC en p=none' },
-              { k: 'warn', t: 'ssh  22/tcp         PasswordAuthentication yes · root autorisé' },
-              { k: 'warn', t: 'rdp  3389/tcp       exposé en NAT direct, aucun VPN devant' },
-              { k: 'warn', t: 'smb  445/tcp        signature désactivée, SMBv1 actif' },
-              { k: 'warn', t: 'vlan                un seul domaine de diffusion en /24 plat' },
-              { k: 'warn', t: 'wifi WPA2-PSK       clé partagée depuis 2019, invités inclus' },
-              { k: 'warn', t: 'comptes             3 comptes d\'anciens salariés encore actifs' },
-              { k: 'out', t: 'postes              12 · 4 sans correctif depuis 14 mois' },
-              { k: 'out', t: 'sauvegardes         quotidiennes · aucune restauration testée' },
+              { k: 'cmd', t: 'grep -rniE "sk-|api_key|password|TODO" src/' },
+              { k: 'ok', t: 'src/auth/session.js   tokens signés, expiration correcte' },
+              { k: 'ok', t: 'src/db/pool.js        requêtes préparées, pas de concat.' },
+              { k: 'warn', t: 'src/config.js:14      clé Stripe laissée en dur' },
+              { k: 'warn', t: 'src/api/upload.js:22  aucune limite de taille ni de type' },
+              { k: 'warn', t: 'src/lib/pdf-gen.js    dépendance "pdf-easy-gen" introuvable sur npm' },
+              { k: 'warn', t: 'src/api/users.js:41   requête SQL construite par concatenation' },
+              { k: 'out', t: 'fichiers signalés      6 sur 62 générés par l\'assistant IA' },
+              { k: 'out', t: 'couverture de tests     aucune sur les routes signalées' },
               { k: 'dim', t: '' },
               { k: 'dim', t: 'aucune de ces lignes ne déclenche d\'alerte aujourd\'hui.' },
             ]}
@@ -120,14 +117,15 @@ const bridgeItems = [
         <div class="col-span-full flex flex-col items-start gap-4 text-base text-ink-soft mid:col-start-9 mid:col-span-4">
           <p>
             Aucune de ces lignes ne provoque de panne aujourd'hui. Elles décident
-            simplement de ce qui se passera le jour où quelque chose arrive : une heure
-            d'arrêt, ou trois semaines de reconstruction.
+            simplement de ce qui se passera le jour où quelqu'un les trouve avant vous :
+            une correction d'une heure, ou un incident de sécurité.
           </p>
           <p>
-            Le diagnostic sert à transformer cette liste floue en décisions chiffrées,
-            avec un ordre de priorité que vous pouvez tenir sur douze mois.
+            La relecture sert à transformer cette liste floue en décisions chiffrées,
+            avec un ordre de priorité que vous pouvez tenir sur les prochaines mises en
+            ligne.
           </p>
-          <a class="tlink" href="/contact/">Demander le diagnostic</a>
+          <a class="tlink" href="/contact/">Demander la relecture</a>
         </div>
       </div>
     </div>
@@ -171,9 +169,9 @@ const bridgeItems = [
       </div>
 
       <p class="mt-5 max-w-[62ch] text-base text-ink-faint">
-        Aucune grille tarifaire affichée : le montant dépend du nombre de postes, de la
-        complexité du réseau, du nombre de sites à relier et du niveau de disponibilité attendu. Il est chiffré après
-        le premier échange, par écrit, et ne bouge plus sans votre accord.
+        Aucune grille tarifaire affichée : le montant dépend de la taille du projet, du
+        volume de code à relire et du niveau de disponibilité attendu. Il est chiffré
+        après le premier échange, par écrit, et ne bouge plus sans votre accord.
       </p>
     </div>
   </section>
@@ -184,7 +182,7 @@ const bridgeItems = [
         n="03"
         kicker="Périmètre technique"
         title="Deux chantiers, et c'est volontaire"
-        lede="Le réseau et sa sécurité d'un côté, le site web et sa maintenance de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
+        lede="Le site web d'un côté, la relecture du code généré par IA de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
       />
       <div class="grid12 mt-12 items-start gap-y-10">
         <ol class="col-span-full m-0 list-none border-t border-rule-strong p-0 mid:col-span-7">
@@ -210,7 +208,7 @@ const bridgeItems = [
         <figure class="col-span-full m-0 mid:col-start-9 mid:col-span-4 mid:sticky mid:top-28">
           <Image
             src={baie}
-            alt="Baie de brassage réseau, jarretières bleues repérées une par une"
+            alt="Baie de serveurs câblée, voyants allumés dans la pénombre d'un local technique"
             loading="lazy"
             decoding="async"
             widths={[420, 700, 1000]}
@@ -225,34 +223,53 @@ const bridgeItems = [
 
   <section class="section on-nuit bg-nuit">
     <div class="shell max-w-[62rem]">
-      <p class="label text-accent">04 / Le cran au-dessus</p>
-      <h2 class="mt-[0.9rem] text-x1">Quand l'audit standard ne suffit plus</h2>
+      <p class="label text-accent">04 / Harnais, scanners et outils IA</p>
+      <h2 class="mt-[0.9rem] text-x1">Ce qui se construit derrière, pas encore facturé</h2>
       <p class="mt-[1.1rem] max-w-[58ch] text-ink-soft">
-        Certaines structures manipulent des données qui justifient d'aller plus loin
-        que la liste de contrôle habituelle : santé, juridique, sous-traitance
-        industrielle, ou simplement un client final qui pose des questions précises.
+        Je construis, à titre personnel, des outils pour sécuriser le code et les
+        agents produits par l'IA : harnais d'exécution, scanners, orchestrateurs de
+        vérification. Rien de ce qui suit n'est vendu tant que ce n'est pas publié et
+        vérifiable : c'est la direction, pas une prestation du jour.
       </p>
 
-      <div class="mt-10 grid grid-cols-1 items-start gap-10 mid:grid-cols-[1.15fr_0.85fr]">
+      <div class="mt-10 grid grid-cols-1 items-start gap-10 mid:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <p class="label mb-[0.9rem]">Ce que ça ajoute</p>
+          <p class="label mb-[0.9rem]">Ce qui se construit</p>
           <ul class="m-0 flex list-none flex-col p-0">
             {bridgeItems.map((b) => (
               <li class="relative border-b border-rule py-[0.7rem] pl-[1.2rem] text-base first:border-t">
                 <ChevronRight class="absolute top-[0.8rem] left-0 text-accent" size="0.9em" aria-hidden="true" />
-                {b}
+                <strong class="font-semibold text-nuit-text">{b.t}</strong>
+                <span class="block text-[0.92rem] text-nuit-soft">{b.d}</span>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <p class="label mb-[0.9rem]">Sur quoi ça s'appuie</p>
-          <p class="mb-6 max-w-[40ch] text-base text-ink-soft">
-            Sur des réalisations livrées, pas sur une plaquette. Le portfolio détaille
-            le contexte, les contraintes et ce qui a été fait, projet par projet.
-          </p>
-          <a class="btn btn--nuit-ghost" href="/portfolio/">Voir les réalisations <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+          <p class="label mb-[0.9rem]">À quoi ça ressemble aujourd'hui</p>
+          <Terminal
+            title="prototype personnel : ia-scan"
+            lines={[
+              { k: 'cmd', t: 'ia-scan run --model copilot ./repo' },
+              { k: 'ok', t: 'typage       0 erreur, 412 fichiers' },
+              { k: 'warn', t: 'secrets      2 clés API trouvées en dur' },
+              { k: 'warn', t: "dépendances  1 paquet introuvable sur npm (halluciné)" },
+              { k: 'dim', t: 'prototype personnel, pas encore public' },
+            ]}
+          />
+        </div>
+      </div>
+
+      <div class="mt-10 max-w-[58ch] border-t border-rule-nuit pt-6">
+        <p class="text-base text-nuit-soft">
+          Aucun de ces outils n'est disponible à la vente aujourd'hui. Si votre
+          entreprise fait déjà tourner des agents IA en production et que le sujet
+          vous concerne, dites-le-moi : je préviens en priorité les personnes
+          intéressées quand l'un d'eux sort de la phase de prototype.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a class="btn btn--nuit-ghost" href="/contact/">En parler <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
         </div>
       </div>
     </div>
@@ -268,9 +285,8 @@ const bridgeItems = [
   <CtaBand
     kicker="Prochaine étape"
     title="Trente minutes pour savoir où vous en êtes."
-    text="Un échange sans engagement : votre activité, ce qui vous inquiète, ce qui vous a déjà coûté du temps. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
+    text="Un échange sans engagement : votre projet, ce qui vous inquiète, ce que votre équipe a déjà produit avec une IA. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
     href="/contact/"
-    cta="Demander un diagnostic"
-    second={{ href: '/portfolio/', label: 'Voir des interventions passées' }}
+    cta="Demander une relecture"
   />
 </Base>

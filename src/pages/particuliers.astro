@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import X from '@lucide/astro/icons/x';
+import Plus from '@lucide/astro/icons/plus';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
@@ -44,23 +45,30 @@ const refus = [
   { t: 'Un contrat que vous ne pouvez pas arrêter.', d: "Pour un particulier, on paie l'intervention, et c'est tout." },
 ];
 
+const usagesIA = [
+  { t: 'Écrire un e-mail ou une lettre difficile', d: "Réclamation, courrier administratif, mot pour l'école : l'IA aide à formuler, vous gardez le contrôle du contenu." },
+  { t: 'Trier, résumer, comprendre un document', d: "Un contrat, une notice, un relevé : on voit ensemble ce qu'une IA résume bien et ce qu'elle déforme." },
+  { t: 'Ne pas se faire piéger', d: "Reconnaître une voix, une photo ou un texte généré pour tromper, et les arnaques qui utilisent l'IA comme appât." },
+  { t: 'Savoir ce qu\'on ne lui confie jamais', d: "Mot de passe, numéro de sécu, données de santé : ce qu'une IA ne doit jamais voir, et pourquoi." },
+];
+
 const faq = [
-  { q: 'Vous venez chez moi ou je dois apporter la machine ?', a: "Les deux sont possibles. Pour un ordinateur de bureau ou une panne réseau, je viens chez vous. Pour une réparation matérielle plus longue, il est souvent plus simple et moins cher que la machine passe à l'atelier." },
+  { q: 'Vous venez chez moi ou je dois apporter la machine ?', a: "Les deux sont possibles. Pour un ordinateur de bureau ou une panne de connexion, je viens chez vous. Pour une réparation matérielle plus longue, il est souvent plus simple et moins cher que la machine passe à l'atelier." },
   { q: 'Est-ce que je paie si vous ne réparez pas ?', a: "Le diagnostic est offert. Si la réparation n'est pas rentable, je vous le dis et vous ne payez rien. Si vous préférez ne pas donner suite après le devis, vous ne payez rien non plus." },
   { q: 'Pourquoi les tarifs ne sont-ils pas affichés ?', a: "Parce qu'une grille de prix affichée est presque toujours fausse pour votre cas précis. Deux ordinateurs qui rament peuvent demander vingt minutes ou une demi-journée. Je préfère regarder, puis vous annoncer un montant ferme, plutôt qu'un tarif d'appel qui gonfle en cours de route." },
   { q: "Vous touchez à mes données personnelles ?", a: "Uniquement ce qui est nécessaire à l'intervention, et jamais sans vous le dire. Aucune copie n'est conservée après restitution. Sur une récupération de données, le support vous est rendu avec l'ensemble de ce qui a été extrait." },
-  { q: 'Vous travaillez le week-end ?', a: "En semaine en règle générale. Une panne qui vous empêche complètement de travailler ou une suspicion de piratage passe devant, week-end compris." },
+  { q: "Je n'ai jamais utilisé l'IA, la formation s'adresse à moi ?", a: "Oui, c'est même le public le plus fréquent. On part de ce que vous voulez faire concrètement, pas d'un cours théorique, et je vous explique en français sans supposer que vous connaissez le vocabulaire." },
   { q: "Ma machine a douze ans, ça vaut le coup ?", a: "Parfois oui, souvent non. Je regarde le coût des pièces, l'état de la carte mère et la version de Windows encore supportée, et je vous donne une réponse franche, y compris quand elle me fait perdre une réparation." },
 ];
 ---
 <Base
-  title="Dépannage informatique à domicile · Rivesaltes, Perpignan"
-  description="Réparation d'ordinateur, virus, récupération de photos, wifi et imprimante. Technicien à domicile à Rivesaltes et Perpignan. Diagnostic offert."
+  title="Dépannage informatique et formation IA à Rivesaltes, Perpignan (66)"
+  description="Réparation d'ordinateur, virus, récupération de photos, wifi et imprimante, et formation à l'usage de l'IA pour particuliers. Technicien à domicile à Rivesaltes et Perpignan. Diagnostic offert."
 >
   <PageHead
     kicker="Particuliers · Pyrénées-Orientales"
     title="Votre ordinateur vous pose problème. On règle ça."
-    lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence."
+    lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence. Et si c'est l'IA elle-même qui vous pose question, je vous montre aussi comment vous en servir."
   >
     <div class="flex flex-wrap gap-3">
       <a class="btn btn--cta" href="/contact/">Décrire mon problème <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
@@ -148,9 +156,32 @@ const faq = [
     </div>
   </section>
 
+  <section class="section section-rule section-tint" id="formation-ia">
+    <div class="shell">
+      <SectionHead
+        n="04"
+        kicker="Autre demande fréquente"
+        title="Se servir de l'IA sans se faire piéger"
+        lede="ChatGPT, Copilot, ou l'assistant intégré à votre téléphone : une formation courte, sur vos usages réels, plutôt qu'un cours théorique."
+      />
+      <ul class="m-0 mt-12 grid list-none grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-x-6 border-t border-rule-strong p-0" data-reveal>
+        {usagesIA.map((u) => (
+          <li class="relative border-b border-rule py-[1.1rem] pl-6">
+            <Plus class="absolute top-[1.35rem] left-0 text-accent" size="0.85em" aria-hidden="true" />
+            <h3 class="text-[1.05rem] tracking-[-0.02em]">{u.t}</h3>
+            <p class="mt-[0.35rem] max-w-[40ch] text-base text-ink-soft">{u.d}</p>
+          </li>
+        ))}
+      </ul>
+      <a class="btn btn--cta mt-8" href="/contact/">
+        Réserver une séance <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+      </a>
+    </div>
+  </section>
+
   <section class="section section-rule">
     <div class="shell">
-      <SectionHead n="04" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
+      <SectionHead n="05" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
       <ul class="m-0 mt-10 flex max-w-[62ch] list-none flex-col p-0" data-reveal>
         {refus.map((r) => (
           <li class="relative border-b border-rule py-[1.1rem] pl-8 text-base text-ink-soft first:border-t">
@@ -164,7 +195,7 @@ const faq = [
 
   <section class="section section-rule">
     <div class="shell">
-      <SectionHead n="05" kicker="Questions fréquentes" title="Avant de m'appeler" />
+      <SectionHead n="06" kicker="Questions fréquentes" title="Avant de m'appeler" />
       <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
     </div>
   </section>
@@ -172,7 +203,7 @@ const faq = [
   <CtaBand
     kicker="Votre tour"
     title="Dites-moi ce qui se passe."
-    text="La marque de l'appareil, ce qu'il fait, depuis quand. Je vous réponds avec un premier avis et un ordre de prix, sans engagement."
+    text="La marque de l'appareil, ce qu'il fait, depuis quand — ou simplement votre envie de vous mettre à l'IA. Je vous réponds avec un premier avis et un ordre de prix, sans engagement."
     href="/contact/"
     cta="Décrire mon problème"
     second={{ href: '/blog/', label: 'Lire les conseils pratiques' }}

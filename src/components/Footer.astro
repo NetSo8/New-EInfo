@@ -8,11 +8,10 @@ const year = new Date().getFullYear();
 const communes = ['Rivesaltes', 'Perpignan', 'Cabestany', 'Le Barcarès', 'Baixas', 'Salses-le-Château'];
 
 const prestations = [
-  { href: '/particuliers/', label: 'Dépannage particuliers' },
-  { href: '/professionnels/', label: 'Infogérance TPE / PME' },
-  { href: '/services/#reseau', label: 'Réseau et sécurité' },
   { href: '/services/#depannage', label: 'Dépannage et assistance' },
+  { href: '/services/#formation-ia', label: "Formation à l'usage de l'IA" },
   { href: '/services/#web', label: 'Site web et maintenance' },
+  { href: '/services/#revue-ia', label: 'Relecture de code généré par IA' },
 ];
 
 const link = 'flex min-h-[24px] w-fit items-center py-[0.15rem] text-[0.9rem] text-nuit-soft no-underline hover:text-paper';
@@ -25,7 +24,7 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
       <div class="col-span-full mid:col-span-4">
         <p class="text-2xl font-extrabold tracking-[-0.035em]">E&nbsp;Informatique</p>
         <p class="mt-[0.6rem] mb-6 max-w-[34ch] text-base/[1.65] text-nuit-soft">
-          Un seul interlocuteur pour le poste, le serveur, le réseau et le site.
+          Un seul interlocuteur pour le poste, l'IA et le site.
           Basé à Rivesaltes, dans les Pyrénées-Orientales.
         </p>
         <a class="btn btn--cta" href="/contact/">
@@ -40,7 +39,6 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
 
       <nav class={colonne} aria-label="Le site">
         <p class={titre}>Le site</p>
-        <a class={link} href="/portfolio/">Réalisations</a>
         <a class={link} href="/blog/">Blog</a>
         <a class={link} href="/a-propos/">À propos</a>
         <a class={link} href="/contact/">Contact</a>

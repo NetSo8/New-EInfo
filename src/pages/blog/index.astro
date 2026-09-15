@@ -9,13 +9,13 @@ import { AUDIENCE_LABEL, formatDate } from '../../lib/blog';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base
-  title="Blog · conseils informatiques pratiques (66)"
-  description="Sauvegarde, sécurité, matériel, accès à distance : des articles pour les particuliers et les petites entreprises du Roussillon, sans jargon inutile."
+  title="Blog · code, sécurité et cryptographie (66)"
+  description="Sites web, sécurité du code généré par IA, et notes de veille sur la cryptographie post-quantique : des articles pour les particuliers et les petites entreprises du Roussillon, sans jargon inutile."
 >
   <PageHead
     kicker="Blog"
     title="Ce que j'explique le plus souvent"
-    lede="Les mêmes questions reviennent sur presque toutes les interventions. Autant les écrire une fois pour toutes, en français, sans supposer que vous connaissez le vocabulaire."
+    lede="Les mêmes questions reviennent sur presque toutes les missions, et c'est aussi ici que je documente ce que j'apprends en ce moment. Autant l'écrire une fois pour toutes, en français, sans supposer que vous connaissez le vocabulaire."
   />
 
   <section class="section">

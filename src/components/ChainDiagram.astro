@@ -1,21 +1,12 @@
 ---
 const nodes = [
-  { t: 'Poste', s: 'Windows · macOS · Linux' },
-  { t: 'Réseau', s: 'Box, VLAN, VPN, wifi' },
-  { t: 'Serveur', s: 'VPS Linux, services' },
-  { t: 'Site', s: 'Code, base, déploiement' },
+  { t: 'Poste', s: 'Dépannage, virus, sauvegardes' },
+  { t: 'Usage', s: "Formation à l'IA, grand public" },
+  { t: 'Site', s: 'Création, hébergement, maintenance' },
+  { t: 'Code', s: 'Relecture du code généré par IA' },
 ];
 ---
 <figure class="m-0">
-  {/* Les trois prestataires que la chaîne remplace. Masqués en étroit. */}
-  <div class="mb-[0.6rem] hidden grid-cols-3 gap-2 [@media(width>46rem)]:grid">
-    {['Prestataire A', 'Prestataire B', 'Prestataire C'].map((p) => (
-      <span class="border-b border-dashed border-rule-strong pb-[0.35rem] text-center font-mono text-[0.67rem] uppercase tracking-[0.1em] text-ink-faint">
-        {p}
-      </span>
-    ))}
-  </div>
-
   {/* Les filets se chevauchent d'un pixel : une seule ligne entre deux cases. */}
   <ol class="m-0 grid list-none grid-cols-2 p-0 [@media(width>46rem)]:grid-cols-4">
     {nodes.map((n, i) => (
@@ -36,7 +27,7 @@ const nodes = [
   </div>
 
   <figcaption class="mt-[1.1rem] max-w-[54ch] text-base text-ink-soft">
-    Quatre étages, une seule personne qui les traverse. La cause se trouve au lieu
-    d'être renvoyée au voisin.
+    Quatre chantiers, une seule personne qui les traverse. La cause se trouve, au
+    lieu d'être renvoyée à quelqu'un d'autre.
   </figcaption>
 </figure>

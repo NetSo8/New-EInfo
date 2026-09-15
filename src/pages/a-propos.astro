@@ -17,18 +17,18 @@ const principes = [
 
 const parcours = [
   { a: 'Le socle', t: 'Technicien informatique', d: "Le métier par lequel j'ai commencé et que je n'ai jamais quitté : postes Windows, macOS et Linux, matériel, pannes, récupération de données, remise en état. C'est ce qui apprend à chercher la cause plutôt que le symptôme." },
-  { a: 'Aujourd\'hui', t: 'Réseau et sécurité', d: "Plan d'adressage, segmentation VLAN, pare-feu, VPN, wifi mesuré sur relevé, durcissement des accès, sauvegardes testées. C'est le seul chantier que je revendique comme une spécialité, et celui sur lequel je refuse de me contenter de la liste de contrôle." },
-  { a: 'Ma spécialisation', t: 'Cryptographie appliquée et sécurité réseau', d: "Les deux domaines qui me passionnent, et vers lesquels je fais évoluer mon métier : arithmétique modulaire, courbes elliptiques, exécution en temps constant, protocoles et chiffrement en transit. Travail personnel mené en parallèle des missions clients." },
+  { a: 'Aujourd\'hui', t: 'Dépannage, formation à l\'IA et site web', d: "Dépannage et assistance pour les particuliers, formation à l'usage de l'IA pour le grand public, création et maintenance de sites pour les TPE, et relecture de code généré par IA pour les entreprises. C'est ce qui est facturé aujourd'hui." },
+  { a: 'Demain', t: "Sécurité du code IA, cryptographie post-quantique, confidential computing", d: "La direction vers laquelle je fais évoluer mon métier, à titre personnel : vérification formelle, arithmétique modulaire, courbes elliptiques, exécution en temps constant, migration vers des algorithmes résistants à l'ordinateur quantique, exécution d'agents IA non fiables en enclave matérielle. Rien de tout cela n'est facturé tant que ce n'est pas publié et vérifiable." },
 ];
 ---
 <Base
   title="À propos · Elian, technicien informatique à Rivesaltes"
-  description="Technicien informatique devenu technicien réseau et sécurité, indépendant à Rivesaltes (66), en spécialisation sur la cryptographie appliquée."
+  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'usage de l'IA, sites web, et spécialisation en cours sur la sécurité du code généré par IA et la cryptographie post-quantique."
 >
   <PageHead
     kicker="À propos"
     title="Une personne, un périmètre, des preuves"
-    lede="Je m'appelle Elian. Je suis parti du métier de technicien informatique et je me spécialise, couche par couche, sur le réseau et la cryptographie. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
+    lede="Je m'appelle Elian. Je suis technicien informatique, je forme aussi au bon usage de l'IA, et je me spécialise, couche par couche, vers la sécurité du code que les IA génèrent et la cryptographie. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
   />
 
   <section class="section relative isolate overflow-hidden">
@@ -48,24 +48,26 @@ const parcours = [
           couche a été apprise parce que la couche du dessous ne suffisait plus.
         </p>
         <p>
-          Aujourd'hui, ce périmètre couvre le poste de travail, le réseau local et sa
-          sécurité, et le site. C'est exactement ce dont une structure de moins de vingt
-          personnes a besoin, et c'est aussi la limite que je m'impose : au-delà, je
-          préfère orienter que bricoler.
+          Aujourd'hui, ce périmètre couvre le poste de travail et le dépannage, la
+          formation à l'usage de l'IA, le site web, et la relecture du code que
+          produisent les assistants IA. Quatre chantiers, tenus par la même exigence
+          plutôt qu'étalés sur un catalogue qui perd en profondeur.
         </p>
         <p>
-          Deux domaines m'ont pris plus que les autres, et ce sont ceux vers lesquels je
-          spécialise mon métier : le réseau et la cryptographie. Le réseau parce que
-          c'est là que se jouent la plupart des problèmes qu'on impute au logiciel, et
-          parce qu'un réseau correctement segmenté règle d'avance des incidents de
-          sécurité entiers. La cryptographie parce que c'est la couche sur laquelle
-          tout le reste s'appuie sans jamais la regarder : arithmétique modulaire,
-          courbes elliptiques, exécution en temps constant, chiffrement en transit.
+          Deux domaines me prennent plus que les autres aujourd'hui, et ce sont ceux
+          vers lesquels je spécialise mon métier : la sécurité du code que les IA
+          génératives écrivent, et la cryptographie, post-quantique en particulier. Le
+          premier parce que ce code fonctionne souvent du premier coup, ce qui
+          décourage justement de le relire. La seconde parce que c'est la couche sur
+          laquelle tout le reste s'appuie sans jamais la regarder, et qu'elle va devoir
+          changer entièrement dans les années qui viennent face à l'ordinateur
+          quantique : arithmétique modulaire, courbes elliptiques, exécution en temps
+          constant.
         </p>
         <p>
           C'est un travail de fond, mené à titre personnel, en parallèle des missions.
-          Il ne remplace pas le métier de technicien, il le prolonge : la même exigence
-          de vérifier avant de conclure, appliquée un étage plus bas.
+          Il ne remplace pas le métier de développeur, il le prolonge : la même
+          exigence de vérifier avant de conclure, appliquée un étage plus bas.
         </p>
       </div>
     </div>
@@ -111,10 +113,11 @@ const parcours = [
       <div class="mt-10 max-w-[60ch] border-t border-rule pt-7">
         <p class="text-base text-ink-soft">
           La troisième ligne mérite une précision, parce qu'elle est facile à
-          survendre. Je ne me présente pas comme architecte en cryptographie : je me
-          spécialise dans cette direction, à titre personnel, et je ne la mets en avant
-          sur une mission que si le sujet s'y prête réellement. Ce que je facture reste
-          le dépannage, le réseau et sa sécurité, et le site.
+          survendre. Je ne me présente pas comme expert en sécurité IA ou en
+          cryptographie post-quantique : je m'oriente dans cette direction, à titre
+          personnel, et je ne la mets en avant sur une mission que si le sujet s'y
+          prête réellement. Ce que je facture aujourd'hui reste le dépannage, la
+          formation à l'IA, le site web et la relecture de code généré par IA.
         </p>
       </div>
     </div>
@@ -140,13 +143,14 @@ const parcours = [
           <h2 class="mt-[0.8rem] text-x2">Rivesaltes, et pas ailleurs</h2>
           <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
             Travailler à distance fonctionne pour presque tout. Presque. Il reste les
-            câbles, les baies, les imprimantes, les machines qui ne s'allument plus, et
-            les conversations qu'on n'a pas de la même façon par écran interposé.
+            machines qui ne s'allument plus, l'imprimante qui refuse d'imprimer, et les
+            conversations qu'on n'a pas de la même façon par écran interposé.
           </p>
           <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
             La proximité n'est pas un argument commercial ajouté après coup : c'est ce
-            qui permet d'être là dans la journée quand une caisse ne fonctionne plus un
-            samedi de marché.
+            qui permet d'être là dans la journée quand une panne vous empêche de
+            travailler, ou quand vous préférez qu'on vous montre l'IA plutôt que de lire
+            une notice.
           </p>
         </div>
       </div>

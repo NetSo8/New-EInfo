@@ -20,7 +20,7 @@ export const services: Service[] = [
     probleme: "Votre machine ne démarre plus, rame, ou fait quelque chose d'inquiétant.",
     resume:
       "Le métier de base : technicien informatique. Diagnostic sur place ou à distance, réparation matérielle et logicielle, remise en état. Windows, macOS et Linux. Je vous dis ce qui ne va pas et ce que ça coûte avant de commencer.",
-    pour: ['particulier', 'entreprise'],
+    pour: ['particulier'],
     livrables: [
       'Diagnostic annoncé et chiffré avant intervention',
       'Réparation logicielle ou remplacement de pièce',
@@ -31,24 +31,21 @@ export const services: Service[] = [
     motscles: 'dépannage informatique Rivesaltes, technicien informatique Perpignan, réparation ordinateur 66',
   },
   {
-    id: 'reseau',
+    id: 'formation-ia',
     n: '02',
-    titre: 'Réseau et sécurité',
-    probleme: "Le wifi lâche, l'accès distant est une porte ouverte, et personne ne sait comment le réseau est câblé.",
+    titre: "Formation à l'usage de l'IA",
+    probleme: "ChatGPT, Copilot ou une autre IA vous intéresse ou vous inquiète, et personne ne vous a montré comment vous en servir sans vous faire piéger.",
     resume:
-      "C'est mon cœur de métier et le seul chantier que je revendique comme une spécialité. Remise à plat du réseau local et de tout ce qui décide de sa sécurité : plan d'adressage, segmentation, pare-feu, accès distant chiffré, wifi mesuré, sauvegardes testées. Quand l'outil du marché ne convient pas, je code le mien : applications de supervision, utilitaires réseau sur mesure.",
-    pour: ['particulier', 'entreprise'],
+      "Une prise en main concrète, sur vos propres besoins : rédiger un e-mail, préparer un dossier, trier des photos, comprendre ce qu'une IA peut faire et ce qu'elle invente. On voit aussi ce qu'il ne faut jamais lui confier, et comment repérer une arnaque ou une fausse information générée par IA.",
+    pour: ['particulier'],
     livrables: [
-      "Plan d'adressage et schéma réseau à jour, remis par écrit",
-      'Segmentation VLAN : postes, caisses, wifi invités, équipements isolés',
-      'Pare-feu et règles de filtrage documentées, entrantes et sortantes',
-      'Accès distant par VPN chiffré, à la place du RDP exposé sur internet',
-      'Couverture wifi mesurée sur site, bornes placées sur relevé et non au hasard',
-      'Durcissement des accès et des comptes, sauvegardes chiffrées et restauration testée',
-      'Supervision continue et alerte quand quelque chose sort du rail',
+      "Prise en main d'un assistant IA (ChatGPT ou équivalent) sur vos cas réels",
+      "Ce qu'il ne faut jamais partager avec une IA (données personnelles, bancaires, santé)",
+      "Reconnaître un contenu ou une arnaque générée par IA",
+      'Réglages de confidentialité expliqués, pas seulement cochés',
+      'Support écrit à relire chez vous après la séance',
     ],
-    motscles:
-      'technicien réseau et sécurité Perpignan, configuration VLAN pare-feu Pyrénées-Orientales, VPN télétravail TPE 66, sécurisation réseau entreprise Rivesaltes',
+    motscles: 'formation ChatGPT particulier Rivesaltes, apprendre à utiliser IA Perpignan, initiation intelligence artificielle 66',
   },
   {
     id: 'web',
@@ -56,7 +53,7 @@ export const services: Service[] = [
     titre: 'Site web : création et maintenance',
     probleme: "Votre site est lent, daté, ou tombe sans que vous sachiez pourquoi.",
     resume:
-      "Création ou refonte orientée performance et référencement local, puis maintenance dans la durée : mises à jour, sauvegardes, correctifs de sécurité, supervision de disponibilité. L'hébergement va avec, et il est tenu par la même personne que le réseau.",
+      "Création ou refonte orientée performance et référencement local, puis maintenance dans la durée : mises à jour, sauvegardes, correctifs de sécurité, supervision de disponibilité. L'hébergement va avec, et il est tenu par la même personne que le reste.",
     pour: ['entreprise'],
     livrables: [
       'Site rapide, accessible, indexable, sans dépendance inutile',
@@ -66,5 +63,22 @@ export const services: Service[] = [
       'Maintenance mensuelle : mises à jour, sauvegardes, correctifs, disponibilité',
     ],
     motscles: 'création site web Perpignan, maintenance site internet Rivesaltes, refonte site vitrine 66',
+  },
+  {
+    id: 'revue-ia',
+    n: '04',
+    titre: 'Relecture de code généré par IA',
+    probleme: "Une équipe utilise Copilot, Cursor ou ChatGPT pour produire du code, et personne ne l'a relu avant que ça tourne pour de vrai.",
+    resume:
+      "Une IA générative écrit du code qui fonctionne, pas nécessairement du code sûr : secret oublié en dur, requête construite par concatenation, dépendance qui n'existe pas, comportement qui ne correspond pas à ce que le projet promet. Je relis ce code ligne par ligne, humainement, et je vous dis ce qui doit être corrigé avant la mise en ligne.",
+    pour: ['entreprise'],
+    livrables: [
+      'Relecture manuelle du code, pas un simple passage de linter automatique',
+      'Rapport priorisé : ce qui est dangereux, ce qui peut attendre, ce qui est correct',
+      "Repérage des erreurs récurrentes propres à l'assistant utilisé (secrets en dur, injection, dépendances inventées)",
+      'Vérification que le comportement réel correspond à ce que le code prétend faire',
+      'Corrections appliquées ou expliquées, selon ce que vous préférez',
+    ],
+    motscles: 'audit code généré par IA Perpignan, relecture code ChatGPT Copilot Rivesaltes, sécurité vibe coding 66',
   },
 ];
