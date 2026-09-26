@@ -4,7 +4,10 @@ import ArrowRight from '@lucide/astro/icons/arrow-right';
 import Plus from '@lucide/astro/icons/plus';
 import SectionHead from '../components/SectionHead.astro';
 import Terminal from '../components/Terminal.astro';
-import ChainDiagram from '../components/ChainDiagram.astro';
+import Receipt from '@lucide/astro/icons/receipt';
+import MessageCircle from '@lucide/astro/icons/message-circle';
+import FileText from '@lucide/astro/icons/file-text';
+import Compass from '@lucide/astro/icons/compass';
 import ZoneRadar from '../components/ZoneRadar.astro';
 import HeroNetworkBg from '../components/HeroNetworkBg.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -45,6 +48,15 @@ const faq = [
   },
 ];
 
+
+/* Engagements repris des pages Particuliers et À propos : rien de promis
+   ici qui ne soit déjà écrit ailleurs sur le site. */
+const engagements = [
+  { icon: Receipt, t: 'Le prix avant de commencer', d: "Vous savez ce que ça coûte avant que je touche à quoi que ce soit. Si quelque chose change en cours de route, je m'arrête et je vous appelle." },
+  { icon: MessageCircle, t: 'Des explications en français', d: "Je vous montre ce qui s'est passé et ce que j'ai changé, sans jargon, avec les réflexes qui évitent que ça recommence." },
+  { icon: FileText, t: 'Rien ne reste dans ma tête', d: "Ce que je mets en place est documenté et les accès de secours restent chez vous. Quelqu'un d'autre peut reprendre sans repartir de zéro." },
+  { icon: Compass, t: 'Je dis quand ce n\'est pas pour moi', d: "Hors de mon périmètre, je vous le dis et je vous oriente vers quelqu'un de compétent, plutôt que d'apprendre à vos frais." },
+];
 
 const pannesCourantes = [
   "Il rame, il chauffe, il s'éteint tout seul",
@@ -107,9 +119,9 @@ const pannesCourantes = [
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          widths={[640, 960, 1280]}
-          sizes="(width >= 62rem) 50vw, 100vw"
-          quality={45}
+          widths={[480, 800, 1200]}
+          sizes="(width >= 62rem) 45vw, 100vw"
+          quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07] grayscale contrast-125"
         />
         <span class="badge badge--accent self-start" aria-hidden="true">Particulier</span>
@@ -194,9 +206,9 @@ const pannesCourantes = [
                       aria-hidden="true"
                       loading="lazy"
                       decoding="async"
-                      widths={[640, 960, 1280]}
-                      sizes="(width >= 62rem) 60vw, 100vw"
-                      quality={60}
+                      widths={[480, 800, 1200]}
+                      sizes="(width >= 80rem) 52rem, (width >= 62rem) 64vw, 100vw"
+                      quality={50}
                       class:list={['panel-media absolute inset-0 -z-20 size-full object-cover', t.tone === 'nuit' ? 'opacity-45' : 'opacity-70']}
                     />
                     {/* Voile : garantit le contraste du texte posé sur la photo. */}
@@ -227,27 +239,32 @@ const pannesCourantes = [
     </div>
   </section>
 
-  <!-- ─── L'ARGUMENT ───────────────────────────────────── -->
+  <!-- ─── ENGAGEMENTS ──────────────────────────────────── -->
   <section class="section section-rule section-tint">
     <div class="shell">
-      <SectionHead title="La panne est rarement là où on la cherche" />
-      <div class="mt-12" data-reveal><ChainDiagram /></div>
-      <div class="mt-12 grid gap-x-12 gap-y-5 text-base text-ink-soft md:grid-cols-2">
-        <p>
-          Une machine qui rame, une IA qu'on n'ose pas utiliser, un site qui tombe,
-          du code généré qu'on n'a jamais relu : quatre situations qui semblent sans
-          rapport, et qui demandent souvent le même réflexe, vérifier avant de
-          conclure.
-        </p>
-        <div class="flex flex-col items-start gap-4">
-          <p>
-            Je couvre un périmètre précis, poste de travail, usage de l'IA, site web,
-            sécurité du code généré, et ce périmètre suffit à la très grande majorité
-            des besoins. Ce qui sort de ce cadre, je le dis, et je vous oriente.
-          </p>
-          <a class="tlink" href="/a-propos/">Comment je travaille</a>
-        </div>
-      </div>
+      <SectionHead
+        title="Quatre engagements, quel que soit le chantier"
+        lede="Une panne chez un particulier ou un site d'entreprise : la façon de travailler ne change pas."
+      />
+      <ul class="m-0 mt-14 grid list-none grid-cols-1 gap-y-10 border-t border-rule-strong p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {engagements.map((e, i) => (
+          <li
+            class:list={[
+              'flex flex-col gap-3 pt-8 sm:pr-8',
+              i > 0 && 'lg:border-l lg:border-rule lg:pl-8',
+              i % 2 === 1 && 'sm:max-lg:border-l sm:max-lg:border-rule sm:max-lg:pl-8',
+            ]}
+            data-reveal
+          >
+            <span class="grid size-11 place-items-center rounded-full bg-raised text-accent shadow-[var(--shadow-raise)]" aria-hidden="true">
+              <e.icon size={20} stroke-width={1.8} />
+            </span>
+            <h3 class="mt-2 text-[1.25rem]/[1.2] tracking-[-0.028em]">{e.t}</h3>
+            <p class="text-base text-ink-soft">{e.d}</p>
+          </li>
+        ))}
+      </ul>
+      <a class="tlink mt-12 inline-block" href="/a-propos/">Comment je travaille</a>
     </div>
   </section>
 

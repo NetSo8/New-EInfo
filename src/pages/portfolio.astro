@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import PageHead from '../components/PageHead.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projets } from '../data/portfolio';
+
+const livres = projets.filter((p) => p.type !== 'recherche');
+const [vedette, ...autres] = livres;
+const rech = projets.filter((p) => p.type === 'recherche');
+---
+{/* Page prête mais pas encore publiée : hors navigation, hors plan du site
+    et `noindex` tant que les projets et leurs chiffres ne sont pas validés.
+    Pour la mettre en ligne : retirer `noindex`, le filtre du sitemap dans
+    astro.config.mjs, et ajouter le lien dans Nav.astro et Footer.astro. */}
+<Base
+  noindex
+  title="Réalisations et travaux en cours · E Informatique"
+  description="Missions livrées pour des clients des Pyrénées-Orientales et travaux de recherche en cours, avec leur état réel."
+>
+  <PageHead
+    kicker="Réalisations"
+    title="Ce qui est livré, et ce qui est en train de se faire"
+    lede="Deux catégories volontairement séparées. Les missions client sont terminées et mesurées. Les travaux de recherche sont affichés avec leur état réel, y compris quand il n'y a pas encore de conclusion."
+  >
+    <a class="btn btn--ghost" href="https://github.com/NetSo8" rel="noopener noreferrer" target="_blank">
+      Dépôts publics sur GitHub <span class="sr-only">(nouvel onglet)</span> <ArrowUpRight size="1em" aria-hidden="true" />
+    </a>
+  </PageHead>
+
+  <!-- ─── Missions client : une fiche en vedette, puis la grille ─ -->
+  <section class="section section-rule">
+    <div class="shell">
+      <SectionHead
+        title="Missions client"
+        lede="Des entreprises de moins de vingt personnes, avec un budget réel et des contraintes d'activité."
+      />
+      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-2">
+        {vedette && <li class="lg:col-span-2"><ProjectCard projet={vedette} featured /></li>}
+        {autres.map((p) => <li><ProjectCard projet={p} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── Recherche : panneau sombre ─────────────────────────── -->
+  <section class="pb-[var(--spacing-band)]" aria-labelledby="recherche-t">
+    <div class="shell">
+      <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
+        <h2 class="text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]" id="recherche-t">Travaux de recherche</h2>
+        <p class="mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft">
+          Non facturés, non finis. Ils indiquent la direction que prend le travail
+          technique sans prétendre qu'elle est déjà atteinte.
+        </p>
+        <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-2">
+          {rech.map((p) => <li><ProjectCard projet={p} /></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Un contexte proche du vôtre ?"
+    text="Décrivez le vôtre, je vous dis franchement s'il ressemble à ce que je sais faire."
+  />
+</Base>

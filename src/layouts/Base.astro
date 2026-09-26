@@ -20,6 +20,8 @@ const business = {
   description:
     "Technicien informatique freelance à Rivesaltes : dépannage et assistance pour les particuliers, formation à l'usage de l'IA grand public, création et maintenance de sites, et relecture de code généré par IA pour les TPE/PME des Pyrénées-Orientales.",
   url: 'https://einformatique.fr',
+  image: 'https://einformatique.fr/logo.png',
+  logo: 'https://einformatique.fr/logo.png',
   founder: { '@type': 'Person', name: 'Elian', jobTitle: 'Technicien informatique · formation et sécurité IA' },
   address: {
     '@type': 'PostalAddress',
@@ -137,6 +139,13 @@ const business = {
         (el as HTMLElement).style.setProperty('--d', `${(i % 6) * 70}ms`);
         io.observe(el);
       });
+
+      // Fonds et schémas animés en boucle : en pause dès qu'ils quittent
+      // l'écran, relancés quand ils y reviennent.
+      const decor = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.target.classList.toggle('is-offscreen', !e.isIntersecting));
+      });
+      document.querySelectorAll('.hero-mesh, .crack-bg, .world-bg, [data-decor]').forEach((el) => decor.observe(el));
     </script>
   </body>
 </html>

@@ -8,9 +8,12 @@ import { AUDIENCE_LABEL, formatDate } from '../../lib/blog';
 
 const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
+{/* Tant qu'aucun article n'est publié, la page reste hors index : une page
+    vide est considérée comme du contenu pauvre et pèse sur tout le site. */}
 <Base
+  noindex={posts.length === 0}
   title="Blog · code, sécurité et cryptographie (66)"
-  description="Sites web, sécurité du code généré par IA, et notes de veille sur la cryptographie post-quantique : des articles pour les particuliers et les petites entreprises du Roussillon, sans jargon inutile."
+  description="Conseils pratiques, sécurité du code généré par IA et veille en cryptographie, sans jargon, pour les particuliers et TPE du Roussillon."
 >
   <PageHead
     kicker="Blog"

@@ -1,42 +1,50 @@
 ---
 import type { Projet } from '../data/portfolio';
-import ChevronRight from '@lucide/astro/icons/chevron-right';
+import Check from '@lucide/astro/icons/check';
 
-interface Props { projet: Projet; n: number }
-const { projet: p, n } = Astro.props;
+interface Props { projet: Projet; featured?: boolean }
+const { projet: p, featured = false } = Astro.props;
 
 const etiq = { 'livré': 'Livré', 'maintenance': 'En maintenance', 'recherche': 'Recherche en cours' } as const;
 const badgeTone = { 'livré': 'badge--accent', maintenance: '', 'recherche': 'badge--warn' } as const;
+const id = `projet-${p.titre.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48)}`;
 ---
-<li class="border-b border-rule py-9" data-reveal>
-  <div class="grid grid-cols-[2.5rem_1fr] items-start gap-4 mid:grid-cols-[3rem_minmax(0,1fr)_auto]">
-    <span class="pt-[0.4rem] font-mono text-[0.75rem] font-semibold text-accent">
-      {String(n).padStart(2, '0')}
-    </span>
-
-    <div>
-      <h2 class="max-w-[30ch] text-[clamp(1.25rem,1.05rem+1vw,1.85rem)] tracking-[-0.032em]">{p.titre}</h2>
-      <p class="mt-[0.4rem] font-mono text-[0.75rem] tracking-[0.05em] text-ink-faint">{p.client} · {p.annee}</p>
-    </div>
-
-    <span class:list={['badge col-start-2 justify-self-start whitespace-nowrap mid:col-start-3', badgeTone[p.type]]}>
-      {etiq[p.type]}
-    </span>
+{/* Une fiche = un article nommé par son titre : un lecteur d'écran peut
+    passer de projet en projet par la liste des titres ou des repères. */}
+<article
+  class:list={[
+    'panel flex h-full flex-col gap-5 p-[clamp(1.5rem,2.8vw,2.4rem)]',
+    featured && 'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-14',
+  ]}
+  aria-labelledby={id}
+  data-reveal
+>
+  <div class="flex flex-col gap-4">
+    <p class="flex flex-wrap items-center gap-3">
+      <span class:list={['badge', badgeTone[p.type]]}>{etiq[p.type]}</span>
+      <span class="text-[0.9rem] text-ink-soft">{p.client}, {p.annee}</span>
+    </p>
+    <h3
+      class:list={[
+        'max-w-[26ch] tracking-[-0.032em]',
+        featured ? 'text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08]' : 'text-[clamp(1.3rem,1.1rem+0.8vw,1.7rem)]/[1.12]',
+      ]}
+      id={id}
+    >{p.titre}</h3>
+    <p class="max-w-[52ch] text-base text-ink-soft">{p.resume}</p>
   </div>
 
-  <div class="mt-5 grid grid-cols-1 items-start gap-y-6 mid:ml-16 mid:grid-cols-2 mid:gap-x-12">
-    <p class="max-w-[50ch] text-base text-ink-soft">{p.resume}</p>
-    <ul class="m-0 list-none border-t border-rule p-0">
+  <div class="flex flex-col gap-5">
+    <ul class="m-0 flex list-none flex-col gap-3 border-t border-rule p-0 pt-5" aria-label="Résultats">
       {p.faits.map((f) => (
-        <li class="relative border-b border-rule py-[0.6rem] pl-[1.2rem] text-base">
-          <ChevronRight class="absolute top-[0.85rem] left-0 text-accent" size="0.9em" aria-hidden="true" />
+        <li class="grid grid-cols-[1.25rem_1fr] gap-3 text-base/[1.5]">
+          <Check class="mt-[0.2rem] text-accent" size={17} stroke-width={2.2} aria-hidden="true" />
           {f}
         </li>
       ))}
     </ul>
+    <ul class="m-0 mt-auto flex list-none flex-wrap gap-2 p-0" aria-label="Technologies">
+      {p.stack.map((s) => <li class="tag">{s}</li>)}
+    </ul>
   </div>
-
-  <p class="mt-5 flex flex-wrap items-center gap-[0.4rem] mid:ml-16">
-    {p.stack.map((s) => <span class="tag">{s}</span>)}
-  </p>
-</li>
+</article>

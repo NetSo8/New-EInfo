@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+/* Le logo source fait 395px : servi tel quel, il pesait 16 Ko pour 28px
+   affichés. Astro en tire une version 28 et 56px (écrans denses). */
+import logo from '../assets/logo.png';
 import Menu from '@lucide/astro/icons/menu';
 import Moon from '@lucide/astro/icons/moon';
 import Sun from '@lucide/astro/icons/sun';
@@ -23,7 +27,7 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
   <div class="shell relative">
     <div class="flex h-[60px] items-center gap-5 rounded-full border border-rule bg-paper/82 pr-2 pl-5 shadow-[var(--shadow-raise)] backdrop-blur-[12px] backdrop-saturate-150">
       <a class="flex flex-none items-center gap-[0.6rem] text-ink no-underline" href="/" aria-label="E Informatique, accueil">
-        <img src="/logo.png" alt="" width="28" height="28" class="size-[28px] rounded-none" />
+        <Image src={logo} alt="" width={28} height={28} densities={[1, 2]} loading="eager" class="size-[28px] rounded-none" />
         <span class="text-[1rem] font-bold tracking-[-0.03em]">E&nbsp;Informatique</span>
       </a>
 

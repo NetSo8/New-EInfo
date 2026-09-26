@@ -108,8 +108,9 @@ const flowingSet = new Set(
 </svg>
 
 <style>
+  /* Pas de `filter: blur` ici : appliqué à un SVG animé en continu, il
+     oblige le navigateur à refaire le flou à chaque image. */
   .hero-mesh {
-    filter: blur(0.6px);
     mask-image: radial-gradient(ellipse 78% 72% at 50% 38%, black 40%, transparent 88%);
   }
 
