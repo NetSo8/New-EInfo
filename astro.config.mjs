@@ -2,9 +2,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { readdirSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 
-const blogVide = !readdirSync('./src/content/blog').some((f) => f.endsWith('.md'));
+// Git ne conserve pas les dossiers vides : sans article, `src/content/blog`
+// n'existe pas du tout sur la machine de déploiement.
+const DOSSIER_BLOG = './src/content/blog';
+const blogVide = !existsSync(DOSSIER_BLOG) || !readdirSync(DOSSIER_BLOG).some((f) => f.endsWith('.md'));
 
 export default defineConfig({
   site: 'https://einformatique.fr',
