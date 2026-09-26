@@ -3,10 +3,10 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import X from '@lucide/astro/icons/x';
-import Plus from '@lucide/astro/icons/plus';
+import Check from '@lucide/astro/icons/check';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
-import Faq from '../components/Faq.astro';
+import FaqSection from '../components/FaqSection.astro';
 import { Image } from 'astro:assets';
 import etabli from '../assets/etabli.jpg';
 
@@ -70,142 +70,138 @@ const faq = [
     title="Votre ordinateur vous pose problème. On règle ça."
     lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence. Et si c'est l'IA elle-même qui vous pose question, je vous montre aussi comment vous en servir."
   >
-    <div class="flex flex-wrap gap-3">
-      <a class="btn btn--cta" href="/contact/">Décrire mon problème <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+    <div class="flex flex-wrap items-center gap-3">
+      <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       <a class="btn btn--ghost" href="#chiffrage">Comment je chiffre</a>
     </div>
-    <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
-      Déplacement inclus jusqu'à 15 km
-    </p>
+    <p class="mt-4 text-[0.9rem] text-ink-soft">Déplacement inclus jusqu'à 15 km de Rivesaltes.</p>
   </PageHead>
 
-  <section class="section">
+  <!-- ─── Pannes courantes : grille de fiches ───────────── -->
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        n="01"
-        kicker="Ce que je répare le plus"
         title="Vous reconnaîtrez sûrement votre panne"
         lede="Aucune de ces situations n'est perdue d'avance, et aucune ne nécessite de racheter une machine sans avoir vérifié le reste."
       />
-      <ul class="m-0 mt-12 grid list-none grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] border-t border-rule-strong p-0" data-reveal>
+      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {pannes.map((p) => (
-          <li class="border-b border-rule pt-[1.4rem] pr-6 pb-6">
-            <h3 class="text-[1.05rem] tracking-[-0.02em]">{p.t}</h3>
-            <p class="mt-[0.4rem] max-w-[40ch] text-base text-ink-soft">{p.d}</p>
+          <li class="panel flex flex-col gap-2 p-6" data-reveal>
+            <h3 class="text-[1.1rem]/[1.25] tracking-[-0.02em]">{p.t}</h3>
+            <p class="text-[0.95rem]/[1.55] text-ink-soft">{p.d}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
+  <!-- ─── Déroulé : frise verticale + photo ─────────────── -->
   <section class="section section-rule section-tint">
-    <div class="shell">
-      <SectionHead n="02" kicker="Comment ça se passe" title="Quatre étapes, pas de surprise" />
-      <div class="grid12 mt-12 items-start gap-y-10">
-        <ol class="col-span-full m-0 list-none border-t border-rule-strong p-0 mid:col-span-6">
-          {etapes.map((e) => (
-            <li class="grid grid-cols-[3rem_1fr] gap-4 border-b border-rule py-[1.35rem]">
-              <span class="pt-[0.3rem] font-mono text-[0.75rem] font-semibold text-accent">{e.n}</span>
-              <div>
-                <h3 class="text-[1.15rem] tracking-[-0.025em]">{e.t}</h3>
-                <p class="mt-[0.3rem] max-w-[46ch] text-base text-ink-soft">{e.d}</p>
+    <div class="shell grid grid-cols-1 items-center gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div>
+        <SectionHead title="Quatre étapes, pas de surprise" />
+        <ol class="m-0 mt-10 list-none p-0">
+          {etapes.map((e, i) => (
+            <li class="relative grid grid-cols-[2.75rem_1fr] gap-5 pb-8 last:pb-0">
+              {/* Le fil qui relie les étapes ; l'ordre, lui, est porté par la liste numérotée. */}
+              {i < etapes.length - 1 && <span class="absolute top-11 bottom-1 left-[1.375rem] w-px bg-rule-strong" aria-hidden="true"></span>}
+              <span class="grid size-11 place-items-center rounded-full border border-rule bg-raised font-mono text-[0.8rem] font-semibold text-accent shadow-[var(--shadow-raise)]" aria-hidden="true">{e.n}</span>
+              <div class="pt-2">
+                <h3 class="text-[1.2rem] tracking-[-0.025em]">{e.t}</h3>
+                <p class="mt-1 max-w-[46ch] text-base text-ink-soft">{e.d}</p>
               </div>
             </li>
           ))}
         </ol>
+      </div>
 
-        <figure class="col-span-full m-0 mid:col-start-8 mid:col-span-5">
-          <Image
-            src={etabli}
-            alt="Mains gantées au travail sur une carte électronique, à l'établi"
-            loading="lazy"
-            decoding="async"
-            widths={[480, 768, 1100]}
-            sizes="(width >= 60rem) 40vw, 100vw"
-            quality={68}
-            class="aspect-video w-full object-cover contrast-105 saturate-80 mid:aspect-[4/5]"
-          />
-        </figure>
+      <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)] shadow-[var(--shadow-raise-hi)]">
+        <Image
+          src={etabli}
+          alt="Réparation d'une carte électronique au tournevis de précision, sur l'établi"
+          loading="lazy"
+          decoding="async"
+          widths={[480, 768, 1100]}
+          sizes="(width >= 62rem) 40vw, 100vw"
+          quality={68}
+          class="aspect-video w-full rounded-none object-cover object-[72%_50%] lg:aspect-[4/5]"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ─── Chiffrage : panneau sombre, engagements cochés ── -->
+  <section class="section" id="chiffrage">
+    <div class="shell">
+      <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
+        <SectionHead
+          title="Vous saurez ce que ça coûte avant que je commence"
+          lede="Je n'affiche pas de grille tarifaire, parce qu'elle serait fausse pour la moitié des situations. Ce qui est garanti, en revanche, tient en six points."
+        />
+        <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-x-12 gap-y-8 p-0 md:grid-cols-2">
+          {chiffrage.map((c) => (
+            <li class="grid grid-cols-[2rem_1fr] gap-4" data-reveal>
+              <span class="mt-[0.15rem] grid size-8 place-items-center rounded-full bg-accent-wash text-accent" aria-hidden="true"><Check size={16} stroke-width={2.2} /></span>
+              <div>
+                <h3 class="text-[1.15rem] tracking-[-0.025em]">{c.t}</h3>
+                <p class="mt-1 max-w-[52ch] text-base text-ink-soft">{c.d}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-12 max-w-[62ch] border-t border-rule pt-6 text-base text-ink-soft">
+          Pour obtenir un montant, décrivez la panne : la marque de l'appareil, ce qu'il
+          fait, depuis quand. Vous recevez une estimation sans engagement.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section section-rule" id="chiffrage">
+  <!-- ─── Formation IA : panneau sable en deux temps ────── -->
+  <section class="pb-[var(--spacing-band)]" id="formation-ia">
     <div class="shell">
-      <SectionHead
-        n="03"
-        kicker="Comment je chiffre"
-        title="Vous saurez ce que ça coûte avant que je commence"
-        lede="Je n'affiche pas de grille tarifaire, parce qu'elle serait fausse pour la moitié des situations. Ce qui est garanti, en revanche, tient en six points."
-      />
-      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
-        {chiffrage.map((c, i) => (
-          <li class="grid grid-cols-[2.5rem_1fr] gap-[0.9rem] border-b border-rule py-6 xs:grid-cols-[3.5rem_1fr] xs:gap-5">
-            <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 class="text-[1.2rem] tracking-[-0.028em]">{c.t}</h3>
-              <p class="mt-[0.4rem] max-w-[62ch] text-base text-ink-soft">{c.d}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <p class="mt-6 max-w-[62ch] text-base text-ink-soft">
-        Pour obtenir un montant, décrivez la panne : la marque de l'appareil, ce qu'il
-        fait, depuis quand. Vous recevez une estimation sans engagement.
-      </p>
+      <div class="panel grid grid-cols-1 gap-x-14 gap-y-10 border-transparent bg-sand px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <div class="flex flex-col items-start gap-8">
+          <SectionHead
+            title="Se servir de l'IA sans se faire piéger"
+            lede="ChatGPT, Copilot, ou l'assistant intégré à votre téléphone : une formation courte, sur vos usages réels, plutôt qu'un cours théorique."
+          />
+          <a class="btn btn--cta" href="/contact/">
+            Réserver une séance <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          </a>
+        </div>
+        <ul class="m-0 grid list-none grid-cols-1 gap-3 self-center p-0 sm:grid-cols-2">
+          {usagesIA.map((u) => (
+            <li class="panel flex flex-col gap-1 p-5" data-reveal>
+              <h3 class="text-[1.05rem]/[1.25] tracking-[-0.02em]">{u.t}</h3>
+              <p class="text-[0.95rem]/[1.55] text-ink-soft">{u.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section section-rule section-tint" id="formation-ia">
-    <div class="shell">
-      <SectionHead
-        n="04"
-        kicker="Autre demande fréquente"
-        title="Se servir de l'IA sans se faire piéger"
-        lede="ChatGPT, Copilot, ou l'assistant intégré à votre téléphone : une formation courte, sur vos usages réels, plutôt qu'un cours théorique."
-      />
-      <ul class="m-0 mt-12 grid list-none grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-x-6 border-t border-rule-strong p-0" data-reveal>
-        {usagesIA.map((u) => (
-          <li class="relative border-b border-rule py-[1.1rem] pl-6">
-            <Plus class="absolute top-[1.35rem] left-0 text-accent" size="0.85em" aria-hidden="true" />
-            <h3 class="text-[1.05rem] tracking-[-0.02em]">{u.t}</h3>
-            <p class="mt-[0.35rem] max-w-[40ch] text-base text-ink-soft">{u.d}</p>
-          </li>
-        ))}
-      </ul>
-      <a class="btn btn--cta mt-8" href="/contact/">
-        Réserver une séance <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
-      </a>
-    </div>
-  </section>
-
+  <!-- ─── Ce que je ne vends pas ───────────────────────── -->
   <section class="section section-rule">
     <div class="shell">
-      <SectionHead n="05" kicker="Franchise" title="Ce que je ne vous vendrai pas" />
-      <ul class="m-0 mt-10 flex max-w-[62ch] list-none flex-col p-0" data-reveal>
+      <SectionHead title="Ce que je ne vous vendrai pas" />
+      <ul class="m-0 mt-10 grid list-none grid-cols-1 gap-x-12 gap-y-6 p-0 md:grid-cols-2">
         {refus.map((r) => (
-          <li class="relative border-b border-rule py-[1.1rem] pl-8 text-base text-ink-soft first:border-t">
-            <X class="absolute top-[1.35rem] left-[0.35rem] text-accent" size="0.85em" aria-hidden="true" />
-            <strong class="font-semibold text-ink">{r.t}</strong> {r.d}
+          <li class="grid grid-cols-[2rem_1fr] gap-4 text-base text-ink-soft" data-reveal>
+            <span class="mt-[0.1rem] grid size-8 place-items-center rounded-full border border-rule text-accent" aria-hidden="true"><X size={15} stroke-width={2.2} /></span>
+            <p><strong class="font-semibold text-ink">{r.t}</strong> {r.d}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="section section-rule">
-    <div class="shell">
-      <SectionHead n="06" kicker="Questions fréquentes" title="Avant de m'appeler" />
-      <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
-    </div>
-  </section>
+  <FaqSection title="Avant de m'appeler" items={faq} />
 
   <CtaBand
-    kicker="Votre tour"
     title="Dites-moi ce qui se passe."
-    text="La marque de l'appareil, ce qu'il fait, depuis quand — ou simplement votre envie de vous mettre à l'IA. Je vous réponds avec un premier avis et un ordre de prix, sans engagement."
-    href="/contact/"
-    cta="Décrire mon problème"
+    text="La marque de l'appareil, ce qu'il fait, depuis quand, ou simplement votre envie de vous mettre à l'IA. Je vous réponds avec un premier avis et un ordre de prix, sans engagement."
     second={{ href: '/blog/', label: 'Lire les conseils pratiques' }}
   />
 </Base>

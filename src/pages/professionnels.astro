@@ -1,13 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
-import ChevronRight from '@lucide/astro/icons/chevron-right';
-import Plus from '@lucide/astro/icons/plus';
 import PageHead from '../components/PageHead.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Terminal from '../components/Terminal.astro';
 import CtaBand from '../components/CtaBand.astro';
-import Faq from '../components/Faq.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Check from '@lucide/astro/icons/check';
 import { services } from '../data/services';
 import { Image } from 'astro:assets';
 import baie from '../assets/baie.jpg';
@@ -72,30 +71,26 @@ const bridgeItems = [
   description="Création et maintenance de site web, et relecture de code généré par IA (Copilot, Cursor, ChatGPT, Claude) pour les TPE des Pyrénées-Orientales."
 >
   <PageHead
-    tone="warm"
     kicker="Entreprises · TPE, PME, professions libérales"
     title="Je fais deux choses, et je les fais bien."
-    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je ne vous propose pas pour autant un catalogue de dix lignes : je construis et je maintiens votre site, et je relis le code que votre équipe ou ses prestataires produisent avec une IA. Ce qui sort de ce périmètre, je le dis et je vous oriente."
+    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je construis et je maintiens votre site, et je relis le code que votre équipe ou ses prestataires produisent avec une IA. Ce qui sort de ce périmètre, je le dis et je vous oriente."
   >
-    <div class="flex flex-wrap gap-3">
-      <a class="btn btn--cta" href="/contact/">Demander une relecture <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+    <div class="flex flex-wrap items-center gap-3">
+      <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
       <a class="btn btn--ghost" href="#formules">Voir les formules</a>
     </div>
-    <p class="mt-4 font-mono text-[0.7rem] tracking-[0.04em] text-ink-faint">
-      Premier échange gratuit et sans engagement
-    </p>
+    <p class="mt-4 text-[0.9rem] text-ink-soft">Premier échange gratuit et sans engagement.</p>
   </PageHead>
 
-  <section class="section">
+  <!-- ─── Relevé type : terminal + lecture ─────────────── -->
+  <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        n="01"
-        kicker="Le point de départ"
         title="Ce que je trouve en arrivant"
         lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'une équipe qui utilise un assistant IA depuis quelques mois et n'a jamais eu de raison de tout relire."
       />
-      <div class="grid12 mt-12 items-start gap-y-8">
-        <div class="col-span-full mid:col-span-7">
+      <div class="mt-12 grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
+        <div class="panel on-nuit border-transparent bg-nuit p-[clamp(0.75rem,2vw,1.5rem)]">
           <Terminal
             title="premier relevé : dépôt client, 62 fichiers générés par IA"
             lines={[
@@ -108,13 +103,12 @@ const bridgeItems = [
               { k: 'warn', t: 'src/api/users.js:41   requête SQL construite par concatenation' },
               { k: 'out', t: 'fichiers signalés      6 sur 62 générés par l\'assistant IA' },
               { k: 'out', t: 'couverture de tests     aucune sur les routes signalées' },
-              { k: 'dim', t: '' },
               { k: 'dim', t: 'aucune de ces lignes ne déclenche d\'alerte aujourd\'hui.' },
             ]}
           />
         </div>
 
-        <div class="col-span-full flex flex-col items-start gap-4 text-base text-ink-soft mid:col-start-9 mid:col-span-4">
+        <div class="flex flex-col items-start gap-4 text-base text-ink-soft">
           <p>
             Aucune de ces lignes ne provoque de panne aujourd'hui. Elles décident
             simplement de ce qui se passera le jour où quelqu'un les trouve avant vous :
@@ -125,50 +119,48 @@ const bridgeItems = [
             avec un ordre de priorité que vous pouvez tenir sur les prochaines mises en
             ligne.
           </p>
-          <a class="tlink" href="/contact/">Demander la relecture</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ─── Formules : trois panneaux, le troisième en avant ─ -->
   <section class="section section-rule section-tint" id="formules">
     <div class="shell">
       <SectionHead
-        n="02"
-        kicker="Formules"
         title="Trois façons de travailler ensemble"
         lede="On commence rarement par la troisième. On finit souvent par la deuxième."
       />
 
-      <div class="mt-12 grid grid-cols-1 border-t border-rule-strong lg:grid-cols-3" data-reveal>
+      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
         {formules.map((f) => (
-          <article
+          <li
             class:list={[
-              'flex flex-col gap-[1.1rem] border-b border-rule px-6 py-7',
-              f.bridge ? 'on-nuit bg-nuit' : 'lg:not-first:border-l',
+              'panel flex flex-col gap-5 p-[clamp(1.5rem,2.5vw,2.1rem)]',
+              f.bridge && 'on-nuit border-transparent bg-nuit text-ink',
             ]}
+            data-reveal
           >
-            <header>
-              <span class="font-mono text-[0.72rem] font-semibold text-accent">{f.n}</span>
-              <h3 class="mt-2 text-[1.25rem] tracking-[-0.028em]">{f.t}</h3>
-              <p class="mt-[0.4rem] text-base text-ink-soft">{f.q}</p>
-            </header>
+            <div>
+              <h3 class="text-[1.35rem] tracking-[-0.028em]">{f.t}</h3>
+              <p class="mt-2 text-base text-ink-soft">{f.q}</p>
+            </div>
 
-            <ul class="m-0 flex flex-1 list-none flex-col gap-[0.55rem] p-0">
+            <ul class="m-0 flex flex-1 list-none flex-col gap-3 border-t border-rule p-0 pt-5">
               {f.l.map((x) => (
-                <li class="relative pl-[1.1rem] text-base/[1.5]">
-                  <Plus class="absolute top-[0.4rem] left-0 text-accent" size="0.75em" aria-hidden="true" />
+                <li class="grid grid-cols-[1.25rem_1fr] gap-3 text-base/[1.5]">
+                  <Check class="mt-[0.2rem] text-accent" size={17} stroke-width={2.2} aria-hidden="true" />
                   {x}
                 </li>
               ))}
             </ul>
 
-            <p class="font-mono text-[0.8rem] font-semibold tracking-[0.02em] text-accent">{f.p}</p>
-          </article>
+            <p class="self-start rounded-full bg-accent-wash px-4 py-[0.4rem] text-[0.9rem] font-semibold text-accent">{f.p}</p>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <p class="mt-5 max-w-[62ch] text-base text-ink-faint">
+      <p class="mt-6 max-w-[62ch] text-base text-ink-soft">
         Aucune grille tarifaire affichée : le montant dépend de la taille du projet, du
         volume de code à relire et du niveau de disponibilité attendu. Il est chiffré
         après le premier échange, par écrit, et ne bouge plus sans votre accord.
@@ -176,117 +168,102 @@ const bridgeItems = [
     </div>
   </section>
 
+  <!-- ─── Périmètre : deux prestations en panneaux + photo ─ -->
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        n="03"
-        kicker="Périmètre technique"
         title="Deux chantiers, et c'est volontaire"
         lede="Le site web d'un côté, la relecture du code généré par IA de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
       />
-      <div class="grid12 mt-12 items-start gap-y-10">
-        <ol class="col-span-full m-0 list-none border-t border-rule-strong p-0 mid:col-span-7">
-          {pro.map((s) => (
-            <li id={s.id} class="grid scroll-mt-28 grid-cols-[3rem_1fr] gap-4 border-b border-rule py-7">
-              <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{s.n}</span>
-              <div>
-                <h3 class="text-[1.3rem] tracking-[-0.03em]">{s.titre}</h3>
-                <p class="mt-[0.45rem] max-w-[52ch] text-base text-ink-soft">{s.resume}</p>
-                <ul class="m-0 mt-[0.9rem] flex list-none flex-col gap-[0.35rem] p-0">
-                  {s.livrables.map((l) => (
-                    <li class="relative pl-[1.1rem] text-base text-ink-soft">
-                      <Plus class="absolute top-[0.45rem] left-0 text-accent" size="0.75em" aria-hidden="true" />
-                      {l}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <div class="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)]">
+        {pro.map((s) => (
+          <article id={s.id} class="panel flex scroll-mt-28 flex-col gap-4 p-[clamp(1.5rem,2.5vw,2.1rem)]" aria-labelledby={`${s.id}-t`} data-reveal>
+            <h3 class="text-[1.35rem] tracking-[-0.03em]" id={`${s.id}-t`}>{s.titre}</h3>
+            <p class="text-base text-ink-soft">{s.resume}</p>
+            <ul class="m-0 flex list-none flex-col gap-3 border-t border-rule p-0 pt-5">
+              {s.livrables.map((l) => (
+                <li class="grid grid-cols-[1.25rem_1fr] gap-3 text-[0.97rem]/[1.5]">
+                  <Check class="mt-[0.2rem] text-accent" size={17} stroke-width={2.2} aria-hidden="true" />
+                  {l}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
 
-        <figure class="col-span-full m-0 mid:col-start-9 mid:col-span-4 mid:sticky mid:top-28">
+        <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)] lg:sticky lg:top-28">
           <Image
             src={baie}
-            alt="Baie de serveurs câblée, voyants allumés dans la pénombre d'un local technique"
+            alt="Baie de serveurs câblée, câbles réseau branchés sur un panneau de brassage numéroté"
             loading="lazy"
             decoding="async"
             widths={[420, 700, 1000]}
-            sizes="(width >= 60rem) 32vw, 100vw"
+            sizes="(width >= 62rem) 28vw, 100vw"
             quality={68}
-            class="aspect-video w-full object-cover contrast-105 saturate-70 mid:aspect-3/4"
+            class="aspect-video w-full rounded-none object-cover contrast-105 saturate-70 lg:aspect-3/4"
           />
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="section on-nuit bg-nuit">
-    <div class="shell max-w-[62rem]">
-      <p class="label text-accent">04 / Harnais, scanners et outils IA</p>
-      <h2 class="mt-[0.9rem] text-x1">Ce qui se construit derrière, pas encore facturé</h2>
-      <p class="mt-[1.1rem] max-w-[58ch] text-ink-soft">
-        Je construis, à titre personnel, des outils pour sécuriser le code et les
-        agents produits par l'IA : harnais d'exécution, scanners, orchestrateurs de
-        vérification. Rien de ce qui suit n'est vendu tant que ce n'est pas publié et
-        vérifiable : c'est la direction, pas une prestation du jour.
-      </p>
-
-      <div class="mt-10 grid grid-cols-1 items-start gap-10 mid:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <p class="label mb-[0.9rem]">Ce qui se construit</p>
-          <ul class="m-0 flex list-none flex-col p-0">
-            {bridgeItems.map((b) => (
-              <li class="relative border-b border-rule py-[0.7rem] pl-[1.2rem] text-base first:border-t">
-                <ChevronRight class="absolute top-[0.8rem] left-0 text-accent" size="0.9em" aria-hidden="true" />
-                <strong class="font-semibold text-nuit-text">{b.t}</strong>
-                <span class="block text-[0.92rem] text-nuit-soft">{b.d}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p class="label mb-[0.9rem]">À quoi ça ressemble aujourd'hui</p>
-          <Terminal
-            title="prototype personnel : ia-scan"
-            lines={[
-              { k: 'cmd', t: 'ia-scan run --model copilot ./repo' },
-              { k: 'ok', t: 'typage       0 erreur, 412 fichiers' },
-              { k: 'warn', t: 'secrets      2 clés API trouvées en dur' },
-              { k: 'warn', t: "dépendances  1 paquet introuvable sur npm (halluciné)" },
-              { k: 'dim', t: 'prototype personnel, pas encore public' },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div class="mt-10 max-w-[58ch] border-t border-rule-nuit pt-6">
-        <p class="text-base text-nuit-soft">
-          Aucun de ces outils n'est disponible à la vente aujourd'hui. Si votre
-          entreprise fait déjà tourner des agents IA en production et que le sujet
-          vous concerne, dites-le-moi : je préviens en priorité les personnes
-          intéressées quand l'un d'eux sort de la phase de prototype.
-        </p>
-        <div class="mt-5 flex flex-wrap gap-3">
-          <a class="btn btn--nuit-ghost" href="/contact/">En parler <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-rule">
+  <!-- ─── Recherche en cours : panneau sombre contenu ──── -->
+  <section class="pb-[var(--spacing-band)]" aria-labelledby="labo-t">
     <div class="shell">
-      <SectionHead n="05" kicker="Questions fréquentes" title="Les objections légitimes" />
-      <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
+      <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
+        <span class="badge" aria-hidden="true">En construction</span>
+        <h2 class="mt-5 max-w-[22ch] text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]" id="labo-t">Ce qui se construit derrière, pas encore facturé</h2>
+        <p class="mt-5 max-w-[58ch] text-lede/[1.5] text-ink-soft">
+          Je construis, à titre personnel, des outils pour sécuriser le code et les
+          agents produits par l'IA : harnais d'exécution, scanners, orchestrateurs de
+          vérification. Rien de ce qui suit n'est vendu tant que ce n'est pas publié et
+          vérifiable : c'est la direction, pas une prestation du jour.
+        </p>
+
+        <div class="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <h3 class="label mb-4">Ce qui se construit</h3>
+            <ul class="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
+              {bridgeItems.map((b) => (
+                <li class="rounded-[var(--radius-lg)] border border-rule bg-nuit-2 p-5">
+                  <p class="font-semibold text-ink">{b.t}</p>
+                  <p class="mt-1 text-[0.93rem]/[1.5] text-ink-soft">{b.d}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="label mb-4">À quoi ça ressemble aujourd'hui</h3>
+            <Terminal
+              title="prototype personnel : ia-scan"
+              lines={[
+                { k: 'cmd', t: 'ia-scan run --model copilot ./repo' },
+                { k: 'ok', t: 'typage       0 erreur, 412 fichiers' },
+                { k: 'warn', t: 'secrets      2 clés API trouvées en dur' },
+                { k: 'warn', t: "dépendances  1 paquet introuvable sur npm (halluciné)" },
+                { k: 'dim', t: 'prototype personnel, pas encore public' },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div class="mt-12 flex flex-col items-start gap-5 border-t border-rule pt-8 lg:flex-row lg:items-center lg:justify-between">
+          <p class="max-w-[58ch] text-base text-ink-soft">
+            Si votre entreprise fait déjà tourner des agents IA en production et que le
+            sujet vous concerne, dites-le-moi : je préviens en priorité les personnes
+            intéressées quand l'un de ces outils sort de la phase de prototype.
+          </p>
+          <a class="btn btn--nuit-ghost" href="/contact/">Être prévenu <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+        </div>
+      </div>
     </div>
   </section>
+
+  <FaqSection title="Les objections légitimes" items={faq} />
 
   <CtaBand
-    kicker="Prochaine étape"
     title="Trente minutes pour savoir où vous en êtes."
     text="Un échange sans engagement : votre projet, ce qui vous inquiète, ce que votre équipe a déjà produit avec une IA. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
-    href="/contact/"
-    cta="Demander une relecture"
   />
 </Base>

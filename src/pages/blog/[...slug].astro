@@ -32,13 +32,14 @@ const schema = {
 ---
 <Base title={post.data.title} description={post.data.summary}>
   <article>
-    <header class="border-b border-rule bg-paper-warm pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(1.75rem,3vw,2.75rem)]">
+    <header class="relative isolate overflow-x-clip pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(1.75rem,3vw,2.75rem)]">
+      <div class="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[36rem] bg-[radial-gradient(75%_65%_at_20%_0%,var(--color-accent-wash),transparent_75%)]" aria-hidden="true"></div>
       <div class="shell max-w-[58rem]">
-        <a class="inline-flex min-h-[24px] items-center gap-[0.4rem] font-mono text-[0.72rem] tracking-[0.08em] text-ink-faint no-underline hover:text-accent" href="/blog/">
-          <ArrowLeft size="1em" aria-hidden="true" /> Blog
+        <a class="chip min-h-[40px] pl-3 no-underline hover:text-accent" href="/blog/">
+          <ArrowLeft size="1em" aria-hidden="true" /> Tous les articles
         </a>
         <div class="mt-7 flex flex-wrap items-center gap-3">
-          <time class="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-faint" datetime={post.data.date.toISOString()}>
+          <time class="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft" datetime={post.data.date.toISOString()}>
             {formatDate(post.data.date)}
           </time>
           <span class="badge badge--accent">{AUDIENCE_LABEL[post.data.audience]}</span>
@@ -51,27 +52,27 @@ const schema = {
     <div class="shell grid grid-cols-1 items-start gap-[clamp(2rem,5vw,4.5rem)] py-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,1fr)_16rem]">
       <div class="prose"><Content /></div>
 
-      <aside class="flex flex-col gap-7 lg:sticky lg:top-28">
-        <div class="border-t border-rule-strong pt-4">
-          <p class="label">En pratique</p>
-          <p class="mt-[0.7rem] mb-[1.1rem] text-base text-ink-soft">
+      <aside class="flex flex-col gap-4 lg:sticky lg:top-28" aria-label="Pour aller plus loin">
+        <div class="panel p-6">
+          <h2 class="text-[1.15rem] tracking-[-0.02em]">En pratique</h2>
+          <p class="mt-2 mb-5 text-base text-ink-soft">
             Cet article décrit ce que je fais chez mes clients. Si vous préférez que je
             m'en occupe, la mise en place se règle en général en une intervention.
           </p>
           <a class="btn btn--cta" href="/contact/">Me confier ça <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
         </div>
 
-        <div class="border-t border-rule-strong pt-4">
-          <p class="label">Voir aussi</p>
+        <div class="panel p-6">
+          <h2 class="text-[1.15rem] tracking-[-0.02em]">Voir aussi</h2>
           <ul class="m-0 mt-[0.8rem] list-none p-0">
-            <li class="border-b border-rule">
-              <a class="block py-[0.7rem] text-[0.875rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={cible}>
+            <li class="border-b border-rule last:border-b-0">
+              <a class="flex min-h-[44px] items-center py-2 text-[0.95rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={cible}>
                 {post.data.audience === 'entreprise' ? 'Prestations entreprises' : 'Pour les particuliers'}
               </a>
             </li>
             {others.map((o) => (
-              <li class="border-b border-rule">
-                <a class="block py-[0.7rem] text-[0.875rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={`/blog/${o.id}/`}>{o.data.title}</a>
+              <li class="border-b border-rule last:border-b-0">
+                <a class="flex min-h-[44px] items-center py-2 text-[0.95rem] font-semibold tracking-[-0.015em] no-underline hover:text-accent" href={`/blog/${o.id}/`}>{o.data.title}</a>
               </li>
             ))}
           </ul>
@@ -81,7 +82,6 @@ const schema = {
   </article>
 
   <CtaBand
-    kicker="Après lecture"
     title="Une question qui reste ?"
     text="Écrivez-la telle quelle, y compris quand la réponse est que vous n'avez besoin de personne."
   />

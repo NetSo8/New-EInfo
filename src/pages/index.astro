@@ -8,11 +8,23 @@ import ChainDiagram from '../components/ChainDiagram.astro';
 import ZoneRadar from '../components/ZoneRadar.astro';
 import HeroNetworkBg from '../components/HeroNetworkBg.astro';
 import CtaBand from '../components/CtaBand.astro';
-import Faq from '../components/Faq.astro';
+import FaqSection from '../components/FaqSection.astro';
 import { Image } from 'astro:assets';
 import { services } from '../data/services';
 import atelier from '../assets/atelier.jpg';
 import cote from '../assets/cote.jpg';
+import etabli from '../assets/etabli.jpg';
+import paysage from '../assets/paysage.jpg';
+
+/* Mise en scène des quatre prestations dans la grille : deux tuiles
+   larges portées par une photo, deux tuiles étroites sur surface pleine.
+   L'ordre suit `services`, la disposition est décidée ici. */
+const tuiles: Record<string, { span: string; tone: 'photo' | 'sand' | 'raised' | 'nuit'; img?: ImageMetadata }> = {
+  depannage: { span: 'lg:col-span-2', tone: 'photo', img: atelier },
+  'formation-ia': { span: '', tone: 'sand' },
+  web: { span: '', tone: 'raised' },
+  'revue-ia': { span: 'lg:col-span-2', tone: 'nuit', img: paysage },
+};
 
 const faq = [
   {
@@ -33,10 +45,6 @@ const faq = [
   },
 ];
 
-const faits = [
-  { v: '15 km', d: 'Déplacement inclus depuis Rivesaltes' },
-  { v: '1', d: 'Interlocuteur, du poste à l\'IA' },
-];
 
 const pannesCourantes = [
   "Il rame, il chauffe, il s'éteint tout seul",
@@ -51,60 +59,66 @@ const pannesCourantes = [
   description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web et relecture de code IA pour les TPE des Pyrénées-Orientales."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
-  <section class="relative isolate overflow-hidden pt-[clamp(3rem,6vw,6rem)] pb-[clamp(3.5rem,7vw,7.5rem)]">
-    <HeroNetworkBg class="-z-10 opacity-70" />
-    <div class="shell relative">
-      <div class="max-w-[38rem]">
-        <p class="label flex items-center gap-[0.55rem] text-ink-soft">
-          <span class="size-[7px] flex-none rounded-full bg-accent" aria-hidden="true"></span>
-          Dépannage & formation IA · Rivesaltes · Pyrénées-Orientales
-        </p>
+  <section class="relative isolate overflow-hidden pt-[clamp(2rem,4.5vw,4.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
+    <HeroNetworkBg class="-z-10 opacity-45" />
+    <div class="shell grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
+      <div>
+        <p class="chip rise" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Rivesaltes, Perpignan et alentours</p>
 
-        <h1 class="mt-5 text-[clamp(2.35rem,1rem+4.1vw,4rem)]/[0.98]">
-          Une&nbsp;panne.<br />Un&nbsp;site.<br />Une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
+        <h1 class="rise mt-7 text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
+          Une panne, un site, une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
         </h1>
 
-        <p class="mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft">
-          Je dépanne et forme les particuliers du Roussillon à l'usage de l'IA, et je
-          construis les sites des entreprises qui n'ont pas de service technique. Un
-          périmètre court, assumé, travaillé en profondeur plutôt qu'étalé sur dix
-          lignes.
+        <p class="rise mt-6 max-w-[42ch] text-lede/[1.5] text-ink-soft" style="--i:2">
+          Dépannage et formation à l'IA pour les particuliers, sites et relecture de
+          code pour les entreprises du Roussillon.
         </p>
 
-        <ul class="m-0 mt-9 flex list-none flex-wrap border-t border-rule p-0">
-          {faits.map((f) => (
-            <li class="mr-6 flex flex-col gap-[0.1rem] pt-[0.9rem] pr-6 not-first:border-l not-first:border-rule not-first:pl-6">
-              <strong class="text-2xl/none font-bold tracking-[-0.04em]">{f.v}</strong>
-              <span class="max-w-[15ch] text-[0.75rem]/[1.35] text-ink-soft">{f.d}</span>
-            </li>
-          ))}
-        </ul>
+        <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
+          <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+          <a class="btn btn--ghost" href="/services/">Voir les prestations</a>
+        </div>
       </div>
+
+      <figure class="unveil relative m-0 overflow-hidden rounded-[var(--radius-xl)] shadow-[var(--shadow-raise-hi)]">
+        <Image
+          src={etabli}
+          alt="Réparation d'une carte électronique au tournevis de précision, sur l'établi"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          widths={[560, 840, 1120, 1400]}
+          sizes="(width >= 62rem) 44vw, 100vw"
+          quality={72}
+          class="aspect-[4/3] w-full rounded-none object-cover object-[72%_50%] lg:aspect-[4/5]"
+        />
+      </figure>
     </div>
   </section>
 
   <!-- ─── DOUBLE AIGUILLAGE ────────────────────────────── -->
-  <section class="grid grid-cols-1 border-t border-rule lg:grid-cols-2" aria-label="Choisir votre parcours">
-    <div class="relative overflow-hidden bg-sand px-[clamp(1.25rem,3.5vw,3.25rem)] pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2.5rem,4vw,3.75rem)]">
-      {/* Photo d'ambiance en fond, volontairement très effacée. */}
-      <Image
-        src={atelier}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        widths={[640, 960, 1280]}
-        sizes="(width >= 62rem) 50vw, 100vw"
-        quality={45}
-        class="absolute inset-0 size-full object-cover opacity-10 grayscale contrast-125"
-      />
-      <div class="relative mx-auto flex max-w-[34rem] flex-col gap-[1.1rem]">
-        <p class="label text-accent">01 / Vous êtes un particulier</p>
-        <h2 class="text-[clamp(1.65rem,1.15rem+1.8vw,2.5rem)] tracking-[-0.035em]">Mon ordinateur ne va pas, ou je ne sais pas utiliser l'IA.</h2>
+  <section class="pb-[clamp(3.5rem,6vw,6rem)]" aria-label="Choisir votre parcours">
+    <div class="shell grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <div class="panel flex flex-col gap-[1.1rem] border-transparent bg-sand px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
+        {/* Photo d'ambiance en fond, volontairement très effacée. */}
+        <Image
+          src={atelier}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          widths={[640, 960, 1280]}
+          sizes="(width >= 62rem) 50vw, 100vw"
+          quality={45}
+          class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07] grayscale contrast-125"
+        />
+        <span class="badge badge--accent self-start" aria-hidden="true">Particulier</span>
+        {/* L'étiquette visible est rattachée au titre pour qui navigue de titre en titre. */}
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes un particulier : </span>Mon ordinateur ne va pas, ou je ne sais pas utiliser l'IA.</h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
           {pannesCourantes.map((p) => (
-            <li class="relative border-b border-rule py-[0.6rem] pl-6 text-base">
+            <li class="relative border-b border-rule py-[0.6rem] pl-6 text-base last:border-b-0">
               <Plus class="absolute top-[0.95rem] left-0 text-accent" size="0.85em" aria-hidden="true" />
               {p}
             </li>
@@ -115,16 +129,14 @@ const pannesCourantes = [
           Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
           ne vaut pas le coup, je vous le dis.
         </p>
-        <a class="btn btn--cta mt-[0.4rem] self-start" href="/particuliers/">
-          Décrire mon problème <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+        <a class="btn btn--cta mt-auto self-start" href="/particuliers/">
+          Voir l'offre particuliers <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
-    </div>
 
-    <div class="on-nuit bg-nuit px-[clamp(1.25rem,3.5vw,3.25rem)] pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2.5rem,4vw,3.75rem)]">
-      <div class="mx-auto flex max-w-[34rem] flex-col gap-[1.1rem]">
-        <p class="label text-accent">02 / Vous êtes une entreprise</p>
-        <h2 class="text-[clamp(1.65rem,1.15rem+1.8vw,2.5rem)] tracking-[-0.035em]">Votre site tourne. Qui a relu le code ?</h2>
+      <div class="panel on-nuit flex flex-col gap-[1.1rem] border-transparent bg-nuit px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
+        <span class="badge badge--accent self-start" aria-hidden="true">Entreprise</span>
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes une entreprise : </span>Votre site tourne. Qui a relu le code ?</h2>
 
         <Terminal
           title="revue : dépôt client, code généré par IA"
@@ -143,119 +155,131 @@ const pannesCourantes = [
           site dans la durée. Pas de flou entre qui a écrit quoi et qui répond si ça
           casse.
         </p>
-        <a class="btn btn--cta mt-[0.4rem] self-start" href="/professionnels/">
-          Demander une relecture <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+        <a class="btn btn--cta mt-auto self-start" href="/professionnels/">
+          Voir l'offre entreprises <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ─── § 01 SERVICES ────────────────────────────────── -->
+  <!-- ─── SERVICES : grille à quatre tuiles ────────────── -->
   <section class="section section-rule" id="services">
     <div class="shell">
       <SectionHead
-        n="01"
-        kicker="Ce que je couvre"
         title="Quatre prestations, deux publics"
-        lede="Dépannage et formation à l'IA pour les particuliers, site web et relecture de code IA pour les entreprises. Une liste courte parce que c'est un choix : je ne facture que ce que je peux vérifier moi-même."
+        lede="Dépannage et formation à l'IA pour les particuliers, site web et relecture de code IA pour les entreprises. Je ne facture que ce que je peux vérifier moi-même."
       />
 
-      <ol class="rowlist mt-12" data-reveal>
-        {services.map((s) => (
-          <li>
-            <a
-              href={`/services/#${s.id}`}
-              class="grid grid-cols-[2.5rem_1fr_1.25rem] items-baseline gap-4 py-[1.4rem] hover:px-[0.9rem] mid:grid-cols-[3rem_minmax(0,1fr)_12rem_1.5rem]"
-            >
-              <span class="font-mono text-[0.75rem] font-semibold text-accent">{s.n}</span>
-
-              <span class="flex flex-col gap-1">
-                <span class="text-[clamp(1.2rem,1.05rem+0.7vw,1.65rem)]/[1.15] font-bold tracking-[-0.03em]">{s.titre}</span>
-                <span class="max-w-[52ch] text-base text-ink-soft">{s.probleme}</span>
-              </span>
-
-              <span class="col-start-2 flex flex-wrap items-center gap-[0.35rem] mid:col-start-3">
-                {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
-                {s.pour.includes('entreprise') && <span class="badge">Entreprises</span>}
-              </span>
-
-              <ArrowRight class="arrow justify-self-end text-accent" size="1.1em" aria-hidden="true" />
-            </a>
-          </li>
-        ))}
-      </ol>
+      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
+        {services.map((s) => {
+          const t = tuiles[s.id];
+          const sombre = t.tone === 'photo' || t.tone === 'nuit';
+          return (
+            <li class:list={[t.span]} data-reveal>
+              <a
+                href={`/services/#${s.id}`}
+                aria-labelledby={`tuile-${s.id}`}
+                aria-describedby={`tuile-${s.id}-d`}
+                class:list={[
+                  'panel panel-link h-full min-h-[19rem] flex-col justify-end gap-3 p-[clamp(1.4rem,2.5vw,2.1rem)]',
+                  sombre && 'on-nuit border-transparent bg-nuit text-ink',
+                  t.tone === 'sand' && 'border-transparent bg-sand',
+                ]}
+              >
+                {t.img && (
+                  <>
+                    <Image
+                      src={t.img}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      decoding="async"
+                      widths={[640, 960, 1280]}
+                      sizes="(width >= 62rem) 60vw, 100vw"
+                      quality={60}
+                      class:list={['panel-media absolute inset-0 -z-20 size-full object-cover', t.tone === 'nuit' ? 'opacity-45' : 'opacity-70']}
+                    />
+                    {/* Voile : garantit le contraste du texte posé sur la photo. */}
+                    <span class="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--color-nuit)_18%,color-mix(in_oklch,var(--color-nuit)_55%,transparent)_60%,color-mix(in_oklch,var(--color-nuit)_15%,transparent))]" aria-hidden="true"></span>
+                  </>
+                )}
+                <span class="flex flex-wrap gap-[0.35rem]" aria-hidden="true">
+                  {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
+                  {s.pour.includes('entreprise') && <span class="badge">Entreprises</span>}
+                </span>
+                <span class="flex items-end justify-between gap-6">
+                  <span class="flex flex-col gap-2">
+                    <h3 class="text-[clamp(1.3rem,1.05rem+0.9vw,1.85rem)]/[1.1] tracking-[-0.03em]" id={`tuile-${s.id}`}>{s.titre}</h3>
+                    <span class="max-w-[48ch] text-[0.97rem]/[1.55] text-ink-soft" id={`tuile-${s.id}-d`}>
+                      {s.probleme}
+                      <span class="sr-only">Pour les {s.pour.map((x) => (x === 'particulier' ? 'particuliers' : 'entreprises')).join(' et les ')}.</span>
+                    </span>
+                  </span>
+                  <span class="grid size-10 flex-none place-items-center rounded-full border border-rule text-accent" aria-hidden="true">
+                    <ArrowRight class="arrow" size="1.05em" />
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   </section>
 
-  <!-- ─── § 02 L'ARGUMENT ──────────────────────────────── -->
+  <!-- ─── L'ARGUMENT ───────────────────────────────────── -->
   <section class="section section-rule section-tint">
     <div class="shell">
-      <SectionHead
-        n="02"
-        kicker="L'avantage du freelance"
-        title="La panne est rarement là où on la cherche"
-      />
-      <div class="grid12 mt-12 gap-y-10">
-        <div class="col-span-full mid:col-span-7">
-          <ChainDiagram />
-        </div>
-        <div class="col-span-full flex flex-col items-start gap-4 text-base text-ink-soft mid:col-start-9 mid:col-span-4">
+      <SectionHead title="La panne est rarement là où on la cherche" />
+      <div class="mt-12" data-reveal><ChainDiagram /></div>
+      <div class="mt-12 grid gap-x-12 gap-y-5 text-base text-ink-soft md:grid-cols-2">
+        <p>
+          Une machine qui rame, une IA qu'on n'ose pas utiliser, un site qui tombe,
+          du code généré qu'on n'a jamais relu : quatre situations qui semblent sans
+          rapport, et qui demandent souvent le même réflexe, vérifier avant de
+          conclure.
+        </p>
+        <div class="flex flex-col items-start gap-4">
           <p>
-            Une machine qui rame, une IA qu'on n'ose pas utiliser, un site qui tombe,
-            du code généré qu'on n'a jamais relu : quatre situations qui semblent sans
-            rapport, et qui demandent souvent le même réflexe, vérifier avant de
-            conclure.
+            Je couvre un périmètre précis, poste de travail, usage de l'IA, site web,
+            sécurité du code généré, et ce périmètre suffit à la très grande majorité
+            des besoins. Ce qui sort de ce cadre, je le dis, et je vous oriente.
           </p>
-          <p>
-            Je ne prétends pas tout couvrir, et je ne veux pas. Je couvre un périmètre
-            précis, poste de travail, usage de l'IA, site web, sécurité du code généré,
-            et ce périmètre suffit à la très grande majorité des besoins. Ce qui sort de
-            ce cadre, je le dis, et je vous oriente.
-          </p>
-          <a class="tlink mt-[0.4rem]" href="/a-propos/">Comment je travaille</a>
+          <a class="tlink" href="/a-propos/">Comment je travaille</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── § 03 ZONE ────────────────────────────────────── -->
+  <!-- ─── ZONE ─────────────────────────────────────────── -->
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        n="03"
-        kicker="Zone d'intervention"
         title="Je privilégie la proximité"
         lede="Pour tout ce qui se touche ou se montre, être à vingt minutes change la nature du service. Pour le reste, la distance ne change rien."
       />
-      <div class="grid12 mt-12 items-end gap-y-10">
-        <div class="col-span-full mid:col-span-6"><ZoneRadar /></div>
-        <figure class="col-span-full m-0 mid:col-start-8 mid:col-span-5">
+      <div class="mt-12 grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div class="panel p-[clamp(1rem,2.5vw,2rem)]" data-reveal><ZoneRadar /></div>
+        <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]" data-reveal>
           <Image
             src={cote}
             alt="Mains sur le clavier d'un ordinateur portable pendant une intervention à distance"
             loading="lazy" decoding="async"
             widths={[480, 768, 1100]}
-            sizes="(width >= 60rem) 40vw, 100vw"
+            sizes="(width >= 62rem) 40vw, 100vw"
             quality={68}
-            class="aspect-video w-full object-cover saturate-[0.82] mid:aspect-3/4"
+            class="aspect-video size-full rounded-none object-cover saturate-[0.82] lg:aspect-auto"
           />
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- ─── § 04 FAQ ─────────────────────────────────────── -->
-  <section class="section section-rule">
-    <div class="shell">
-      <SectionHead n="04" kicker="Questions fréquentes" title="Ce qu'on me demande avant d'appeler" />
-      <div class="mt-10 max-w-[62rem]"><Faq items={faq} /></div>
-    </div>
-  </section>
+  <!-- ─── FAQ ──────────────────────────────────────────── -->
+  <FaqSection title="Ce qu'on me demande avant d'appeler" items={faq} />
 
   <CtaBand
-    kicker="Prochaine étape"
     title="Dites-moi ce qui ne va pas."
     text="Quelques lignes suffisent : la machine, le symptôme, ou le projet, depuis quand. Je réponds avec un plan concret et un ordre de prix, avant tout engagement."
-    second={{ href: '/services/', label: 'Voir le détail des prestations' }}
   />
 </Base>

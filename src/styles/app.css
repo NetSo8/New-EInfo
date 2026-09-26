@@ -142,7 +142,9 @@
   --text-x3:    clamp(1.15rem, 0.98rem + 0.7vw, 1.5rem);
   --text-body:  clamp(1rem, 0.96rem + 0.2vw, 1.115rem);
   --text-lede:  clamp(1.06rem, 0.98rem + 0.48vw, 1.375rem);
-  --text-label: 0.7rem;
+  /* Plancher de lecture : 12px. En dessous, une personne malvoyante
+     zoome pour lire une étiquette qui n'apporte qu'un repère. */
+  --text-label: 0.75rem;
 
   /* ── Rythme ─────────────────────────────────────────────── */
   --spacing-gut:   1.5rem;
@@ -150,11 +152,17 @@
   --spacing-band:  clamp(4.5rem, 2.4rem + 8vw, 9.5rem);
   --container-shell: 78rem;
 
-  --radius-sm: 3px;   /* étiquettes, badges */
-  --radius-md: 5px;   /* boutons, champs */
-  --radius-lg: 7px;   /* terminal, blocs de code */
+  /* Rayons. Règle unique : tout ce qui se clique est une pilule
+     (boutons, badges, commandes), les champs sont à 10px, les surfaces
+     (panneaux, images, terminal) à 16 ou 24px selon leur taille. */
+  --radius-sm: 6px;    /* code en ligne, petites pièces */
+  --radius-md: 10px;   /* champs, blocs de citation */
+  --radius-lg: 16px;   /* terminal, images, blocs de code */
+  --radius-xl: 24px;   /* panneaux et bandes contenues */
+  --radius-pill: 999px;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 
   /* ── Élévation ───────────────────────────────────────────
      Deux couches par niveau : une ombre de contact très serrée qui
@@ -323,7 +331,7 @@
      ses classes de disposition. */
   [hidden] { display: none !important; }
   img, svg, video { display: block; max-width: 100%; }
-  img { height: auto; border-radius: var(--radius-md); }
+  img { height: auto; border-radius: var(--radius-lg); }
 
   ::selection {
     background-color: oklch(0.455 0.090 210 / 0.20);
@@ -334,10 +342,11 @@
      où `--color-accent` bascule sur sa version claire. Le halo blanc/sombre
      posé autour garantit qu'il reste visible quelle que soit la couleur du
      composant survolé (WCAG 2.4.13 Apparence du focus). */
+  /* Le contour suit la forme de l'élément (pilule, panneau) : on ne force
+     plus de rayon, sinon un bouton rond prenait des coins carrés au focus. */
   :focus-visible {
     outline: 3px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    outline-offset: 3px;
   }
 
   /* Mouvement. Les fonds décoratifs tournent en boucle sans fin : WCAG 2.2.2
@@ -404,25 +413,25 @@
   /* Étiquette de mot-clé : discrète, casse d'origine (linux, crypto…). */
   .tag {
     display: inline-block;
-    padding: 0.05rem 0.45rem;
+    padding: 0.1rem 0.55rem;
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--color-ink-faint);
   }
 
   /* Badge de statut ou de catégorie : capitales, chasse large. */
   .badge {
     display: inline-block;
-    padding: 0.1rem 0.45rem;
+    padding: 0.2rem 0.6rem;
     border: 1px solid var(--color-rule-strong);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.63rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: var(--color-ink-soft);
   }
   .badge--accent { border-color: var(--color-accent); background-color: transparent; color: var(--color-accent); }
@@ -468,22 +477,28 @@
     letter-spacing: -0.012em;
     text-decoration: none;
     border: 1px solid var(--btn-edge);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     cursor: pointer;
+    white-space: nowrap;
     box-shadow: var(--btn-gloss), var(--btn-shadow);
-    transition: transform .18s var(--ease-out-soft), background-color .18s var(--ease-out-soft),
-                border-color .18s var(--ease-out-soft), box-shadow .22s var(--ease-out-soft);
+    transition: transform .16s var(--ease-out-strong), background-color .18s ease,
+                border-color .18s ease, color .18s ease, box-shadow .22s var(--ease-out-strong);
   }
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--btn-gloss), var(--btn-shadow-hi);
+  /* Le survol n'existe qu'avec un vrai pointeur : sur écran tactile, il
+     resterait collé après le toucher. */
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--btn-gloss), var(--btn-shadow-hi);
+    }
   }
-  /* À l'appui, la pièce revient au contact : l'ombre s'écrase au lieu de
-     disparaître, sinon le bouton semble s'éteindre plutôt que s'enfoncer. */
+  /* À l'appui, la pièce revient au contact et se tasse légèrement :
+     l'ombre s'écrase au lieu de disparaître, sinon le bouton semble
+     s'éteindre plutôt que s'enfoncer. */
   .btn:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.97);
     box-shadow: var(--btn-gloss), var(--shadow-press);
-    transition-duration: .06s;
+    transition-duration: .08s;
   }
   .btn[disabled], .btn[aria-disabled='true'] {
     opacity: 0.55;
@@ -539,13 +554,13 @@
     display: grid;
     place-items: center;
     flex: none;
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     background-color: var(--color-raised);
     color: var(--color-ink-soft);
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     box-shadow: var(--shadow-raise);
     cursor: pointer;
     transition: transform .18s var(--ease-out-soft), color .15s var(--ease-out-soft),
@@ -558,13 +573,15 @@
     box-shadow: var(--shadow-raise-hi);
   }
   .btn-icon:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.95);
     box-shadow: var(--shadow-press);
     transition-duration: .06s;
   }
 
-  /* Apparition au défilement, armée par l'observateur dans Base.astro. */
-  [data-reveal] {
+  /* Apparition au défilement, armée par l'observateur dans Base.astro.
+     Seulement si le JavaScript tourne (classe `js` posée dans le <head>) :
+     sans lui, rien ne viendrait rendre le contenu visible. */
+  .js [data-reveal] {
     opacity: 0;
     transform: translateY(14px);
     transition: opacity .6s var(--ease-out-soft) var(--d, 0ms),
@@ -740,4 +757,135 @@
   }
   .prose td { padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--color-rule); }
   .prose hr { border: 0; border-top: 1px solid var(--color-rule); margin: 2.5rem 0; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Refonte 2026 : surfaces contenues et mouvement d'entrée.
+
+   Les bandes pleine largeur deviennent des panneaux posés dans la
+   gouttière, à grands rayons : même matière que les boutons (surface
+   pleine + ombre de contact), à l'échelle d'une section.
+   Le mouvement reste rare : une entrée à l'arrivée sur la page, un
+   soulèvement au survol des panneaux cliquables. Rien ne boucle.
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  /* Permet d'animer une hauteur vers `auto` (ouverture des FAQ). */
+  :root { interpolate-size: allow-keywords; }
+}
+
+@layer components {
+  .panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    background-color: var(--color-raised);
+    border: 1px solid var(--color-rule);
+    box-shadow: var(--shadow-raise);
+  }
+  .panel img { border-radius: 0; }
+
+  /* Panneau cliquable : il se lève comme un bouton, sans changer de
+     couleur. L'image éventuelle s'approche à peine. */
+  .panel-link {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .28s var(--ease-out-strong), box-shadow .28s var(--ease-out-strong),
+                border-color .2s ease;
+  }
+  .panel-link .panel-media { transition: transform .6s var(--ease-out-strong); }
+  @media (hover: hover) and (pointer: fine) {
+    .panel-link:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-raise-hi);
+      border-color: var(--color-rule-strong);
+    }
+    .panel-link:hover .panel-media { transform: scale(1.035); }
+    .panel-link:hover .arrow { transform: translateX(3px); }
+  }
+  .panel-link:active { transform: scale(0.99); transition-duration: .1s; }
+
+  /* Étiquette d'en-tête : pilule discrète, casse normale. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-raised);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    box-shadow: var(--shadow-raise);
+  }
+  .chip__mark {
+    display: inline-grid;
+    place-items: center;
+    padding: 0.1rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent-wash);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* Entrée du haut de page : chaque pièce monte de quelques pixels,
+     en cascade courte. Joué une fois, jamais au défilement. */
+  .rise {
+    animation: rise .7s var(--ease-out-strong) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 60ms);
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Photo du haut de page : dévoilée de bas en haut, comme un tirage. */
+  .unveil {
+    animation: unveil 1.1s cubic-bezier(0.77, 0, 0.175, 1) .15s both;
+  }
+  @keyframes unveil {
+    from { clip-path: inset(100% 0 0 0 round var(--radius-xl)); }
+    to   { clip-path: inset(0 0 0 0 round var(--radius-xl)); }
+  }
+
+  /* Ouverture des questions : la hauteur suit au lieu de sauter.
+     Amélioration progressive, sans effet là où ::details-content
+     n'est pas pris en charge. */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size .3s var(--ease-out-strong), content-visibility .3s allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; }
+}
+
+/* Le mouvement réduit garde les éléments visibles, sans trajet. */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion='full']) .rise,
+  html:not([data-motion='full']) .unveil { animation: none; }
+}
+html[data-motion='reduced'] .rise,
+html[data-motion='reduced'] .unveil { animation: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   Couleurs forcées (mode contraste élevé de Windows, thèmes
+   système). Le navigateur remplace toutes les couleurs par la
+   palette de la personne : les fonds disparaissent, les ombres
+   aussi. Ce qui tenait par une teinte doit tenir par un trait.
+   ───────────────────────────────────────────────────────────── */
+@media (forced-colors: active) {
+  .panel, .chip, .btn, .btn-icon, .badge, .tag, .faq-item {
+    border: 1px solid CanvasText;
+  }
+  .btn--cta { border-width: 2px; }
+  .btn[aria-current], [aria-current='page'] { text-decoration: underline; text-underline-offset: 0.25em; }
+  :focus-visible { outline: 3px solid Highlight; }
+  /* Fonds décoratifs et photos d'ambiance : pur bruit dans ce mode. */
+  .hero-mesh, .crack-bg, .world-bg { display: none; }
+  .panel-media { opacity: 0.25 !important; }
 }

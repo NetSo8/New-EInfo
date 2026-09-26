@@ -1,0 +1,16 @@
+---
+import SectionHead from './SectionHead.astro';
+import Faq from './Faq.astro';
+
+interface Props { title: string; items: { q: string; a: string }[]; note?: string }
+const { title, items, note = 'Une autre question ? Posez-la directement par e-mail : je réponds en français, sans jargon.' } = Astro.props;
+---
+<section class="section section-rule">
+  <div class="shell grid grid-cols-1 gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <SectionHead title={title} />
+      <p class="mt-5 max-w-[36ch] text-base text-ink-soft">{note}</p>
+    </div>
+    <Faq items={items} />
+  </div>
+</section>

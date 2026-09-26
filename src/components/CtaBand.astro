@@ -1,17 +1,25 @@
 ---
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 
-interface Props { kicker: string; title: string; text: string; href?: string; cta?: string; second?: { href: string; label: string } }
-const { kicker, title, text, href = '/contact/', cta = 'Décrire mon besoin', second } = Astro.props;
+interface Props { kicker?: string; title: string; text: string; href?: string; cta?: string; second?: { href: string; label: string } }
+const { title, text, href = '/contact/', cta = 'Me contacter', second } = Astro.props;
 ---
-<section class="bg-nuit text-nuit-text py-[clamp(3.5rem,7vw,6.5rem)]">
-  <div class="shell max-w-[54rem]">
-    <p class="label text-accent-nuit">{kicker}</p>
-    <h2 class="mt-[0.9rem] text-x1">{title}</h2>
-    <p class="mt-4 max-w-[52ch] text-nuit-soft text-[1.05rem]/[1.65]">{text}</p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a class="btn btn--cta" href={href}>{cta} <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-      {second && <a class="btn btn--nuit-ghost" href={second.href}>{second.label}</a>}
+<section class="pb-[clamp(3rem,6vw,5.5rem)]">
+  <div class="shell">
+    <div class="on-nuit relative isolate overflow-hidden rounded-[var(--radius-xl)] bg-nuit px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5.5rem)]">
+      {/* Un seul halo, dans la teinte du rouge et très bas en opacité :
+          il réchauffe le panneau sans devenir une lueur décorative. */}
+      <div class="pointer-events-none absolute -top-1/2 -right-1/4 -z-10 size-[42rem] rounded-full bg-[radial-gradient(closest-side,oklch(0.505_0.170_20/0.22),transparent)]" aria-hidden="true"></div>
+      <div class="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div class="max-w-[40rem]">
+          <h2 class="text-[clamp(2rem,1.1rem+3vw,3.4rem)]/[1.02] tracking-[-0.04em]">{title}</h2>
+          <p class="mt-5 max-w-[50ch] text-[1.05rem]/[1.65] text-ink-soft">{text}</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn btn--cta" href={href}>{cta} <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+          {second && <a class="btn btn--nuit-ghost" href={second.href}>{second.label}</a>}
+        </div>
+      </div>
     </div>
   </div>
 </section>

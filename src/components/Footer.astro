@@ -14,9 +14,9 @@ const prestations = [
   { href: '/services/#revue-ia', label: 'Relecture de code généré par IA' },
 ];
 
-const link = 'flex min-h-[24px] w-fit items-center py-[0.15rem] text-[0.9rem] text-nuit-soft no-underline hover:text-paper';
-const colonne = 'col-span-1 xs:col-span-2 flex flex-col gap-[0.55rem]';
-const titre = 'label mb-[0.35rem] text-nuit-faint';
+const link = 'flex min-h-[40px] w-fit items-center text-[0.95rem] text-nuit-soft underline-offset-4 no-underline hover:text-nuit-text hover:underline';
+const colonne = 'col-span-1 xs:col-span-2 flex flex-col';
+const titre = 'label mb-2 text-nuit-faint';
 ---
 <footer class="border-t border-rule-nuit bg-nuit pt-[clamp(3rem,6vw,5rem)] pb-8 text-nuit-text">
   <div class="shell">
@@ -28,44 +28,52 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
           Basé à Rivesaltes, dans les Pyrénées-Orientales.
         </p>
         <a class="btn btn--cta" href="/contact/">
-          Décrire mon besoin <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
 
-      <nav class={colonne} aria-label="Prestations">
-        <p class={titre}>Prestations</p>
-        {prestations.map((l) => <a class={link} href={l.href}>{l.label}</a>)}
+      <nav class={colonne} aria-labelledby="pied-prestations">
+        <h2 class={titre} id="pied-prestations">Prestations</h2>
+        <ul class="m-0 list-none p-0">
+          {prestations.map((l) => <li><a class={link} href={l.href}>{l.label}</a></li>)}
+        </ul>
       </nav>
 
-      <nav class={colonne} aria-label="Le site">
-        <p class={titre}>Le site</p>
-        <a class={link} href="/blog/">Blog</a>
-        <a class={link} href="/a-propos/">À propos</a>
-        <a class={link} href="/contact/">Contact</a>
-        <a class={link + ' inline-flex items-center gap-[0.3rem]'} href="https://github.com/NetSo8" rel="me noopener noreferrer" target="_blank">
-          GitHub · NetSo8 <ArrowUpRight size="0.95em" aria-hidden="true" />
-        </a>
+      <nav class={colonne} aria-labelledby="pied-site">
+        <h2 class={titre} id="pied-site">Le site</h2>
+        <ul class="m-0 list-none p-0">
+          <li><a class={link} href="/blog/">Blog</a></li>
+          <li><a class={link} href="/a-propos/">À propos</a></li>
+          <li><a class={link} href="/contact/">Contact</a></li>
+          <li>
+            <a class={link + ' inline-flex items-center gap-[0.3rem]'} href="https://github.com/NetSo8" rel="me noopener noreferrer" target="_blank">
+              GitHub, profil NetSo8 <span class="sr-only">(nouvel onglet)</span> <ArrowUpRight size="0.95em" aria-hidden="true" />
+            </a>
+          </li>
+        </ul>
       </nav>
 
       <div class={colonne}>
-        <p class={titre}>Joindre</p>
+        <h2 class={titre}>Joindre</h2>
         <p class="text-[0.9rem]/[1.55] text-nuit-soft">Rivesaltes 66600<br />Pyrénées-Orientales</p>
         <p class="text-[0.9rem]/[1.55] text-nuit-faint">Sur place : Rivesaltes, Perpignan, alentours.<br />À distance : France entière.</p>
       </div>
     </div>
 
     <div class="mt-14 border-t border-rule-nuit pt-6">
-      <p class="label text-nuit-faint">Zone d'intervention en présentiel</p>
-      <p class="mt-2 text-[0.86rem]/[1.9] text-nuit-soft">{communes.join(' · ')}</p>
+      <h2 class="label text-nuit-faint" id="pied-zone">Zone d'intervention en présentiel</h2>
+      <ul class="m-0 mt-2 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-[0.9rem]/[1.9] text-nuit-soft" aria-labelledby="pied-zone">
+        {communes.map((c) => <li>{c}</li>)}
+      </ul>
     </div>
 
     {/* Les fonds décoratifs bouclent sans fin. WCAG 2.2.2 demande qu'on puisse
         les arrêter : le réglage du système est respecté, et cet interrupteur
         sert à qui ne l'a pas activé ou ne veut couper que sur ce site. */}
-    <div class="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-rule-nuit pt-5 font-mono text-[0.72rem] text-nuit-faint">
-      <p>© {year} E Informatique · Elian · SIRET sur demande</p>
+    <div class="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-rule-nuit pt-5 font-mono text-[0.75rem] text-nuit-faint">
+      <p>© {year} E Informatique, Elian. SIRET sur demande.</p>
       <button
-        class="inline-flex min-h-[28px] cursor-pointer items-center gap-[0.45rem] rounded-md border border-rule-nuit bg-transparent px-[0.6rem] py-[0.35rem] font-mono text-[0.72rem] text-nuit-soft transition-[color,border-color] duration-150 ease-out-soft hover:border-nuit-text hover:text-paper"
+        class="inline-flex min-h-[40px] cursor-pointer items-center gap-[0.45rem] rounded-full border border-rule-nuit bg-transparent px-[0.6rem] py-[0.35rem] px-3 font-mono text-[0.75rem] text-nuit-soft transition-[color,border-color] duration-150 ease-out-soft hover:border-nuit-text hover:text-nuit-text aria-pressed:border-nuit-text aria-pressed:bg-nuit-2 aria-pressed:text-nuit-text"
         type="button"
         data-motion-toggle
         aria-pressed="false"
@@ -74,11 +82,10 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
         <Pause class="motion-off hidden" size="0.95em" aria-hidden="true" />
         <span data-motion-label>Réduire les animations</span>
       </button>
-      <p class="flex gap-[0.6rem]">
-        <a class="inline-flex min-h-[24px] items-center text-nuit-soft no-underline hover:text-paper" href="/mentions-legales/">Mentions légales</a>
-        <span aria-hidden="true">·</span>
-        <a class="inline-flex min-h-[24px] items-center text-nuit-soft no-underline hover:text-paper" href="/sitemap-index.xml">Plan du site</a>
-      </p>
+      <ul class="m-0 flex list-none gap-5 p-0">
+        <li><a class="inline-flex min-h-[40px] items-center text-nuit-soft no-underline hover:text-nuit-text hover:underline" href="/mentions-legales/">Mentions légales</a></li>
+        <li><a class="inline-flex min-h-[40px] items-center text-nuit-soft no-underline hover:text-nuit-text hover:underline" href="/sitemap-index.xml">Plan du site</a></li>
+      </ul>
     </div>
   </div>
 </footer>
@@ -88,7 +95,6 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
   // ou aucun attribut — on suit alors le réglage du système.
   const root = document.documentElement;
   const btn = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
-  const label = btn?.querySelector<HTMLElement>('[data-motion-label]');
   const systemCalm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const isCalm = () =>
@@ -96,8 +102,9 @@ const titre = 'label mb-[0.35rem] text-nuit-faint';
 
   const sync = () => {
     const calm = isCalm();
+    // Nom fixe, état porté par aria-pressed : « Réduire les animations,
+    // bouton bascule, activé » se comprend sans ambiguïté.
     btn?.setAttribute('aria-pressed', String(calm));
-    if (label) label.textContent = calm ? 'Rétablir les animations' : 'Réduire les animations';
     btn?.querySelector('.motion-on')?.classList.toggle('hidden', calm);
     btn?.querySelector('.motion-off')?.classList.toggle('hidden', !calm);
   };

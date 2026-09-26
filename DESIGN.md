@@ -57,11 +57,17 @@ Règles d'emploi :
 - Plancher de taille : 10,5 px, sauf annotations de schéma.
 
 ## Structure
-Grille de 12 colonnes, gouttière 24px. Filets pleine largeur (1px, ink/14 %).
-Sections numérotées `§ 01`. Pas de cartes par réflexe : les listes de services,
-de preuves et de réalisations sont des **lignes réglées**.
-Rayons : `--radius-sm` 3px (badges), `--radius-md` 5px (boutons), `--radius-lg` 7px
-(terminal, blocs de code). Tout le reste est à angle vif.
+Grille de 12 colonnes, gouttière 24px. Les sections se lisent à leur titre seul :
+plus de numérotation `§ 01` ni d'étiquette en capitales au-dessus de chaque bloc.
+Les contenus se posent dans des **panneaux** contenus dans la gouttière (`.panel`),
+pas en bandes pleine largeur ; chaque section choisit une disposition différente
+(grille de fiches, frise, panneau sombre, deux colonnes) pour éviter la répétition.
+
+Rayons, une seule règle :
+- tout ce qui se clique est une **pilule** (boutons, badges, commandes, filtres) ;
+- champs et blocs de citation : `--radius-md` 10px ;
+- images, terminal, blocs de code : `--radius-lg` 16px ;
+- panneaux et bandes contenues : `--radius-xl` 24px.
 
 ## Élévation
 Les boutons et les commandes d'interface sont des **objets posés sur la page**, pas
@@ -112,12 +118,27 @@ C'est `prefers-contrast: more` qui sert la version à bords francs, plutôt que 
 le design pour tout le monde.
 
 ## Motion
-Sobre. Révélation au scroll sur une bande par page, curseur du terminal,
-transitions 180ms `cubic-bezier(0.22, 1, 0.36, 1)`. Le CTA descend de 2px au survol
-et prend une ombre courte ; il revient à plat au clic.
-`prefers-reduced-motion` neutralise tout.
+Sobre, jamais en boucle pour les nouveautés. Entrée du haut de page en cascade
+courte (`.rise`, 70ms entre pièces), photo d'accueil dévoilée une fois (`.unveil`),
+panneaux cliquables qui se lèvent de 3px au survol, boutons qui se tassent à
+`scale(0.97)` à l'appui. Survols réservés aux pointeurs fins
+(`@media (hover: hover) and (pointer: fine)`). `prefers-reduced-motion` et
+l'interrupteur du pied de page neutralisent tout.
+
+## Lecteurs d'écran et clavier
+- Un seul `h1`, aucun niveau sauté ; chaque fiche, étape ou engagement porte un
+  `h3` pour la navigation de titre en titre.
+- Une carte entièrement cliquable annonce son **titre** (`aria-labelledby`) et
+  sa description (`aria-describedby`), pas tout son contenu d'un bloc.
+- Boutons bascule : nom fixe, état dans `aria-pressed` ou `aria-expanded`.
+  Ne jamais changer le libellé en même temps que l'état.
+- Étiquettes purement visuelles (badges, points médians, numéros d'étape portés
+  par une liste `<ol>`) : `aria-hidden`, l'information est redonnée en texte.
+- Lien qui ouvre un nouvel onglet : « (nouvel onglet) » en `sr-only`.
+- Cibles tactiles : 40px minimum, 44px dans la navigation. Texte : 12px minimum.
+- `forced-colors` : tout ce qui tenait par une teinte est redessiné par un trait.
 
 ## Interdits
-Dégradé sur texte, glassmorphisme, bordure latérale colorée, grille de cartes
+Dégradé sur texte, bordure latérale colorée, grille de cartes
 identiques, tirets cadratins dans la copie, icônes arrondies au-dessus de chaque
 titre, rouge ailleurs que sur un appel à l'action.

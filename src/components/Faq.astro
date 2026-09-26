@@ -12,9 +12,9 @@ const schema = {
   })),
 };
 ---
-<div class="border-t border-rule">
+<div class="flex flex-col gap-2">
   {items.map((i) => (
-    <details class="group border-b border-rule">
+    <details class="faq-item group rounded-[var(--radius-lg)] border border-rule bg-raised px-5 transition-[border-color,box-shadow] duration-200 open:border-rule-strong open:shadow-[var(--shadow-raise)]">
       <summary
         class="flex cursor-pointer list-none items-center justify-between gap-8 py-[1.1rem] text-[clamp(1rem,0.95rem+0.3vw,1.15rem)] font-semibold tracking-[-0.02em] hover:text-accent [&::-webkit-details-marker]:hidden"
       >

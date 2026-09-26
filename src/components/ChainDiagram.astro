@@ -7,26 +7,25 @@ const nodes = [
 ];
 ---
 <figure class="m-0">
-  {/* Les filets se chevauchent d'un pixel : une seule ligne entre deux cases. */}
-  <ol class="m-0 grid list-none grid-cols-2 p-0 [@media(width>46rem)]:grid-cols-4">
+  <ol class="m-0 grid list-none grid-cols-2 gap-3 p-0 [@media(width>46rem)]:grid-cols-4">
     {nodes.map((n, i) => (
-      <li class="-mr-px -mb-px flex flex-col gap-[0.15rem] border border-rule bg-paper-warm px-[0.9rem] py-[1.15rem]">
-        <span class="font-mono text-[0.68rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
-        <span class="text-[1.05rem] font-bold tracking-[-0.02em]">{n.t}</span>
-        <span class="text-[0.76rem]/[1.4] text-ink-soft">{n.s}</span>
+      <li class="panel flex flex-col gap-1 px-5 py-6">
+        <span class="font-mono text-[0.75rem] font-semibold text-accent" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="text-[1.2rem] font-bold tracking-[-0.025em]">{n.t}</span>
+        <span class="text-[0.82rem]/[1.45] text-ink-soft">{n.s}</span>
       </li>
     ))}
   </ol>
 
   {/* Accolade : les quatre étages tenus par une seule personne. */}
-  <div class="relative mt-[0.6rem] text-center">
-    <span class="block h-[10px] border border-t-0 border-accent" aria-hidden="true"></span>
-    <span class="mt-[0.55rem] inline-block font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent">
+  <div class="mt-4 flex flex-col items-center">
+    <span class="block h-[14px] w-full rounded-b-[14px] border border-t-0 border-accent" aria-hidden="true"></span>
+    <span class="mt-3 inline-flex items-center rounded-full bg-accent-wash px-4 py-[0.35rem] text-[0.85rem] font-semibold text-accent">
       Un seul interlocuteur
     </span>
   </div>
 
-  <figcaption class="mt-[1.1rem] max-w-[54ch] text-base text-ink-soft">
+  <figcaption class="sr-only">
     Quatre chantiers, une seule personne qui les traverse. La cause se trouve, au
     lieu d'être renvoyée à quelqu'un d'autre.
   </figcaption>

@@ -21,29 +21,25 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
   <section class="section">
     <div class="shell">
       {posts.length === 0 ? (
-        <p class="border-y border-rule py-12 text-ink-soft">Aucun article publié pour l'instant.</p>
+        <p class="panel p-10 text-ink-soft">Aucun article publié pour l'instant.</p>
       ) : (
-        <ol class="rowlist">
+        <ol class="m-0 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2">
           {posts.map((p) => (
-            <li>
-              <a
-                href={`/blog/${p.id}/`}
-                class="grid grid-cols-[1fr_1.5rem] items-start gap-6 py-[1.9rem] hover:px-4 [@media(width>52rem)]:grid-cols-[11rem_minmax(0,1fr)_1.5rem]"
-              >
-                <span class="flex flex-row items-center gap-3 [@media(width>52rem)]:flex-col [@media(width>52rem)]:items-start [@media(width>52rem)]:gap-[0.45rem] [@media(width>52rem)]:pt-[0.35rem]">
-                  <time class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-faint" datetime={p.data.date.toISOString()}>
+            <li data-reveal>
+              <article class="panel panel-link relative h-full flex-col gap-4 p-[clamp(1.5rem,2.5vw,2.1rem)]" aria-labelledby={`post-${p.id}`}>
+                <h2 class="order-2 max-w-[28ch] text-[clamp(1.25rem,1.05rem+0.8vw,1.65rem)]/[1.18] tracking-[-0.03em]" id={`post-${p.id}`}>
+                  {/* Le lien porte le seul titre ; sa zone cliquable couvre la carte entière. */}
+                  <a class="no-underline after:absolute after:inset-0 after:rounded-[var(--radius-xl)] after:content-['']" href={`/blog/${p.id}/`}>{p.data.title}</a>
+                </h2>
+                <p class="order-1 flex flex-wrap items-center gap-3">
+                  <time class="font-mono text-[0.75rem] uppercase tracking-[0.06em] text-ink-soft" datetime={p.data.date.toISOString()}>
                     {formatDate(p.data.date)}
                   </time>
-                  <span class="badge badge--accent w-fit">{AUDIENCE_LABEL[p.data.audience]}</span>
-                </span>
-
-                <span class="flex flex-col gap-[0.45rem]">
-                  <span class="max-w-[28ch] text-[clamp(1.2rem,1.05rem+0.85vw,1.7rem)]/[1.18] font-bold tracking-[-0.032em]">{p.data.title}</span>
-                  <span class="max-w-[66ch] text-base text-ink-soft">{p.data.summary}</span>
-                </span>
-
-                <ArrowRight class="arrow justify-self-end mt-[0.4rem] text-accent" size="1.1em" aria-hidden="true" />
-              </a>
+                  <span class="badge badge--accent">{AUDIENCE_LABEL[p.data.audience]}</span>
+                </p>
+                <p class="order-3 max-w-[60ch] text-base text-ink-soft">{p.data.summary}</p>
+                <span class="order-4 mt-auto inline-flex items-center gap-2 font-semibold text-accent" aria-hidden="true">Lire l'article <ArrowRight class="arrow" size="1.05em" /></span>
+              </article>
             </li>
           ))}
         </ol>
@@ -52,7 +48,6 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
   </section>
 
   <CtaBand
-    kicker="Un cas particulier"
     title="Votre situation n'est pas dans la liste ?"
     text="Décrivez-la. Si la réponse peut servir à d'autres, elle finira probablement en article, et vous l'aurez eue en premier."
   />

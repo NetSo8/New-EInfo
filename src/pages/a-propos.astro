@@ -31,10 +31,11 @@ const parcours = [
     lede="Je m'appelle Elian. Je suis technicien informatique, je forme aussi au bon usage de l'IA, et je me spécialise, couche par couche, vers la sécurité du code que les IA génèrent et la cryptographie. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
   />
 
-  <section class="section relative isolate overflow-hidden">
+  <section class="section section-rule relative isolate overflow-hidden" aria-labelledby="parcours-t">
     <CryptoCrackBg class="-z-10 opacity-60" />
     <div class="shell relative">
-      <div class="flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft">
+      <h2 class="text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]" id="parcours-t">D'où je viens</h2>
+      <div class="mt-8 flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft">
         <p>
           J'ai commencé par réparer des machines, ce qui apprend une chose que le
           diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
@@ -73,92 +74,88 @@ const parcours = [
     </div>
   </section>
 
+  <!-- ─── Méthode : quatre fiches ─────────────────────── -->
   <section class="section section-rule section-tint">
     <div class="shell">
-      <SectionHead n="01" kicker="Méthode" title="Quatre principes qui tiennent depuis le début" />
-      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
-        {principes.map((p, i) => (
-          <li class="grid grid-cols-[3.5rem_1fr] gap-5 border-b border-rule py-[1.6rem]">
-            <span class="pt-[0.35rem] font-mono text-[0.75rem] font-semibold text-accent">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 class="text-[1.25rem] tracking-[-0.028em]">{p.t}</h3>
-              <p class="mt-[0.4rem] max-w-[64ch] text-base text-ink-soft">{p.d}</p>
-            </div>
+      <SectionHead title="Quatre principes qui tiennent depuis le début" />
+      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2">
+        {principes.map((p) => (
+          <li class="panel flex flex-col gap-2 p-[clamp(1.4rem,2.5vw,2rem)]" data-reveal>
+            <h3 class="text-[1.3rem] tracking-[-0.028em]">{p.t}</h3>
+            <p class="max-w-[54ch] text-base text-ink-soft">{p.d}</p>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
 
+  <!-- ─── Parcours : frise en trois temps ─────────────── -->
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        n="02"
-        kicker="Compétences"
         title="Ce que je fais, et ce que j'apprends"
-        lede="Trois niveaux, énoncés dans l'ordre où ils se sont construits. Les deux premiers sont ce sur quoi vous pouvez compter aujourd'hui. Le troisième est ma spécialisation en cours : un travail personnel, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
+        lede="Trois niveaux, dans l'ordre où ils se sont construits. Les deux premiers sont ce sur quoi vous pouvez compter aujourd'hui. Le troisième est ma spécialisation en cours, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
       />
-      <ol class="m-0 mt-12 list-none border-t border-rule-strong p-0" data-reveal>
-        {parcours.map((p) => (
-          <li class="grid grid-cols-1 gap-2 border-b border-rule py-[1.6rem] [@media(width>46rem)]:grid-cols-[9rem_1fr] [@media(width>46rem)]:gap-6">
-            <span class="pt-[0.4rem] font-mono text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-accent">{p.a}</span>
-            <div>
-              <h3 class="text-[1.2rem] tracking-[-0.028em]">{p.t}</h3>
-              <p class="mt-[0.4rem] max-w-[62ch] text-base text-ink-soft">{p.d}</p>
-            </div>
+      <ol class="m-0 mt-12 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-3">
+        {parcours.map((p, i) => (
+          <li
+            class:list={[
+              'panel flex flex-col gap-3 p-[clamp(1.4rem,2.5vw,2rem)]',
+              i === 2 && 'on-nuit border-transparent bg-nuit text-ink',
+            ]}
+            data-reveal
+          >
+            <span class="self-start rounded-full bg-accent-wash px-3 py-1 text-[0.85rem] font-semibold text-accent">{p.a}</span>
+            <h3 class="text-[1.25rem]/[1.2] tracking-[-0.028em]">{p.t}</h3>
+            <p class="text-base text-ink-soft">{p.d}</p>
           </li>
         ))}
       </ol>
 
-      <div class="mt-10 max-w-[60ch] border-t border-rule pt-7">
-        <p class="text-base text-ink-soft">
-          La troisième ligne mérite une précision, parce qu'elle est facile à
-          survendre. Je ne me présente pas comme expert en sécurité IA ou en
-          cryptographie post-quantique : je m'oriente dans cette direction, à titre
-          personnel, et je ne la mets en avant sur une mission que si le sujet s'y
-          prête réellement. Ce que je facture aujourd'hui reste le dépannage, la
-          formation à l'IA, le site web et la relecture de code généré par IA.
+      <p class="mt-10 max-w-[62ch] text-base text-ink-soft">
+        La troisième colonne mérite une précision, parce qu'elle est facile à
+        survendre. Je ne me présente pas comme expert en sécurité IA ou en
+        cryptographie post-quantique : je m'oriente dans cette direction, à titre
+        personnel, et je ne la mets en avant sur une mission que si le sujet s'y
+        prête réellement. Ce que je facture aujourd'hui reste le dépannage, la
+        formation à l'IA, le site web et la relecture de code généré par IA.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── Pourquoi ici ─────────────────────────────────── -->
+  <section class="section section-rule">
+    <div class="shell grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
+      <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]">
+        <Image
+          src={paysage}
+          alt="Baies de serveurs câblées, voyants allumés dans la pénombre d'un local technique"
+          loading="lazy"
+          decoding="async"
+          widths={[560, 900, 1300]}
+          sizes="(width >= 62rem) 48vw, 100vw"
+          quality={68}
+          class="aspect-3/2 w-full rounded-none object-cover saturate-[0.82]"
+        />
+      </figure>
+      <div>
+        <SectionHead title="Rivesaltes, et pas ailleurs" />
+        <p class="mt-5 max-w-[48ch] text-base text-ink-soft">
+          Travailler à distance fonctionne pour presque tout. Presque. Il reste les
+          machines qui ne s'allument plus, l'imprimante qui refuse d'imprimer, et les
+          conversations qu'on n'a pas de la même façon par écran interposé.
+        </p>
+        <p class="mt-4 max-w-[48ch] text-base text-ink-soft">
+          La proximité n'est pas un argument commercial ajouté après coup : c'est ce
+          qui permet d'être là dans la journée quand une panne vous empêche de
+          travailler, ou quand vous préférez qu'on vous montre l'IA plutôt que de lire
+          une notice.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="section section-rule">
-    <div class="shell">
-      <div class="grid12 items-center gap-y-8">
-        <figure class="col-span-full m-0 mid:col-span-6">
-          <Image
-            src={paysage}
-            alt="Baies de serveurs câblées, voyants allumés dans la pénombre d'un local technique"
-            loading="lazy"
-            decoding="async"
-            widths={[560, 900, 1300]}
-            sizes="(width >= 60rem) 48vw, 100vw"
-            quality={68}
-            class="aspect-3/2 w-full object-cover saturate-[0.82]"
-          />
-        </figure>
-        <div class="col-span-full mid:col-start-8 mid:col-span-5">
-          <p class="label text-accent">Pourquoi ici</p>
-          <h2 class="mt-[0.8rem] text-x2">Rivesaltes, et pas ailleurs</h2>
-          <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
-            Travailler à distance fonctionne pour presque tout. Presque. Il reste les
-            machines qui ne s'allument plus, l'imprimante qui refuse d'imprimer, et les
-            conversations qu'on n'a pas de la même façon par écran interposé.
-          </p>
-          <p class="mt-4 max-w-[46ch] text-base text-ink-soft">
-            La proximité n'est pas un argument commercial ajouté après coup : c'est ce
-            qui permet d'être là dans la journée quand une panne vous empêche de
-            travailler, ou quand vous préférez qu'on vous montre l'IA plutôt que de lire
-            une notice.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <CtaBand
-    kicker="Prendre contact"
     title="Le plus simple reste de décrire votre situation."
     text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
   />

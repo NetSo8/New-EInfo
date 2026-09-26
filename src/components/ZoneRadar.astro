@@ -65,9 +65,14 @@ const rings = [5, 10, 15, 20];
   </svg>
 
   <figcaption class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-[0.4rem] text-base text-ink-soft">
-    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-accent bg-accent-wash"></span>
+    {/* Le dessin n'est pas lisible par un lecteur d'écran : les mêmes
+        informations, en liste, pour qui ne voit pas le radar. */}
+    <ul class="sr-only">
+      {pts.map((p) => <li>{p.n} : {p.d} km de Rivesaltes, déplacement inclus.</li>)}
+    </ul>
+    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-accent bg-accent-wash" aria-hidden="true"></span>
     Déplacement inclus jusqu'à 15 km.
-    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-dashed border-rule-strong"></span>
+    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-dashed border-rule-strong" aria-hidden="true"></span>
     Au-delà, forfait kilométrique annoncé avant intervention.
   </figcaption>
 </figure>

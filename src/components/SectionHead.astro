@@ -1,15 +1,12 @@
 ---
-interface Props { n: string; kicker: string; title: string; lede?: string }
-const { n, kicker, title, lede } = Astro.props;
+/* `n` et `kicker` restent acceptés pour ne pas casser les pages existantes,
+   mais ne sont plus affichés : un titre clair suffit à situer une section,
+   et l'étiquette répétée au-dessus de chaque bloc faisait gabarit. */
+interface Props { n?: string; kicker?: string; title: string; lede?: string; center?: boolean }
+const { title, lede, center = false } = Astro.props;
 ---
-<div class="grid grid-cols-1 items-start gap-[0.9rem] mid:grid-cols-[10rem_1fr] mid:gap-gut">
-  <div class="flex items-baseline gap-[0.8rem] mid:flex-col mid:items-stretch mid:gap-[0.3rem] mid:pt-[0.55rem]">
-    <span class="font-mono text-[0.72rem] font-semibold tracking-[0.04em] text-accent">§&nbsp;{n}</span>
-    <span class="label leading-[1.5]">{kicker}</span>
-  </div>
-  <div class="flex max-w-[58ch] flex-col gap-[1.1rem]">
-    <h2>{title}</h2>
-    {lede && <p class="max-w-[46ch] text-lede/[1.5] text-ink-soft">{lede}</p>}
-    <slot />
-  </div>
+<div class:list={['flex max-w-[46rem] flex-col gap-4', center && 'mx-auto items-center text-center']}>
+  <h2 class="text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]">{title}</h2>
+  {lede && <p class="max-w-[54ch] text-lede/[1.5] text-ink-soft">{lede}</p>}
+  <slot />
 </div>

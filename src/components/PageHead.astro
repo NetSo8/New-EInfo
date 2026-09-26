@@ -1,12 +1,20 @@
 ---
 interface Props { kicker: string; title: string; lede: string; tone?: 'paper' | 'warm' }
-const { kicker, title, lede, tone = 'paper' } = Astro.props;
+const { kicker, title, lede } = Astro.props;
+/* Le point médian est lu « point » par certains lecteurs d'écran : il reste
+   à l'œil, mais n'est pas prononcé. */
+const parts = kicker.split(' · ');
 ---
-<section class:list={['pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.25rem,4vw,3.5rem)] border-b border-rule', tone === 'warm' && 'bg-paper-warm']}>
-  <div class="shell max-w-[62rem]">
-    <p class="label text-accent">{kicker}</p>
-    <h1 class="mt-4 text-[clamp(2.1rem,1rem+3.4vw,3.5rem)]">{title}</h1>
-    <p class="mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft">{lede}</p>
-    <div class="empty:hidden mt-8"><slot /></div>
+<section class="relative isolate overflow-x-clip pt-[clamp(2.5rem,5vw,4.5rem)] pb-[clamp(2.5rem,4.5vw,4rem)]">
+  {/* Lueur de fond : l'accent à quelques pour cent, pour que le haut de
+      page ne soit pas un aplat. Décoratif, sans contraste à tenir. */}
+  <div class="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[36rem] bg-[radial-gradient(75%_65%_at_20%_0%,var(--color-accent-wash),transparent_75%)]" aria-hidden="true"></div>
+  <div class="shell">
+    <p class="chip rise pl-[0.8rem]" style="--i:0">
+      {parts.map((t, i) => (<>{i > 0 && <span aria-hidden="true">·</span>}<span>{t}{i < parts.length - 1 && <span class="sr-only">,</span>}</span></>))}
+    </p>
+    <h1 class="rise mt-6 max-w-[20ch] text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]" style="--i:1">{title}</h1>
+    <p class="rise mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft" style="--i:2">{lede}</p>
+    <div class="rise mt-8 empty:hidden" style="--i:3"><slot /></div>
   </div>
 </section>

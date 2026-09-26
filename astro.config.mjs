@@ -21,9 +21,10 @@ export default defineConfig({
   vite: { plugins: [tailwindcss()] },
   trailingSlash: 'always',
   build: { format: 'directory' },
-  // Anciennes URL du site en production
+  // Anciennes URL du site en production. Une seule entrée suffit : avec
+  // `trailingSlash: 'always'`, Astro génère /about/index.html, qui répond
+  // aussi à /about. La déclarer deux fois faisait collision.
   redirects: {
     '/about': '/a-propos/',
-    '/about/': '/a-propos/',
   },
 });

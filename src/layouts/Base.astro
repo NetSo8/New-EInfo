@@ -61,10 +61,12 @@ const business = {
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#f7f8f8" />
+    <meta name="color-scheme" content="light dark" />
 
     <!-- Thème : résolu avant le premier rendu, pour éviter tout flash. -->
     <script is:inline>
       (() => {
+        document.documentElement.classList.add('js');
         const stored = (() => { try { return localStorage.getItem('theme'); } catch { return null; } })();
         const dark = stored ? stored === 'dark'
           : window.matchMedia('(prefers-color-scheme: dark)').matches;
