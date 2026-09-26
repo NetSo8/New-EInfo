@@ -1,6 +1,15 @@
 ---
-interface Props { kicker: string; title: string; lede?: string; tone?: 'paper' | 'warm' }
-const { kicker, title, lede } = Astro.props;
+interface Props {
+  kicker: string;
+  title: string;
+  lede?: string;
+  tone?: 'paper' | 'warm';
+  /** Place l'étiquette DANS le titre principal. À utiliser quand elle porte
+   *  la recherche visée par la page (« Dépannage informatique à domicile… ») :
+   *  Google lit le H1, et une accroche seule ne dit pas de quoi parle la page. */
+  motcle?: boolean;
+}
+const { kicker, title, lede, motcle = false } = Astro.props;
 /* Le point médian est lu « point » par certains lecteurs d'écran : il reste
    à l'œil, mais n'est pas prononcé. */
 const parts = kicker.split(' · ');
@@ -10,10 +19,21 @@ const parts = kicker.split(' · ');
       page ne soit pas un aplat. Décoratif, sans contraste à tenir. */}
   <div class="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[36rem] bg-[radial-gradient(75%_65%_at_20%_0%,var(--color-accent-wash),transparent_75%)]" aria-hidden="true"></div>
   <div class="shell">
-    <p class="chip rise pl-[0.8rem]" style="--i:0">
-      {parts.map((t, i) => (<>{i > 0 && <span aria-hidden="true">·</span>}<span>{t}{i < parts.length - 1 && <span class="sr-only">,</span>}</span></>))}
-    </p>
-    <h1 class="rise mt-6 max-w-[20ch] text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]" style="--i:1">{title}</h1>
+    {motcle ? (
+      <h1>
+        <span class="chip rise pl-[0.8rem] text-[0.8rem] font-medium tracking-normal" style="--i:0">
+          {parts.map((t, i) => (<>{i > 0 && <span aria-hidden="true">·</span>}<span>{t}{i < parts.length - 1 && <span class="sr-only">,</span>}</span></>))}<span class="sr-only"> :</span>
+        </span>
+        <span class="rise mt-6 block max-w-[20ch] text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]" style="--i:1">{title}</span>
+      </h1>
+    ) : (
+      <>
+        <p class="chip rise pl-[0.8rem]" style="--i:0">
+          {parts.map((t, i) => (<>{i > 0 && <span aria-hidden="true">·</span>}<span>{t}{i < parts.length - 1 && <span class="sr-only">,</span>}</span></>))}
+        </p>
+        <h1 class="rise mt-6 max-w-[20ch] text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]" style="--i:1">{title}</h1>
+      </>
+    )}
     {lede && <p class="rise mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft" style="--i:2">{lede}</p>}
     <div class="rise mt-8 empty:hidden" style="--i:3"><slot /></div>
   </div>

@@ -41,5 +41,8 @@ export default defineConfig({
   // aussi à /about. La déclarer deux fois faisait collision.
   redirects: {
     '/about': '/a-propos/',
+    // Page supprimée : ses prestations sont détaillées sur /particuliers/ et
+    // /professionnels/. Le 301 réel est dans public/.htaccess.
+    '/services': '/#services',
   },
 });

@@ -13,7 +13,7 @@ import HeroNetworkBg from '../components/HeroNetworkBg.astro';
 import CtaBand from '../components/CtaBand.astro';
 import FaqSection from '../components/FaqSection.astro';
 import { Image } from 'astro:assets';
-import { services } from '../data/services';
+import { services, lienService } from '../data/services';
 import atelier from '../assets/atelier.jpg';
 import cote from '../assets/cote.jpg';
 import etabli from '../assets/etabli.jpg';
@@ -67,7 +67,7 @@ const pannesCourantes = [
 ];
 ---
 <Base
-  title="Dépannage, formation IA et sites web · Rivesaltes (66)"
+  title="Technicien informatique à Rivesaltes et Perpignan (66)"
   description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web et relecture de code IA pour les TPE des Pyrénées-Orientales."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
@@ -75,10 +75,13 @@ const pannesCourantes = [
     <HeroNetworkBg class="-z-10 opacity-45" />
     <div class="shell grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
       <div>
-        <p class="chip rise" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Rivesaltes, Perpignan et alentours</p>
-
-        <h1 class="rise mt-7 text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
-          Une panne, un site, une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
+        {/* L'étiquette fait partie du titre principal : c'est elle qui dit à
+            Google de quoi parle la page, l'accroche porte le ton. */}
+        <h1>
+          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Technicien informatique à Rivesaltes et Perpignan<span class="sr-only"> :</span></span>
+          <span class="rise mt-7 block text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
+            Une panne, un site, une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
+          </span>
         </h1>
 
         <p class="rise mt-6 max-w-[42ch] text-lede/[1.5] text-ink-soft" style="--i:2">
@@ -88,7 +91,7 @@ const pannesCourantes = [
 
         <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
           <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-          <a class="btn btn--ghost" href="/services/">Voir les prestations</a>
+          <a class="btn btn--ghost" href="#services">Voir les prestations</a>
         </div>
       </div>
 
@@ -102,6 +105,7 @@ const pannesCourantes = [
           widths={[560, 840, 1120, 1400]}
           sizes="(width >= 62rem) 44vw, 100vw"
           quality={72}
+          data-parallax="14"
           class="aspect-[4/3] w-full rounded-none object-cover object-[72%_50%] lg:aspect-[4/5]"
         />
       </figure>
@@ -189,7 +193,8 @@ const pannesCourantes = [
           return (
             <li class:list={[t.span]} data-reveal>
               <a
-                href={`/services/#${s.id}`}
+                href={lienService(s)}
+                data-spotlight
                 aria-labelledby={`tuile-${s.id}`}
                 aria-describedby={`tuile-${s.id}-d`}
                 class:list={[
@@ -246,7 +251,7 @@ const pannesCourantes = [
         title="Quatre engagements, quel que soit le chantier"
         lede="Une panne chez un particulier ou un site d'entreprise : la façon de travailler ne change pas."
       />
-      <ul class="m-0 mt-14 grid list-none grid-cols-1 gap-y-10 border-t border-rule-strong p-0 sm:grid-cols-2 lg:grid-cols-4">
+      <ul class="trace-line m-0 mt-14 grid list-none grid-cols-1 gap-y-10 p-0 sm:grid-cols-2 lg:grid-cols-4" data-inview>
         {engagements.map((e, i) => (
           <li
             class:list={[
@@ -256,7 +261,7 @@ const pannesCourantes = [
             ]}
             data-reveal
           >
-            <span class="grid size-11 place-items-center rounded-full bg-raised text-accent shadow-[var(--shadow-raise)]" aria-hidden="true">
+            <span class="pop-icon grid size-11 place-items-center rounded-full bg-raised text-accent shadow-[var(--shadow-raise)]" style={`--i:${i}`} aria-hidden="true">
               <e.icon size={20} stroke-width={1.8} />
             </span>
             <h3 class="mt-2 text-[1.25rem]/[1.2] tracking-[-0.028em]">{e.t}</h3>

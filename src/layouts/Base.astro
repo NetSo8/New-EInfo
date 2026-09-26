@@ -2,6 +2,7 @@
 import '../styles/app.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { services, lienService } from '../data/services';
 
 interface Props {
   title: string;
@@ -50,6 +51,22 @@ const business = {
     'Confidential computing',
   ],
   sameAs: ['https://github.com/NetSo8'],
+  // Catalogue des prestations, chacune reliée à sa page de référence : c'est
+  // ce qui remplace l'ancienne liste de `Service` de la page /services/.
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Prestations',
+    itemListElement: services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.titre,
+        description: s.resume,
+        url: `https://einformatique.fr${lienService(s)}`,
+        areaServed: 'Pyrénées-Orientales, France',
+      },
+    })),
+  },
 };
 ---
 <!doctype html>
@@ -140,12 +157,69 @@ const business = {
         io.observe(el);
       });
 
+      // Mises en scène jouées une seule fois à l'arrivée dans l'écran
+      // (radar, filets qui se tracent…) : la classe `in-view` les déclenche.
+      const vu = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in-view');
+          vu.unobserve(e.target);
+        }),
+        { threshold: 0.3 }
+      );
+      document.querySelectorAll('[data-inview]').forEach((el) => vu.observe(el));
+
       // Fonds et schémas animés en boucle : en pause dès qu'ils quittent
       // l'écran, relancés quand ils y reviennent.
       const decor = new IntersectionObserver((entries) => {
         entries.forEach((e) => e.target.classList.toggle('is-offscreen', !e.isIntersecting));
       });
       document.querySelectorAll('.hero-mesh, .crack-bg, .world-bg, [data-decor]').forEach((el) => decor.observe(el));
+
+      // ── Effets au pointeur ─────────────────────────────────────
+      // Réservés à la souris (inutiles au doigt) et coupés si la personne
+      // a demandé moins de mouvement, par son système ou par le site.
+      const root = document.documentElement;
+      const calme = () =>
+        root.dataset.motion === 'reduced' ||
+        (root.dataset.motion !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+      const souris = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      if (souris) {
+        // Halo des cartes : position du pointeur dans la carte, en variables CSS.
+        document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((el) => {
+          el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            el.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+
+        // Profondeur : l'élément glisse de quelques pixels à l'opposé du
+        // pointeur, avec un amorti pour qu'il suive sans coller à la souris.
+        document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+          const force = Number(el.dataset.parallax) || 10;
+          const zone = el.closest('section') ?? el;
+          let cx = 0, cy = 0, tx = 0, ty = 0, raf = 0;
+          const pas = () => {
+            cx += (tx - cx) * 0.08;
+            cy += (ty - cy) * 0.08;
+            el.style.setProperty('--px', `${cx.toFixed(2)}px`);
+            el.style.setProperty('--py', `${cy.toFixed(2)}px`);
+            raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.05 ? requestAnimationFrame(pas) : 0;
+          };
+          const viser = (x: number, y: number) => {
+            tx = x; ty = y;
+            if (!raf) raf = requestAnimationFrame(pas);
+          };
+          zone.addEventListener('pointermove', (e) => {
+            if (calme()) return;
+            const r = zone.getBoundingClientRect();
+            viser(-((e.clientX - r.left) / r.width - 0.5) * force, -((e.clientY - r.top) / r.height - 0.5) * force);
+          });
+          zone.addEventListener('pointerleave', () => viser(0, 0));
+        });
+      }
     </script>
   </body>
 </html>

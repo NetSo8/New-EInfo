@@ -62,11 +62,12 @@ const faq = [
 ];
 ---
 <Base
-  title="Dépannage informatique & formation IA à Rivesaltes"
+  title="Dépannage informatique à domicile · Rivesaltes, Perpignan"
   description="Réparation d'ordinateur, virus, récupération de photos, et formation à l'IA pour particuliers, à domicile à Rivesaltes et Perpignan. Diagnostic offert."
 >
   <PageHead
-    kicker="Particuliers · Pyrénées-Orientales"
+    kicker="Dépannage informatique à domicile · Rivesaltes, Perpignan"
+    motcle
     title="Votre ordinateur vous pose problème. On règle ça."
     lede="Je me déplace chez vous à Rivesaltes, Perpignan et dans les environs, ou je prends la main à distance. Le diagnostic est offert et vous savez ce que ça coûte avant que je commence. Et si c'est l'IA elle-même qui vous pose question, je vous montre aussi comment vous en servir."
   >
@@ -78,7 +79,7 @@ const faq = [
   </PageHead>
 
   <!-- ─── Pannes courantes : grille de fiches ───────────── -->
-  <section class="section section-rule">
+  <section class="section section-rule scroll-mt-24" id="depannage">
     <div class="shell">
       <SectionHead
         title="Vous reconnaîtrez sûrement votre panne"
@@ -104,7 +105,11 @@ const faq = [
           {etapes.map((e, i) => (
             <li class="relative grid grid-cols-[2.75rem_1fr] gap-5 pb-8 last:pb-0">
               {/* Le fil qui relie les étapes ; l'ordre, lui, est porté par la liste numérotée. */}
-              {i < etapes.length - 1 && <span class="absolute top-11 bottom-1 left-[1.375rem] w-px bg-rule-strong" aria-hidden="true"></span>}
+              {i < etapes.length - 1 && (
+                <span class="absolute top-11 bottom-1 left-[1.375rem] w-px bg-rule-strong" aria-hidden="true">
+                  <span class="fil-progres absolute inset-0 bg-accent"></span>
+                </span>
+              )}
               <span class="grid size-11 place-items-center rounded-full border border-rule bg-raised font-mono text-[0.8rem] font-semibold text-accent shadow-[var(--shadow-raise)]" aria-hidden="true">{e.n}</span>
               <div class="pt-2">
                 <h3 class="text-[1.2rem] tracking-[-0.025em]">{e.t}</h3>

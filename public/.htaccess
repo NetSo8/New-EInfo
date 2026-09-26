@@ -17,6 +17,11 @@ RewriteRule ^ https://einformatique.fr%{REQUEST_URI} [L,R=301]
 # par Astro, qui ne sert plus que de filet de sécurité.
 RewriteRule ^about/?$ https://einformatique.fr/a-propos/ [L,R=301]
 
+# /services/ supprimée : chaque prestation n'a plus qu'une page de référence
+# (/particuliers/ ou /professionnels/). L'ancienne adresse mène à la section
+# Prestations de l'accueil, qui aiguille vers la bonne page. NE : garde le #.
+RewriteRule ^services/?$ https://einformatique.fr/#services [L,R=301,NE]
+
 # Indique aux navigateurs de toujours revenir en HTTPS sur ce domaine,
 # même sur un lien tapé en http:// (protection contre le détournement de
 # la première requête).

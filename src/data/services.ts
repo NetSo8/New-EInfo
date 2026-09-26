@@ -12,6 +12,12 @@ export interface Service {
   motscles: string;
 }
 
+/** Page de référence d'une prestation : chaque prestation n'est détaillée
+ *  qu'à un seul endroit, la page de son public. Deux pages qui décrivent
+ *  la même chose se disputent la même recherche Google (cannibalisation). */
+export const lienService = (s: Service) =>
+  `${s.pour.includes('particulier') ? '/particuliers/' : '/professionnels/'}#${s.id}`;
+
 export const services: Service[] = [
   {
     id: 'depannage',

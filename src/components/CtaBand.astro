@@ -9,7 +9,7 @@ const { title, text, href = '/contact/', cta = 'Me contacter', second } = Astro.
     <div class="on-nuit relative isolate overflow-hidden rounded-[var(--radius-xl)] bg-nuit px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5.5rem)]">
       {/* Un seul halo, dans la teinte du rouge et très bas en opacité :
           il réchauffe le panneau sans devenir une lueur décorative. */}
-      <div class="pointer-events-none absolute -top-1/2 -right-1/4 -z-10 size-[42rem] rounded-full bg-[radial-gradient(closest-side,oklch(0.505_0.170_20/0.22),transparent)]" aria-hidden="true"></div>
+      <div data-decor class="halo-drift pointer-events-none absolute -top-1/2 -right-1/4 -z-10 size-[42rem] rounded-full bg-[radial-gradient(closest-side,oklch(0.505_0.170_20/0.22),transparent)]" aria-hidden="true"></div>
       <div class="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
         <div class="max-w-[40rem]">
           <h2 class="text-[clamp(2rem,1.1rem+3vw,3.4rem)]/[1.02] tracking-[-0.04em]">{title}</h2>

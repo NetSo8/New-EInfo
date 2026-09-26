@@ -80,10 +80,10 @@ Deux audiences, deux parcours, une seule marque :
 
 ```
 /                     accueil, double aiguillage dès le premier écran
-/particuliers/        dépannage, méthode de chiffrage, FAQ, ton simple
-/professionnels/      formules, périmètre, audit approfondi
-/services/            les 3 prestations en détail (ancres #depannage, #reseau, #web)
-/portfolio/           missions livrées (clair) + recherche en cours (sombre)
+/particuliers/        page de référence : dépannage (#depannage), formation IA (#formation-ia)
+/professionnels/      page de référence : site web (#web), audit de code IA (#revue-ia)
+/portfolio/           grille de projets (src/content/projets/), noindex tant que non publié
+/portfolio/<projet>/  fiche projet : captures, technologies, liens
 /blog/                contenu grand public
 /blog/<slug>/         article
 /a-propos/            profil, méthode, trajectoire annoncée sans la survendre
@@ -91,6 +91,11 @@ Deux audiences, deux parcours, une seule marque :
 /mentions-legales/    SIRET et TVA à compléter
 404                   page d'erreur
 /about/ → /a-propos/  redirection depuis l'ancienne URL
+/services/ → /#services  page supprimée (doublon des deux pages par public)
+
+Règle : **une prestation = une seule page de référence**, celle de son public
+(`lienService()` dans `src/data/services.ts`). Deux pages qui détaillent la même
+prestation se disputent la même recherche Google.
 ```
 
 ## Système de design
@@ -104,13 +109,13 @@ En résumé :
 - **Clair par défaut, sombre par bandes.** Les sections `.on-nuit` remappent les jetons
   localement ; `--color-fixed-paper` / `--color-fixed-nuit` ne s'inversent jamais.
   Le mode sombre redéfinit les variables, aucun `dark:` n'est écrit dans le markup.
-- **Grille visible.** Filets d'un pixel, sections numérotées `§ 01`, listes réglées
-  plutôt que grilles de cartes.
+- **Panneaux contenus.** Boutons en pilule, panneaux à grands rayons, dispositions
+  variées d'une section à l'autre (détails dans `DESIGN.md`).
 - **Deux familles.** Satoshi (titres et corps), Spline Sans Mono (étiquettes, terminal,
   métadonnées). Servies localement, cf. plus haut.
 
 Composants dans `src/components/` : `Nav`, `Footer`, `PageHead`, `SectionHead`,
-`Terminal`, `ChainDiagram`, `ZoneRadar`, `ProjectCard`, `CtaBand`, `Faq`, plus trois
+`Terminal`, `ZoneRadar`, `CtaBand`, `Faq`, `FaqSection`, plus trois
 fonds décoratifs générés au build (`HeroNetworkBg`, `CryptoCrackBg`, `WorldMapBg`).
 Ces fonds tirent leur aléa de `mulberry32` (`src/lib/random.ts`) : à graine égale, le
 rendu est identique d'un build à l'autre.
@@ -123,13 +128,19 @@ Rivesaltes : modifier le tableau `pts` en tête du composant pour ajuster la zon
 - `src/content/blog/*.md` : `title`, `summary`, `date`,
   `audience` (`particulier` | `entreprise` | `tous`), `tags`. Schéma dans
   `src/content.config.ts`.
-- Prestations et réalisations en données typées : `src/data/services.ts` et
-  `src/data/portfolio.ts`.
+- Prestations en données typées : `src/data/services.ts`.
+- Projets du portfolio : `src/content/projets/<projet>/index.md` + captures
+  (mode d'emploi dans `src/content/projets/README.md`).
 
 ## SEO
 
-- JSON-LD `LocalBusiness` sur toutes les pages (`src/layouts/Base.astro`), `ItemList`
-  de `Service` sur `/services/`, `FAQPage` sur les FAQ, `BlogPosting` sur les articles.
+- JSON-LD `LocalBusiness` sur toutes les pages (`src/layouts/Base.astro`), avec le
+  catalogue des prestations (`hasOfferCatalog`, chaque `Service` pointant vers sa page
+  de référence), `FAQPage` sur les FAQ, `BlogPosting` sur les articles.
+- Une recherche cible par page, portée par le `<title>` et le H1 (option `motcle` de
+  `PageHead`) : accueil « technicien informatique Rivesaltes Perpignan », Particuliers
+  « dépannage informatique à domicile », Entreprises « création de site web, audit de
+  code IA ».
 - `sitemap-index.xml` généré, `robots.txt` dans `public/`.
 - Le champ `motscles` de `src/data/services.ts` est une **référence rédactionnelle** :
   ces termes doivent se retrouver dans les textes visibles. Ne jamais les réinjecter

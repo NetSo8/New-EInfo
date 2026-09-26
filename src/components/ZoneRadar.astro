@@ -1,113 +1,214 @@
 ---
-
-/* Diagramme d'intervention : distances et relèvements réels depuis Rivesaltes. */
+/* Zone d'intervention : un radar dont le faisceau balaie la carte depuis
+   Rivesaltes. Distances et relèvements (degrés depuis le nord, sens horaire)
+   sont réels : chaque commune s'allume à l'instant précis où le faisceau
+   passe sur elle, parce que le délai de son écho est calculé à partir de
+   son relèvement. Tout est en CSS, aucun script ne tourne en boucle. */
 const pts = [
-  { n: 'Salses-le-Château', a: 350, d: 9 },
-  { n: 'Le Barcarès', a: 75, d: 13 },
   { n: 'Baixas', a: 232, d: 6 },
   { n: 'Perpignan', a: 160, d: 9, big: true },
+  { n: 'Salses-le-Château', a: 350, d: 9 },
+  { n: 'Le Barcarès', a: 75, d: 13 },
   { n: 'Cabestany', a: 148, d: 13 },
 ];
 const S = 520;           // viewBox
 const C = S / 2;
-const KM = 20;           // rayon max affiché en km
-const r = (d: number) => (d / KM) * (C - 46);
-const xy = (a: number, d: number) => {
-  const rad = ((a - 90) * Math.PI) / 180;
-  return [C + r(d) * Math.cos(rad), C + r(d) * Math.sin(rad)];
+const KM = 20;           // rayon maximal affiché, en km
+const R = C - 46;
+const r = (d: number) => (d / KM) * R;
+const polar = (a: number, rad: number) => {
+  const t = ((a - 90) * Math.PI) / 180;
+  return [C + rad * Math.cos(t), C + rad * Math.sin(t)];
 };
+const xy = (a: number, d: number) => polar(a, r(d));
 const rings = [5, 10, 15, 20];
+
+/* Un tour de faisceau, en secondes : lent, pour rester un fond calme. */
+const TOUR = 8;
+
+/* Traîne du faisceau : des tranches de plus en plus pâles derrière la
+   ligne de tête, ce qui imite un dégradé angulaire que SVG ne sait pas faire. */
+const TRAINE = 42;
+const tranches = Array.from({ length: 14 }, (_, i) => {
+  const a0 = -(i + 1) * (TRAINE / 14);
+  const a1 = -i * (TRAINE / 14);
+  const [x0, y0] = polar(a0, R);
+  const [x1, y1] = polar(a1, R);
+  return { dAttr: `M${C},${C} L${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 0 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`, o: (0.2 * (1 - i / 14)).toFixed(3) };
+});
+const [tx, ty] = polar(0, R);
 ---
-<figure class="m-0">
+<figure class="radar m-0" data-inview data-radar style={`--tour:${TOUR}s`}>
   <svg viewBox={`0 0 ${S} ${S}`} class="h-auto w-full overflow-visible" role="img" aria-labelledby="radar-t" data-decor>
     <title id="radar-t">
-      Communes desservies depuis Rivesaltes, positionnées selon leur distance et leur direction réelles.
+      Carte radar des communes desservies depuis Rivesaltes, positionnées selon leur distance et leur direction réelles.
     </title>
 
-    {rings.map((k) => (
-      <circle cx={C} cy={C} r={r(k)} fill="none" class="stroke-rule" stroke-dasharray={k === 15 ? '0' : '2 4'} />
-    ))}
-    {rings.map((k) => (
-      <text x={C + 4} y={C - r(k) + 12} class="fill-ink-faint font-mono text-[10px]">{k} km</text>
+    {/* Cercles de distance : ils s'ouvrent en onde depuis le centre. */}
+    {rings.map((k, i) => (
+      <g class="radar-cercle" style={`--i:${i}`}>
+        <circle cx={C} cy={C} r={r(k)} fill="none" class="stroke-rule" stroke-dasharray={k === 15 ? '0' : '2 5'} />
+        <text x={C + 5} y={C - r(k) + 13} class="fill-ink-faint font-mono text-[10px]">{k} km</text>
+      </g>
     ))}
 
     {/* Le disque des 15 km : déplacement inclus. */}
-    <circle cx={C} cy={C} r={r(15)} class="fill-accent-wash stroke-accent" stroke-width="1" />
+    <circle cx={C} cy={C} r={r(15)} class="radar-zone fill-accent-wash stroke-accent" stroke-width="1.25" />
 
-    <line x1={C} y1="28" x2={C} y2={S - 28} class="stroke-rule" />
-    <line x1="28" y1={C} x2={S - 28} y2={C} class="stroke-rule" />
-    <text x={C} y="20" class="fill-ink-faint text-center font-mono text-[10.5px] tracking-[0.1em] [text-anchor:middle]">N</text>
-    <text x={S - 14} y={C + 4} class="fill-ink-faint font-mono text-[10.5px] tracking-[0.1em] [text-anchor:end]">MER</text>
+    <g class="radar-axes">
+      <line x1={C} y1="30" x2={C} y2={S - 30} class="stroke-rule" />
+      <line x1="30" y1={C} x2={S - 30} y2={C} class="stroke-rule" />
+      <text x={C} y="20" class="fill-ink-faint font-mono text-[10.5px] tracking-[0.1em] [text-anchor:middle]">N</text>
+      <text x={S - 12} y={C + 4} class="fill-ink-faint font-mono text-[10.5px] tracking-[0.1em] [text-anchor:end]">MER</text>
+    </g>
+
+    {/* Le faisceau : traîne dégradée + ligne de tête, en rotation lente. */}
+    <g class="radar-sweep" aria-hidden="true">
+      {tranches.map((t) => <path d={t.dAttr} class="fill-accent" fill-opacity={t.o} />)}
+      <line x1={C} y1={C} x2={tx.toFixed(1)} y2={ty.toFixed(1)} class="stroke-accent" stroke-width="1.5" stroke-opacity="0.7" />
+    </g>
 
     {pts.map((p, i) => {
       const [x, y] = xy(p.a, p.d);
       const right = x >= C;
       return (
-        <g>
-          <line x1={C} y1={C} x2={x} y2={y} class="stroke-rule" />
-          <line x1={C} y1={C} x2={x} y2={y} class="stroke-accent radar-link" style={`--i:${i}`} />
-          <circle cx={x} cy={y} r={p.big ? 5 : 3.2} class={p.big ? 'fill-accent radar-hub' : 'fill-ink'} />
+        <g class="radar-pt" data-commune={i} style={`--i:${i}; --echo:${((p.a / 360) * TOUR).toFixed(2)}s`}>
+          <line x1={C} y1={C} x2={x.toFixed(1)} y2={y.toFixed(1)} class="radar-route stroke-accent" pathLength="1" />
+          <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="4" class="radar-echo fill-none stroke-accent" stroke-width="1.5" />
+          <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r={p.big ? 5.5 : 4} class="radar-dot fill-ink" />
           <text
-            x={right ? x + 9 : x - 9}
-            y={y + 3.5}
+            x={right ? x + 10 : x - 10}
+            y={y + 4}
             text-anchor={right ? 'start' : 'end'}
-            class="fill-ink-soft font-mono text-[11.5px]"
+            class="radar-label fill-ink-soft font-mono text-[12px]"
           >{p.n}</text>
         </g>
       );
     })}
 
-    <g>
-      <circle cx={C} cy={C} r="7" fill="none" class="stroke-accent radar-ring" />
-      <circle cx={C} cy={C} r="2.5" class="fill-accent" />
-      <text x={C - 12} y={C - 14} text-anchor="end" class="fill-accent font-mono text-[11px] font-semibold tracking-[0.08em]">RIVESALTES</text>
+    <g class="radar-home">
+      <circle cx={C} cy={C} r="9" class="fill-raised stroke-accent" stroke-width="1.5" />
+      <circle cx={C} cy={C} r="3.5" class="fill-accent" />
+      <text x={C - 14} y={C - 15} text-anchor="end" class="fill-accent font-mono text-[11px] font-semibold tracking-[0.08em]">RIVESALTES</text>
     </g>
   </svg>
 
-  <figcaption class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-[0.4rem] text-base text-ink-soft">
-    {/* Le dessin n'est pas lisible par un lecteur d'écran : les mêmes
-        informations, en liste, pour qui ne voit pas le radar. */}
-    <ul class="sr-only">
-      {pts.map((p) => <li>{p.n} : {p.d} km de Rivesaltes, déplacement inclus.</li>)}
+  <figcaption class="mt-6 flex flex-col gap-5">
+    {/* La même information que le dessin, en texte : lisible par tous, et
+        chaque ligne survolée met en avant la commune sur le radar. */}
+    <ul class="m-0 grid list-none grid-cols-1 gap-2 p-0 sm:grid-cols-2">
+      {pts.map((p, i) => (
+        <li class="radar-item flex items-center justify-between gap-3 rounded-full border border-rule bg-raised px-4 py-2 text-[0.95rem]" data-commune={i}>
+          <span class="font-medium">{p.n}</span>
+          <span class="font-mono text-[0.8rem] text-ink-soft">{p.d} km</span>
+        </li>
+      ))}
     </ul>
-    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-accent bg-accent-wash" aria-hidden="true"></span>
-    Déplacement inclus jusqu'à 15 km.
-    <span class="inline-block size-[11px] flex-none rounded-[3px] border border-dashed border-rule-strong" aria-hidden="true"></span>
-    Au-delà, forfait kilométrique annoncé avant intervention.
+    <p class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.95rem] text-ink-soft">
+      <span class="inline-flex items-center gap-2">
+        <span class="inline-block size-[11px] flex-none rounded-full border border-accent bg-accent-wash" aria-hidden="true"></span>
+        Déplacement inclus jusqu'à 15 km.
+      </span>
+      <span class="inline-flex items-center gap-2">
+        <span class="inline-block size-[11px] flex-none rounded-full border border-dashed border-rule-strong" aria-hidden="true"></span>
+        Au-delà, forfait kilométrique annoncé avant intervention.
+      </span>
+    </p>
   </figcaption>
 </figure>
 
 <style>
-  /* Petit signal qui part de Rivesaltes vers chaque commune, pour donner au
-     radar un vrai côté réseau plutôt qu'un diagramme figé. */
-  .radar-link {
-    stroke-width: 1.5;
-    stroke-dasharray: 2 16;
-    opacity: 0.85;
-    animation: radar-flow 3.4s linear calc(var(--i, 0) * -0.55s) infinite;
+  /* ── Faisceau ─────────────────────────────────────────────── */
+  .radar-sweep {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: radar-sweep var(--tour) linear infinite;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.9s;
   }
-  .radar-hub {
+  .radar.in-view .radar-sweep, :global(html:not(.js)) .radar-sweep { opacity: 1; }
+  @keyframes radar-sweep { to { transform: rotate(360deg); } }
+
+  /* ── Écho : la commune s'allume quand le faisceau la touche ──
+     Même période que le faisceau ; le délai vaut le temps que met la
+     tête du faisceau pour atteindre le relèvement de la commune. */
+  .radar-echo {
     transform-box: fill-box;
     transform-origin: center;
-    animation: radar-hub-pulse 2.4s ease-in-out infinite;
+    opacity: 0;
+    animation: radar-echo var(--tour) var(--echo) cubic-bezier(0.23, 1, 0.32, 1) infinite;
   }
-  .radar-ring {
-    stroke-width: 2;
+  @keyframes radar-echo {
+    0%   { opacity: 0.9; transform: scale(1); }
+    22%  { opacity: 0;   transform: scale(4.2); }
+    100% { opacity: 0;   transform: scale(4.2); }
+  }
+  .radar-dot {
     transform-box: fill-box;
     transform-origin: center;
-    animation: radar-ring-pulse 3s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+    animation: radar-blip var(--tour) var(--echo) ease-out infinite;
+  }
+  @keyframes radar-blip {
+    0%   { fill: var(--color-accent); transform: scale(1.5); }
+    30%  { fill: var(--color-ink);    transform: scale(1); }
+    100% { fill: var(--color-ink);    transform: scale(1); }
   }
 
-  @keyframes radar-flow {
-    to { stroke-dashoffset: -36; }
+  /* ── Entrée, jouée une fois à l'arrivée dans l'écran ───────── */
+  .radar-cercle {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    transition: opacity 0.6s ease, transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    transition-delay: calc(var(--i) * 90ms);
   }
-  @keyframes radar-hub-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  .radar-zone {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    transition: opacity 0.7s ease 0.35s, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0.35s;
   }
-  @keyframes radar-ring-pulse {
-    0% { transform: scale(1); opacity: 0.65; }
-    75% { transform: scale(2.6); opacity: 0; }
-    100% { transform: scale(2.6); opacity: 0; }
+  .radar-route {
+    stroke-width: 1.25;
+    stroke-opacity: 0.45;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.77, 0, 0.175, 1), stroke-opacity 0.2s ease, stroke-width 0.2s ease;
+    transition-delay: calc(0.5s + var(--i) * 110ms), 0s, 0s;
   }
+  .radar-label { transition: fill 0.2s ease, opacity 0.5s ease; transition-delay: 0s, calc(0.8s + var(--i) * 110ms); }
+
+  :global(.js) .radar:not(.in-view) .radar-cercle { opacity: 0; transform: scale(0.55); }
+  :global(.js) .radar:not(.in-view) .radar-zone { opacity: 0; transform: scale(0.8); }
+  :global(.js) .radar:not(.in-view) .radar-route { stroke-dashoffset: 1; }
+  :global(.js) .radar:not(.in-view) .radar-label { opacity: 0; }
+
+  /* ── Mise en avant d'une commune (survol de la liste ou du point) ── */
+  .radar-pt.is-hot .radar-route { stroke-opacity: 1; stroke-width: 2.25; }
+  .radar-pt.is-hot .radar-label { fill: var(--color-ink); font-weight: 600; }
+  .radar-pt.is-hot .radar-dot { fill: var(--color-accent); }
+  .radar-item { transition: border-color 0.2s ease, background-color 0.2s ease; }
+  .radar-item.is-hot { border-color: var(--color-accent); background-color: var(--color-accent-wash); }
+
+  /* Mouvement réduit : carte immobile, faisceau retiré. L'entrée reste
+     visible puisque les transitions sont ramenées à 1 ms par app.css. */
+  @media (prefers-reduced-motion: reduce) {
+    :global(html:not([data-motion='full'])) .radar-sweep,
+    :global(html:not([data-motion='full'])) .radar-echo { display: none; }
+    :global(html:not([data-motion='full'])) .radar-dot { animation: none; }
+  }
+  :global(html[data-motion='reduced']) .radar-sweep,
+  :global(html[data-motion='reduced']) .radar-echo { display: none; }
+  :global(html[data-motion='reduced']) .radar-dot { animation: none; }
 </style>
+
+<script>
+  // Survol d'une commune dans la liste ↔ mise en avant sur le radar, et
+  // inversement. Pur confort visuel : la liste porte déjà l'information.
+  document.querySelectorAll<HTMLElement>('[data-radar]').forEach((radar) => {
+    const lier = (i: string | undefined, on: boolean) =>
+      radar.querySelectorAll(`[data-commune="${i}"]`).forEach((el) => el.classList.toggle('is-hot', on));
+    radar.querySelectorAll<HTMLElement>('[data-commune]').forEach((el) => {
+      el.addEventListener('pointerenter', () => lier(el.dataset.commune, true));
+      el.addEventListener('pointerleave', () => lier(el.dataset.commune, false));
+    });
+  });
+</script>
