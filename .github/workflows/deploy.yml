@@ -17,16 +17,17 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    # Version d'Ubuntu figée : `ubuntu-latest` change de version sans prévenir
+    # (passage à Ubuntu 26 prévu en octobre 2026). On la montera à la main,
+    # après avoir vérifié que le build passe dessus.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Récupérer le dépôt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Installer Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: npm
@@ -47,7 +48,7 @@ jobs:
         run: npm run build
 
       - name: Téléverser sur l'hébergement
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
