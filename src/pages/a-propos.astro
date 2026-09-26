@@ -1,135 +1,129 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHead from '../components/PageHead.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
-import CryptoCrackBg from '../components/CryptoCrackBg.astro';
+import LayerStack from '../components/LayerStack.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { Image } from 'astro:assets';
-import paysage from '../assets/paysage.jpg';
+import cote from '../assets/cote.jpg';
 
+/* Le parcours, raconté couche par couche : chaque étape allume la couche
+   correspondante de la pile 3D (LayerStack), du poste jusqu'à la
+   cryptographie. « Un étage plus bas » à chaque fois. */
+const couches = ['Poste', 'Serveur', 'Site web', 'Code', 'Cryptographie'];
 
-const principes = [
-  { t: 'Le devis avant la clé de douze', d: "Je n'ouvre rien avant d'avoir annoncé ce que je fais, combien de temps ça prend et ce que ça coûte. Si ça change en cours de route, je m'arrête et je vous appelle." },
-  { t: 'Documenter ce que je laisse', d: "Une infrastructure que personne d'autre ne peut reprendre est une infrastructure fragile. Tout ce que je gère est écrit, versionné, et les accès de secours restent chez vous." },
-  { t: 'Dire quand je ne sais pas', d: "Le périmètre que je couvre est large mais fini. Hors de ce périmètre, je le dis et j'oriente vers quelqu'un de compétent, plutôt que d'apprendre à vos frais." },
-  { t: 'Mesurer plutôt qu\'affirmer', d: "Un gain de performance, une disponibilité ou une faille se chiffrent. Ce qui n'est pas mesuré ne va pas dans un rapport, et ne va pas non plus dans une page de vente." },
+const etapes = [
+  {
+    t: "J'ai commencé par réparer des machines.",
+    d: "Ce métier apprend une chose que le diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais la panne réelle. Vérifier avant de conclure, sur un portable de 2016 comme sur un serveur.",
+  },
+  {
+    t: "Puis le serveur, parce qu'il le fallait.",
+    d: "Un client avait besoin d'un site, puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessous ne suffit plus.",
+  },
+  {
+    t: "Aujourd'hui, quatre chantiers.",
+    d: "Le poste et le dépannage, la formation à l'IA, le site web, la relecture du code écrit par les IA. Tenus par la même exigence, plutôt qu'étalés sur un catalogue.",
+    liens: [
+      { href: '/particuliers/', label: 'Pour les particuliers' },
+      { href: '/professionnels/', label: 'Pour les entreprises' },
+    ],
+  },
+  {
+    t: 'Le code que les IA écrivent.',
+    d: "Il fonctionne souvent du premier coup, ce qui décourage justement de le relire. C'est l'un des deux domaines vers lesquels je spécialise mon métier.",
+  },
+  {
+    t: 'Un étage plus bas : la cryptographie.',
+    d: "La couche sur laquelle tout repose sans qu'on la regarde, et qui va devoir changer face à l'ordinateur quantique. À côté, des outils de calcul pour la gestion : comptabilité, conformité, trésorerie.",
+    note: "Travail personnel : je ne me présente pas comme expert, et rien n'est vendu tant que ce n'est pas publié et vérifiable. Le blog en rendra compte.",
+  },
 ];
 
-const parcours = [
-  { a: 'Le socle', t: 'Technicien informatique', d: "Le métier par lequel j'ai commencé et que je n'ai jamais quitté : postes Windows, macOS et Linux, matériel, pannes, récupération de données, remise en état. C'est ce qui apprend à chercher la cause plutôt que le symptôme." },
-  { a: 'Aujourd\'hui', t: 'Dépannage, formation à l\'IA et site web', d: "Dépannage et assistance pour les particuliers, formation à l'usage de l'IA pour le grand public, création et maintenance de sites pour les TPE, et relecture de code généré par IA pour les entreprises. C'est ce qui est facturé aujourd'hui." },
-  { a: 'Demain', t: "Sécurité du code IA, cryptographie post-quantique, confidential computing", d: "La direction vers laquelle je fais évoluer mon métier, à titre personnel : vérification formelle, arithmétique modulaire, courbes elliptiques, exécution en temps constant, migration vers des algorithmes résistants à l'ordinateur quantique, exécution d'agents IA non fiables en enclave matérielle. Rien de tout cela n'est facturé tant que ce n'est pas publié et vérifiable." },
+const principes = [
+  { t: 'Le devis avant la clé de douze', d: "Rien ne s'ouvre avant d'avoir annoncé ce que je fais, le temps et le prix." },
+  { t: 'Documenter ce que je laisse', d: "Tout est écrit et versionné ; les accès de secours restent chez vous." },
+  { t: 'Dire quand je ne sais pas', d: "Hors de mon périmètre, je vous oriente plutôt que d'apprendre à vos frais." },
+  { t: "Mesurer plutôt qu'affirmer", d: "Ce qui n'est pas mesuré ne va ni dans un rapport, ni sur ce site." },
 ];
 ---
 <Base
   title="À propos · Elian, technicien informatique à Rivesaltes"
-  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et spécialisation en sécurité du code IA et cryptographie post-quantique."
+  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et spécialisation en sécurité du code IA et cryptographie."
 >
-  <PageHead
-    kicker="À propos"
-    title="Une personne, un périmètre, des preuves"
-    lede="Je m'appelle Elian. Je suis technicien informatique, je forme aussi au bon usage de l'IA, et je me spécialise, couche par couche, vers la sécurité du code que les IA génèrent et la cryptographie. Je travaille seul, ce qui est à la fois l'argument et la limite : vous avez un interlocuteur unique, et il faut que ce qu'il laisse derrière lui soit repris par n'importe qui."
-  />
+  <!-- ─── Récit en couches : texte qui défile, pile 3D fixe ─────── -->
+  <section class="relative isolate overflow-x-clip">
+    <div class="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[36rem] bg-[radial-gradient(75%_65%_at_20%_0%,var(--color-accent-wash),transparent_75%)]" aria-hidden="true"></div>
 
-  <section class="section section-rule relative isolate overflow-hidden" aria-labelledby="parcours-t">
-    <CryptoCrackBg class="-z-10 opacity-60" />
-    <div class="shell relative">
-      <h2 class="text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]" id="parcours-t">D'où je viens</h2>
-      <div class="mt-8 flex max-w-[62ch] flex-col gap-[1.15rem] text-[1.05rem]/[1.7] text-ink-soft">
-        <p>
-          J'ai commencé par réparer des machines, ce qui apprend une chose que le
-          diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais
-          la panne réelle. Ce réflexe de vérifier avant de conclure est resté, et il
-          sert autant sur un portable de 2016 que sur un serveur de production.
-        </p>
-        <p>
-          Le reste s'est construit par nécessité. Un client avait besoin d'un site,
-          puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent
-          vraiment, puis d'un accès distant qui ne soit pas une porte ouverte. Chaque
-          couche a été apprise parce que la couche du dessous ne suffisait plus.
-        </p>
-        <p>
-          Aujourd'hui, ce périmètre couvre le poste de travail et le dépannage, la
-          formation à l'usage de l'IA, le site web, et la relecture du code que
-          produisent les assistants IA. Quatre chantiers, tenus par la même exigence
-          plutôt qu'étalés sur un catalogue qui perd en profondeur.
-        </p>
-        <p>
-          Deux domaines me prennent plus que les autres aujourd'hui, et ce sont ceux
-          vers lesquels je spécialise mon métier : la sécurité du code que les IA
-          génératives écrivent, et la cryptographie, post-quantique en particulier. Le
-          premier parce que ce code fonctionne souvent du premier coup, ce qui
-          décourage justement de le relire. La seconde parce que c'est la couche sur
-          laquelle tout le reste s'appuie sans jamais la regarder, et qu'elle va devoir
-          changer entièrement dans les années qui viennent face à l'ordinateur
-          quantique : arithmétique modulaire, courbes elliptiques, exécution en temps
-          constant.
-        </p>
-        <p>
-          C'est un travail de fond, mené à titre personnel, en parallèle des missions.
-          Il ne remplace pas le métier de développeur, il le prolonge : la même
-          exigence de vérifier avant de conclure, appliquée un étage plus bas.
-        </p>
+    <div class="shell grid grid-cols-1 gap-x-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <div class="pt-[clamp(2.5rem,5vw,4.5rem)]">
+        <div class="lg:flex lg:min-h-[calc(100dvh-7rem)] lg:flex-col lg:justify-center lg:pb-24">
+          <p class="chip rise self-start pl-[0.8rem]" style="--i:0">À propos</p>
+          <h1 class="rise mt-6 max-w-[16ch] text-[clamp(2.4rem,1.1rem+3.8vw,4.2rem)]/[1.02]" style="--i:1">Une personne, un périmètre, des preuves.</h1>
+          <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:2">
+            Je m'appelle Elian. Je travaille seul : vous avez un interlocuteur unique, et
+            tout ce que je laisse derrière moi peut être repris par n'importe qui.
+          </p>
+        </div>
+
+        {/* Pile 3D sur mobile : en tête du récit, sans rester collée. */}
+        <LayerStack couches={couches} class="my-8 h-[22rem] lg:hidden" />
+
+        <ol class="m-0 list-none p-0 pb-[var(--spacing-band)]">
+          {etapes.map((e, i) => (
+            <li class="etape relative border-l-2 border-rule py-6 pl-6 lg:flex lg:min-h-[72dvh] lg:flex-col lg:justify-center lg:py-0" data-couche={i}>
+              <p class="font-mono text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-accent">
+                <span aria-hidden="true">{String(i + 1).padStart(2, '0')} · </span>{couches[i]}
+              </p>
+              <h2 class="mt-3 max-w-[20ch] text-[clamp(1.6rem,1.1rem+1.8vw,2.5rem)]/[1.08] tracking-[-0.035em]">{e.t}</h2>
+              <p class="mt-4 max-w-[46ch] text-[1.05rem]/[1.65] text-ink-soft">{e.d}</p>
+              {e.liens && (
+                <p class="mt-6 flex flex-wrap gap-3">
+                  {e.liens.map((l) => (
+                    <a class="btn btn--ghost" href={l.href}>{l.label} <ArrowRight class="arrow" size="1em" aria-hidden="true" /></a>
+                  ))}
+                </p>
+              )}
+              {e.note && <p class="mt-5 max-w-[46ch] rounded-[var(--radius-md)] bg-accent-wash px-4 py-3 text-[0.95rem] text-ink">{e.note}</p>}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* Pile 3D sur grand écran : collée pendant tout le récit. */}
+      <div class="hidden lg:block">
+        <LayerStack couches={couches} class="sticky top-20 h-[calc(100dvh-6rem)]" />
       </div>
     </div>
   </section>
 
-  <!-- ─── Méthode : quatre fiches ─────────────────────── -->
-  <section class="section section-rule section-tint">
+  <!-- ─── Principes : panneau sombre, quatre phrases ────────────── -->
+  <section class="pb-[var(--spacing-band)]">
     <div class="shell">
-      <SectionHead title="Quatre principes qui tiennent depuis le début" />
-      <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2">
-        {principes.map((p) => (
-          <li class="panel flex flex-col gap-2 p-[clamp(1.4rem,2.5vw,2rem)]" data-reveal>
-            <h3 class="text-[1.3rem] tracking-[-0.028em]">{p.t}</h3>
-            <p class="max-w-[54ch] text-base text-ink-soft">{p.d}</p>
-          </li>
-        ))}
-      </ul>
+      <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
+        <SectionHead title="Quatre principes qui tiennent depuis le début" />
+        <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-x-12 gap-y-10 p-0 md:grid-cols-2">
+          {principes.map((p, i) => (
+            <li class="grid grid-cols-[2.5rem_1fr] gap-4" data-reveal>
+              <span class="font-mono text-[1.1rem] font-semibold text-accent" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="text-[1.3rem]/[1.2] tracking-[-0.028em]">{p.t}</h3>
+                <p class="mt-2 max-w-[40ch] text-base text-ink-soft">{p.d}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- ─── Parcours : frise en trois temps ─────────────── -->
-  <section class="section section-rule">
-    <div class="shell">
-      <SectionHead
-        title="Ce que je fais, et ce que j'apprends"
-        lede="Trois niveaux, dans l'ordre où ils se sont construits. Les deux premiers sont ce sur quoi vous pouvez compter aujourd'hui. Le troisième est ma spécialisation en cours, et rien de ce qui s'y trouve n'est vendu tant qu'il n'est pas publié et vérifiable."
-      />
-      <ol class="m-0 mt-12 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-3">
-        {parcours.map((p, i) => (
-          <li
-            class:list={[
-              'panel flex flex-col gap-3 p-[clamp(1.4rem,2.5vw,2rem)]',
-              i === 2 && 'on-nuit border-transparent bg-nuit text-ink',
-            ]}
-            data-reveal
-          >
-            <span class="self-start rounded-full bg-accent-wash px-3 py-1 text-[0.85rem] font-semibold text-accent">{p.a}</span>
-            <h3 class="text-[1.25rem]/[1.2] tracking-[-0.028em]">{p.t}</h3>
-            <p class="text-base text-ink-soft">{p.d}</p>
-          </li>
-        ))}
-      </ol>
-
-      <p class="mt-10 max-w-[62ch] text-base text-ink-soft">
-        La troisième colonne mérite une précision, parce qu'elle est facile à
-        survendre. Je ne me présente pas comme expert en sécurité IA ou en
-        cryptographie post-quantique : je m'oriente dans cette direction, à titre
-        personnel, et je ne la mets en avant sur une mission que si le sujet s'y
-        prête réellement. Ce que je facture aujourd'hui reste le dépannage, la
-        formation à l'IA, le site web et la relecture de code généré par IA.
-      </p>
-    </div>
-  </section>
-
-  <!-- ─── Pourquoi ici ─────────────────────────────────── -->
+  <!-- ─── Pourquoi ici ────────────────────────────────────────── -->
   <section class="section section-rule">
     <div class="shell grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
       <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]">
         <Image
-          src={paysage}
-          alt="Baies de serveurs câblées, voyants allumés dans la pénombre d'un local technique"
+          src={cote}
+          alt="Mains sur le clavier d'un ordinateur portable pendant une intervention"
           loading="lazy"
           decoding="async"
           widths={[560, 900, 1300]}
@@ -140,16 +134,10 @@ const parcours = [
       </figure>
       <div>
         <SectionHead title="Rivesaltes, et pas ailleurs" />
-        <p class="mt-5 max-w-[48ch] text-base text-ink-soft">
-          Travailler à distance fonctionne pour presque tout. Presque. Il reste les
-          machines qui ne s'allument plus, l'imprimante qui refuse d'imprimer, et les
-          conversations qu'on n'a pas de la même façon par écran interposé.
-        </p>
-        <p class="mt-4 max-w-[48ch] text-base text-ink-soft">
-          La proximité n'est pas un argument commercial ajouté après coup : c'est ce
-          qui permet d'être là dans la journée quand une panne vous empêche de
-          travailler, ou quand vous préférez qu'on vous montre l'IA plutôt que de lire
-          une notice.
+        <p class="mt-5 max-w-[46ch] text-lede/[1.5] text-ink-soft">
+          La distance fonctionne pour presque tout. Presque : une machine qui ne
+          s'allume plus, ou l'IA qu'on préfère se faire montrer, demandent quelqu'un
+          à vingt minutes, dans la journée.
         </p>
       </div>
     </div>
@@ -157,6 +145,13 @@ const parcours = [
 
   <CtaBand
     title="Le plus simple reste de décrire votre situation."
-    text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
+    text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
   />
 </Base>
+
+<style>
+  /* Étape en cours : le filet de gauche passe à l'accent. Le texte ne
+     s'éteint jamais autour, il reste lisible à pleine intensité. */
+  .etape { transition: border-color 0.3s ease; }
+  .etape.is-active { border-color: var(--color-accent); }
+</style>

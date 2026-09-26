@@ -19,12 +19,14 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
     "dotted-map": "^3.1.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.1"
   },
   "allowScripts": {
     "esbuild": true
   },
   "devDependencies": {
+    "@types/three": "^0.186.0",
     "axe-core": "^4.13.0"
   }
 }

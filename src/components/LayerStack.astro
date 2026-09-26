@@ -1,0 +1,137 @@
+---
+/* Pile de couches en 3D pour la page À propos : le parcours raconté
+   « un étage plus bas » à chaque fois (poste, serveur, site, code,
+   cryptographie). Les étapes du texte, repérées par [data-couche="i"],
+   allument la couche correspondante pendant le défilement.
+
+   Three.js est chargé à la demande, seulement quand la pile approche de
+   l'écran, et servi depuis ce serveur comme le reste (aucun CDN).
+   Sans WebGL ou sans JavaScript, une pile dessinée en CSS le remplace. */
+interface Props { couches: string[]; class?: string }
+const { couches, class: klass = '' } = Astro.props;
+---
+<div class:list={['layerstack relative', klass]} data-layerstack data-couches={JSON.stringify(couches)} aria-hidden="true">
+  <canvas class="absolute inset-0 size-full"></canvas>
+
+  {/* Repli : la même pile, en plaques CSS isométriques. */}
+  <div class="layerstack__repli absolute inset-0 grid place-items-center">
+    <div class="flex flex-col items-center">
+      {couches.map((c, i) => (
+        <div class="layerstack__plaque" style={`--i:${i}`} data-plaque={i}>
+          <span>{c}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .layerstack__plaque {
+    width: min(15rem, 60vw);
+    aspect-ratio: 1;
+    margin-top: calc(min(15rem, 60vw) * -0.78);
+    display: grid;
+    place-items: end start;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--color-rule-strong);
+    border-radius: 18px;
+    background: color-mix(in oklch, var(--color-raised) 88%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    transform: rotateX(58deg) rotateZ(-45deg);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .layerstack__plaque:first-child { margin-top: 0; }
+  .layerstack__plaque.is-active {
+    border-color: var(--color-accent);
+    background: color-mix(in oklch, var(--color-accent) 12%, var(--color-raised));
+    color: var(--color-accent);
+    transform: rotateX(58deg) rotateZ(-45deg) translate(-10px, -10px);
+  }
+  /* La 3D a démarré : le repli s'efface. */
+  .layerstack.is-ready .layerstack__repli { display: none; }
+  canvas { opacity: 0; transition: opacity 0.8s ease; }
+  .layerstack.is-ready canvas { opacity: 1; }
+</style>
+
+<script>
+  import type { Pile } from '../lib/pile3d';
+
+  // La page peut contenir deux piles (mobile et grand écran) : l'étape
+  // active est commune, chaque pile ne démarre que si elle est affichée.
+  const etapes = [...document.querySelectorAll<HTMLElement>('[data-couche]')];
+  const root = document.documentElement;
+  const calme = () =>
+    root.dataset.motion === 'reduced' ||
+    (root.dataset.motion !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  let active = -1;
+  const piles: Pile[] = [];
+
+  // ── Étape active : celle qui traverse le milieu de l'écran ───────────
+  const suivre = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        active = Number((e.target as HTMLElement).dataset.couche);
+        etapes.forEach((el) => el.classList.toggle('is-active', Number(el.dataset.couche) === active));
+        document.querySelectorAll<HTMLElement>('[data-plaque]').forEach((p) =>
+          p.classList.toggle('is-active', Number(p.dataset.plaque) === active),
+        );
+        piles.forEach((p) => p.activer(active));
+      });
+    },
+    { rootMargin: '-45% 0px -45% 0px' },
+  );
+  etapes.forEach((el) => suivre.observe(el));
+
+  // ── Quand charger la 3D ─────────────────────────────────────────────
+  // Three.js pèse ~130 Ko et son analyse occupe le navigateur plusieurs
+  // centaines de millisecondes sur un téléphone modeste. On ne le lance
+  // pas pendant le chargement de la page : on attend un premier geste
+  // (défilement, souris, toucher, clavier), ou à défaut que le navigateur
+  // soit libre quelques secondes après. D'ici là, la pile CSS s'affiche.
+  const feuVert = new Promise<void>((ok) => {
+    const gestes = ['scroll', 'pointermove', 'touchstart', 'keydown'] as const;
+    const go = () => {
+      gestes.forEach((g) => removeEventListener(g, go));
+      ok();
+    };
+    gestes.forEach((g) => addEventListener(g, go, { once: true, passive: true }));
+    const auRepos = () =>
+      'requestIdleCallback' in window ? requestIdleCallback(() => go(), { timeout: 2000 }) : setTimeout(go, 200);
+    const apresChargement = () => setTimeout(auRepos, 4000);
+    if (document.readyState === 'complete') apresChargement();
+    else addEventListener('load', apresChargement, { once: true });
+  });
+
+  // ── La 3D ne se charge qu'à l'approche d'une pile affichée ───────────
+  document.querySelectorAll<HTMLElement>('[data-layerstack]').forEach((hote) => {
+    const couches: string[] = JSON.parse(hote.dataset.couches ?? '[]');
+    let visible = false;
+    let pile: Pile | null = null;
+    let demarre = false;
+
+    new IntersectionObserver(
+      async ([e]) => {
+        visible = e.isIntersecting;
+        if (visible && !demarre) {
+          demarre = true;
+          await feuVert;
+          const { monterPile } = await import('../lib/pile3d');
+          await document.fonts?.ready; // la police des étiquettes d'abord
+          pile = monterPile({ hote, canvas: hote.querySelector('canvas')!, couches, calme, estVisible: () => visible });
+          if (!pile) return;
+          pile.activer(active);
+          piles.push(pile);
+          hote.classList.add('is-ready');
+        }
+        if (visible) pile?.relancer();
+      },
+      { rootMargin: '300px 0px' },
+    ).observe(hote);
+  });
+</script>
