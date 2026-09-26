@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import CtaBand from '../../components/CtaBand.astro';
+import { PORTFOLIO_PUBLIE, projetsTries } from '../../lib/portfolio';
+
+export async function getStaticPaths() {
+  const projets = await projetsTries();
+  return projets.map((projet, i) => ({
+    params: { id: projet.id },
+    props: { projet, suivant: projets[(i + 1) % projets.length] },
+  }));
+}
+
+const { projet, suivant } = Astro.props;
+const d = projet.data;
+const { Content } = await render(projet);
+const aTexte = Boolean(projet.body?.trim());
+---
+<Base
+  noindex={!PORTFOLIO_PUBLIE}
+  title={`${d.titre} · Portfolio E Informatique`}
+  description={`${d.categorie} réalisé en ${d.annee} : ${d.technologies.join(', ')}.`}
+>
+  <article>
+    <header class="relative isolate overflow-x-clip pt-[clamp(2rem,4vw,3.5rem)] pb-[clamp(2rem,3.5vw,3rem)]">
+      <div class="pointer-events-none absolute inset-x-0 -top-28 -z-10 h-[36rem] bg-[radial-gradient(75%_65%_at_20%_0%,var(--color-accent-wash),transparent_75%)]" aria-hidden="true"></div>
+      <div class="shell">
+        <a class="chip min-h-[40px] pl-3 no-underline hover:text-accent" href="/portfolio/">
+          <ArrowLeft size="1em" aria-hidden="true" /> Tous les projets
+        </a>
+        <div class="mt-7 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-[0.95rem] text-ink-soft">{d.categorie}, {d.annee}</p>
+            <h1 class="mt-2 text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]">{d.titre}</h1>
+          </div>
+          {(d.liens.site || d.liens.code) && (
+            <div class="flex flex-wrap gap-3">
+              {d.liens.site && (
+                <a class="btn btn--cta" href={d.liens.site} rel="noopener noreferrer" target="_blank">
+                  Voir le site <span class="sr-only">(nouvel onglet)</span> <ArrowUpRight size="1em" aria-hidden="true" />
+                </a>
+              )}
+              {d.liens.code && (
+                <a class="btn btn--ghost" href={d.liens.code} rel="noopener noreferrer" target="_blank">
+                  Code source <span class="sr-only">(nouvel onglet)</span> <ArrowUpRight size="1em" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+        <ul class="m-0 mt-6 flex list-none flex-wrap gap-2 p-0" aria-label="Technologies">
+          {d.technologies.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+      </div>
+    </header>
+
+    <div class="shell flex flex-col gap-6 pb-[var(--spacing-band)]">
+      <figure class="panel m-0 bg-sand p-0">
+        <Image
+          src={d.couverture}
+          alt={d.couvertureAlt}
+          widths={[640, 1024, 1440, 2000]}
+          sizes="(width >= 80rem) 78rem, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          quality={78}
+          class="h-auto w-full rounded-none"
+        />
+      </figure>
+
+      {d.captures.length > 0 && (
+        <ul class="m-0 grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2" aria-label="Captures d'écran">
+          {d.captures.map((c) => (
+            <li class="panel bg-sand p-0" data-reveal>
+              <Image
+                src={c.src}
+                alt={c.alt}
+                widths={[480, 800, 1100]}
+                sizes="(width >= 48rem) 46vw, 100vw"
+                quality={75}
+                class="h-auto w-full rounded-none"
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {aTexte && <div class="prose mt-8"><Content /></div>}
+
+      {suivant && suivant.id !== projet.id && (
+        <nav class="mt-8 border-t border-rule pt-8" aria-label="Projet suivant">
+          <a class="group inline-flex items-center gap-3 text-[1.2rem] font-semibold no-underline hover:text-accent" href={`/portfolio/${suivant.id}/`}>
+            <span class="text-ink-soft">Projet suivant :</span> {suivant.data.titre}
+            <ArrowRight class="arrow" size="1em" aria-hidden="true" />
+          </a>
+        </nav>
+      )}
+    </div>
+  </article>
+
+  <CtaBand title="Un projet en tête ?" text="Décrivez-le en quelques lignes, je vous réponds avec un premier avis." />
+</Base>

@@ -1,5 +1,5 @@
 ---
-interface Props { kicker: string; title: string; lede: string; tone?: 'paper' | 'warm' }
+interface Props { kicker: string; title: string; lede?: string; tone?: 'paper' | 'warm' }
 const { kicker, title, lede } = Astro.props;
 /* Le point médian est lu « point » par certains lecteurs d'écran : il reste
    à l'œil, mais n'est pas prononcé. */
@@ -14,7 +14,7 @@ const parts = kicker.split(' · ');
       {parts.map((t, i) => (<>{i > 0 && <span aria-hidden="true">·</span>}<span>{t}{i < parts.length - 1 && <span class="sr-only">,</span>}</span></>))}
     </p>
     <h1 class="rise mt-6 max-w-[20ch] text-[clamp(2.2rem,1rem+3.6vw,3.9rem)]/[1.02]" style="--i:1">{title}</h1>
-    <p class="rise mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft" style="--i:2">{lede}</p>
+    {lede && <p class="rise mt-5 max-w-[56ch] text-lede/[1.5] text-ink-soft" style="--i:2">{lede}</p>}
     <div class="rise mt-8 empty:hidden" style="--i:3"><slot /></div>
   </div>
 </section>

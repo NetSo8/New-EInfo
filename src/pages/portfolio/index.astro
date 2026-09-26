@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import PageHead from '../../components/PageHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { PORTFOLIO_PUBLIE, projetsTries } from '../../lib/portfolio';
+
+const projets = await projetsTries();
+---
+<Base
+  noindex={!PORTFOLIO_PUBLIE}
+  title="Portfolio · E Informatique, Rivesaltes (66)"
+  description="Les projets réalisés par E Informatique : sites web et outils, avec captures d'écran et technologies utilisées."
+>
+  <PageHead kicker="Portfolio" title="Projets réalisés">
+    <a class="btn btn--ghost" href="https://github.com/NetSo8" rel="noopener noreferrer" target="_blank">
+      GitHub <span class="sr-only">(nouvel onglet)</span> <ArrowUpRight size="1em" aria-hidden="true" />
+    </a>
+  </PageHead>
+
+  <section class="pb-[var(--spacing-band)]" aria-label="Liste des projets">
+    <div class="shell">
+      {projets.length === 0 ? (
+        <p class="panel p-10 text-ink-soft">Les premiers projets arrivent bientôt.</p>
+      ) : (
+        <ul class="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-12 p-0 md:grid-cols-2">
+          {projets.map((p, i) => (
+            <li data-reveal>
+              {/* Carte entièrement cliquable ; le lien, lui, ne porte que le titre. */}
+              <article class="group relative flex flex-col gap-5" aria-labelledby={`p-${p.id}`}>
+                <div class="panel aspect-[16/10] bg-sand p-0">
+                  <Image
+                    src={p.data.couverture}
+                    alt={p.data.couvertureAlt}
+                    widths={[480, 720, 960, 1280]}
+                    sizes="(width >= 48rem) 46vw, 100vw"
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                    quality={70}
+                    class="panel-media size-full rounded-none object-cover object-top transition-transform duration-500 ease-out-soft group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div class="flex items-start justify-between gap-6">
+                  <div>
+                    <h2 class="text-[clamp(1.3rem,1.1rem+0.8vw,1.7rem)]/[1.15] tracking-[-0.03em]" id={`p-${p.id}`}>
+                      <a class="no-underline after:absolute after:inset-0 after:rounded-[var(--radius-xl)] after:content-[''] group-hover:text-accent" href={`/portfolio/${p.id}/`}>{p.data.titre}</a>
+                    </h2>
+                    <p class="mt-1 text-[0.95rem] text-ink-soft">{p.data.categorie}, {p.data.annee}</p>
+                  </div>
+                </div>
+                <ul class="m-0 flex list-none flex-wrap gap-2 p-0" aria-label="Technologies">
+                  {p.data.technologies.map((t) => <li class="tag">{t}</li>)}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <CtaBand title="Un projet en tête ?" text="Décrivez-le en quelques lignes, je vous réponds avec un premier avis." />
+</Base>

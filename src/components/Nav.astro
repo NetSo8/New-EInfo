@@ -15,6 +15,7 @@ const links = [
   { href: '/particuliers/', label: 'Particuliers' },
   { href: '/professionnels/', label: 'Entreprises' },
   { href: '/services/', label: 'Services' },
+  { href: '/portfolio/', label: 'Portfolio' },
   { href: '/blog/', label: 'Blog' },
   { href: '/a-propos/', label: 'À propos' },
 ];
@@ -25,19 +26,19 @@ const isOn = (href: string) => path === href || (href !== '/' && path.startsWith
       qu'un bandeau collé au bord. Le lieu, qui tenait dans un bandeau
       d'état, est désormais porté par le haut de chaque page. */}
   <div class="shell relative">
-    <div class="flex h-[60px] items-center gap-5 rounded-full border border-rule bg-paper/82 pr-2 pl-5 shadow-[var(--shadow-raise)] backdrop-blur-[12px] backdrop-saturate-150">
+    <div class="flex h-[60px] items-center gap-3 rounded-full xl:gap-5 border border-rule bg-paper/82 pr-2 pl-5 shadow-[var(--shadow-raise)] backdrop-blur-[12px] backdrop-saturate-150">
       <a class="flex flex-none items-center gap-[0.6rem] text-ink no-underline" href="/" aria-label="E Informatique, accueil">
         <Image src={logo} alt="" width={28} height={28} densities={[1, 2]} loading="eager" class="size-[28px] rounded-none" />
         <span class="text-[1rem] font-bold tracking-[-0.03em]">E&nbsp;Informatique</span>
       </a>
 
       <nav class="ml-auto hidden lg:block" aria-label="Navigation principale">
-        <ul class="m-0 flex list-none items-center gap-1 p-0">
+        <ul class="m-0 flex list-none items-center gap-0.5 p-0 xl:gap-1">
         {links.map((l) => (
           <li><a
             href={l.href}
             class:list={[
-              'flex min-h-[44px] items-center rounded-full px-[0.85rem] text-[0.875rem] no-underline transition-[color,background-color] duration-150 ease-out-soft hover:bg-accent-wash hover:text-ink',
+              'flex min-h-[44px] items-center whitespace-nowrap rounded-full px-[0.6rem] text-[0.85rem] no-underline xl:px-[0.85rem] xl:text-[0.875rem] transition-[color,background-color] duration-150 ease-out-soft hover:bg-accent-wash hover:text-ink',
               isOn(l.href)
                 ? 'bg-accent-wash font-semibold text-ink'
                 : 'font-medium text-ink-soft',
