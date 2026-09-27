@@ -7,36 +7,39 @@ import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { Image } from 'astro:assets';
 import cote from '../assets/cote.jpg';
 
-/* Le parcours, raconté couche par couche : chaque étape allume la couche
-   correspondante de la pile 3D (LayerStack), du poste jusqu'à la
-   cryptographie. « Un étage plus bas » à chaque fois. */
-const couches = ['Poste', 'Serveur', 'Site web', 'Code', 'Cryptographie'];
+/* Le parcours, raconté couche par couche : chaque étape allume la couche
+   correspondante de la pile 3D (LayerStack). Les couches sont de vrais
+   niveaux d'abstraction, de ce que l'utilisateur touche jusqu'au
+   processeur : « un étage plus bas » à chaque fois. */
+const couches = ['Interface', 'Réseau', 'Service', 'Système', 'Matériel'];
 
 const etapes = [
   {
-    t: "J'ai commencé par réparer des machines.",
-    d: "Ce métier apprend une chose que le diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais la panne réelle. Vérifier avant de conclure, sur un portable de 2016 comme sur un serveur.",
-  },
-  {
-    t: "Puis le serveur, parce qu'il le fallait.",
-    d: "Un client avait besoin d'un site, puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessous ne suffit plus.",
-  },
-  {
-    t: "Aujourd'hui, quatre chantiers.",
-    d: "Le poste et le dépannage, la formation à l'IA, le site web, la relecture du code écrit par les IA. Tenus par la même exigence, plutôt qu'étalés sur un catalogue.",
+    t: "J'ai commencé par ce que les gens voient.",
+    d: "Le poste qui rame, le site qui ne répond plus. Ce métier apprend une chose que le diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais la panne réelle. Vérifier avant de conclure.",
+    fil: "C'est toujours mon quotidien : dépannage, formation à l'IA, sites web, relecture du code écrit par les IA.",
     liens: [
       { href: '/particuliers/', label: 'Pour les particuliers' },
       { href: '/professionnels/', label: 'Pour les entreprises' },
     ],
   },
   {
-    t: 'Le code que les IA écrivent.',
-    d: "Il fonctionne souvent du premier coup, ce qui décourage justement de le relire. C'est l'un des deux domaines vers lesquels je spécialise mon métier.",
+    t: "Puis le serveur, parce qu'il le fallait.",
+    d: "Un client avait besoin d'un site, puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessus ne suffit plus.",
   },
   {
-    t: 'Un étage plus bas : la cryptographie.',
-    d: "La couche sur laquelle tout repose sans qu'on la regarde, et qui va devoir changer face à l'ordinateur quantique. À côté, des outils de calcul pour la gestion : comptabilité, conformité, trésorerie.",
-    note: "Travail personnel : je ne me présente pas comme expert, et rien n'est vendu tant que ce n'est pas publié et vérifiable. Le blog en rendra compte.",
+    t: 'Sous le site, le service qui répond.',
+    d: "Pour le back-end, le Go : un seul binaire, peu de dépendances, un code qu'on relit sans effort. Le genre de logiciel qu'on oublie parce qu'il tient.",
+  },
+  {
+    t: 'Plus bas, le C : là où tout se paie.',
+    d: "La mémoire qu'on alloue soi-même, le système qu'on appelle sans intermédiaire. C'est là que j'écris un petit langage de programmation, et une bibliothèque graphique légère au-dessus de Win32.",
+  },
+  {
+    t: 'Tout en bas : le calcul, au plus près du processeur.',
+    d: "Caches, registres, instructions vectorielles. Une bibliothèque d'algèbre linéaire poussée jusqu'à la machine, et un petit moteur d'inférence pour modèles d'IA bâti dessus.",
+    fil: "Des domaines différents, une même démarche : comprendre la couche du dessous, puis écrire l'outil qui manquait. Fabriquer les pelles plutôt que chercher l'or.",
+    note: "Travail personnel, au long cours. Rien n'est présenté comme acquis tant que ce n'est pas publié, mesuré et vérifiable. Le blog en rendra compte.",
   },
 ];
 
@@ -49,7 +52,7 @@ const principes = [
 ---
 <Base
   title="À propos · Elian, technicien informatique à Rivesaltes"
-  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et spécialisation en sécurité du code IA et cryptographie."
+  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et un travail de fond en programmation système (C, Go)."
 >
   <!-- ─── Récit en couches : texte qui défile, pile 3D fixe ─────── -->
   <section class="relative isolate overflow-x-clip">
@@ -77,6 +80,7 @@ const principes = [
               </p>
               <h2 class="mt-3 max-w-[20ch] text-[clamp(1.6rem,1.1rem+1.8vw,2.5rem)]/[1.08] tracking-[-0.035em]">{e.t}</h2>
               <p class="mt-4 max-w-[46ch] text-[1.05rem]/[1.65] text-ink-soft">{e.d}</p>
+              {e.fil && <p class="mt-4 max-w-[46ch] text-[1.05rem]/[1.65] text-ink">{e.fil}</p>}
               {e.liens && (
                 <p class="mt-6 flex flex-wrap gap-3">
                   {e.liens.map((l) => (
