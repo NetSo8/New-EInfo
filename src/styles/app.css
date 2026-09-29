@@ -481,24 +481,24 @@
     cursor: pointer;
     white-space: nowrap;
     box-shadow: var(--btn-gloss), var(--btn-shadow);
-    transition: transform .16s var(--ease-out-strong), background-color .18s ease,
-                border-color .18s ease, color .18s ease, box-shadow .22s var(--ease-out-strong);
+    transition: transform .16s var(--ease-out-strong), background-color .15s ease,
+                border-color .15s ease, color .15s ease, box-shadow .15s ease;
   }
-  /* Le survol n'existe qu'avec un vrai pointeur : sur écran tactile, il
-     resterait collé après le toucher. */
+  /* Le survol ne déplace rien : le bouton reste posé, c'est sa matière qui
+     répond (fond, arête, flèche), comme chez Linear, Vercel ou Stripe. Une
+     pièce qui décolle avec une ombre qui grossit, c'est le survol par défaut
+     de tous les gabarits. Seulement avec un vrai pointeur : sur écran
+     tactile, il resterait collé après le toucher. */
   @media (hover: hover) and (pointer: fine) {
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--btn-gloss), var(--btn-shadow-hi);
+      box-shadow: var(--btn-gloss), var(--btn-shadow), var(--btn-hover-ring, 0 0 #0000);
     }
   }
-  /* À l'appui, la pièce revient au contact et se tasse légèrement :
-     l'ombre s'écrase au lieu de disparaître, sinon le bouton semble
-     s'éteindre plutôt que s'enfoncer. */
+  /* À l'appui, le bouton s'enfonce net, sans rebond. */
   .btn:active {
-    transform: translateY(0) scale(0.97);
+    transform: scale(0.98);
     box-shadow: var(--btn-gloss), var(--shadow-press);
-    transition-duration: .08s;
+    transition-duration: .06s;
   }
   .btn[disabled], .btn[aria-disabled='true'] {
     opacity: 0.55;
@@ -516,7 +516,9 @@
     --btn-shadow-hi: 0 2px 4px oklch(0.426 0.159 19 / 0.22),
                      0 14px 26px -6px oklch(0.426 0.159 19 / 0.38);
   }
-  .btn--cta:hover { --btn-bg: var(--color-cta-hi); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn--cta:hover { --btn-bg: var(--color-cta-hi); --btn-gloss: inset 0 1px 0 oklch(1 0 0 / 0.22); }
+  }
 
   /* Secondaire : une vraie surface claire posée sur la page, tenue par son
      ombre. Le liseré ne dessine plus la forme, il ne fait que retenir le
@@ -527,9 +529,11 @@
     --btn-edge: var(--color-rule);
     --btn-gloss: 0 0 #0000;
   }
-  .btn--ghost:hover {
-    --btn-edge: var(--color-rule-strong);
-    --btn-fg: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .btn--ghost:hover {
+      --btn-bg: var(--color-paper-warm);
+      --btn-edge: var(--color-rule-strong);
+    }
   }
 
   /* Même principe sur fond nuit, où l'ombre ne se voit pas : c'est la
@@ -543,9 +547,11 @@
     --btn-shadow-hi: 0 2px 3px oklch(0.12 0.010 200 / 0.40),
                      0 12px 22px -6px oklch(0.12 0.010 200 / 0.45);
   }
-  .btn--nuit-ghost:hover {
-    --btn-bg: var(--color-nuit-3);
-    --btn-edge: oklch(0.930 0.004 200 / 0.28);
+  @media (hover: hover) and (pointer: fine) {
+    .btn--nuit-ghost:hover {
+      --btn-bg: var(--color-nuit-3);
+      --btn-edge: oklch(0.930 0.004 200 / 0.28);
+    }
   }
 
   /* Commande carrée d'interface (bascule de thème, menu). Même matière que
@@ -563,17 +569,18 @@
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-raise);
     cursor: pointer;
-    transition: transform .18s var(--ease-out-soft), color .15s var(--ease-out-soft),
-                border-color .15s var(--ease-out-soft), box-shadow .22s var(--ease-out-soft);
+    transition: transform .16s var(--ease-out-strong), background-color .15s ease,
+                color .15s ease, border-color .15s ease;
   }
-  .btn-icon:hover {
-    transform: translateY(-1px);
-    color: var(--color-ink);
-    border-color: var(--color-rule-strong);
-    box-shadow: var(--shadow-raise-hi);
+  @media (hover: hover) and (pointer: fine) {
+    .btn-icon:hover {
+      background-color: var(--color-paper-warm);
+      color: var(--color-ink);
+      border-color: var(--color-rule-strong);
+    }
   }
   .btn-icon:active {
-    transform: translateY(0) scale(0.95);
+    transform: scale(0.94);
     box-shadow: var(--shadow-press);
     transition-duration: .06s;
   }
@@ -675,8 +682,20 @@
   }
   .tlink:hover { background-size: 0% 1px; }
 
-  .arrow { transition: transform .18s var(--ease-out-soft); }
-  .btn:hover .arrow, .rowlist a:hover .arrow { transform: translateX(3px); }
+  /* Flèche à la Stripe : au repos un simple chevron, au survol la
+     queue apparaît et se prolonge et le chevron avance d'un cran. Le trait est le
+     premier tracé de l'icône Lucide, la pointe le second. */
+  .arrow path { transition: transform .2s var(--ease-out-strong), opacity .15s ease; transform-box: fill-box; }
+  .arrow path:first-child { transform-origin: right center; transform: translateX(-3px) scaleX(0.2); opacity: 0; }
+  .arrow path:last-child { transform: translateX(-3px); }
+  @media (hover: hover) and (pointer: fine) {
+    :is(.btn, .rowlist a, .panel-link):hover .arrow path:first-child { transform: translateX(0) scaleX(1); opacity: 1; }
+    :is(.btn, .rowlist a, .panel-link):hover .arrow path:last-child { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html:not([data-motion='full']) .arrow path { transition: none; }
+  }
+  html[data-motion='reduced'] .arrow path { transition: none; }
 }
 
 /* ── Corps d'article de blog. ──────────────────────────────── */
@@ -791,18 +810,16 @@
     display: flex;
     color: inherit;
     text-decoration: none;
-    transition: transform .28s var(--ease-out-strong), box-shadow .28s var(--ease-out-strong),
+    transition: transform .16s var(--ease-out-strong), box-shadow .2s ease,
                 border-color .2s ease;
   }
   .panel-link .panel-media { transition: transform .6s var(--ease-out-strong); }
   @media (hover: hover) and (pointer: fine) {
     .panel-link:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-raise-hi);
       border-color: var(--color-rule-strong);
+      box-shadow: var(--shadow-raise);
     }
-    .panel-link:hover .panel-media { transform: scale(1.035); }
-    .panel-link:hover .arrow { transform: translateX(3px); }
+    .panel-link:hover .panel-media { transform: scale(1.025); }
   }
   .panel-link:active { transform: scale(0.99); transition-duration: .1s; }
 

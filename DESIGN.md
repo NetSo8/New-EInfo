@@ -89,9 +89,12 @@ Trois ingrédients, toujours ensemble :
 Le liseré ne disparaît pas, il change de rôle : il ne dessine plus la forme, il retient
 le bord là où le fond du bouton et celui de la page se ressemblent (`--color-rule`).
 
-Au survol, la pièce se lève : `translateY(-2px)` **et** l'ombre qui grandit. La
-translation seule glisse sans convaincre. À l'appui, l'ombre s'écrase au lieu de
-disparaître, sinon le bouton semble s'éteindre plutôt que s'enfoncer.
+Au survol, le bouton ne bouge pas : c'est sa matière qui répond (fond qui monte d'un
+cran, arête plus claire, liseré plus net), comme chez Linear, Vercel ou Stripe. La
+lévitation avec ombre qui grossit est le survol par défaut de tous les gabarits, on
+l'a retirée. La flèche des boutons est un simple chevron au repos, dont la queue
+apparaît et se prolonge au survol. À l'appui, le bouton s'enfonce net (`scale(0.98)`) et
+l'ombre s'écrase au lieu de disparaître.
 
 Le CTA porte son rouge jusque dans son ombre : une ombre grise sous une pièce colorée
 la fait flotter au lieu de la poser.
@@ -120,8 +123,8 @@ le design pour tout le monde.
 ## Motion
 Sobre, jamais en boucle pour les nouveautés. Entrée du haut de page en cascade
 courte (`.rise`, 70ms entre pièces), photo d'accueil dévoilée une fois (`.unveil`),
-panneaux cliquables qui se lèvent de 3px au survol, boutons qui se tassent à
-`scale(0.97)` à l'appui. Survols réservés aux pointeurs fins
+panneaux cliquables dont le liseré se renforce et l'image respire au survol,
+boutons qui se tassent à `scale(0.98)` à l'appui. Survols réservés aux pointeurs fins
 (`@media (hover: hover) and (pointer: fine)`). `prefers-reduced-motion` et
 l'interrupteur du pied de page neutralisent tout.
 
