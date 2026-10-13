@@ -1,7 +1,7 @@
 ---
 interface Line { k: 'cmd' | 'out' | 'ok' | 'warn' | 'dim'; t: string }
-interface Props { title?: string; lines: Line[] }
-const { title = 'elian@e-informatique : zsh', lines } = Astro.props;
+interface Props { title?: string; lines: Line[]; prompt?: string }
+const { title = 'elian@e-informatique : zsh', lines, prompt = '$' } = Astro.props;
 
 /* Le registre du terminal est fixe : il ne suit pas le thème de la page. */
 const tone: Record<Line['k'], string> = {
@@ -17,10 +17,10 @@ const tone: Record<Line['k'], string> = {
    état porte donc aussi un signe, comme dans un vrai outil en ligne de
    commande, et un mot lu par les lecteurs d'écran. Les lignes neutres
    gardent la même gouttière, sinon les colonnes se décalent. */
-const mark: Record<Line['k'], string> = { cmd: '$', ok: '+', warn: '!', out: ' ', dim: ' ' };
+const mark: Record<Line['k'], string> = { cmd: prompt, ok: '+', warn: '!', out: ' ', dim: ' ' };
 const spoken: Record<Line['k'], string> = {
   cmd: 'Commande : ',
-  ok: 'Conforme : ',
+  ok: 'Sécurisé : ',
   warn: 'À corriger : ',
   out: '',
   dim: '',
@@ -40,5 +40,5 @@ const id = `term-${Math.random().toString(36).slice(2, 8)}`;
 
   <pre class="m-0 overflow-x-auto px-[1.15rem] pt-[1.15rem] pb-[1.3rem] font-mono text-[0.775rem]/[1.85] text-nuit-text"><code>{lines.map((l) => (
     <span class:list={['block break-words whitespace-pre-wrap', tone[l.k]]}>{spoken[l.k] && <span class="sr-only">{spoken[l.k]}</span>}<span class="mr-[0.6rem] font-semibold" aria-hidden="true">{mark[l.k]}</span>{l.t}{'\n'}</span>
-  ))}<span class="block" aria-hidden="true"><span class="mr-[0.6rem] font-semibold text-accent-nuit">$</span><span class="inline-block h-[1em] w-[8px] animate-blink bg-accent-nuit align-[-0.15em]"></span></span></code></pre>
+  ))}<span class="block" aria-hidden="true"><span class="mr-[0.6rem] font-semibold text-accent-nuit">{prompt}</span><span class="inline-block h-[1em] w-[8px] animate-blink bg-accent-nuit align-[-0.15em]"></span></span></code></pre>
 </figure>

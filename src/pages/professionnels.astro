@@ -36,13 +36,13 @@ const formules = [
   },
   {
     n: '03',
-    t: 'Revue de code approfondie',
-    q: "Votre équipe utilise Copilot, Cursor ou ChatGPT en production, et personne n'a de vue d'ensemble sur ce qui part réellement en ligne.",
+    t: 'Audit de sécurité & Confinement IA',
+    q: "Votre équipe intègre du code généré ou des agents autonomes sur votre infrastructure Windows, sans cloisonnement ni vérification de ce qui tourne en production.",
     l: [
-      "Cartographie du code généré par IA dans le dépôt",
-      "Détection des erreurs récurrentes propres à l'assistant utilisé",
-      'Vérification que le comportement livré correspond à la spécification',
-      'Rapport priorisé : ce qui est urgent, ce qui peut attendre, ce qui est correct',
+      "Cartographie du code et des dépendances générées par IA",
+      "Détection des vulnérabilités, secrets en dur et comportements non maîtrisés",
+      "Confinement d'exécution des agents sous Windows : sandboxing et isolation des flux",
+      'Rapport priorisé et correctifs de durcissement directement exploitables',
     ],
     p: 'Devis après échange',
     bridge: true,
@@ -60,21 +60,21 @@ const faq = [
 ];
 
 const bridgeItems = [
-  { t: 'Harnais de sécurité pour agents IA', d: "Exécution isolée d'un agent non fiable : sandboxing dans un premier temps, enclave matérielle ensuite." },
+  { t: 'Harnais de confinement pour agents Windows', d: "Exécution isolée d'un agent IA : sandboxing AppContainer, restriction des privilèges et filtrage WFP." },
   { t: 'Scanner de code généré par IA', d: 'Patterns dangereux propres à chaque assistant : Copilot, Cursor, Claude et GPT ont chacun leurs tics.' },
   { t: 'Orchestrateur de vérification', d: "Typage, analyse statique, cohérence entre le README et l'implémentation réelle, en un seul passage." },
   { t: 'Outillage de migration post-quantique', d: 'Préparer le remplacement des algorithmes actuels par des versions résistantes (Kyber, Dilithium).' },
 ];
 ---
 <Base
-  title="Création de site web et audit de code IA · Perpignan (66)"
-  description="Création et maintenance de site web, audit et relecture du code généré par IA (Copilot, Cursor, ChatGPT) pour les TPE des Pyrénées-Orientales."
+  title="Création de site web et sécurité de code IA · Perpignan (66)"
+  description="Création et maintenance de site web, audit de sécurité et confinement IA sous Windows pour les entreprises des Pyrénées-Orientales."
 >
   <PageHead
-    kicker="Création de site web et audit de code IA · TPE et PME"
+    kicker="Création de site web et sécurité de code IA · TPE et PME"
     motcle
     title="Je fais deux choses, et je les fais bien."
-    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je construis et je maintiens votre site, et j'audite le code que votre équipe ou ses prestataires produisent avec une IA. Ce qui sort de ce périmètre, je le dis et je vous oriente."
+    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je construis et je maintiens votre site, et je sécurise le code et les agents IA déployés sur votre infrastructure. Ce qui sort de ce périmètre, je le dis et je vous oriente."
   >
     <div class="flex flex-wrap items-center gap-3">
       <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
@@ -88,37 +88,33 @@ const bridgeItems = [
     <div class="shell">
       <SectionHead
         title="Ce que je trouve en arrivant"
-        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'une équipe qui utilise un assistant IA depuis quelques mois et n'a jamais eu de raison de tout relire."
+        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'un script ou agent IA déployé sur un poste Windows sans avoir verrouillé ses privilèges ni ses accès."
       />
       <div class="mt-12 grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
         <div class="panel on-nuit border-transparent bg-nuit p-[clamp(0.75rem,2vw,1.5rem)]">
           <Terminal
-            title="premier relevé : dépôt client, 62 fichiers générés par IA"
+            title="revue : audit runtime agent IA sur Windows (Win32/NT)"
+            prompt=">"
             lines={[
-              { k: 'cmd', t: 'grep -rniE "sk-|api_key|password|TODO" src/' },
-              { k: 'ok', t: 'src/auth/session.js   tokens signés, expiration correcte' },
-              { k: 'ok', t: 'src/db/pool.js        requêtes préparées, pas de concat.' },
-              { k: 'warn', t: 'src/config.js:14      clé Stripe laissée en dur' },
-              { k: 'warn', t: 'src/api/upload.js:22  aucune limite de taille ni de type' },
-              { k: 'warn', t: 'src/lib/pdf-gen.js    dépendance "pdf-easy-gen" introuvable sur npm' },
-              { k: 'warn', t: 'src/api/users.js:41   requête SQL construite par concatenation' },
-              { k: 'out', t: 'fichiers signalés      6 sur 62 générés par l\'assistant IA' },
-              { k: 'out', t: 'couverture de tests     aucune sur les routes signalées' },
-              { k: 'dim', t: 'aucune de ces lignes ne déclenche d\'alerte aujourd\'hui.' },
+              { k: 'cmd', t: 'win-sandbox.exe --check-token --pid 4180' },
+              { k: 'warn', t: '[PID 4180] Agent IA s\'exécute avec les privilèges MediumIL (inadéquat)' },
+              { k: 'warn', t: 'Clé HKCU:\\Software\\AppData accessible en écriture par le subprocess' },
+              { k: 'ok', t: 'AppContainer actif : isolation du système de fichiers validée' },
+              { k: 'ok', t: 'Règles WFP : trafic réseau externe bloqué (mode local strict)' },
+              { k: 'out', t: 'Rapport    : 2 failles d\'isolation corrigées, confinement Job Object appliqué' },
             ]}
           />
         </div>
 
         <div class="flex flex-col items-start gap-4 text-base text-ink-soft">
           <p>
-            Aucune de ces lignes ne provoque de panne aujourd'hui. Elles décident
-            simplement de ce qui se passera le jour où quelqu'un les trouve avant vous :
-            une correction d'une heure, ou un incident de sécurité.
+            Aucune de ces lignes ne provoque de panne immédiate. Elles décident
+            simplement de ce qui se passera si l'agent exécute du code non fiable :
+            un accès direct aux données locales, ou un confinement étanche.
           </p>
           <p>
-            La relecture sert à transformer cette liste floue en décisions chiffrées,
-            avec un ordre de priorité que vous pouvez tenir sur les prochaines mises en
-            ligne.
+            L'audit et le confinement servent à transformer ces risques en garanties
+            système vérifiables, avec un ordre de priorité et une isolation stricte.
           </p>
         </div>
       </div>
@@ -175,7 +171,7 @@ const bridgeItems = [
     <div class="shell">
       <SectionHead
         title="Deux chantiers, et c'est volontaire"
-        lede="Le site web d'un côté, la relecture du code généré par IA de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
+        lede="Le site web d'un côté, la sécurité et le confinement du code IA de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
       />
       <div class="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)]">
         {pro.map((s) => (

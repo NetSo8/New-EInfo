@@ -73,18 +73,19 @@ export const services: Service[] = [
   {
     id: 'revue-ia',
     n: '04',
-    titre: 'Relecture de code généré par IA',
-    probleme: "Une équipe utilise Copilot, Cursor ou ChatGPT pour produire du code, et personne ne l'a relu avant que ça tourne pour de vrai.",
+    titre: 'Sécurité de code & Confinement IA (Windows)',
+    probleme:
+      "Vous intégrez du code IA ou des agents autonomes sur votre infrastructure Windows. Audit de sécurité des scripts générés, contrôle des flux et isolation des exécutions (sandboxing) pour protéger vos données métier.",
     resume:
-      "Une IA générative écrit du code qui fonctionne, pas nécessairement du code sûr : secret oublié en dur, requête construite par concatenation, dépendance qui n'existe pas, comportement qui ne correspond pas à ce que le projet promet. Je relis ce code ligne par ligne, humainement, et je vous dis ce qui doit être corrigé avant la mise en ligne.",
+      "Une IA générative écrit du code qui fonctionne, pas nécessairement du code sûr ni confiné : secrets exposés, accès fichiers non restreints, requêtes arbitraires ou dépendances inventées. J'audite vos scripts et je sécurise l'exécution locale de vos agents IA sous Windows : isolation sandbox (AppContainer, Job Objects), restriction des privilèges et blocage des flux non autorisés.",
     pour: ['entreprise'],
     livrables: [
-      'Relecture manuelle du code, pas un simple passage de linter automatique',
-      'Rapport priorisé : ce qui est dangereux, ce qui peut attendre, ce qui est correct',
-      "Repérage des erreurs récurrentes propres à l'assistant utilisé (secrets en dur, injection, dépendances inventées)",
-      'Vérification que le comportement réel correspond à ce que le code prétend faire',
-      'Corrections appliquées ou expliquées, selon ce que vous préférez',
+      'Audit de sécurité et relecture manuelle du code généré par IA',
+      'Rapport priorisé : vulnérabilités critiques, secrets exposés, dépendances inventées',
+      'Confinement d\'exécution sous Windows : isolation sandbox (AppContainer, Job Objects)',
+      'Contrôle des flux réseau (WFP) et protection des données métier locales',
+      'Corrections appliquées ou plan de durcissement documenté pour votre équipe',
     ],
-    motscles: 'audit code généré par IA Perpignan, relecture code ChatGPT Copilot Rivesaltes, sécurité vibe coding 66',
+    motscles: 'sécurité code IA Windows Perpignan, confinement agent IA sandboxing Rivesaltes, audit scripts IA 66',
   },
 ];
