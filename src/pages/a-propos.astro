@@ -16,16 +16,16 @@ const couches = ['Interface', 'Réseau', 'Service', 'Système', 'Matériel'];
 const etapes = [
   {
     t: "J'ai commencé par ce que les gens voient.",
-    d: "Le poste qui rame, le logiciel qui fait attendre. Ce début apprend une chose que le diplôme n'apprend pas : le problème décrit au téléphone n'est presque jamais le problème réel. Vérifier avant de conclure.",
-    fil: "Aujourd'hui, je mets cette rigueur au service des PME : des logiciels Windows rapides, sur mesure, et des diagnostics de performance chiffrés.",
+    d: "Le poste qui rame, le site qui ne répond plus. Ce métier apprend une chose que le diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais la panne réelle. Vérifier avant de conclure.",
+    fil: "C'est toujours mon quotidien : dépannage, formation à l'IA, sites web, sécurité et confinement du code IA.",
     liens: [
-      { href: '/particuliers/', label: 'Pour les utilisateurs exigeants' },
+      { href: '/particuliers/', label: 'Pour les particuliers' },
       { href: '/professionnels/', label: 'Pour les entreprises' },
     ],
   },
   {
     t: "Puis le serveur, parce qu'il le fallait.",
-    d: "Un projet demandait un site, puis un serveur pour l'héberger, puis des sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessus ne suffit plus.",
+    d: "Un client avait besoin d'un site, puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessus ne suffit plus.",
   },
   {
     t: 'Sous le site, le service qui répond.',
@@ -33,26 +33,26 @@ const etapes = [
   },
   {
     t: 'Plus bas, le C et Win32 : là où tout se paie.',
-    d: "La mémoire qu'on alloue soi-même, le système qu'on appelle sans intermédiaire. C'est là que j'écris un petit langage de programmation, une bibliothèque graphique au-dessus de Win32, et des utilitaires système natifs.",
+    d: "La mémoire qu'on alloue soi-même, le système qu'on appelle sans intermédiaire. C'est là que j'écris un petit langage de programmation, une bibliothèque graphique au-dessus de Win32, et le confinement natif d'agents.",
   },
   {
-    t: "Tout en bas : l'assembleur, au plus près du processeur.",
-    d: "C'est là que je veux aller, et là que je m'entraîne : écrire de l'assembleur x86-64 à la main, lire ce que le compilateur produit, comprendre les registres, les caches et les instructions vectorielles. Une bibliothèque d'algèbre linéaire poussée jusqu'à la machine, et un petit moteur d'inférence pour modèles d'IA bâti dessus, servent de terrain d'essai.",
-    fil: "Ma vision : faire du bas niveau mon métier. Comprendre la couche du dessous, puis écrire l'outil qui manquait, plutôt que d'empiler des logiciels déjà lourds. Pour vous, cela donne des programmes plus rapides et plus légers.",
-    note: "L'assembleur est un apprentissage en cours, pas un acquis. Rien n'est présenté comme maîtrisé tant que ce n'est pas publié, mesuré et vérifiable. Le blog en rendra compte.",
+    t: 'Tout en bas : le calcul, au plus près du processeur.',
+    d: "Caches, registres, instructions vectorielles. Une bibliothèque d'algèbre linéaire poussée jusqu'à la machine, et un petit moteur d'inférence pour modèles d'IA bâti dessus.",
+    fil: "Des domaines différents, une même démarche : comprendre la couche du dessous, puis écrire l'outil qui manquait. Fabriquer les pelles plutôt que chercher l'or.",
+    note: "Travail personnel, au long cours. Rien n'est présenté comme acquis tant que ce n'est pas publié, mesuré et vérifiable. Le blog en rendra compte.",
   },
 ];
 
 const principes = [
-  { t: "Le prix avant de commencer", d: "Rien ne démarre avant d'avoir annoncé ce que je fais, le temps que cela prend et ce que cela coûte." },
-  { t: 'Documenter ce que je laisse', d: "Code, notes et mesures sont remis par écrit. Un autre développeur peut reprendre sans repartir de zéro." },
-  { t: "Dire quand ce n'est pas pour moi", d: "Hors de mon périmètre, je vous oriente plutôt que d'apprendre à vos frais." },
+  { t: 'Le devis avant la clé de douze', d: "Rien ne s'ouvre avant d'avoir annoncé ce que je fais, le temps et le prix." },
+  { t: 'Documenter ce que je laisse', d: "Tout est écrit et versionné ; les accès de secours restent chez vous." },
+  { t: 'Dire quand je ne sais pas', d: "Hors de mon périmètre, je vous oriente plutôt que d'apprendre à vos frais." },
   { t: "Mesurer plutôt qu'affirmer", d: "Ce qui n'est pas mesuré ne va ni dans un rapport, ni sur ce site." },
 ];
 ---
 <Base
-  title="À propos · Elian, ingénieur logiciel à Rivesaltes"
-  description="Elian, ingénieur logiciel à Rivesaltes (66) : logiciels Windows rapides et sur mesure pour les PME, et une vision tournée vers le bas niveau et l'assembleur."
+  title="À propos · Elian, technicien informatique à Rivesaltes"
+  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et un travail de fond en développement bas niveau, rétro-ingénierie et sécurisation Windows."
 >
   <!-- ─── Récit en couches : texte qui défile, pile 3D fixe ─────── -->
   <section class="relative isolate overflow-x-clip">
@@ -62,11 +62,11 @@ const principes = [
       <div class="pt-[clamp(2.5rem,5vw,4.5rem)]">
         <div class="lg:flex lg:min-h-[calc(100dvh-7rem)] lg:flex-col lg:justify-center lg:pb-24">
           <p class="chip rise self-start pl-[0.8rem]" style="--i:0">À propos</p>
-          <h1 class="rise mt-6 max-w-[16ch] text-[clamp(2.4rem,1.1rem+3.8vw,4.2rem)]/[1.02]" style="--i:1">Un ingénieur, une vision : le bas niveau.</h1>
+          <h1 class="rise mt-6 max-w-[16ch] text-[clamp(2.4rem,1.1rem+3.8vw,4.2rem)]/[1.02]" style="--i:1">Une personne, un périmètre, des preuves.</h1>
           <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:2">
             Je m'appelle Elian. Je travaille seul : vous avez un interlocuteur unique, et
             tout ce que je laisse derrière moi peut être repris par n'importe qui.
-            Mon but : faire du bas niveau, jusqu'à l'assembleur, pour écrire des logiciels Windows plus rapides et plus légers.
+            Ma trajectoire de fond : développement bas niveau, rétro-ingénierie et recherche sur la sécurisation des agents sous environnement Windows.
           </p>
         </div>
 
@@ -128,7 +128,7 @@ const principes = [
       <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]">
         <Image
           src={cote}
-          alt="Mains sur le clavier d'un ordinateur portable pendant une session de travail"
+          alt="Mains sur le clavier d'un ordinateur portable pendant une intervention"
           loading="lazy"
           decoding="async"
           widths={[560, 900, 1300]}
@@ -138,17 +138,19 @@ const principes = [
         />
       </figure>
       <div>
-        <SectionHead title="Basé à Rivesaltes, au service des PME" />
+        <SectionHead title="Rivesaltes, et pas ailleurs" />
         <p class="mt-5 max-w-[46ch] text-lede/[1.5] text-ink-soft">
-          Je travaille à distance avec des entreprises de toute la France, et sur place dans le Roussillon quand c'est utile. Dans les deux cas, vous parlez directement à la personne qui écrit le code.
+          La distance fonctionne pour presque tout. Presque : une machine qui ne
+          s'allume plus, ou l'IA qu'on préfère se faire montrer, demandent quelqu'un
+          à vingt minutes, dans la journée.
         </p>
       </div>
     </div>
   </section>
 
   <CtaBand
-    title="Le plus simple : décrire votre situation."
-    text="PME ou utilisateur exigeant, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
+    title="Le plus simple reste de décrire votre situation."
+    text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
   />
 </Base>
 

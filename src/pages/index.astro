@@ -7,6 +7,7 @@ import Receipt from '@lucide/astro/icons/receipt';
 import MessageCircle from '@lucide/astro/icons/message-circle';
 import FileText from '@lucide/astro/icons/file-text';
 import Compass from '@lucide/astro/icons/compass';
+import ZoneRadar from '../components/ZoneRadar.astro';
 import HeroNetworkBg from '../components/HeroNetworkBg.astro';
 import CtaBand from '../components/CtaBand.astro';
 import FaqSection from '../components/FaqSection.astro';
@@ -30,50 +31,52 @@ const tuiles: Record<string, { span: string; tone: 'photo' | 'sand' | 'raised' |
 
 const faq = [
   {
-    q: "Pourquoi ne pas utiliser les technologies web habituelles pour un logiciel de bureau ?",
-    a: "Beaucoup de logiciels actuels embarquent un navigateur complet : ils consomment 150 à 350 Mo de mémoire et mettent plusieurs secondes à s'ouvrir. Un logiciel écrit directement pour Windows s'ouvre instantanément et tient dans moins de 8 Mo. Sur les postes de vos équipes, cela se voit tous les jours.",
+    q: "Vous vous déplacez jusqu'où ?",
+    a: "Je me déplace sans supplément dans un rayon de 15 km autour de Rivesaltes, ce qui couvre Perpignan et les communes proches. Au-delà, un forfait kilométrique est annoncé avant l'intervention. Le reste de la France est couvert à distance.",
   },
   {
-    q: "Mon logiciel est lent : pouvez-vous l'accélérer sans tout refaire ?",
-    a: "Souvent, oui. Je commence par mesurer où le temps est perdu, puis je corrige uniquement les parties qui posent problème. Vous recevez un rapport chiffré, avec les gains attendus avant que vous ne décidiez de quoi que ce soit.",
+    q: "Combien ça coûte ?",
+    a: "Le diagnostic est annoncé et chiffré avant que je touche à la machine. Pour les particuliers, l'intervention se facture à l'heure, sans frais de dossier. Pour les entreprises, un forfait est proposé après un premier échange gratuit d'une trentaine de minutes.",
   },
   {
-    q: "Qu'est-ce que je reçois à la fin d'une mission ?",
-    a: "Un logiciel ou un correctif qui fonctionne, le code source, une documentation écrite et les mesures avant/après. Rien ne reste dans ma tête : un autre développeur peut reprendre le travail sans repartir de zéro.",
+    q: "Je n'y connais rien du tout, c'est un problème ?",
+    a: "Non, c'est même le cas le plus fréquent, aussi bien pour une panne que pour découvrir l'IA. Je vous explique ce qui s'est passé en français, je vous montre ce que j'ai changé, et vous repartez avec les quelques réflexes qui évitent que ça recommence.",
   },
   {
-    q: "Mes données restent-elles chez moi ?",
-    a: "Oui. Les outils fonctionnent entièrement en local : pas de compte à créer, pas de serveur distant, pas de collecte de données, pas d'installation intrusive. Ils se lancent et se suppriment comme un simple fichier.",
+    q: "Vous travaillez avec quels systèmes ?",
+    a: "Spécialisation prioritaire sur l'écosystème Windows : développement d'outils internes natifs (Win32, C, Go), durcissement d'exécution (sandboxing, droits d'accès) et sécurisation d'outils IA locaux. J'interviens également sur les environnements Linux et macOS pour le dépannage et le web.",
   },
 ];
 
 
+/* Engagements repris des pages Particuliers et À propos : rien de promis
+   ici qui ne soit déjà écrit ailleurs sur le site. */
 const engagements = [
-  { icon: Receipt, t: 'Rapide dès le premier clic', d: "Le logiciel s'ouvre immédiatement et reste fluide, même sur un poste ancien. Chaque gain est mesuré, pas promis." },
-  { icon: MessageCircle, t: 'Léger et sans dépendance', d: "Un seul fichier à déployer, rien d'autre à installer. Moins de pannes, moins de mises à jour à gérer pour vous." },
-  { icon: FileText, t: 'Documenté et repris facilement', d: "Code source, notes et mesures vous sont remis. Vous ne dépendez pas de moi pour la suite." },
-  { icon: Compass, t: 'Vos données restent chez vous', d: "Tout tourne en local. Aucune donnée envoyée à l'extérieur, aucun abonnement imposé." },
+  { icon: Receipt, t: 'Le prix avant de commencer', d: "Vous savez ce que ça coûte avant que je touche à quoi que ce soit. Si quelque chose change en cours de route, je m'arrête et je vous appelle." },
+  { icon: MessageCircle, t: 'Des explications en français', d: "Je vous montre ce qui s'est passé et ce que j'ai changé, sans jargon, avec les réflexes qui évitent que ça recommence." },
+  { icon: FileText, t: 'Rien ne reste dans ma tête', d: "Ce que je mets en place est documenté et les accès de secours restent chez vous. Quelqu'un d'autre peut reprendre sans repartir de zéro." },
+  { icon: Compass, t: 'Je dis quand ce n\'est pas pour moi', d: "Hors de mon périmètre, je vous le dis et je vous oriente vers quelqu'un de compétent, plutôt que d'apprendre à vos frais." },
 ];
 
 const pannesCourantes = [
-  "S'ouvre instantanément, sans écran de chargement",
-  'Tient dans moins de 8 Mo de mémoire',
-  'Retrouve un fichier en une fraction de seconde',
-  'Un seul fichier à copier, rien à installer',
-  "Aucune donnée envoyée sur internet",
+  "Il rame, il chauffe, il s'éteint tout seul",
+  'Écran noir, plus de démarrage',
+  'Boîte mail piratée, fenêtres suspectes',
+  'Photos et documents à récupérer',
+  "Vous voulez enfin comprendre l'IA, sans vous faire piéger",
 ];
 
 const besoinsEntreprises = [
-  'Un logiciel métier lent, qui fait attendre vos équipes',
-  "Un traitement qui plante ou ralentit quand il y a beaucoup de données",
-  'Un ancien outil à reprendre pour le rendre rapide et fiable',
-  'Un petit service qui tourne en arrière-plan sans ralentir les postes',
-  "Administration ou automatisation système Windows pour fiabiliser vos outils",
+  'Site web lent, à refondre ou à maintenir sans panne',
+  "Code généré par IA : personne ne l'a relu avant la production",
+  'Scripts et agents IA sous Windows à sécuriser (sandboxing)',
+  'Serveur ou hébergement Linux à durcir et documenter',
+  'Pas de service informatique : un interlocuteur unique et direct',
 ];
 ---
 <Base
-  title="Logiciels Windows rapides et sur mesure pour les PME"
-  description="Logiciels Windows rapides, légers et sur mesure pour les PME : outils locaux, accélération de logiciels existants, développement natif. Ingénieur à Rivesaltes (66)."
+  title="Technicien informatique à Rivesaltes et Perpignan (66)"
+  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web et sécurité du code IA sous Windows pour les entreprises des Pyrénées-Orientales."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
   <section class="relative isolate overflow-hidden pt-[clamp(2rem,4.5vw,4.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
@@ -83,27 +86,27 @@ const besoinsEntreprises = [
         {/* L'étiquette fait partie du titre principal : c'est elle qui dit à
             Google de quoi parle la page, l'accroche porte le ton. */}
         <h1>
-          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Logiciels Windows sur mesure, Rivesaltes<span class="sr-only"> :</span></span>
+          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Technicien informatique à Rivesaltes et Perpignan<span class="sr-only"> :</span></span>
           <span class="rise mt-7 block text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
-            Des logiciels Windows rapides.<br /><span class="text-accent">Légers, sur mesure, fiables.</span>
+            Une panne, un système, une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
           </span>
         </h1>
 
         <p class="rise mt-6 max-w-[42ch] text-lede/[1.5] text-ink-soft" style="--i:2">
-          Outils pour utilisateurs exigeants, accélération de vos logiciels
-          et développement sur mesure pour les PME.
+          Dépannage et formation à l'IA pour les particuliers, sites et sécurité du
+          code pour les entreprises du Roussillon.
         </p>
 
         <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
           <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-          <a class="btn btn--ghost" href="#services">Voir les domaines</a>
+          <a class="btn btn--ghost" href="#services">Voir les prestations</a>
         </div>
       </div>
 
       <figure class="unveil relative m-0 overflow-hidden rounded-[var(--radius-xl)] shadow-[var(--shadow-raise-hi)]">
         <Image
           src={etabli}
-          alt="Carte électronique sur un établi, outils de précision"
+          alt="Réparation d'une carte électronique au tournevis de précision, sur l'établi"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -133,9 +136,9 @@ const besoinsEntreprises = [
           quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07] grayscale contrast-125"
         />
-        <span class="badge badge--accent self-start" aria-hidden="true">Power-users</span>
+        <span class="badge badge--accent self-start" aria-hidden="true">Particulier</span>
         {/* L'étiquette visible est rattachée au titre pour qui navigue de titre en titre. */}
-        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes un power-user : </span>Des outils Windows instantanés, sans superflu.</h2>
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes un particulier : </span>Mon ordinateur ne va pas, ou je ne sais pas utiliser l'IA.</h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
           {pannesCourantes.map((p) => (
@@ -147,11 +150,11 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Des outils qui font une chose, et la font vite : ouverture immédiate,
-          très peu de mémoire, aucune installation lourde.
+          Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
+          ne vaut pas le coup, je vous le dis.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/particuliers/">
-          Voir l'offre power-users <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          Voir l'offre particuliers <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
 
@@ -168,7 +171,7 @@ const besoinsEntreprises = [
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.06] grayscale contrast-125"
         />
         <span class="badge badge--accent self-start" aria-hidden="true">Entreprise</span>
-        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes une entreprise : </span>Votre logiciel fait attendre vos équipes.</h2>
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes une entreprise : </span>Votre site tourne. Qui a relu le code ?</h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
           {besoinsEntreprises.map((b) => (
@@ -180,8 +183,8 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Diagnostic, accélération, développement sur mesure.
-          Des mesures avant et après, un rapport clair, un devis annoncé.
+          Création de site, audit de code IA et maintenance dans la durée. Pas de flou
+          entre qui a écrit quoi et qui répond si ça casse.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/professionnels/">
           Voir l'offre entreprises <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
@@ -194,8 +197,8 @@ const besoinsEntreprises = [
   <section class="section section-rule" id="services">
     <div class="shell">
       <SectionHead
-        title="Quatre services, deux publics"
-        lede="Outils et optimisation pour les utilisateurs exigeants, diagnostic et développement sur mesure pour les PME. Je ne promets que ce que je peux mesurer."
+        title="Quatre prestations, deux publics"
+        lede="Dépannage et formation à l'IA pour les particuliers, site web et sécurité de code IA pour les entreprises. Je ne facture que ce que je peux vérifier moi-même."
       />
 
       <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
@@ -233,7 +236,7 @@ const besoinsEntreprises = [
                   </>
                 )}
                 <span class="flex flex-wrap gap-[0.35rem]" aria-hidden="true">
-                  {s.pour.includes('particulier') && <span class="badge">Power-users</span>}
+                  {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
                   {s.pour.includes('entreprise') && <span class="badge">Entreprises</span>}
                 </span>
                 <span class="flex items-end justify-between gap-6">
@@ -241,7 +244,7 @@ const besoinsEntreprises = [
                     <h3 class="text-[clamp(1.3rem,1.05rem+0.9vw,1.85rem)]/[1.1] tracking-[-0.03em]" id={`tuile-${s.id}`}>{s.titre}</h3>
                     <span class="max-w-[48ch] text-[0.97rem]/[1.55] text-ink-soft" id={`tuile-${s.id}-d`}>
                       {s.probleme}
-                      <span class="sr-only">Pour les {s.pour.map((x) => (x === 'particulier' ? 'power-users' : 'entreprises')).join(' et les ')}.</span>
+                      <span class="sr-only">Pour les {s.pour.map((x) => (x === 'particulier' ? 'particuliers' : 'entreprises')).join(' et les ')}.</span>
                     </span>
                   </span>
                   <span class="grid size-10 flex-none place-items-center rounded-full border border-rule text-accent" aria-hidden="true">
@@ -260,8 +263,8 @@ const besoinsEntreprises = [
   <section class="section section-rule section-tint">
     <div class="shell">
       <SectionHead
-        title="Quatre engagements, quel que soit le projet"
-        lede="Un petit outil ou un logiciel d'entreprise : la façon de travailler ne change pas."
+        title="Quatre engagements, quel que soit le chantier"
+        lede="Une panne chez un particulier ou un site d'entreprise : la façon de travailler ne change pas."
       />
       <ul class="trace-line m-0 mt-14 grid list-none grid-cols-1 gap-y-10 p-0 sm:grid-cols-2 lg:grid-cols-4" data-inview>
         {engagements.map((e, i) => (
@@ -285,34 +288,19 @@ const besoinsEntreprises = [
     </div>
   </section>
 
-  <!-- ─── COMPARATIF : ce que ça change ─────────────────── -->
+  <!-- ─── ZONE ─────────────────────────────────────────── -->
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        title="Concrètement, ce que ça change"
-        lede="Un logiciel écrit directement pour Windows, comparé à un logiciel classique qui embarque un navigateur. Valeurs typiques mesurées sur un poste de bureau courant."
+        title="Je privilégie la proximité"
+        lede="Pour tout ce qui se touche ou se montre, être à vingt minutes change la nature du service. Pour le reste, la distance ne change rien."
       />
       <div class="mt-12 grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-        <div class="panel flex flex-col justify-center p-[clamp(1.4rem,3vw,2.5rem)]" data-reveal>
-          <div class="grid grid-cols-[1.2fr_1fr_1fr] gap-x-4 border-b border-rule pb-3 font-mono text-[0.75rem] text-ink-soft">
-            <span></span><span>Logiciel classique</span><span class="text-accent">Logiciel sur mesure</span>
-          </div>
-          {[
-            ['Temps d\'ouverture', '1 à 2 secondes', 'instantané'],
-            ['Mémoire utilisée', '150 à 350 Mo', 'moins de 8 Mo'],
-            ['Poids du logiciel', '140 à 240 Mo', 'moins de 2 Mo'],
-            ['À installer', 'programme + composants', 'un seul fichier'],
-            ['Données envoyées dehors', 'souvent', 'aucune'],
-          ].map(([k, a, b]) => (
-            <div class="grid grid-cols-[1.2fr_1fr_1fr] gap-x-4 border-b border-rule py-3 text-[0.95rem] last:border-b-0">
-              <span class="text-ink-soft">{k}</span><span>{a}</span><span class="font-semibold">{b}</span>
-            </div>
-          ))}
-        </div>
+        <div class="panel p-[clamp(1rem,2.5vw,2rem)]" data-reveal><ZoneRadar /></div>
         <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]" data-reveal>
           <Image
             src={cote}
-            alt="Mains sur le clavier d'un ordinateur portable pendant une session de travail"
+            alt="Mains sur le clavier d'un ordinateur portable pendant une intervention à distance"
             loading="lazy" decoding="async"
             widths={[480, 768, 1100]}
             sizes="(width >= 62rem) 40vw, 100vw"
@@ -325,10 +313,10 @@ const besoinsEntreprises = [
   </section>
 
   <!-- ─── FAQ ──────────────────────────────────────────── -->
-  <FaqSection title="Ce qu'on me demande avant de commencer" items={faq} />
+  <FaqSection title="Ce qu'on me demande avant d'appeler" items={faq} />
 
   <CtaBand
-    title="Un logiciel lent ou un outil à créer ?"
-    text="Quelques lignes suffisent : ce qui ralentit, sur quels postes, depuis quand. Je réponds avec un plan clair et un ordre de prix, avant tout engagement."
+    title="Dites-moi ce qui ne va pas."
+    text="Quelques lignes suffisent : la machine, le symptôme, ou le projet, depuis quand. Je réponds avec un plan concret et un ordre de prix, avant tout engagement."
   />
 </Base>
