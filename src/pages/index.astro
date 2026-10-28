@@ -19,9 +19,7 @@ import etabli from '../assets/etabli.jpg';
 import paysage from '../assets/paysage.jpg';
 import baie from '../assets/baie.jpg';
 
-/* Mise en scène des quatre prestations dans la grille : deux tuiles
-   larges portées par une photo, deux tuiles étroites sur surface pleine.
-   L'ordre suit `services`, la disposition est décidée ici. */
+/* Disposition des tuiles dans la grille */
 const tuiles: Record<string, { span: string; tone: 'photo' | 'sand' | 'raised' | 'nuit'; img?: ImageMetadata }> = {
   depannage: { span: 'lg:col-span-2', tone: 'photo', img: atelier },
   'formation-ia': { span: '', tone: 'sand' },
@@ -32,81 +30,98 @@ const tuiles: Record<string, { span: string; tone: 'photo' | 'sand' | 'raised' |
 const faq = [
   {
     q: "Vous vous déplacez jusqu'où ?",
-    a: "Je me déplace sans supplément dans un rayon de 15 km autour de Rivesaltes, ce qui couvre Perpignan et les communes proches. Au-delà, un forfait kilométrique est annoncé avant l'intervention. Le reste de la France est couvert à distance.",
+    a: "Je me déplace sans supplément dans un rayon de 15 km autour de Rivesaltes, ce qui couvre Perpignan et les communes proches (Baixas, Salses, Cabestany, Le Barcarès, Saint-Estève, Bompas, Pia...). Au-delà, un forfait kilométrique est annoncé avant l'intervention. L'assistance logicielle et les projets web se font aussi à distance partout en France.",
   },
   {
-    q: "Combien ça coûte ?",
-    a: "Le diagnostic est annoncé et chiffré avant que je touche à la machine. Pour les particuliers, l'intervention se facture à l'heure, sans frais de dossier. Pour les entreprises, un forfait est proposé après un premier échange gratuit d'une trentaine de minutes.",
+    q: "Combien coûte une intervention ?",
+    a: "Le diagnostic est clair et chiffré avant que je commence. Pour les dépannages, la facturation se fait à l'heure ou au forfait selon l'opération (changement de disque SSD, réinstallation, etc.). Pour les sites web et la maintenance d'entreprise, un devis forfaitaire précis est établi après un premier échange gratuit.",
   },
   {
-    q: "Je n'y connais rien du tout, c'est un problème ?",
-    a: "Non, c'est même le cas le plus fréquent, aussi bien pour une panne que pour découvrir l'IA. Je vous explique ce qui s'est passé en français, je vous montre ce que j'ai changé, et vous repartez avec les quelques réflexes qui évitent que ça recommence.",
+    q: "Je n'y connais rien en informatique, est-ce un problème ?",
+    a: "Non, c'est même très fréquent. Je vous explique ce qui s'est passé avec des mots simples en français, sans jargon inutile. Je vous montre ce qui a été fait et vous repartez avec les bons réflexes pour éviter que le problème ne réapparaisse.",
   },
   {
-    q: "Vous travaillez avec quels systèmes ?",
-    a: "Spécialisation prioritaire sur l'écosystème Windows : développement d'outils internes natifs (Win32, C, Go), durcissement d'exécution (sandboxing, droits d'accès) et sécurisation d'outils IA locaux. J'interviens également sur les environnements Linux et macOS pour le dépannage et le web.",
+    q: "Si la réparation coûte trop cher par rapport à la valeur de l'ordinateur ?",
+    a: "Je vous le dis en toute transparence avant d'engager des frais. Si votre matériel est trop ancien ou que la réparation n'est pas rentable, je vous conseille franchement sur la meilleure option sans chercher à facturer inutilement.",
   },
 ];
 
-
-/* Engagements repris des pages Particuliers et À propos : rien de promis
-   ici qui ne soit déjà écrit ailleurs sur le site. */
 const engagements = [
-  { icon: Receipt, t: 'Le prix avant de commencer', d: "Vous savez ce que ça coûte avant que je touche à quoi que ce soit. Si quelque chose change en cours de route, je m'arrête et je vous appelle." },
-  { icon: MessageCircle, t: 'Des explications en français', d: "Je vous montre ce qui s'est passé et ce que j'ai changé, sans jargon, avec les réflexes qui évitent que ça recommence." },
-  { icon: FileText, t: 'Rien ne reste dans ma tête', d: "Ce que je mets en place est documenté et les accès de secours restent chez vous. Quelqu'un d'autre peut reprendre sans repartir de zéro." },
-  { icon: Compass, t: 'Je dis quand ce n\'est pas pour moi', d: "Hors de mon périmètre, je vous le dis et je vous oriente vers quelqu'un de compétent, plutôt que d'apprendre à vos frais." },
+  {
+    icon: Receipt,
+    t: 'Le prix avant de commencer',
+    d: "Vous savez exactement ce que ça coûte avant toute intervention. Si une pièce s'avère nécessaire, je m'arrête et nous validons ensemble.",
+  },
+  {
+    icon: MessageCircle,
+    t: 'Des explications en français',
+    d: "Pas de jargon technique pour noyer le poisson. Je vous explique clairement ce qui a été réparé et comment garder votre machine saine.",
+  },
+  {
+    icon: FileText,
+    t: 'Vos accès restent chez vous',
+    d: "Vos mots de passe, vos comptes et vos codes restent votre propriété exclusive. Tout ce qui est configuré est noté sur une fiche récapitulative.",
+  },
+  {
+    icon: Compass,
+    t: 'Honnêteté et bon sens',
+    d: "Si réparer un vieil appareil n'en vaut pas la peine, je vous le dis franchement plutôt que d'engager des frais inutiles à vos dépens.",
+  },
 ];
 
 const pannesCourantes = [
-  "Il rame, il chauffe, il s'éteint tout seul",
-  'Écran noir, plus de démarrage',
-  'Boîte mail piratée, fenêtres suspectes',
-  'Photos et documents à récupérer',
-  "Vous voulez enfin comprendre l'IA, sans vous faire piéger",
+  "Ordinateur très lent, blocages au démarrage",
+  "Virus, fenêtres publicitaires suspectes, piratage de compte",
+  "Écran noir, panne de chargeur, ordinateur qui ne s'allume plus",
+  "Photos et documents à récupérer ou sauvegarder",
+  "Wi-Fi faible, imprimante bloquée, box internet à configurer",
+  "Initiation pratique aux outils numériques et à l'IA du quotidien",
 ];
 
 const besoinsEntreprises = [
-  'Site web lent, à refondre ou à maintenir sans panne',
-  'Postes et serveurs Windows à maintenir et fiabiliser',
-  'Sauvegardes de sécurité, droits et accès à cadrer proprement',
-  'Serveur ou hébergement Linux à durcir et documenter',
-  'Pas de service informatique : un interlocuteur unique et direct',
+  "Création ou refonte de site web vitrine rapide et adapté aux mobiles",
+  "Visibilité sur Google & Google Maps pour que les clients locaux vous appellent",
+  "Postes et serveurs Windows entretenus pour éviter les pannes en plein travail",
+  "Sauvegardes automatiques fiables pour protéger vos données professionnelles",
+  "Un artisan de proximité disponible directement, sans intermédiaire",
 ];
 ---
 <Base
-  title="Technicien informatique à Rivesaltes et Perpignan (66)"
-  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, maintenance et administration système Windows pour les entreprises des Pyrénées-Orientales."
+  title="Dépannage informatique & Sites Web à Rivesaltes et Perpignan (66)"
+  description="Dépannage et réparation d'ordinateurs, assistance à domicile, création de sites vitrines et maintenance informatique pour particuliers, artisans et TPE des Pyrénées-Orientales."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
   <section class="relative isolate overflow-hidden pt-[clamp(2rem,4.5vw,4.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
     <HeroNetworkBg class="-z-10 opacity-45" />
     <div class="shell grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
       <div>
-        {/* L'étiquette fait partie du titre principal : c'est elle qui dit à
-            Google de quoi parle la page, l'accroche porte le ton. */}
         <h1>
-          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0"><span class="chip__mark" aria-hidden="true">66</span>Technicien informatique à Rivesaltes et Perpignan<span class="sr-only"> :</span></span>
+          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0">
+            <span class="chip__mark" aria-hidden="true">66</span>Rivesaltes · Perpignan · Pyrénées-Orientales
+          </span>
           <span class="rise mt-7 block text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
-            Une panne, un système, une&nbsp;IA.<br /><span class="text-accent">Un seul interlocuteur.</span>
+            Votre informatique en ordre de marche.<br /><span class="text-accent">Vos outils, votre site web.</span>
           </span>
         </h1>
 
         <p class="rise mt-6 max-w-[42ch] text-lede/[1.5] text-ink-soft" style="--i:2">
-          Dépannage et formation à l'IA pour les particuliers, sites web, maintenance et
-          administration Windows pour les entreprises du Roussillon.
+          Dépannage et maintenance de vos ordinateurs sur place ou en atelier, création et suivi de sites web pour artisans, commerçants et particuliers. Un interlocuteur unique, sans intermédiaire.
         </p>
 
         <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
-          <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-          <a class="btn btn--ghost" href="#services">Voir les prestations</a>
+          <a class="btn btn--cta" href="/contact/">Demander un diagnostic <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+          <a class="btn btn--ghost" href="#services">Découvrir les prestations</a>
         </div>
+
+        <p class="rise mt-4 text-[0.85rem] text-ink-soft" style="--i:4">
+          Déplacement inclus jusqu'à 15 km autour de Rivesaltes · Devis annoncé avant toute intervention.
+        </p>
       </div>
 
       <figure class="unveil relative m-0 overflow-hidden rounded-[var(--radius-xl)] shadow-[var(--shadow-raise-hi)]">
         <Image
           src={etabli}
-          alt="Réparation d'une carte électronique au tournevis de précision, sur l'établi"
+          alt="Réparation et maintenance d'un ordinateur de précision sur l'établi"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -123,8 +138,8 @@ const besoinsEntreprises = [
   <!-- ─── DOUBLE AIGUILLAGE ────────────────────────────── -->
   <section class="pb-[clamp(3.5rem,6vw,6rem)]" aria-label="Choisir votre parcours">
     <div class="shell grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <!-- Volet Particuliers -->
       <div class="panel flex flex-col gap-[1.1rem] border-transparent bg-sand px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
-        {/* Photo d'ambiance en fond, volontairement très effacée. */}
         <Image
           src={atelier}
           alt=""
@@ -136,9 +151,10 @@ const besoinsEntreprises = [
           quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07] grayscale contrast-125"
         />
-        <span class="badge badge--accent self-start" aria-hidden="true">Particulier</span>
-        {/* L'étiquette visible est rattachée au titre pour qui navigue de titre en titre. */}
-        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes un particulier : </span>Mon ordinateur ne va pas, ou je ne sais pas utiliser l'IA.</h2>
+        <span class="badge badge--accent self-start" aria-hidden="true">Particuliers & Domicile</span>
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
+          <span class="sr-only">Pour les particuliers : </span>Mon ordinateur rame, est bloqué ou je veux apprendre à l'utiliser.
+        </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
           {pannesCourantes.map((p) => (
@@ -150,14 +166,14 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation
-          ne vaut pas le coup, je vous le dis.
+          Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation n'en vaut pas la peine, je vous le dis en toute honnêteté.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/particuliers/">
-          Voir l'offre particuliers <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          Voir les services particuliers <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
 
+      <!-- Volet Professionnels -->
       <div class="panel on-nuit flex flex-col gap-[1.1rem] border-transparent bg-nuit px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
         <Image
           src={baie}
@@ -170,8 +186,10 @@ const besoinsEntreprises = [
           quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.06] grayscale contrast-125"
         />
-        <span class="badge badge--accent self-start" aria-hidden="true">Entreprise</span>
-        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]"><span class="sr-only">Vous êtes une entreprise : </span>Vos outils et vos postes tournent. Qui s'en occupe ?</h2>
+        <span class="badge badge--accent self-start" aria-hidden="true">Artisans, Commerçants & PME</span>
+        <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
+          <span class="sr-only">Pour les professionnels : </span>Un site internet qui rapporte des clients et un matériel fiable.
+        </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
           {besoinsEntreprises.map((b) => (
@@ -183,11 +201,10 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Création de site, maintenance de parc Windows et suivi informatique. Pas de flou
-          sur qui gère vos postes et qui répond si ça coince.
+          Création de site web sobre et rapide, présence sur Google Maps, et entretien de vos ordinateurs de travail. Pas de sous-traitance, un seul interlocuteur réactif.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/professionnels/">
-          Voir l'offre entreprises <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          Voir les offres entreprises <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
     </div>
@@ -198,7 +215,7 @@ const besoinsEntreprises = [
     <div class="shell">
       <SectionHead
         title="Quatre prestations, deux publics"
-        lede="Dépannage et formation à l'IA pour les particuliers, site web et maintenance Windows pour les entreprises. Je ne facture que ce que je peux vérifier moi-même."
+        lede="Dépannage et assistance pour votre confort à la maison, visibilité web et tranquillité informatique pour votre activité professionnelle."
       />
 
       <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
@@ -231,7 +248,6 @@ const besoinsEntreprises = [
                       quality={50}
                       class:list={['panel-media absolute inset-0 -z-20 size-full object-cover', t.tone === 'nuit' ? 'opacity-45' : 'opacity-70']}
                     />
-                    {/* Voile : garantit le contraste du texte posé sur la photo. */}
                     <span class="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--color-nuit)_18%,color-mix(in_oklch,var(--color-nuit)_55%,transparent)_60%,color-mix(in_oklch,var(--color-nuit)_15%,transparent))]" aria-hidden="true"></span>
                   </>
                 )}
@@ -263,8 +279,8 @@ const besoinsEntreprises = [
   <section class="section section-rule section-tint">
     <div class="shell">
       <SectionHead
-        title="Quatre engagements, quel que soit le chantier"
-        lede="Une panne chez un particulier ou un site d'entreprise : la façon de travailler ne change pas."
+        title="Quatre engagements, quel que soit le travail"
+        lede="Une panne à domicile ou un site d'entreprise : la façon de travailler reste la même, avec rigueur et clarté."
       />
       <ul class="trace-line m-0 mt-14 grid list-none grid-cols-1 gap-y-10 p-0 sm:grid-cols-2 lg:grid-cols-4" data-inview>
         {engagements.map((e, i) => (
@@ -284,23 +300,23 @@ const besoinsEntreprises = [
           </li>
         ))}
       </ul>
-      <a class="tlink mt-12 inline-block" href="/a-propos/">Comment je travaille</a>
+      <a class="tlink mt-12 inline-block" href="/a-propos/">En savoir plus sur ma façon de travailler</a>
     </div>
   </section>
 
-  <!-- ─── ZONE ─────────────────────────────────────────── -->
+  <!-- ─── ZONE RADAR ───────────────────────────────────── -->
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        title="Je privilégie la proximité"
-        lede="Pour tout ce qui se touche ou se montre, être à vingt minutes change la nature du service. Pour le reste, la distance ne change rien."
+        title="Proximité et réactivité locale"
+        lede="Déplacement sans surcoût jusqu'à 15 km autour de Rivesaltes (Perpignan et communes voisines). Au-delà ou pour vos sites web, tout est également réalisable à distance."
       />
       <div class="mt-12 grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div class="panel p-[clamp(1rem,2.5vw,2rem)]" data-reveal><ZoneRadar /></div>
         <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]" data-reveal>
           <Image
             src={cote}
-            alt="Mains sur le clavier d'un ordinateur portable pendant une intervention à distance"
+            alt="Mains sur le clavier d'un ordinateur portable pendant une intervention d'assistance informatique"
             loading="lazy" decoding="async"
             widths={[480, 768, 1100]}
             sizes="(width >= 62rem) 40vw, 100vw"
@@ -315,8 +331,10 @@ const besoinsEntreprises = [
   <!-- ─── FAQ ──────────────────────────────────────────── -->
   <FaqSection title="Ce qu'on me demande avant d'appeler" items={faq} />
 
+  <!-- ─── BANDEAU FINAL ────────────────────────────────── -->
   <CtaBand
-    title="Dites-moi ce qui ne va pas."
-    text="Quelques lignes suffisent : la machine, le symptôme, ou le projet, depuis quand. Je réponds avec un plan concret et un ordre de prix, avant tout engagement."
+    title="Un problème d'ordinateur ou un projet de site web ?"
+    text="Quelques lignes suffisent : la panne rencontrée, le matériel concerné ou ce que vous souhaitez pour votre activité. Je vous réponds avec une estimation claire et sans aucun engagement."
+    cta="Demander un devis"
   />
 </Base>

@@ -7,52 +7,49 @@ import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { Image } from 'astro:assets';
 import cote from '../assets/cote.jpg';
 
-/* Le parcours, raconté couche par couche : chaque étape allume la couche
-   correspondante de la pile 3D (LayerStack). Les couches sont de vrais
-   niveaux d'abstraction, de ce que l'utilisateur touche jusqu'au
-   processeur : « un étage plus bas » à chaque fois. */
-const couches = ['Interface', 'Réseau', 'Service', 'Système', 'Matériel'];
+/* Le parcours, raconté couche par couche */
+const couches = ['Matériel', 'Système', 'Réseau', 'Web & Outils', 'Proximité'];
 
 const etapes = [
   {
-    t: "J'ai commencé par ce que les gens voient.",
-    d: "Le poste qui rame, le site qui ne répond plus. Ce métier apprend une chose que le diplôme n'apprend pas : la panne décrite au téléphone n'est presque jamais la panne réelle. Vérifier avant de conclure.",
-    fil: "C'est toujours mon quotidien : dépannage, formation à l'IA, sites web, sécurité et confinement du code IA.",
+    t: "Le matériel : remettre en état plutôt que jeter.",
+    d: "Un composant en panne, un disque dur d'origine essoufflé, une surchauffe : dans la grande majorité des cas, un diagnostic précis et le remplacement d'une seule pièce (comme un passage sur SSD) redonne plusieurs années de vie à votre ordinateur sans racheter de machine neuve.",
+    fil: "Mon approche : réparer ce qui peut l'être avec bon sens et rentabilité pour vous.",
+  },
+  {
+    t: "Le système : un environnement propre et réactif.",
+    d: "Windows et macOS s'encrassent vite : logiciels publicitaires indésirables, pilotes mal réglés, lenteurs au démarrage. Je nettoie le système, élimine les logiciels parasites et sécurise vos accès pour que votre outil de travail ou de maison réponde instantanément.",
+  },
+  {
+    t: "Le réseau : connecter vos équipements sans prise de tête.",
+    d: "Box internet, partage Wi-Fi dans toute la maison, imprimante en réseau, sauvegardes automatiques. Je configure vos appareils pour qu'ils fonctionnent ensemble de manière fluide et transparente au quotidien.",
+  },
+  {
+    t: "Le web & les outils : une présence locale claire et efficace.",
+    d: "Pour les artisans et petites entreprises, concevoir un site web sobre, rapide et bien référencé sur Google Maps est essentiel. Pas de complication technique : je crée votre vitrine en ligne et m'occupe du suivi pour que vos clients locaux vous appellent directement.",
+    fil: "Deux activités complémentaires : dépanner vos postes informatiques et valoriser votre savoir-faire sur internet.",
     liens: [
-      { href: '/particuliers/', label: 'Pour les particuliers' },
-      { href: '/professionnels/', label: 'Pour les entreprises' },
+      { href: '/particuliers/', label: 'Services Particuliers' },
+      { href: '/professionnels/', label: 'Services Professionnels' },
     ],
   },
   {
-    t: "Puis le serveur, parce qu'il le fallait.",
-    d: "Un client avait besoin d'un site, puis d'un serveur pour l'héberger, puis de sauvegardes qui fonctionnent vraiment. Chaque couche s'apprend quand celle du dessus ne suffit plus.",
-  },
-  {
-    t: 'Sous le site, le service qui répond.',
-    d: "Pour le back-end, le Go : un seul binaire, peu de dépendances, un code qu'on relit sans effort. Le genre de logiciel qu'on oublie parce qu'il tient.",
-  },
-  {
-    t: 'Plus bas, le C et Win32 : là où tout se paie.',
-    d: "La mémoire qu'on alloue soi-même, le système qu'on appelle sans intermédiaire. C'est là que j'écris un petit langage de programmation, une bibliothèque graphique au-dessus de Win32, et le confinement natif d'agents.",
-  },
-  {
-    t: 'Tout en bas : le calcul, au plus près du processeur.',
-    d: "Caches, registres, instructions vectorielles. Une bibliothèque d'algèbre linéaire poussée jusqu'à la machine, et un petit moteur d'inférence pour modèles d'IA bâti dessus.",
-    fil: "Des domaines différents, une même démarche : comprendre la couche du dessous, puis écrire l'outil qui manquait. Fabriquer les pelles plutôt que chercher l'or.",
-    note: "Travail personnel, au long cours. Rien n'est présenté comme acquis tant que ce n'est pas publié, mesuré et vérifiable. Le blog en rendra compte.",
+    t: "La proximité : un artisan informatique à vos côtés.",
+    d: "Je travaille en indépendant : vous avez un contact direct, qui se déplace chez vous ou vous reçoit en atelier, sans intermédiaire ni ticket de support impersonnel. Tout ce qui est fait est documenté et vos accès restent toujours chez vous.",
+    note: "Un engagement simple : le prix est annoncé avant de commencer, et si une réparation ne vaut pas son coût, je vous le dis franchement.",
   },
 ];
 
 const principes = [
-  { t: 'Le devis avant la clé de douze', d: "Rien ne s'ouvre avant d'avoir annoncé ce que je fais, le temps et le prix." },
-  { t: 'Documenter ce que je laisse', d: "Tout est écrit et versionné ; les accès de secours restent chez vous." },
-  { t: 'Dire quand je ne sais pas', d: "Hors de mon périmètre, je vous oriente plutôt que d'apprendre à vos frais." },
-  { t: "Mesurer plutôt qu'affirmer", d: "Ce qui n'est pas mesuré ne va ni dans un rapport, ni sur ce site." },
+  { t: 'Le prix annoncé avant de commencer', d: "Rien ne démarre sans votre accord préalable sur le temps et le coût." },
+  { t: 'Des explications en français', d: "Pas de jargon technique pour faire savant. Tout est expliqué simplement." },
+  { t: 'Vos accès restent chez vous', d: "Vos comptes, vos mots de passe et vos fichiers vous appartiennent." },
+  { t: 'Transparence et bon sens', d: "Si réparer coûte plus cher que racheter, je vous le dis franchement." },
 ];
 ---
 <Base
-  title="À propos · Elian, technicien informatique à Rivesaltes"
-  description="Technicien informatique à Rivesaltes (66) : dépannage, formation à l'IA, sites web, et un travail de fond en développement bas niveau, rétro-ingénierie et sécurisation Windows."
+  title="À propos · Elian Brodhag, informaticien à Rivesaltes (66)"
+  description="À propos d'E Informatique (Elian Brodhag) : artisan informaticien à Rivesaltes. Dépannage informatique de proximité et création de sites web locaux dans les Pyrénées-Orientales."
 >
   <!-- ─── Récit en couches : texte qui défile, pile 3D fixe ─────── -->
   <section class="relative isolate overflow-x-clip">
@@ -62,11 +59,10 @@ const principes = [
       <div class="pt-[clamp(2.5rem,5vw,4.5rem)]">
         <div class="lg:flex lg:min-h-[calc(100dvh-7rem)] lg:flex-col lg:justify-center lg:pb-24">
           <p class="chip rise self-start pl-[0.8rem]" style="--i:0">À propos</p>
-          <h1 class="rise mt-6 max-w-[16ch] text-[clamp(2.4rem,1.1rem+3.8vw,4.2rem)]/[1.02]" style="--i:1">Une personne, un périmètre, des preuves.</h1>
+          <h1 class="rise mt-6 max-w-[16ch] text-[clamp(2.4rem,1.1rem+3.8vw,4.2rem)]/[1.02]" style="--i:1">Un artisan de proximité pour votre informatique.</h1>
           <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:2">
-            Je m'appelle Elian. Je travaille seul : vous avez un interlocuteur unique, et
-            tout ce que je laisse derrière moi peut être repris par n'importe qui.
-            Ma trajectoire de fond : développement bas niveau, rétro-ingénierie et recherche sur la sécurisation des agents sous environnement Windows.
+            Je m'appelle Elian Brodhag (E Informatique). Je travaille en indépendant à Rivesaltes auprès des particuliers, des artisans et des TPE du Roussillon.
+            Mon rôle : être votre contact unique pour réparer vos ordinateurs, fiabiliser votre matériel et faire rayonner votre activité sur internet.
           </p>
         </div>
 
@@ -106,7 +102,7 @@ const principes = [
   <section class="pb-[var(--spacing-band)]">
     <div class="shell">
       <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
-        <SectionHead title="Quatre principes qui tiennent depuis le début" />
+        <SectionHead title="Quatre engagements qui guident chaque journée" />
         <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-x-12 gap-y-10 p-0 md:grid-cols-2">
           {principes.map((p, i) => (
             <li class="grid grid-cols-[2.5rem_1fr] gap-4" data-reveal>
@@ -128,7 +124,7 @@ const principes = [
       <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]">
         <Image
           src={cote}
-          alt="Mains sur le clavier d'un ordinateur portable pendant une intervention"
+          alt="Intervention informatique de précision sur ordinateur portable à Rivesaltes"
           loading="lazy"
           decoding="async"
           widths={[560, 900, 1300]}
@@ -138,25 +134,21 @@ const principes = [
         />
       </figure>
       <div>
-        <SectionHead title="Rivesaltes, et pas ailleurs" />
+        <SectionHead title="Rivesaltes et les Pyrénées-Orientales" />
         <p class="mt-5 max-w-[46ch] text-lede/[1.5] text-ink-soft">
-          La distance fonctionne pour presque tout. Presque : une machine qui ne
-          s'allume plus, ou l'IA qu'on préfère se faire montrer, demandent quelqu'un
-          à vingt minutes, dans la journée.
+          Être à proximité immédiate change tout : un ordinateur qui refuse de démarrer, une panne bloquante ou un site web à construire autour d'un café demandent un artisan disponible, sur place et réactif.
         </p>
       </div>
     </div>
   </section>
 
   <CtaBand
-    title="Le plus simple reste de décrire votre situation."
-    text="Particulier ou entreprise, la première réponse est toujours la même : un avis honnête, et un ordre de prix. Ensuite, vous décidez."
+    title="Besoin d'un dépannage ou d'un site web ?"
+    text="Particulier, artisan ou commerçant : appelez-moi ou écrivez-moi. Je vous donne un premier avis honnête et une estimation claire, sans engagement."
   />
 </Base>
 
 <style>
-  /* Étape en cours : le filet de gauche passe à l'accent. Le texte ne
-     s'éteint jamais autour, il reste lisible à pleine intensité. */
   .etape { transition: border-color 0.3s ease; }
   .etape.is-active { border-color: var(--color-accent); }
 </style>
