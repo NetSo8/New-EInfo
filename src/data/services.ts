@@ -73,19 +73,19 @@ export const services: Service[] = [
   {
     id: 'revue-ia',
     n: '04',
-    titre: 'Sécurité de code & Confinement IA (Windows)',
+    titre: 'Maintenance & Administration Windows (PME)',
     probleme:
-      "Vous intégrez du code IA ou des agents autonomes sur votre infrastructure Windows. Audit de sécurité des scripts générés, contrôle des flux et isolation des exécutions (sandboxing) pour protéger vos données métier.",
+      "Votre parc informatique ralentit, vos postes et serveurs Windows manquent de suivi, ou vous devez fiabiliser vos sauvegardes et vos accès.",
     resume:
-      "Une IA générative écrit du code qui fonctionne, pas nécessairement du code sûr ni confiné : secrets exposés, accès fichiers non restreints, requêtes arbitraires ou dépendances inventées. J'audite vos scripts et je sécurise l'exécution locale de vos agents IA sous Windows : isolation sandbox (AppContainer, Job Objects), restriction des privilèges et blocage des flux non autorisés.",
+      "Gestion, sécurisation et maintenance de votre environnement Windows : suivi des mises à jour, gestion des droits et comptes utilisateurs, sauvegardes locales et distantes, scripts d'automatisation et résolution des pannes système pour assurer la continuité de votre activité.",
     pour: ['entreprise'],
     livrables: [
-      'Audit de sécurité et relecture manuelle du code généré par IA',
-      'Rapport priorisé : vulnérabilités critiques, secrets exposés, dépendances inventées',
-      'Confinement d\'exécution sous Windows : isolation sandbox (AppContainer, Job Objects)',
-      'Contrôle des flux réseau (WFP) et protection des données métier locales',
-      'Corrections appliquées ou plan de durcissement documenté pour votre équipe',
+      'Audit de configuration, inventaire et état de santé du parc Windows',
+      'Maintien en conditions opérationnelles des postes et serveurs Windows',
+      'Politique de sauvegarde testée et plan de reprise d\'activité',
+      'Gestion des droits, comptes utilisateurs et durcissement système',
+      'Assistance rapide sur site ou à distance en cas d\'incident',
     ],
-    motscles: 'sécurité code IA Windows Perpignan, confinement agent IA sandboxing Rivesaltes, audit scripts IA 66',
+    motscles: 'maintenance informatique Windows PME Perpignan, administration système Windows Rivesaltes, support informatique entreprise 66',
   },
 ];

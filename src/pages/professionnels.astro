@@ -11,70 +11,62 @@ import { services } from '../data/services';
 import { Image } from 'astro:assets';
 import baie from '../assets/baie.jpg';
 
-
 const pro = services.filter((s) => s.pour.includes('entreprise'));
 
 const formules = [
   {
     n: '01',
     t: 'Intervention ponctuelle',
-    q: "Un site à construire, une fonctionnalité à ajouter, ou un lot de code généré par IA à faire relire avant la mise en production.",
-    l: ['Facturation à l\'heure ou au forfait projet', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
+    q: "Un poste en panne, un problème réseau, une mise à niveau matérielle ou une intervention ciblée sur vos systèmes Windows.",
+    l: ['Facturation à l\'heure ou au forfait intervention', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
     p: 'Devis avant démarrage',
   },
   {
     n: '02',
-    t: 'Infogérance mensuelle',
-    q: "Vous voulez que le site tourne sans y penser, avec quelqu'un à appeler.",
+    t: 'Infogérance de site web',
+    q: "Vous voulez que votre site internet tourne sans y penser, avec un interlocuteur direct en cas de besoin.",
     l: [
       'Supervision continue du site et de sa disponibilité',
-      'Mises à jour, sauvegardes vérifiées, correctifs de sécurité',
-      'Relecture du code livré par un prestataire ou une IA avant chaque mise en ligne',
-      'Rapport mensuel lisible, sans jargon',
+      'Mises à jour, sauvegardes régulières et vérifiées',
+      'Correctifs de sécurité et assistance technique',
+      'Rapport régulier lisible, sans jargon technique',
     ],
     p: 'Forfait mensuel, après cadrage',
   },
   {
     n: '03',
-    t: 'Audit de sécurité & Confinement IA',
-    q: "Votre équipe intègre du code généré ou des agents autonomes sur votre infrastructure Windows, sans cloisonnement ni vérification de ce qui tourne en production.",
+    t: 'Maintenance & Parc Windows PME',
+    q: "Vos postes et serveurs Windows demandent un suivi régulier pour éviter les pannes, les lenteurs et sécuriser vos données métier.",
     l: [
-      "Cartographie du code et des dépendances générées par IA",
-      "Détection des vulnérabilités, secrets en dur et comportements non maîtrisés",
-      "Confinement d'exécution des agents sous Windows : sandboxing et isolation des flux",
-      'Rapport priorisé et correctifs de durcissement directement exploitables',
+      "Audit régulier de l'état de santé des postes de travail",
+      "Suivi des mises à jour Windows et des logiciels métiers",
+      "Mise en place et contrôle régulier des sauvegardes",
+      'Gestion des droits d\'accès et assistance rapide aux utilisateurs',
     ],
-    p: 'Devis après échange',
+    p: 'Forfait adapté à la taille du parc',
     bridge: true,
   },
 ];
 
 const faq = [
-  { q: "Vous remplacez notre développeur ou notre agence ?", a: "Pas nécessairement. Je peux relire ce qu'ils livrent avant la mise en ligne, reprendre un projet abandonné, ou construire et maintenir le site en direct si vous n'avez personne d'autre. Vous décidez du périmètre." },
-  { q: "Comment vous détectez les problèmes propres à Copilot, Cursor ou ChatGPT ?", a: "Chaque assistant a ses tics : tel modèle laisse des secrets en dur plus souvent, tel autre invente des noms de dépendances plausibles. Je relis en connaissant ces schémas récurrents, pas seulement les motifs génériques qu'un linter automatique connaît déjà." },
-  { q: "Vous corrigez directement le code, ou juste un rapport ?", a: "Les deux sont possibles. Un rapport priorisé si votre équipe préfère corriger elle-même, des correctifs directs si vous voulez que ce soit réglé. Le tarif suit ce choix." },
-  { q: "C'est confidentiel ? Vous voyez notre code source.", a: "Oui. Le code n'est partagé avec personne d'autre, et rien n'en est conservé après la mission sauf accord contraire. Un accord de confidentialité peut être signé avant tout accès." },
-  { q: "Vous administrez nos serveurs ?", a: "Je configure et j'exploite les serveurs Linux et les VPS dont dépend le site, et je les documente pour qu'un autre puisse les reprendre. Si votre activité repose sur un parc de serveurs déjà important, un administrateur système à temps plein sera plus pertinent que moi, et je le dis avant de commencer plutôt qu'après." },
-  { q: "Que se passe-t-il si vous n'êtes pas disponible ?", a: "C'est la vraie limite d'un freelance et je ne la cache pas. Tout ce que je gère est documenté et reproductible, les accès de secours sont détenus par le dirigeant, et rien ne dépend d'un savoir qui resterait dans ma tête. Un confrère peut reprendre sans repartir de zéro." },
-  { q: "Pourquoi aucun tarif n'est affiché ?", a: "Parce qu'un forfait annoncé sans avoir vu le projet est soit trop cher pour vous, soit intenable pour moi. Le premier échange de trente minutes est gratuit et suffit en général à donner un ordre de grandeur ferme, avant tout engagement." },
-];
-
-const bridgeItems = [
-  { t: 'Harnais de confinement pour agents Windows', d: "Exécution isolée d'un agent IA : sandboxing AppContainer, restriction des privilèges et filtrage WFP." },
-  { t: 'Scanner de code généré par IA', d: 'Patterns dangereux propres à chaque assistant : Copilot, Cursor, Claude et GPT ont chacun leurs tics.' },
-  { t: 'Orchestrateur de vérification', d: "Typage, analyse statique, cohérence entre le README et l'implémentation réelle, en un seul passage." },
-  { t: 'Outillage de migration post-quantique', d: 'Préparer le remplacement des algorithmes actuels par des versions résistantes (Kyber, Dilithium).' },
+  { q: "Vous remplacez un service informatique ?", a: "Pour une TPE ou PME qui n'a pas la taille d'avoir un service informatique interne, j'assure ce rôle : maintenance des machines, assistance aux utilisateurs, gestion du site et interlocuteur unique pour vos questions techniques." },
+  { q: "Comment se déroule la maintenance de nos postes Windows ?", a: "On commence par un état des lieux : inventaire des machines, état des sauvegardes, logiciels installés et points de blocage. Ensuite, un plan d'action préventif est mis en place pour que vos équipes travaillent sans ralentissement." },
+  { q: "Intervenez-vous sur site ou à distance ?", a: "Les deux. Beaucoup d'opérations et de dépannages se font à distance en quelques minutes pour ne pas bloquer vos collaborateurs. Pour les interventions matérielles, les installations réseau ou les pannes bloquantes, je me déplace directement dans vos locaux dans les Pyrénées-Orientales." },
+  { q: "C'est confidentiel ? Vous avez accès à nos données de travail.", a: "Oui, la confidentialité est absolue. Rien n'est partagé ni conservé en dehors des besoins stricts de votre mission de support. Un accord de confidentialité (NDA) peut être formalisé avant toute prise en main." },
+  { q: "Vous administrez nos serveurs ?", a: "Oui, qu'il s'agisse de serveurs Windows locaux (partages de fichiers, gestion des accès) ou de serveurs d'hébergement web sous Linux. Tout est documenté pour que votre entreprise garde toujours la main sur ses identifiants." },
+  { q: "Que se passe-t-il en cas d'urgence ?", a: "Vous m'appelez directement, sans passer par un standard téléphonique ou un système de tickets impersonnel. Si l'incident est bloquant, un diagnostic à distance est lancé immédiatement ou une intervention sur site est programmée." },
+  { q: "Pourquoi aucun tarif fixe n'est affiché ?", a: "Parce qu'une entreprise de 3 postes n'a pas les mêmes besoins qu'une PME de 25 machines avec un serveur de données. Le premier échange d'une trentaine de minutes permet de dimensionner le forfait exact, au juste prix et sans mauvaise surprise." },
 ];
 ---
 <Base
-  title="Création de site web et sécurité de code IA · Perpignan (66)"
-  description="Création et maintenance de site web, audit de sécurité et confinement IA sous Windows pour les entreprises des Pyrénées-Orientales."
+  title="Maintenance informatique Windows & Sites web pour PME · Perpignan (66)"
+  description="Maintenance de parc informatique Windows, dépannage, création de sites web et administration système pour les TPE/PME des Pyrénées-Orientales."
 >
   <PageHead
-    kicker="Création de site web et sécurité de code IA · TPE et PME"
+    kicker="Maintenance informatique Windows & Sites web · TPE et PME"
     motcle
     title="Je fais deux choses, et je les fais bien."
-    lede="Vous n'avez pas de service informatique et vous n'en aurez pas. Je construis et je maintiens votre site, et je sécurise le code et les agents IA déployés sur votre infrastructure. Ce qui sort de ce périmètre, je le dis et je vous oriente."
+    lede="Vous n'avez pas de service informatique et vous n'en avez pas besoin d'un à temps plein. Je maintiens et fiabilise vos postes et serveurs Windows au quotidien, et je conçois et fais tourner votre site web. Un seul contact direct, sans intermédiaire."
   >
     <div class="flex flex-wrap items-center gap-3">
       <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
@@ -88,33 +80,31 @@ const bridgeItems = [
     <div class="shell">
       <SectionHead
         title="Ce que je trouve en arrivant"
-        lede="Ce relevé n'a rien d'exceptionnel : c'est la situation ordinaire d'un script ou agent IA déployé sur un poste Windows sans avoir verrouillé ses privilèges ni ses accès."
+        lede="Ce relevé montre la réalité fréquente d'un poste Windows en entreprise non maintenu : disques encombrés, mises à jour en souffrance et sauvegardes non fonctionnelles."
       />
       <div class="mt-12 grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
         <div class="panel on-nuit border-transparent bg-nuit p-[clamp(0.75rem,2vw,1.5rem)]">
           <Terminal
-            title="revue : audit runtime agent IA sur Windows (Win32/NT)"
+            title="audit-parc : vérification poste Windows de travail"
             prompt=">"
             lines={[
-              { k: 'cmd', t: 'win-sandbox.exe --check-token --pid 4180' },
-              { k: 'warn', t: '[PID 4180] Agent IA s\'exécute avec les privilèges MediumIL (inadéquat)' },
-              { k: 'warn', t: 'Clé HKCU:\\Software\\AppData accessible en écriture par le subprocess' },
-              { k: 'ok', t: 'AppContainer actif : isolation du système de fichiers validée' },
-              { k: 'ok', t: 'Règles WFP : trafic réseau externe bloqué (mode local strict)' },
-              { k: 'out', t: 'Rapport    : 2 failles d\'isolation corrigées, confinement Job Object appliqué' },
+              { k: 'cmd', t: 'systeminfo & health-check.bat' },
+              { k: 'warn', t: 'Mises à jour de sécurité Windows : 14 correctifs en attente' },
+              { k: 'warn', t: 'Disque C: (SSD) saturé à 92% — ralentissements système mesurés' },
+              { k: 'warn', t: 'Dernière sauvegarde locale : il y a 83 jours (support déconnecté)' },
+              { k: 'ok', t: 'Nettoyage et optimisation stockage : 64 Go d\'espace récupérés' },
+              { k: 'ok', t: 'Planification sauvegarde automatique et journalisation active' },
+              { k: 'out', t: 'Poste réactif, sécurisé et prêt pour la reprise d\'activité' },
             ]}
           />
         </div>
 
         <div class="flex flex-col items-start gap-4 text-base text-ink-soft">
           <p>
-            Aucune de ces lignes ne provoque de panne immédiate. Elles décident
-            simplement de ce qui se passera si l'agent exécute du code non fiable :
-            un accès direct aux données locales, ou un confinement étanche.
+            Ces alertes ne déclenchent pas toujours une panne visible tout de suite. Mais le jour où un disque lâche ou qu'un logiciel plante, l'absence de sauvegarde paralyse votre activité.
           </p>
           <p>
-            L'audit et le confinement servent à transformer ces risques en garanties
-            système vérifiables, avec un ordre de priorité et une isolation stricte.
+            La maintenance préventive permet de désamorcer ces blocages avant qu'ils ne coûtent du temps et de l'argent à vos collaborateurs.
           </p>
         </div>
       </div>
@@ -126,7 +116,7 @@ const bridgeItems = [
     <div class="shell">
       <SectionHead
         title="Trois façons de travailler ensemble"
-        lede="On commence rarement par la troisième. On finit souvent par la deuxième."
+        lede="D'une intervention d'urgence ponctuelle à un accompagnement mensuel complet de votre parc."
       />
 
       <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
@@ -159,9 +149,7 @@ const bridgeItems = [
       </ul>
 
       <p class="mt-6 max-w-[62ch] text-base text-ink-soft">
-        Aucune grille tarifaire affichée : le montant dépend de la taille du projet, du
-        volume de code à relire et du niveau de disponibilité attendu. Il est chiffré
-        après le premier échange, par écrit, et ne bouge plus sans votre accord.
+        Aucune mauvaise surprise : le montant est annoncé et cadré après le premier échange technique, par écrit, et ne bouge plus sans votre validation.
       </p>
     </div>
   </section>
@@ -171,7 +159,7 @@ const bridgeItems = [
     <div class="shell">
       <SectionHead
         title="Deux chantiers, et c'est volontaire"
-        lede="Le site web d'un côté, la sécurité et le confinement du code IA de l'autre. Un périmètre étroit assumé : c'est ce qui me permet d'aller plus loin que la liste de contrôle sur les deux."
+        lede="La création et maintenance de votre site web d'un côté, la maintenance et l'administration de vos postes Windows de l'autre. Un périmètre concret pour vous garantir une disponibilité réelle."
       />
       <div class="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)]">
         {pro.map((s) => (
@@ -205,63 +193,10 @@ const bridgeItems = [
     </div>
   </section>
 
-  <!-- ─── Recherche en cours : panneau sombre contenu ──── -->
-  <section class="pb-[var(--spacing-band)]" aria-labelledby="labo-t">
-    <div class="shell">
-      <div class="panel on-nuit border-transparent bg-nuit px-[clamp(1.4rem,4.5vw,4rem)] py-[clamp(2.5rem,5vw,4.5rem)] text-ink">
-        <span class="badge" aria-hidden="true">En construction</span>
-        <h2 class="mt-5 max-w-[22ch] text-[clamp(1.9rem,1.1rem+2.8vw,3.25rem)]/[1.04] tracking-[-0.035em]" id="labo-t">Ce qui se construit derrière, pas encore facturé</h2>
-        <p class="mt-5 max-w-[58ch] text-lede/[1.5] text-ink-soft">
-          Je construis, à titre personnel, des outils pour sécuriser le code et les
-          agents produits par l'IA : harnais d'exécution, scanners, orchestrateurs de
-          vérification. Rien de ce qui suit n'est vendu tant que ce n'est pas publié et
-          vérifiable : c'est la direction, pas une prestation du jour.
-        </p>
-
-        <div class="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <h3 class="label mb-4">Ce qui se construit</h3>
-            <ul class="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
-              {bridgeItems.map((b) => (
-                <li class="rounded-[var(--radius-lg)] border border-rule bg-nuit-2 p-5">
-                  <p class="font-semibold text-ink">{b.t}</p>
-                  <p class="mt-1 text-[0.93rem]/[1.5] text-ink-soft">{b.d}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="label mb-4">À quoi ça ressemble aujourd'hui</h3>
-            <Terminal
-              title="prototype personnel : ia-scan"
-              lines={[
-                { k: 'cmd', t: 'ia-scan run --model copilot ./repo' },
-                { k: 'ok', t: 'typage       0 erreur, 412 fichiers' },
-                { k: 'warn', t: 'secrets      2 clés API trouvées en dur' },
-                { k: 'warn', t: "dépendances  1 paquet introuvable sur npm (halluciné)" },
-                { k: 'dim', t: 'prototype personnel, pas encore public' },
-              ]}
-            />
-          </div>
-        </div>
-
-        <div class="mt-12 flex flex-col items-start gap-5 border-t border-rule pt-8 lg:flex-row lg:items-center lg:justify-between">
-          <p class="max-w-[58ch] text-base text-ink-soft">
-            Si votre entreprise fait déjà tourner des agents IA en production et que le
-            sujet vous concerne, dites-le-moi : je préviens en priorité les personnes
-            intéressées quand l'un de ces outils sort de la phase de prototype.
-          </p>
-          <a class="btn btn--nuit-ghost" href="/contact/">Être prévenu <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <FaqSection title="Les objections légitimes" items={faq} />
+  <FaqSection title="Les questions fréquentes" items={faq} />
 
   <CtaBand
-    title="Trente minutes pour savoir où vous en êtes."
-    text="Un échange sans engagement : votre projet, ce qui vous inquiète, ce que votre équipe a déjà produit avec une IA. Vous repartez avec un premier avis, même si nous ne travaillons pas ensemble."
+    title="Trente minutes pour faire le point sur votre informatique."
+    text="Un premier échange sans engagement : vos postes, vos sauvegardes, vos pannes récurrentes ou votre site web. Vous repartez avec un avis direct et un ordre de grandeur clair."
   />
 </Base>
