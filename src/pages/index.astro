@@ -21,20 +21,19 @@ import baie from '../assets/baie.jpg';
 
 /* Disposition des tuiles dans la grille */
 const tuiles: Record<string, { span: string; tone: 'photo' | 'sand' | 'raised' | 'nuit'; img?: ImageMetadata }> = {
-  depannage: { span: 'lg:col-span-2', tone: 'photo', img: atelier },
-  'formation-ia': { span: '', tone: 'sand' },
-  web: { span: '', tone: 'raised' },
-  'revue-ia': { span: 'lg:col-span-2', tone: 'nuit', img: paysage },
+  depannage: { span: 'lg:col-span-1', tone: 'raised' },
+  reseau: { span: 'lg:col-span-1', tone: 'raised' },
+  web: { span: 'lg:col-span-1', tone: 'raised' },
 };
 
 const faq = [
   {
-    q: "Vous vous déplacez jusqu'où ?",
-    a: "Je me déplace sans supplément dans un rayon de 15 km autour de Rivesaltes, ce qui couvre Perpignan et les communes proches (Baixas, Salses, Cabestany, Le Barcarès, Saint-Estève, Bompas, Pia...). Au-delà, un forfait kilométrique est annoncé avant l'intervention. L'assistance logicielle et les projets web se font aussi à distance partout en France.",
+    q: "Où intervenez-vous ?",
+    a: "J'interviens sur place ou sur dépôt à Perpignan, Rivesaltes et dans les communes alentours (Pyrénées-Orientales - 66). Pour le dépannage logiciel (télémaintenance sécurisée) et la création de sites web, j'interviens à distance partout en France.",
   },
   {
     q: "Combien coûte une intervention ?",
-    a: "Le diagnostic est clair et chiffré avant que je commence. Pour les dépannages, la facturation se fait à l'heure ou au forfait selon l'opération (changement de disque SSD, réinstallation, etc.). Pour les sites web et la maintenance d'entreprise, un devis forfaitaire précis est établi après un premier échange gratuit.",
+    a: "Le premier diagnostic écrit est gratuit et sans engagement. Vous recevez une estimation claire du temps et du coût avant que je commence quoi que ce soit. Aucune mauvaise surprise sur la facture.",
   },
   {
     q: "Je n'y connais rien en informatique, est-ce un problème ?",
@@ -59,8 +58,8 @@ const engagements = [
   },
   {
     icon: FileText,
-    t: 'Vos accès restent chez vous',
-    d: "Vos mots de passe, vos comptes et vos codes restent votre propriété exclusive. Tout ce qui est configuré est noté sur une fiche récapitulative.",
+    t: 'Vos données restent privées',
+    d: "Vos mots de passe, vos comptes et vos fichiers restent votre propriété exclusive. Tout ce qui est configuré vous est remis clairement.",
   },
   {
     icon: Compass,
@@ -70,25 +69,26 @@ const engagements = [
 ];
 
 const pannesCourantes = [
-  "Ordinateur très lent, blocages au démarrage",
-  "Virus, fenêtres publicitaires suspectes, piratage de compte",
-  "Écran noir, panne de chargeur, ordinateur qui ne s'allume plus",
-  "Photos et documents à récupérer ou sauvegarder",
-  "Wi-Fi faible, imprimante bloquée, box internet à configurer",
-  "Initiation pratique aux outils numériques et à l'IA du quotidien",
+  "Nettoyage système, suppression de lenteurs et virus",
+  "Réinstallation propre de Windows ou Linux, configuration initiale",
+  "Sauvegarde et sécurisation des données personnelles ou professionnelles",
+  "Résolution de pannes à distance (télémaintenance) ou en atelier",
+  "Optimisation du Wi-Fi à domicile (zones blanches, répéteurs, CPL)",
+  "Installation de box internet, imprimantes réseau et serveurs de fichiers NAS",
 ];
 
 const besoinsEntreprises = [
-  "Création ou refonte de site web vitrine rapide et adapté aux mobiles",
-  "Visibilité sur Google & Google Maps pour que les clients locaux vous appellent",
-  "Postes et serveurs Windows entretenus pour éviter les pannes en plein travail",
-  "Sauvegardes automatiques fiables pour protéger vos données professionnelles",
-  "Un artisan de proximité disponible directement, sans intermédiaire",
+  "Création de sites vitrines modernes, ultra-rapides et visibles sur mobile",
+  "Formulaires sur mesure, petites automatisations et backends légers",
+  "Hébergement sobre et rapide, sans abonnements cachés ni usines à gaz",
+  "Réseaux d'entreprise, switchs, routeurs et imprimantes partagées",
+  "Serveurs NAS locaux pour sauvegarder automatiquement factures et documents",
+  "Un interlocuteur unique et réactif, travail soigné et respect de vos données",
 ];
 ---
 <Base
-  title="Dépannage informatique & Sites Web à Rivesaltes et Perpignan (66)"
-  description="Dépannage et réparation d'ordinateurs, assistance à domicile, création de sites vitrines et maintenance informatique pour particuliers, artisans et TPE des Pyrénées-Orientales."
+  title="Dépannage informatique, Réseau Wi-Fi & Sites Web · Perpignan (66) | einformatique.fr"
+  description="Prestataire informatique indépendant à Perpignan et à distance : dépannage PC & Mac, optimisation réseau Wi-Fi, sauvegardes NAS et création de sites web sobres pour particuliers, artisans et TPE."
 >
   <!-- ─── HERO ─────────────────────────────────────────── -->
   <section class="relative isolate overflow-hidden pt-[clamp(2rem,4.5vw,4.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
@@ -97,24 +97,24 @@ const besoinsEntreprises = [
       <div>
         <h1>
           <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0">
-            <span class="chip__mark" aria-hidden="true">66</span>Rivesaltes · Perpignan · Pyrénées-Orientales
+            <span class="chip__mark" aria-hidden="true">66</span>Premier diagnostic transparent · Perpignan & à distance
           </span>
           <span class="rise mt-7 block text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
-            Votre informatique en ordre de marche.<br /><span class="text-accent">Vos outils, votre site web.</span>
+            Votre informatique et vos outils web,<br /><span class="text-accent">enfin simples, rapides et fiables.</span>
           </span>
         </h1>
 
-        <p class="rise mt-6 max-w-[42ch] text-lede/[1.5] text-ink-soft" style="--i:2">
-          Dépannage et maintenance de vos ordinateurs sur place ou en atelier, création et suivi de sites web pour artisans, commerçants et particuliers. Un interlocuteur unique, sans intermédiaire.
+        <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:2">
+          Dépannage PC &amp; Mac, optimisation réseau Wi-Fi et création de sites web sobres pour les particuliers, artisans et petites entreprises. Un interlocuteur unique, des explications claires et un travail soigné, dans le strict respect de vos données.
         </p>
 
         <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
-          <a class="btn btn--cta" href="/contact/">Demander un diagnostic <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
+          <a class="btn btn--cta" href="/contact/">Demander un diagnostic écrit <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
           <a class="btn btn--ghost" href="#services">Découvrir les prestations</a>
         </div>
 
         <p class="rise mt-4 text-[0.85rem] text-ink-soft" style="--i:4">
-          Déplacement inclus jusqu'à 15 km autour de Rivesaltes · Devis annoncé avant toute intervention.
+          Réponse écrite rapide avec estimation claire avant toute intervention · Sans engagement.
         </p>
       </div>
 
@@ -138,22 +138,11 @@ const besoinsEntreprises = [
   <!-- ─── DOUBLE AIGUILLAGE ────────────────────────────── -->
   <section class="pb-[clamp(3.5rem,6vw,6rem)]" aria-label="Choisir votre parcours">
     <div class="shell grid grid-cols-1 gap-5 lg:grid-cols-2">
-      <!-- Volet Particuliers -->
-      <div class="panel flex flex-col gap-[1.1rem] border-transparent bg-sand px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
-        <Image
-          src={atelier}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          widths={[480, 800, 1200]}
-          sizes="(width >= 62rem) 45vw, 100vw"
-          quality={35}
-          class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07] grayscale contrast-125"
-        />
+      <!-- Volet Particuliers (sans fond / épuré) -->
+      <div class="panel flex flex-col gap-[1.1rem] border border-rule bg-transparent px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
         <span class="badge badge--accent self-start" aria-hidden="true">Particuliers & Domicile</span>
         <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
-          <span class="sr-only">Pour les particuliers : </span>Mon ordinateur rame, est bloqué ou je veux apprendre à l'utiliser.
+          <span class="sr-only">Pour les particuliers : </span>Dépannage système, lenteurs, Wi-Fi et sauvegardes.
         </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
@@ -166,7 +155,7 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Vous savez ce que ça coûte avant que je touche à la machine. Si la réparation n'en vaut pas la peine, je vous le dis en toute honnêteté.
+          Priorité au diagnostic posé et au bon sens. Décrivez votre problème par écrit pour une analyse à tête reposée et une intervention deux fois plus rapide.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/particuliers/">
           Voir les services particuliers <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
@@ -186,9 +175,9 @@ const besoinsEntreprises = [
           quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.06] grayscale contrast-125"
         />
-        <span class="badge badge--accent self-start" aria-hidden="true">Artisans, Commerçants & PME</span>
+        <span class="badge badge--accent self-start" aria-hidden="true">Artisans, Commerçants & TPE</span>
         <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
-          <span class="sr-only">Pour les professionnels : </span>Un site internet qui rapporte des clients et un matériel fiable.
+          <span class="sr-only">Pour les professionnels : </span>Un site web rapide et des équipements réseaux fiables.
         </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
@@ -201,26 +190,26 @@ const besoinsEntreprises = [
         </ul>
 
         <p class="max-w-[42ch] text-base text-ink-soft">
-          Création de site web sobre et rapide, présence sur Google Maps, et entretien de vos ordinateurs de travail. Pas de sous-traitance, un seul interlocuteur réactif.
+          Sites vitrines modernes et légers, sauvegardes locales sécurisées (NAS) et réseaux stables. Travail soigné sans abonnements cachés ni usines à gaz.
         </p>
         <a class="btn btn--cta mt-auto self-start" href="/professionnels/">
-          Voir les offres entreprises <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
+          Voir les offres pros & TPE <ArrowRight class="arrow" size="1.05em" aria-hidden="true" />
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ─── SERVICES : grille à quatre tuiles ────────────── -->
+  <!-- ─── SERVICES : grille à trois tuiles ────────────── -->
   <section class="section section-rule" id="services">
     <div class="shell">
       <SectionHead
-        title="Quatre prestations, deux publics"
-        lede="Dépannage et assistance pour votre confort à la maison, visibilité web et tranquillité informatique pour votre activité professionnelle."
+        title="Trois domaines d'expertise, une même exigence de clarté"
+        lede="Pas de jargon inutile ni d'options superflues : uniquement des solutions durables, adaptées à votre usage réel."
       />
 
       <ul class="m-0 mt-12 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
         {services.map((s) => {
-          const t = tuiles[s.id];
+          const t = tuiles[s.id] ?? { span: '', tone: 'raised' };
           const sombre = t.tone === 'photo' || t.tone === 'nuit';
           return (
             <li class:list={[t.span]} data-reveal>
@@ -253,7 +242,7 @@ const besoinsEntreprises = [
                 )}
                 <span class="flex flex-wrap gap-[0.35rem]" aria-hidden="true">
                   {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
-                  {s.pour.includes('entreprise') && <span class="badge">Entreprises</span>}
+                  {s.pour.includes('entreprise') && <span class="badge">Professionnels</span>}
                 </span>
                 <span class="flex items-end justify-between gap-6">
                   <span class="flex flex-col gap-2">
@@ -308,15 +297,15 @@ const besoinsEntreprises = [
   <section class="section section-rule">
     <div class="shell">
       <SectionHead
-        title="Proximité et réactivité locale"
-        lede="Déplacement sans surcoût jusqu'à 15 km autour de Rivesaltes (Perpignan et communes voisines). Au-delà ou pour vos sites web, tout est également réalisable à distance."
+        title="Proximité locale & intervention à distance"
+        lede="Sur place et en atelier à Perpignan, Rivesaltes et alentours (Pyrénées-Orientales - 66). Dépannage logiciel sécurisé et projets web réalisables à distance partout en France."
       />
       <div class="mt-12 grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div class="panel p-[clamp(1rem,2.5vw,2rem)]" data-reveal><ZoneRadar /></div>
         <figure class="m-0 overflow-hidden rounded-[var(--radius-xl)]" data-reveal>
           <Image
             src={cote}
-            alt="Mains sur le clavier d'un ordinateur portable pendant une intervention d'assistance informatique"
+            alt="Intervention d'assistance informatique et diagnostic sur ordinateur portable"
             loading="lazy" decoding="async"
             widths={[480, 768, 1100]}
             sizes="(width >= 62rem) 40vw, 100vw"
@@ -333,8 +322,9 @@ const besoinsEntreprises = [
 
   <!-- ─── BANDEAU FINAL ────────────────────────────────── -->
   <CtaBand
-    title="Un problème d'ordinateur ou un projet de site web ?"
-    text="Quelques lignes suffisent : la panne rencontrée, le matériel concerné ou ce que vous souhaitez pour votre activité. Je vous réponds avec une estimation claire et sans aucun engagement."
-    cta="Demander un devis"
+    title="Un problème d'ordinateur, de Wi-Fi ou un projet de site web ?"
+    text="Décrivez votre besoin ou votre panne par message : poser les symptômes par écrit permet d'analyser le problème à tête reposée et d'intervenir deux fois plus vite. Diagnostic transparent et sans engagement."
+    href="/contact/"
+    cta="Demander un pré-diagnostic"
   />
 </Base>

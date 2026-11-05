@@ -17,7 +17,7 @@ const formules = [
   {
     n: '01',
     t: 'Intervention ponctuelle',
-    q: "Un poste en panne, un problème réseau, une mise à niveau matérielle ou une intervention ciblée sur vos systèmes Windows.",
+    q: "Un problème réseau, une coupure Wi-Fi, une mise en service d'imprimante ou un dépannage matériel ciblé.",
     l: ['Facturation à l\'heure ou au forfait intervention', 'Devis écrit avant démarrage', 'Aucun engagement de durée'],
     p: 'Devis avant démarrage',
   },
@@ -35,38 +35,38 @@ const formules = [
   },
   {
     n: '03',
-    t: 'Maintenance & Parc Windows PME',
-    q: "Vos postes et serveurs Windows demandent un suivi régulier pour éviter les pannes, les lenteurs et sécuriser vos données métier.",
+    t: 'Réseaux, Box & Sauvegardes PME',
+    q: "Vos liaisons Wi-Fi, box, switchs et serveurs NAS demandent une configuration soignée pour sécuriser vos données métier.",
     l: [
-      "Audit régulier de l'état de santé des postes de travail",
-      "Suivi des mises à jour Windows et des logiciels métiers",
-      "Mise en place et contrôle régulier des sauvegardes",
-      'Gestion des droits d\'accès et assistance rapide aux utilisateurs',
+      "Audit de couverture Wi-Fi et élimination des zones blanches",
+      "Installation et sécurisation de box, routeurs et switchs",
+      "Mise en place de serveurs NAS pour sauvegardes automatiques",
+      'Partage d\'imprimantes et dossiers réseau entre collaborateurs',
     ],
-    p: 'Forfait adapté à la taille du parc',
+    p: 'Forfait adapté à votre infrastructure',
     bridge: true,
   },
 ];
 
 const faq = [
-  { q: "Vous remplacez un service informatique ?", a: "Pour une TPE ou PME qui n'a pas la taille d'avoir un service informatique interne, j'assure ce rôle : maintenance des machines, assistance aux utilisateurs, gestion du site et interlocuteur unique pour vos questions techniques." },
-  { q: "Comment se déroule la maintenance de nos postes Windows ?", a: "On commence par un état des lieux : inventaire des machines, état des sauvegardes, logiciels installés et points de blocage. Ensuite, un plan d'action préventif est mis en place pour que vos équipes travaillent sans ralentissement." },
-  { q: "Intervenez-vous sur site ou à distance ?", a: "Les deux. Beaucoup d'opérations et de dépannages se font à distance en quelques minutes pour ne pas bloquer vos collaborateurs. Pour les interventions matérielles, les installations réseau ou les pannes bloquantes, je me déplace directement dans vos locaux dans les Pyrénées-Orientales." },
-  { q: "C'est confidentiel ? Vous avez accès à nos données de travail.", a: "Oui, la confidentialité est absolue. Rien n'est partagé ni conservé en dehors des besoins stricts de votre mission de support. Un accord de confidentialité (NDA) peut être formalisé avant toute prise en main." },
-  { q: "Vous administrez nos serveurs ?", a: "Oui, qu'il s'agisse de serveurs Windows locaux (partages de fichiers, gestion des accès) ou de serveurs d'hébergement web sous Linux. Tout est documenté pour que votre entreprise garde toujours la main sur ses identifiants." },
-  { q: "Que se passe-t-il en cas d'urgence ?", a: "Vous m'appelez directement, sans passer par un standard téléphonique ou un système de tickets impersonnel. Si l'incident est bloquant, un diagnostic à distance est lancé immédiatement ou une intervention sur site est programmée." },
-  { q: "Pourquoi aucun tarif fixe n'est affiché ?", a: "Parce qu'une entreprise de 3 postes n'a pas les mêmes besoins qu'une PME de 25 machines avec un serveur de données. Le premier échange d'une trentaine de minutes permet de dimensionner le forfait exact, au juste prix et sans mauvaise surprise." },
+  { q: "Vous remplacez un prestataire réseau ou un service informatique ?", a: "Pour une TPE ou PME qui n'a pas besoin d'un informaticien à temps plein, j'assure ce rôle : installation de votre réseau, paramétrage de box/switchs, serveurs NAS, site web et assistance directe." },
+  { q: "Comment se déroule l'optimisation de notre réseau ?", a: "On commence par un diagnostic : mesure du signal Wi-Fi, recensement des équipements connectés, état des sauvegardes et points de blocage. Ensuite, des solutions concrètes (câblage, répéteurs, switchs, NAS) sont déployées sans surcoût inutile." },
+  { q: "Intervenez-vous sur site ou à distance ?", a: "Les deux. La maintenance du site web et certains dépannages logiciels se font à distance. Pour les câblages, l'installation de box, switchs, points d'accès Wi-Fi et serveurs NAS, je me déplace dans vos locaux dans les Pyrénées-Orientales." },
+  { q: "C'est confidentiel ? Vous avez accès à nos données de travail.", a: "Oui, la confidentialité est absolue. Rien n'est partagé ni conservé en dehors des besoins stricts de votre mission de support. Vos données restent sur vos équipements locaux." },
+  { q: "Vous installez des serveurs NAS ?", a: "Oui, mise en place de NAS locaux pour centraliser et sauvegarder automatiquement factures, contrats et documents de l'entreprise, sans abonnement cloud obligatoire." },
+  { q: "Que se passe-t-il en cas d'urgence réseau ou panne web ?", a: "Vous me contactez directement, sans passer par un standard téléphonique ou un système de tickets impersonnel. Si l'incident bloque votre activité, une intervention prioritaire est programmée." },
+  { q: "Pourquoi aucun tarif fixe n'est affiché ?", a: "Parce qu'un bureau de 2 postes n'a pas les mêmes besoins qu'un atelier ou un commerce avec plusieurs points d'accès et un serveur de stockage. Le premier échange permet de dimensionner le devis exact, au juste prix." },
 ];
 ---
 <Base
-  title="Maintenance informatique Windows & Sites web pour PME · Perpignan (66)"
-  description="Maintenance de parc informatique Windows, dépannage, création de sites web et administration système pour les TPE/PME des Pyrénées-Orientales."
+  title="Réseaux Wi-Fi, Box, Sauvegardes & Sites web pour TPE · Perpignan (66)"
+  description="Optimisation réseau Wi-Fi, installation de box, switchs, serveurs NAS et création de sites web vitrines pour les artisans et TPE des Pyrénées-Orientales."
 >
   <PageHead
-    kicker="Maintenance informatique Windows & Sites web · TPE et PME"
+    kicker="Réseaux, Équipements & Sites web · Artisans, Commerçants et TPE"
     motcle
     title="Je fais deux choses, et je les fais bien."
-    lede="Vous n'avez pas de service informatique et vous n'en avez pas besoin d'un à temps plein. Je maintiens et fiabilise vos postes et serveurs Windows au quotidien, et je conçois et fais tourner votre site web. Un seul contact direct, sans intermédiaire."
+    lede="Des réseaux Wi-Fi et des équipements locaux (box, switchs, NAS) fiables pour travailler sereinement au quotidien, et un site web sobre et rapide pour vos clients. Un seul contact direct, sans intermédiaire."
   >
     <div class="flex flex-wrap items-center gap-3">
       <a class="btn btn--cta" href="/contact/">Me contacter <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
@@ -80,31 +80,31 @@ const faq = [
     <div class="shell">
       <SectionHead
         title="Ce que je trouve en arrivant"
-        lede="Ce relevé montre la réalité fréquente d'un poste Windows en entreprise non maintenu : disques encombrés, mises à jour en souffrance et sauvegardes non fonctionnelles."
+        lede="Ce relevé illustre la réalité fréquente d'un réseau de petite entreprise : Wi-Fi instable, box saturée et sauvegardes déconnectées."
       />
       <div class="mt-12 grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
         <div class="panel on-nuit border-transparent bg-nuit p-[clamp(0.75rem,2vw,1.5rem)]">
           <Terminal
-            title="audit-parc : vérification poste Windows de travail"
+            title="audit-reseau : vérification équipement local & connectivité"
             prompt=">"
             lines={[
-              { k: 'cmd', t: 'systeminfo & health-check.bat' },
-              { k: 'warn', t: 'Mises à jour de sécurité Windows : 14 correctifs en attente' },
-              { k: 'warn', t: 'Disque C: (SSD) saturé à 92% — ralentissements système mesurés' },
-              { k: 'warn', t: 'Dernière sauvegarde locale : il y a 83 jours (support déconnecté)' },
-              { k: 'ok', t: 'Nettoyage et optimisation stockage : 64 Go d\'espace récupérés' },
-              { k: 'ok', t: 'Planification sauvegarde automatique et journalisation active' },
-              { k: 'out', t: 'Poste réactif, sécurisé et prêt pour la reprise d\'activité' },
+              { k: 'cmd', t: 'network-scan --local-lan & check-nas' },
+              { k: 'warn', t: 'Zone Wi-Fi atelier : perte de paquets 28% (signal dégradé)' },
+              { k: 'warn', t: 'Imprimante réseau : conflit d\'adresse IP avec un terminal' },
+              { k: 'warn', t: 'Serveur de fichiers local : aucune sauvegarde automatique active' },
+              { k: 'ok', t: 'Déploiement point d\'accès Wi-Fi & attribution baux DHCP fixes' },
+              { k: 'ok', t: 'Configuration NAS sécurisé : synchronisation quotidienne vérifiée' },
+              { k: 'out', t: 'Réseau stable, débit homogène et données professionnelles à l\'abri' },
             ]}
           />
         </div>
 
         <div class="flex flex-col items-start gap-4 text-base text-ink-soft">
           <p>
-            Ces alertes ne déclenchent pas toujours une panne visible tout de suite. Mais le jour où un disque lâche ou qu'un logiciel plante, l'absence de sauvegarde paralyse votre activité.
+            Ces alertes ne bloquent pas toujours le premier jour. Mais le jour où le Wi-Fi coupe pendant un encaissement ou qu'un disque dur lâche sans sauvegarde NAS, l'activité est paralysée.
           </p>
           <p>
-            La maintenance préventive permet de désamorcer ces blocages avant qu'ils ne coûtent du temps et de l'argent à vos collaborateurs.
+            Une installation réseau propre et des sauvegardes automatisées permettent de travailler en toute sérénité sans risquer de perdre ses documents.
           </p>
         </div>
       </div>
@@ -159,7 +159,7 @@ const faq = [
     <div class="shell">
       <SectionHead
         title="Deux chantiers, et c'est volontaire"
-        lede="La création et maintenance de votre site web d'un côté, la maintenance et l'administration de vos postes Windows de l'autre. Un périmètre concret pour vous garantir une disponibilité réelle."
+        lede="La création et maintenance de votre site web d'un côté, l'installation de votre réseau, box et sauvegardes NAS de l'autre. Un périmètre concret pour vous garantir une disponibilité réelle."
       />
       <div class="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)]">
         {pro.map((s) => (
