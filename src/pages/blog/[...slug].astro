@@ -38,13 +38,13 @@ const schema = {
         <a class="chip min-h-[40px] pl-3 no-underline hover:text-accent" href="/blog/">
           <ArrowLeft size="1em" aria-hidden="true" /> Tous les articles
         </a>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
+        <h1 class="mt-7 max-w-[24ch] text-[clamp(1.9rem,1rem+3.1vw,3rem)]">{post.data.title}</h1>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
           <time class="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft" datetime={post.data.date.toISOString()}>
             {formatDate(post.data.date)}
           </time>
           <span class="badge badge--accent">{AUDIENCE_LABEL[post.data.audience]}</span>
         </div>
-        <h1 class="mt-4 max-w-[24ch] text-[clamp(1.9rem,1rem+3.1vw,3rem)]">{post.data.title}</h1>
         <p class="mt-[1.1rem] max-w-[60ch] text-[1.05rem]/[1.6] text-ink-soft">{post.data.summary}</p>
       </div>
     </header>

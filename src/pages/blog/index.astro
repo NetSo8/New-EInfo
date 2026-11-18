@@ -16,7 +16,6 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
   description="Conseils pratiques, sécurité du code généré par IA et veille en cryptographie, sans jargon, pour les particuliers et TPE du Roussillon."
 >
   <PageHead
-    kicker="Blog"
     title="Ce que j'explique le plus souvent"
     lede="Les mêmes questions reviennent sur presque toutes les missions, et c'est aussi ici que je documente ce que j'apprends en ce moment. Autant l'écrire une fois pour toutes, en français, sans supposer que vous connaissez le vocabulaire."
   />
@@ -30,18 +29,18 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
           {posts.map((p) => (
             <li data-reveal>
               <article class="panel panel-link relative h-full flex-col gap-4 p-[clamp(1.5rem,2.5vw,2.1rem)]" aria-labelledby={`post-${p.id}`}>
-                <h2 class="order-2 max-w-[28ch] text-[clamp(1.25rem,1.05rem+0.8vw,1.65rem)]/[1.18] tracking-[-0.03em]" id={`post-${p.id}`}>
+                <h2 class="max-w-[28ch] text-[clamp(1.25rem,1.05rem+0.8vw,1.65rem)]/[1.18] tracking-[-0.03em]" id={`post-${p.id}`}>
                   {/* Le lien porte le seul titre ; sa zone cliquable couvre la carte entière. */}
                   <a class="no-underline after:absolute after:inset-0 after:rounded-[var(--radius-xl)] after:content-['']" href={`/blog/${p.id}/`}>{p.data.title}</a>
                 </h2>
-                <p class="order-1 flex flex-wrap items-center gap-3">
+                <p class="flex flex-wrap items-center gap-3">
                   <time class="font-mono text-[0.75rem] uppercase tracking-[0.06em] text-ink-soft" datetime={p.data.date.toISOString()}>
                     {formatDate(p.data.date)}
                   </time>
                   <span class="badge badge--accent">{AUDIENCE_LABEL[p.data.audience]}</span>
                 </p>
-                <p class="order-3 max-w-[60ch] text-base text-ink-soft">{p.data.summary}</p>
-                <span class="order-4 mt-auto inline-flex items-center gap-2 font-semibold text-accent" aria-hidden="true">Lire l'article <ArrowRight class="arrow" size="1.05em" /></span>
+                <p class="max-w-[60ch] text-base text-ink-soft">{p.data.summary}</p>
+                <span class="mt-auto inline-flex items-center gap-2 font-semibold text-accent" aria-hidden="true">Lire l'article <ArrowRight class="arrow" size="1.05em" /></span>
               </article>
             </li>
           ))}

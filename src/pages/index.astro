@@ -95,27 +95,18 @@ const besoinsEntreprises = [
     <HeroNetworkBg class="-z-10 opacity-45" />
     <div class="shell grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
       <div>
-        <h1>
-          <span class="chip rise text-[0.8rem] font-medium tracking-normal" style="--i:0">
-            <span class="chip__mark" aria-hidden="true">66</span>Premier diagnostic transparent · Perpignan & à distance
-          </span>
-          <span class="rise mt-7 block text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:1">
-            Votre informatique et vos outils web,<br /><span class="text-accent">enfin simples, rapides et fiables.</span>
-          </span>
+        <h1 class="rise text-[clamp(2.4rem,1.2rem+3.6vw,4.15rem)]/[1.02] tracking-[-0.045em]" style="--i:0">
+          Votre informatique et vos outils web,<br /><span class="text-accent">enfin simples, rapides et fiables.</span>
         </h1>
 
-        <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:2">
+        <p class="rise mt-6 max-w-[44ch] text-lede/[1.5] text-ink-soft" style="--i:1">
           Dépannage PC &amp; Mac, optimisation réseau Wi-Fi et création de sites web sobres pour les particuliers, artisans et petites entreprises. Un interlocuteur unique, des explications claires et un travail soigné, dans le strict respect de vos données.
         </p>
 
-        <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:3">
+        <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--i:2">
           <a class="btn btn--cta" href="/contact/">Demander un diagnostic écrit <ArrowRight class="arrow" size="1.05em" aria-hidden="true" /></a>
           <a class="btn btn--ghost" href="#services">Découvrir les prestations</a>
         </div>
-
-        <p class="rise mt-4 text-[0.85rem] text-ink-soft" style="--i:4">
-          Réponse écrite rapide avec estimation claire avant toute intervention · Sans engagement.
-        </p>
       </div>
 
       <figure class="unveil relative m-0 overflow-hidden rounded-[var(--radius-xl)] shadow-[var(--shadow-raise-hi)]">
@@ -140,9 +131,8 @@ const besoinsEntreprises = [
     <div class="shell grid grid-cols-1 gap-5 lg:grid-cols-2">
       <!-- Volet Particuliers (sans fond / épuré) -->
       <div class="panel flex flex-col gap-[1.1rem] border border-rule bg-transparent px-[clamp(1.4rem,3.5vw,3rem)] pt-[clamp(1.8rem,3.5vw,3rem)] pb-[clamp(2rem,3.5vw,3rem)]" data-reveal>
-        <span class="badge badge--accent self-start" aria-hidden="true">Particuliers & Domicile</span>
         <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
-          <span class="sr-only">Pour les particuliers : </span>Dépannage système, lenteurs, Wi-Fi et sauvegardes.
+          Pour les particuliers : dépannage système, lenteurs, Wi-Fi et sauvegardes.
         </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
@@ -175,9 +165,8 @@ const besoinsEntreprises = [
           quality={35}
           class="absolute inset-0 -z-10 size-full object-cover opacity-[0.06] grayscale contrast-125"
         />
-        <span class="badge badge--accent self-start" aria-hidden="true">Artisans, Commerçants & TPE</span>
         <h2 class="text-[clamp(1.6rem,1.15rem+1.6vw,2.35rem)]/[1.08] tracking-[-0.035em]">
-          <span class="sr-only">Pour les professionnels : </span>Un site web rapide et des équipements réseaux fiables.
+          Pour les professionnels : un site web rapide et des équipements réseaux fiables.
         </h2>
 
         <ul class="m-0 flex list-none flex-col p-0">
@@ -240,10 +229,6 @@ const besoinsEntreprises = [
                     <span class="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--color-nuit)_18%,color-mix(in_oklch,var(--color-nuit)_55%,transparent)_60%,color-mix(in_oklch,var(--color-nuit)_15%,transparent))]" aria-hidden="true"></span>
                   </>
                 )}
-                <span class="flex flex-wrap gap-[0.35rem]" aria-hidden="true">
-                  {s.pour.includes('particulier') && <span class="badge">Particuliers</span>}
-                  {s.pour.includes('entreprise') && <span class="badge">Professionnels</span>}
-                </span>
                 <span class="flex items-end justify-between gap-6">
                   <span class="flex flex-col gap-2">
                     <h3 class="text-[clamp(1.3rem,1.05rem+0.9vw,1.85rem)]/[1.1] tracking-[-0.03em]" id={`tuile-${s.id}`}>{s.titre}</h3>
